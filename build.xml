@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--** This is a template build file for a JOSM  plugin.
+**
+** Maintaining versions
+** ====================-->
+<project name="Microsoft-Streetside" default="dist" basedir=".">
+
+  <!--edit the properties of this plugin in the file `gradle.properties`-->
+  <property file="${basedir}/gradle.properties"/>
+  <property name="josm" location="../../../../core/dist/josm-custom.jar"/>
+  <property name="plugin.dist.dir" value="../../dist"/>
+
+  <!--** include targets that all plugins have in common **-->
+  <import file="../../plugins/build.xml"/>
+  
+  <fileset id="plugin.requires.jars" dir="${plugin.dist.dir}">
+    <include name="apache-commons.jar"/>
+    <include name="apache-http.jar"/>
+  	<include name="jackson-core-2.4.4.jar"/>
+  	<include name="jackson-databind-2.4.4.jar"/>
+  	<include name="jackson-annotations-2.4.4.jar"/>
+  </fileset>
+</project>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StreetsidePlugin.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside</a> &gt; <span class="el_source">StreetsidePlugin.java</span></div><h1>StreetsidePlugin.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
+package org.openstreetmap.josm.plugins.streetside;
+
+import org.openstreetmap.josm.Main;
+import org.openstreetmap.josm.gui.MainApplication;
+import org.openstreetmap.josm.gui.MainMenu;
+import org.openstreetmap.josm.gui.MapFrame;
+import org.openstreetmap.josm.gui.MapView;
+import org.openstreetmap.josm.gui.preferences.PreferenceSetting;
+import org.openstreetmap.josm.plugins.Plugin;
+import org.openstreetmap.josm.plugins.PluginInformation;
+import org.openstreetmap.josm.plugins.streetside.actions.MapObjectLayerAction;
+import org.openstreetmap.josm.plugins.streetside.actions.StreetsideDownloadAction;
+import org.openstreetmap.josm.plugins.streetside.actions.StreetsideDownloadViewAction;
+import org.openstreetmap.josm.plugins.streetside.actions.StreetsideExportAction;
+import org.openstreetmap.josm.plugins.streetside.actions.StreetsideJoinAction;
+import org.openstreetmap.josm.plugins.streetside.actions.StreetsideWalkAction;
+import org.openstreetmap.josm.plugins.streetside.actions.StreetsideZoomAction;
+import org.openstreetmap.josm.plugins.streetside.gui.StreetsideChangesetDialog;
+import org.openstreetmap.josm.plugins.streetside.gui.StreetsideFilterDialog;
+import org.openstreetmap.josm.plugins.streetside.gui.StreetsideHistoryDialog;
+import org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog;
+import org.openstreetmap.josm.plugins.streetside.gui.StreetsidePreferenceSetting;
+import org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ImageInfoHelpPopup;
+import org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ImageInfoPanel;
+import org.openstreetmap.josm.plugins.streetside.oauth.StreetsideUser;
+import org.openstreetmap.josm.plugins.streetside.utils.StreetsideProperties;
+import org.openstreetmap.josm.tools.ImageProvider;
+
+import org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder;
+import org.openstreetmap.josm.plugins.streetside.gui.StreetsideViewerDialog;
+
+/**
+ * This is the main class of the Streetside plugin.
+ */
+public class StreetsidePlugin extends Plugin {
+
+<span class="nc" id="L38">  public static final ImageProvider LOGO = new ImageProvider(&quot;streetside-logo&quot;);</span>
+
+  /** Zoom action */
+<span class="nc" id="L41">  private static final StreetsideZoomAction ZOOM_ACTION = new StreetsideZoomAction();</span>
+  /** Walk action */
+<span class="nc" id="L43">  private static final StreetsideWalkAction WALK_ACTION = new StreetsideWalkAction();</span>
+  /** Upload action */
+  //private static final StreetsideUploadAction UPLOAD_ACTION = new StreetsideUploadAction();
+
+  static {
+<span class="nc bnc" id="L48" title="All 2 branches missed.">    if (Main.main != null) {</span>
+<span class="nc" id="L49">      MainMenu.add(MainApplication.getMenu().fileMenu, new StreetsideExportAction(), false, 14);</span>
+<span class="nc" id="L50">      MainMenu.add(MainApplication.getMenu().imagerySubMenu, new StreetsideDownloadAction(), false);</span>
+      //MainMenu.add(MainApplication.getMenu().fileMenu, new StreetsideImportAction(), false, 14);
+<span class="nc" id="L52">      MainMenu.add(MainApplication.getMenu().viewMenu, ZOOM_ACTION, false, 15);</span>
+<span class="nc" id="L53">      MainMenu.add(MainApplication.getMenu().fileMenu, new StreetsideDownloadViewAction(), false, 14);</span>
+<span class="nc" id="L54">      MainMenu.add(MainApplication.getMenu().dataMenu, new StreetsideJoinAction(), false);</span>
+<span class="nc" id="L55">      MainMenu.add(MainApplication.getMenu().moreToolsMenu, WALK_ACTION, false);</span>
+      //MainMenu.add(MainApplication.getMenu().fileMenu, UPLOAD_ACTION, false, 14);
+<span class="nc" id="L57">      MainMenu.add(MainApplication.getMenu().imagerySubMenu, new MapObjectLayerAction(), false);</span>
+    }
+<span class="nc" id="L59">  }</span>
+
+  /**
+   * Main constructor.
+   *
+   * @param info
+   *          Required information of the plugin. Obtained from the jar file.
+   * @throws IOException if the streetside cache directory is not found
+   */
+  public StreetsidePlugin(PluginInformation info) /*throws IOException*/ {
+<span class="nc" id="L69">    super(info);</span>
+
+<span class="nc bnc" id="L71" title="All 2 branches missed.">    if (StreetsideProperties.ACCESS_TOKEN.get() == null) {</span>
+<span class="nc" id="L72">      StreetsideUser.setTokenValid(false);</span>
+    }
+<span class="nc" id="L74">  }</span>
+
+  static StreetsideDataListener[] getStreetsideDataListeners() {
+<span class="nc" id="L77">	return new StreetsideDataListener[]{/*UPLOAD_ACTION,*/ WALK_ACTION, ZOOM_ACTION, CubemapBuilder.getInstance()};</span>
+  }
+
+
+  /**
+   * @return the {@link StreetsideWalkAction} for the plugin
+   */
+  public static StreetsideWalkAction getStreetsideWalkAction() {
+<span class="nc" id="L85">    return WALK_ACTION;</span>
+  }
+
+  /**
+   * Called when the JOSM map frame is created or destroyed.
+   */
+  @Override
+  public void mapFrameInitialized(MapFrame oldFrame, MapFrame newFrame) {
+<span class="nc bnc" id="L93" title="All 4 branches missed.">    if (oldFrame == null &amp;&amp; newFrame != null) { // map frame added</span>
+<span class="nc" id="L94">      MainApplication.getMap().addToggleDialog(StreetsideMainDialog.getInstance(), false);</span>
+<span class="nc" id="L95">      StreetsideMainDialog.getInstance().setImageInfoHelp(new ImageInfoHelpPopup(</span>
+<span class="nc" id="L96">    	  MainApplication.getMap().addToggleDialog(ImageInfoPanel.getInstance(), false)</span>
+      ));
+<span class="nc" id="L98">      MainApplication.getMap().addToggleDialog(StreetsideViewerDialog.getInstance(), false);</span>
+<span class="nc" id="L99">      MainApplication.getMap().addToggleDialog(StreetsideHistoryDialog.getInstance(), false);</span>
+<span class="nc" id="L100">      MainApplication.getMap().addToggleDialog(StreetsideChangesetDialog.getInstance(), false);</span>
+<span class="nc" id="L101">      MainApplication.getMap().addToggleDialog(StreetsideFilterDialog.getInstance(), false);</span>
+    }
+<span class="nc bnc" id="L103" title="All 4 branches missed.">    if (oldFrame != null &amp;&amp; newFrame == null) { // map frame destroyed</span>
+<span class="nc" id="L104">      StreetsideMainDialog.destroyInstance();</span>
+<span class="nc" id="L105">      StreetsideHistoryDialog.destroyInstance();</span>
+<span class="nc" id="L106">      StreetsideChangesetDialog.destroyInstance();</span>
+<span class="nc" id="L107">      StreetsideFilterDialog.destroyInstance();</span>
+<span class="nc" id="L108">      ImageInfoPanel.destroyInstance();</span>
+<span class="nc" id="L109">      CubemapBuilder.destroyInstance();</span>
+
+    }
+<span class="nc" id="L112">  }</span>
+
+  @Override
+  public PreferenceSetting getPreferenceSetting() {
+<span class="nc" id="L116">    return new StreetsidePreferenceSetting();</span>
+  }
+
+  /**
+   * @return the current {@link MapView} without throwing a {@link NullPointerException}
+   */
+  public static MapView getMapView() {
+<span class="nc" id="L123">    final MapFrame mf = MainApplication.getMap();</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">    if (mf != null) {</span>
+<span class="nc" id="L125">      return mf.mapView;</span>
+    }
+<span class="nc" id="L127">    return null;</span>
+  }
+
+  /**
+   * @return the {@link StreetsideUploadAction} for the plugin
+   */
+  /*public static StreetsideUploadAction getUploadAction() {
+    return UPLOAD_ACTION;
+  }*/
+
+  /**
+   * @return the {@link StreetsideZoomAction} for the plugin
+   */
+  /*public static StreetsideZoomAction getZoomAction() {
+    return ZOOM_ACTION;
+  }*/
+  }
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

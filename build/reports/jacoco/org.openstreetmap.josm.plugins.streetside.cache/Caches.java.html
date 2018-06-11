@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Caches.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.cache</a> &gt; <span class="el_source">Caches.java</span></div><h1>Caches.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
+package org.openstreetmap.josm.plugins.streetside.cache;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.Serializable;
+
+import javax.swing.ImageIcon;
+
+import org.apache.commons.jcs.access.CacheAccess;
+import org.apache.commons.jcs.engine.behavior.IElementAttributes;
+
+import org.openstreetmap.josm.Main;
+import org.openstreetmap.josm.data.cache.BufferedImageCacheEntry;
+import org.openstreetmap.josm.data.cache.JCSCacheManager;
+import org.openstreetmap.josm.plugins.streetside.model.UserProfile;
+import org.openstreetmap.josm.tools.Logging;
+
+public final class Caches {
+
+<span class="fc" id="L21">	private Caches() {</span>
+		// Private constructor to avoid instantiation
+<span class="fc" id="L23">	}</span>
+
+	public static File getCacheDirectory() {
+<span class="fc" id="L26">		final File f = new File(Main.pref.getPluginsDirectory().getPath() + &quot;/MicrosoftStreetside/cache&quot;);</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">		if (!f.exists()) {</span>
+<span class="fc" id="L28">			f.mkdirs();</span>
+		}
+<span class="fc" id="L30">		return f;</span>
+	}
+
+	public abstract static class CacheProxy&lt;K, V extends Serializable&gt; {
+		private final CacheAccess&lt;K, V&gt; cache;
+
+<span class="fc" id="L36">		public CacheProxy() {</span>
+			CacheAccess&lt;K, V&gt; c;
+			try {
+<span class="fc" id="L39">				c = createNewCache();</span>
+<span class="nc" id="L40">			} catch (IOException e) {</span>
+<span class="nc" id="L41">				Logging.log(Logging.LEVEL_WARN, &quot;Could not initialize cache for &quot; + getClass().getName(), e);</span>
+<span class="nc" id="L42">				c = null;</span>
+<span class="fc" id="L43">			}</span>
+<span class="fc" id="L44">			cache = c;</span>
+<span class="fc" id="L45">		}</span>
+
+		protected abstract CacheAccess&lt;K, V&gt; createNewCache() throws IOException;
+
+		public V get(final K key) {
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">			return cache == null ? null : cache.get(key);</span>
+		}
+
+		public void put(final K key, final V value) {
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">			if (cache != null) {</span>
+<span class="fc" id="L55">				cache.put(key, value);</span>
+			}
+<span class="fc" id="L57">		}</span>
+	}
+
+	public static class ImageCache {
+		private static ImageCache instance;
+		private final CacheAccess&lt;String, BufferedImageCacheEntry&gt; cache;
+
+<span class="fc" id="L64">		public ImageCache() {</span>
+			CacheAccess&lt;String, BufferedImageCacheEntry&gt; c;
+			try {
+<span class="fc" id="L67">				c = JCSCacheManager.getCache(&quot;streetside&quot;, 10, 10000, Caches.getCacheDirectory().getPath());</span>
+<span class="nc" id="L68">			} catch (IOException e) {</span>
+<span class="nc" id="L69">				Logging.log(Logging.LEVEL_WARN, &quot;Could not initialize the Streetside image cache.&quot;, e);</span>
+<span class="nc" id="L70">				c = null;</span>
+<span class="fc" id="L71">			}</span>
+<span class="fc" id="L72">			cache = c;</span>
+<span class="fc" id="L73">		}</span>
+
+		public CacheAccess&lt;String, BufferedImageCacheEntry&gt; getCache() {
+<span class="fc" id="L76">			return cache;</span>
+		}
+
+		public static ImageCache getInstance() {
+<span class="fc" id="L80">			synchronized (ImageCache.class) {</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">				if (ImageCache.instance == null) {</span>
+<span class="fc" id="L82">					ImageCache.instance = new ImageCache();</span>
+				}
+<span class="fc" id="L84">				return ImageCache.instance;</span>
+<span class="nc" id="L85">			}</span>
+		}
+	}
+
+	public static class CubemapCache {
+		private static CubemapCache instance;
+		private final CacheAccess&lt;String, BufferedImageCacheEntry&gt; cache;
+
+<span class="nc" id="L93">		public CubemapCache() {</span>
+			CacheAccess&lt;String, BufferedImageCacheEntry&gt; c;
+			try {
+<span class="nc" id="L96">				c = JCSCacheManager.getCache(&quot;streetside&quot;, 10, 10000, Caches.getCacheDirectory().getPath());</span>
+<span class="nc" id="L97">			} catch (IOException e) {</span>
+<span class="nc" id="L98">				Logging.log(Logging.LEVEL_WARN, &quot;Could not initialize the Streetside cubemap cache.&quot;, e);</span>
+<span class="nc" id="L99">				c = null;</span>
+<span class="nc" id="L100">			}</span>
+<span class="nc" id="L101">			cache = c;</span>
+<span class="nc" id="L102">		}</span>
+
+		public CacheAccess&lt;String, BufferedImageCacheEntry&gt; getCache() {
+<span class="nc" id="L105">			return cache;</span>
+		}
+
+		public static CubemapCache getInstance() {
+<span class="nc" id="L109">			synchronized (CubemapCache.class) {</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">				if (CubemapCache.instance == null) {</span>
+<span class="nc" id="L111">					CubemapCache.instance = new CubemapCache();</span>
+				}
+<span class="nc" id="L113">				return CubemapCache.instance;</span>
+<span class="nc" id="L114">			}</span>
+		}
+	}
+
+<span class="fc" id="L118">	public static class MapObjectIconCache extends CacheProxy&lt;String, ImageIcon&gt; {</span>
+		private static CacheProxy&lt;String, ImageIcon&gt; instance;
+
+		public static CacheProxy&lt;String, ImageIcon&gt; getInstance() {
+<span class="fc" id="L122">			synchronized (MapObjectIconCache.class) {</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">				if (MapObjectIconCache.instance == null) {</span>
+<span class="fc" id="L124">					MapObjectIconCache.instance = new MapObjectIconCache();</span>
+				}
+<span class="fc" id="L126">				return MapObjectIconCache.instance;</span>
+<span class="nc" id="L127">			}</span>
+		}
+
+		@Override
+		protected CacheAccess&lt;String, ImageIcon&gt; createNewCache() throws IOException {
+<span class="fc" id="L132">			return JCSCacheManager.getCache(&quot;streetsideObjectIcons&quot;, 100, 1000, Caches.getCacheDirectory().getPath());</span>
+		}
+	}
+
+<span class="fc" id="L136">	public static class UserProfileCache extends CacheProxy&lt;String, UserProfile&gt; {</span>
+		private static CacheProxy&lt;String, UserProfile&gt; instance;
+
+		public static CacheProxy&lt;String, UserProfile&gt; getInstance() {
+<span class="fc" id="L140">			synchronized (UserProfileCache.class) {</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">				if (UserProfileCache.instance == null) {</span>
+<span class="fc" id="L142">					UserProfileCache.instance = new UserProfileCache();</span>
+				}
+<span class="fc" id="L144">				return UserProfileCache.instance;</span>
+<span class="nc" id="L145">			}</span>
+		}
+
+		@Override
+		protected CacheAccess&lt;String, UserProfile&gt; createNewCache() throws IOException {
+<span class="fc" id="L150">			CacheAccess&lt;String, UserProfile&gt; cache =</span>
+<span class="fc" id="L151">					JCSCacheManager.getCache(&quot;userProfile&quot;, 100, 1000, Caches.getCacheDirectory().getPath());</span>
+<span class="fc" id="L152">			IElementAttributes atts = cache.getDefaultElementAttributes();</span>
+<span class="fc" id="L153">			atts.setMaxLife(604_800_000); // Sets lifetime to 7 days (604800000=1000*60*60*24*7)</span>
+<span class="fc" id="L154">			cache.setDefaultElementAttributes(atts);</span>
+<span class="fc" id="L155">			return cache;</span>
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

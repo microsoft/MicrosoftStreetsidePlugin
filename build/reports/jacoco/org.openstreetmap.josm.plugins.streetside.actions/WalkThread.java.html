@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WalkThread.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.actions</a> &gt; <span class="el_source">WalkThread.java</span></div><h1>WalkThread.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
+package org.openstreetmap.josm.plugins.streetside.actions;
+
+import java.awt.image.BufferedImage;
+
+import javax.swing.SwingUtilities;
+
+import org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImage;
+import org.openstreetmap.josm.plugins.streetside.StreetsideCubemap;
+import org.openstreetmap.josm.plugins.streetside.StreetsideData;
+import org.openstreetmap.josm.plugins.streetside.StreetsideDataListener;
+import org.openstreetmap.josm.plugins.streetside.StreetsideImage;
+import org.openstreetmap.josm.plugins.streetside.StreetsideLayer;
+import org.openstreetmap.josm.plugins.streetside.cache.CacheUtils;
+import org.openstreetmap.josm.plugins.streetside.cubemap.CubemapUtils;
+import org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog;
+import org.openstreetmap.josm.plugins.streetside.utils.StreetsideProperties;
+
+
+/**
+ * Thread containing the walk process.
+ *
+ * @author nokutu
+ */
+public class WalkThread extends Thread implements StreetsideDataListener {
+  private final int interval;
+  private final StreetsideData data;
+  private boolean end;
+  private final boolean waitForFullQuality;
+  private final boolean followSelected;
+  private final boolean goForward;
+  private BufferedImage lastImage;
+  private volatile boolean paused;
+
+  /**
+   * Main constructor.
+   *
+   * @param interval How often the images switch.
+   * @param waitForPicture If it must wait for the full resolution picture or just the
+   * thumbnail.
+   * @param followSelected Zoom to each image that is selected.
+   * @param goForward true to go forward; false to go backwards.
+   */
+  public WalkThread(int interval, boolean waitForPicture,
+<span class="nc" id="L45">                    boolean followSelected, boolean goForward) {</span>
+<span class="nc" id="L46">    this.interval = interval;</span>
+<span class="nc" id="L47">    waitForFullQuality = waitForPicture;</span>
+<span class="nc" id="L48">    this.followSelected = followSelected;</span>
+<span class="nc" id="L49">    this.goForward = goForward;</span>
+<span class="nc" id="L50">    data = StreetsideLayer.getInstance().getData();</span>
+<span class="nc" id="L51">    data.addListener(this);</span>
+<span class="nc" id="L52">  }</span>
+
+  @Override
+  public void run() {
+    try {
+<span class="nc bnc" id="L57" title="All 4 branches missed.">      while (!end &amp;&amp; data.getSelectedImage().next() != null) {</span>
+<span class="nc" id="L58">        StreetsideAbstractImage image = data.getSelectedImage();</span>
+<span class="nc bnc" id="L59" title="All 4 branches missed.">        if (image != null &amp;&amp; image.next() instanceof StreetsideImage) {</span>
+          // Predownload next 10 thumbnails.
+<span class="nc" id="L61">          preDownloadImages((StreetsideImage) image.next(), 10, CacheUtils.PICTURE.THUMBNAIL);</span>
+          // TODO: WalkThread for cubemaps? @rrh
+      	  //preDownloadCubemaps((StreetsideImage) image.next(), 10, CacheUtils.PICTURE.CUBEMAP);
+<span class="nc bnc" id="L64" title="All 2 branches missed.">          if (waitForFullQuality) {</span>
+            // Start downloading 3 next full images.
+<span class="nc" id="L66">            StreetsideAbstractImage currentImage = image.next();</span>
+<span class="nc" id="L67">        	preDownloadImages((StreetsideImage) currentImage, 3, CacheUtils.PICTURE.FULL_IMAGE);</span>
+        	// TODO: WalkThread for cubemaps? @rrh
+        	/*if (StreetsideProperties.PREDOWNLOAD_CUBEMAPS.get().booleanValue()) {
+          	  preDownloadCubemaps((StreetsideImage) currentImage, 3, CacheUtils.PICTURE.CUBEMAP);
+            }*/
+          }
+        }
+        try {
+          // Waits for full quality picture.
+<span class="nc" id="L76">          final BufferedImage displayImage = StreetsideMainDialog.getInstance().getStreetsideImageDisplay().getImage();</span>
+<span class="nc bnc" id="L77" title="All 4 branches missed.">          if (waitForFullQuality &amp;&amp; image instanceof StreetsideImage) {</span>
+<span class="nc bnc" id="L78" title="All 6 branches missed.">            while (displayImage == lastImage || displayImage == null || displayImage.getWidth() &lt; 2048) {</span>
+<span class="nc" id="L79">              Thread.sleep(100);</span>
+            }
+          } else { // Waits for thumbnail.
+<span class="nc bnc" id="L82" title="All 6 branches missed.">            while (displayImage == lastImage || displayImage == null || displayImage.getWidth() &lt; 320) {</span>
+<span class="nc" id="L83">              Thread.sleep(100);</span>
+            }
+          }
+<span class="nc bnc" id="L86" title="All 2 branches missed.">          while (paused) {</span>
+<span class="nc" id="L87">            Thread.sleep(100);</span>
+          }
+<span class="nc" id="L89">          wait(interval);</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">          while (paused) {</span>
+<span class="nc" id="L91">            Thread.sleep(100);</span>
+          }
+<span class="nc" id="L93">          lastImage = StreetsideMainDialog.getInstance().getStreetsideImageDisplay().getImage();</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">          if (goForward) {</span>
+<span class="nc" id="L95">            data.selectNext(followSelected);</span>
+          } else {
+<span class="nc" id="L97">            data.selectPrevious(followSelected);</span>
+          }
+<span class="nc" id="L99">        } catch (InterruptedException e) {</span>
+<span class="nc" id="L100">          return;</span>
+<span class="nc" id="L101">        }</span>
+<span class="nc" id="L102">      }</span>
+
+    	// TODO: WalkThread for cubemaps? @rrh
+      	/*while (!end &amp;&amp; data.getSelectedImage().next() != null) {
+            StreetsideAbstractImage cubemap = data.getSelectedImage();
+            if (cubemap != null &amp;&amp; cubemap.next() instanceof StreetsideCubemap) {
+              if (waitForFullQuality) {
+                // Start downloading 3 next full images.
+
+            	// TODO: cubemap handling @rrh
+            	preDownloadCubemaps((StreetsideCubemap) cubemap.next(), 6, CacheUtils.PICTURE.CUBEMAP);
+              }
+            }
+            try {
+              // Waits for full quality picture.
+              final BufferedImage[] displayCubemap = StreetsideMainDialog.getInstance().streetsideViewerDisplay.getCubemap();
+              if (waitForFullQuality &amp;&amp; cubemap instanceof StreetsideCubemap) {
+                  // TODO: handle cubemap width? @rrh
+            	  while (displayCubemap == lastCubemap || displayCubemap == null || displayCubemap.getWidth() &lt; 2048) {
+                  Thread.sleep(100);
+                }
+              } else { // Waits for thumbnail.
+            	  // TODO: handle cubemap width? @rrh
+            	  while (displayCubemap == lastCubemap || displayCubemap == null || displayCubemap.getWidth() &lt; 320) {
+                  Thread.sleep(100);
+                }
+              }
+              while (paused) {
+                Thread.sleep(100);
+              }
+              wait(interval);
+              while (paused) {
+                Thread.sleep(100);
+              }
+              lastCubemap = StreetsideMainDialog.getInstance().streetsideViewerDisplay.getCubemap();
+              // TODO: forward / previous for cubemap? @rrh
+              if (goForward) {
+                data.selectNext(followSelected);
+              } else {
+                data.selectPrevious(followSelected);
+              }
+            } catch (InterruptedException e) {
+              return;
+            }
+          }*/
+<span class="nc" id="L147">    } catch (NullPointerException e) {</span>
+      // TODO: Avoid NPEs instead of waiting until they are thrown and then catching them
+<span class="nc" id="L149">      return;</span>
+<span class="nc" id="L150">    }</span>
+<span class="nc" id="L151">    end();</span>
+<span class="nc" id="L152">  }</span>
+
+  private void preDownloadCubemaps(StreetsideImage startImage, int n, CacheUtils.PICTURE type) {
+<span class="nc bnc" id="L155" title="All 4 branches missed.">	  if (n &gt;= 1 &amp;&amp; startImage != null) {</span>
+
+<span class="nc bnc" id="L157" title="All 2 branches missed.">		  for (int i = 0; i &lt; 6; i++) {</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">				for (int j = 0; j &lt; 4; j++) {</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">					for (int k = 0; k &lt; 4; k++) {</span>
+
+<span class="nc" id="L161">						CacheUtils.downloadPicture(startImage, type);</span>
+<span class="nc bnc" id="L162" title="All 4 branches missed.">						if (startImage.next() instanceof StreetsideImage &amp;&amp; n &gt;= 2) {</span>
+<span class="nc" id="L163">							preDownloadImages((StreetsideImage) startImage.next(), n - 1, type);</span>
+						}
+					}
+				}
+		  }
+	  }
+<span class="nc" id="L169">  }</span>
+
+/**
+   * Downloads n images into the cache beginning from the supplied start-image (including the start-image itself).
+   *
+   * @param startImage the image to start with (this and the next n-1 images in the same sequence are downloaded)
+   * @param n the number of images to download
+   * @param type the quality of the image (full or thumbnail)
+   */
+  private static void preDownloadImages(StreetsideImage startImage, int n, CacheUtils.PICTURE type) {
+<span class="nc bnc" id="L179" title="All 4 branches missed.">    if (n &gt;= 1 &amp;&amp; startImage != null) {</span>
+<span class="nc" id="L180">      CacheUtils.downloadPicture(startImage, type);</span>
+<span class="nc bnc" id="L181" title="All 4 branches missed.">      if (startImage.next() instanceof StreetsideImage &amp;&amp; n &gt;= 2) {</span>
+<span class="nc" id="L182">        preDownloadImages((StreetsideImage) startImage.next(), n - 1, type);</span>
+      }
+    }
+<span class="nc" id="L185">  }</span>
+
+  @Override
+  public void imagesAdded() {
+    // Nothing
+<span class="nc" id="L190">  }</span>
+
+  @Override
+  public void selectedImageChanged(StreetsideAbstractImage oldImage, StreetsideAbstractImage newImage) {
+<span class="nc bnc" id="L194" title="All 2 branches missed.">    if (newImage != oldImage.next()) {</span>
+<span class="nc" id="L195">      end();</span>
+<span class="nc" id="L196">      interrupt();</span>
+    }
+<span class="nc" id="L198">  }</span>
+
+  /**
+   * Continues with the execution if paused.
+   */
+  public void play() {
+<span class="nc" id="L204">    paused = false;</span>
+<span class="nc" id="L205">  }</span>
+
+  /**
+   * Pauses the execution.
+   */
+  public void pause() {
+<span class="nc" id="L211">    paused = true;</span>
+<span class="nc" id="L212">  }</span>
+
+  /**
+   * Stops the execution.
+   */
+  public void stopWalk() {
+<span class="nc bnc" id="L218" title="All 2 branches missed.">    if (SwingUtilities.isEventDispatchThread()) {</span>
+<span class="nc" id="L219">      end();</span>
+<span class="nc" id="L220">      interrupt();</span>
+    } else {
+<span class="nc" id="L222">      SwingUtilities.invokeLater(this::stopWalk);</span>
+    }
+<span class="nc" id="L224">  }</span>
+
+  /**
+   * Called when the walk stops by itself of forcefully.
+   */
+  public void end() {
+<span class="nc bnc" id="L230" title="All 2 branches missed.">    if (SwingUtilities.isEventDispatchThread()) {</span>
+<span class="nc" id="L231">      end = true;</span>
+<span class="nc" id="L232">      data.removeListener(this);</span>
+<span class="nc" id="L233">      StreetsideMainDialog.getInstance().setMode(StreetsideMainDialog.MODE.NORMAL);</span>
+    } else {
+<span class="nc" id="L235">      SwingUtilities.invokeLater(this::end);</span>
+    }
+    // TODO: WalkThread for Cubemaps? @rrh
+    /*if (Platform.isEventDispatchThread()) {
+        end = true;
+        data.removeListener(this);
+        StreetsideViewerDialog.getInstance().setMode(StreetsideViewerDialog.MODE.NORMAL);
+      } else {
+        Platform.invokeLater(this::end);
+      }*/
+<span class="nc" id="L245">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

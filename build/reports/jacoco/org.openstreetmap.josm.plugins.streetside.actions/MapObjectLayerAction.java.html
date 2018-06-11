@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MapObjectLayerAction.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.actions</a> &gt; <span class="el_source">MapObjectLayerAction.java</span></div><h1>MapObjectLayerAction.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
+package org.openstreetmap.josm.plugins.streetside.actions;
+
+import java.awt.event.ActionEvent;
+
+import org.openstreetmap.josm.actions.JosmAction;
+import org.openstreetmap.josm.gui.MainApplication;
+import org.openstreetmap.josm.gui.util.GuiHelper;
+import org.openstreetmap.josm.plugins.streetside.StreetsidePlugin;
+import org.openstreetmap.josm.plugins.streetside.gui.layer.MapObjectLayer;
+import org.openstreetmap.josm.tools.I18n;
+import org.openstreetmap.josm.tools.ImageProvider.ImageSizes;
+
+public class MapObjectLayerAction extends JosmAction {
+
+  private static final long serialVersionUID = 302786746122185446L;
+
+
+  public MapObjectLayerAction() {
+<span class="nc" id="L20">    super(</span>
+<span class="nc" id="L21">      I18n.tr(&quot;Mapillary object layer&quot;),</span>
+<span class="nc" id="L22">      StreetsidePlugin.LOGO.setSize(ImageSizes.DEFAULT),</span>
+<span class="nc" id="L23">      I18n.tr(&quot;Displays the layer displaying the map objects detected by the Bing API&quot;),</span>
+      null,
+      false,
+      &quot;streetsideObjectLayer&quot;,
+      false
+    );
+<span class="nc" id="L29">  }</span>
+
+
+  @Override
+  public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L34">    GuiHelper.runInEDTAndWait(() -&gt; {</span>
+      // Synchronization lock must be held by EDT thread
+      // See {@link LayerManager#addLayer(org.openstreetmap.josm.gui.layer.Layer, boolean)}.
+<span class="nc" id="L37">      synchronized (MainApplication.getLayerManager()) {</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">        if (!MainApplication.getLayerManager().containsLayer(MapObjectLayer.getInstance())) {</span>
+<span class="nc" id="L39">          MainApplication.getLayerManager().addLayer(MapObjectLayer.getInstance());</span>
+        }
+<span class="nc" id="L41">      }</span>
+<span class="nc" id="L42">    });</span>
+<span class="nc" id="L43">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

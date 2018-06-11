@@ -1,0 +1,615 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SpotBugs Report</title>
+<style type="text/css">
+		.tablerow0 {
+			background: #EEEEEE;
+		}
+
+		.tablerow1 {
+			background: white;
+		}
+
+		.detailrow0 {
+			background: #EEEEEE;
+		}
+
+		.detailrow1 {
+			background: white;
+		}
+
+		.tableheader {
+			background: #b9b9fe;
+			font-size: larger;
+		}
+
+		.tablerow0:hover, .tablerow1:hover {
+			background: #aaffaa;
+		}
+
+		.priority-1 {
+		    color: red;
+		    font-weight: bold;
+		}
+		.priority-2 {
+		    color: orange;
+		    font-weight: bold;
+		}
+		.priority-3 {
+		    color: green;
+		    font-weight: bold;
+		}
+		.priority-4 {
+		    color: blue;
+		    font-weight: bold;
+		}
+		</style>
+<script type="text/javascript">
+			function toggleRow(elid) {
+				if (document.getElementById) {
+					element = document.getElementById(elid);
+					if (element) {
+						if (element.style.display == 'none') {
+							element.style.display = 'block';
+							//window.status = 'Toggle on!';
+						} else {
+							element.style.display = 'none';
+							//window.status = 'Toggle off!';
+						}
+					}
+				}
+			}
+		</script>
+</head>
+<body>
+<h1>
+<a href="https://spotbugs.github.io/">SpotBugs</a> Report</h1>
+<h2>Project Information</h2>
+<p>Project: 
+		</p>
+<p>SpotBugs version: 3.1.1</p>
+<p>Code analyzed:</p>
+<ul>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/StreetsideLayerTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/oauth/OAuthPortListenerTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/StreetsideDataTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/cache/StreetsideCacheTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/cache/CachesTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/io/download/SequenceDownloadRunnableTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/utils/JsonUtil.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/utils/StreetsideURLTest$APIv3.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/utils/ImageImportUtilTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/utils/ImageUtilTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/utils/StreetsideUtilsTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/utils/TestUtil$StreetsideTestRules.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/utils/api/JsonDecoderTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/utils/api/JsonMapObjectDecoderTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/utils/api/JsonSequencesDecoderTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/utils/api/JsonImageDetailsDecoderTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/utils/api/JsonImageDetectionDecoderTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/utils/api/JsonImageDetailsDecoderTest$StreetsideDataMock.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/utils/api/JsonImageDetailsDecoderTest$1.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/utils/StreetsideURLTest$Cloudfront.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/utils/StreetsidePropertiesTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/utils/PluginStateTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/utils/TestUtil.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/utils/StreetsideColorSchemeTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/utils/StreetsideURLTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/StreetsideSequenceTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/StreetsideAbstractImageTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/gui/ImageDisplayTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/gui/layer/MapObjectLayerTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/gui/StreetsidePreferenceSettingTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/gui/boilerplate/SelectableLabelTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/model/ImageDetectionTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/model/MapObjectTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/history/StreetsideRecordTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/actions/MapObjectLayerActionTest.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/test/org/openstreetmap/josm/plugins/streetside/ImportTest.class</li>
+</ul>
+<p>
+<br/>
+<br/>
+</p>
+<h2>Metrics</h2>
+<p>1319 lines of code analyzed,
+	in 36 classes, 
+	in 12 packages.</p>
+<table width="500" cellpadding="5" cellspacing="2">
+<tr class="tableheader">
+<th align="left">Metric</th>
+<th align="right">Total</th>
+<th align="right">Density*</th>
+</tr>
+<tr class="tablerow0">
+<td>High Priority Warnings</td>
+<td align="right">1</td>
+<td align="right">0.76</td>
+</tr>
+<tr class="tablerow1">
+<td>Medium Priority Warnings</td>
+<td align="right">16</td>
+<td align="right">12.13</td>
+</tr>
+<tr class="tablerow1">
+<td>Low Priority Warnings</td>
+<td align="right">5</td>
+<td align="right">3.79</td>
+</tr>
+<tr class="$totalClass">
+<td>
+<b>Total Warnings</b>
+</td>
+<td align="right">
+<b>22</b>
+</td>
+<td align="right">
+<b>16.68</b>
+</td>
+</tr>
+</table>
+<p>
+<i>(* Defects per Thousand lines of non-commenting source statements)</i>
+</p>
+<p>
+<br/>
+<br/>
+</p>
+<h2>Contents</h2>
+<ul>
+<li>
+<a href="#Warnings_BAD_PRACTICE">Bad practice Warnings</a>
+</li>
+<li>
+<a href="#Warnings_MALICIOUS_CODE">Malicious code vulnerability Warnings</a>
+</li>
+<li>
+<a href="#Warnings_STYLE">Dodgy code Warnings</a>
+</li>
+<li>
+<a href="#Details">Details</a>
+</li>
+</ul>
+<h1>Summary</h1>
+<table width="500" cellpadding="5" cellspacing="2">
+<tr class="tableheader">
+<th align="left">Warning Type</th>
+<th align="right">Number</th>
+</tr>
+<tr class="tablerow0">
+<td>
+<a href="#Warnings_BAD_PRACTICE">Bad practice Warnings</a>
+</td>
+<td align="right">5</td>
+</tr>
+<tr class="tablerow1">
+<td>
+<a href="#Warnings_MALICIOUS_CODE">Malicious code vulnerability Warnings</a>
+</td>
+<td align="right">1</td>
+</tr>
+<tr class="tablerow0">
+<td>
+<a href="#Warnings_STYLE">Dodgy code Warnings</a>
+</td>
+<td align="right">16</td>
+</tr>
+<tr class="tablerow1">
+<td>
+<b>Total</b>
+</td>
+<td align="right">
+<b>22</b>
+</td>
+</tr>
+</table>
+<h1>Warnings</h1>
+<p>Click on a warning row to see full context information.</p>
+<h2>
+<a name="Warnings_BAD_PRACTICE">Bad practice Warnings</a>
+</h2>
+<table class="warningtable" width="100%" cellspacing="0">
+<tr class="tableheader">
+<th align="left">Code</th>
+<th align="left">Warning</th>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N66473');">
+<td>
+<span class="priority-2">OS</span>
+</td>
+<td>org.openstreetmap.josm.plugins.streetside.oauth.OAuthPortListenerTest.responseTest() may fail to close stream</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N66473" style="display: none;">
+<a href="#OS_OPEN_STREAM">Bug type OS_OPEN_STREAM (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.oauth.OAuthPortListenerTest<br/>In method org.openstreetmap.josm.plugins.streetside.oauth.OAuthPortListenerTest.responseTest()<br/>Need to close java.io.Reader <br/>At OAuthPortListenerTest.java:[line 34]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N65706');">
+<td>
+<span class="priority-3">UI</span>
+</td>
+<td>Usage of GetResource in org.openstreetmap.josm.plugins.streetside.ImportTest.importNoTagsTest() may be unsafe if class is extended</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N65706" style="display: none;">
+<a href="#UI_INHERITANCE_UNSAFE_GETRESOURCE">Bug type UI_INHERITANCE_UNSAFE_GETRESOURCE (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.ImportTest<br/>In method org.openstreetmap.josm.plugins.streetside.ImportTest.importNoTagsTest()<br/>At ImportTest.java:[line 34]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N66733');">
+<td>
+<span class="priority-3">UI</span>
+</td>
+<td>Usage of GetResource in org.openstreetmap.josm.plugins.streetside.utils.api.JsonImageDetectionDecoderTest.testDecodeImageDetections() may be unsafe if class is extended</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N66733" style="display: none;">
+<a href="#UI_INHERITANCE_UNSAFE_GETRESOURCE">Bug type UI_INHERITANCE_UNSAFE_GETRESOURCE (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.utils.api.JsonImageDetectionDecoderTest<br/>In method org.openstreetmap.josm.plugins.streetside.utils.api.JsonImageDetectionDecoderTest.testDecodeImageDetections()<br/>At JsonImageDetectionDecoderTest.java:[line 36]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N66786');">
+<td>
+<span class="priority-3">UI</span>
+</td>
+<td>Usage of GetResource in org.openstreetmap.josm.plugins.streetside.utils.api.JsonMapObjectDecoderTest.testDecodeMapObjects() may be unsafe if class is extended</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N66786" style="display: none;">
+<a href="#UI_INHERITANCE_UNSAFE_GETRESOURCE">Bug type UI_INHERITANCE_UNSAFE_GETRESOURCE (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.utils.api.JsonMapObjectDecoderTest<br/>In method org.openstreetmap.josm.plugins.streetside.utils.api.JsonMapObjectDecoderTest.testDecodeMapObjects()<br/>At JsonMapObjectDecoderTest.java:[line 31]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N66890');">
+<td>
+<span class="priority-3">UI</span>
+</td>
+<td>Usage of GetResource in org.openstreetmap.josm.plugins.streetside.utils.api.JsonSequencesDecoderTest.testDecodeSequences() may be unsafe if class is extended</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N66890" style="display: none;">
+<a href="#UI_INHERITANCE_UNSAFE_GETRESOURCE">Bug type UI_INHERITANCE_UNSAFE_GETRESOURCE (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.utils.api.JsonSequencesDecoderTest<br/>In method org.openstreetmap.josm.plugins.streetside.utils.api.JsonSequencesDecoderTest.testDecodeSequences()<br/>At JsonSequencesDecoderTest.java:[line 36]</p>
+</td>
+</tr>
+</table>
+<h2>
+<a name="Warnings_MALICIOUS_CODE">Malicious code vulnerability Warnings</a>
+</h2>
+<table class="warningtable" width="100%" cellspacing="0">
+<tr class="tableheader">
+<th align="left">Code</th>
+<th align="left">Warning</th>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N66657');">
+<td>
+<span class="priority-3">DP</span>
+</td>
+<td>Invocation of reflect.Field.setAccessible(boolean), which should be invoked from within a doPrivileged block, in org.openstreetmap.josm.plugins.streetside.utils.TestUtil.getAccessibleField(Class, String)</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N66657" style="display: none;">
+<a href="#DP_DO_INSIDE_DO_PRIVILEGED">Bug type DP_DO_INSIDE_DO_PRIVILEGED (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.utils.TestUtil<br/>In method org.openstreetmap.josm.plugins.streetside.utils.TestUtil.getAccessibleField(Class, String)<br/>Called method reflect.Field.setAccessible(boolean)<br/>At TestUtil.java:[line 34]<br/>Another occurrence at TestUtil.java:[line 36]</p>
+</td>
+</tr>
+</table>
+<h2>
+<a name="Warnings_STYLE">Dodgy code Warnings</a>
+</h2>
+<table class="warningtable" width="100%" cellspacing="0">
+<tr class="tableheader">
+<th align="left">Code</th>
+<th align="left">Warning</th>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N66218');">
+<td>
+<span class="priority-2">DLS</span>
+</td>
+<td>Dead store to keyField in org.openstreetmap.josm.plugins.streetside.model.MapObjectTest.setUp()</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N66218" style="display: none;">
+<a href="#DLS_DEAD_LOCAL_STORE">Bug type DLS_DEAD_LOCAL_STORE (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.model.MapObjectTest<br/>In method org.openstreetmap.josm.plugins.streetside.model.MapObjectTest.setUp()<br/>Local variable named keyField<br/>At MapObjectTest.java:[line 45]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N66288');">
+<td>
+<span class="priority-2">ST</span>
+</td>
+<td>Write to static field org.openstreetmap.josm.plugins.streetside.model.MapObjectTest.iconUrlGen from instance method org.openstreetmap.josm.plugins.streetside.model.MapObjectTest.setUp()</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N66288" style="display: none;">
+<a href="#ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD">Bug type ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.model.MapObjectTest<br/>In method org.openstreetmap.josm.plugins.streetside.model.MapObjectTest.setUp()<br/>Field org.openstreetmap.josm.plugins.streetside.model.MapObjectTest.iconUrlGen<br/>At MapObjectTest.java:[line 49]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N66355');">
+<td>
+<span class="priority-2">ST</span>
+</td>
+<td>Write to static field org.openstreetmap.josm.plugins.streetside.model.MapObjectTest.iconUrlGenValue from instance method org.openstreetmap.josm.plugins.streetside.model.MapObjectTest.setUp()</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N66355" style="display: none;">
+<a href="#ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD">Bug type ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.model.MapObjectTest<br/>In method org.openstreetmap.josm.plugins.streetside.model.MapObjectTest.setUp()<br/>Field org.openstreetmap.josm.plugins.streetside.model.MapObjectTest.iconUrlGenValue<br/>At MapObjectTest.java:[line 50]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N66539');">
+<td>
+<span class="priority-1">ST</span>
+</td>
+<td>Write to static field org.openstreetmap.josm.Main.main from instance method org.openstreetmap.josm.plugins.streetside.utils.PluginStateTest.uploadTest()</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N66539" style="display: none;">
+<a href="#ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD">Bug type ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.utils.PluginStateTest<br/>In method org.openstreetmap.josm.plugins.streetside.utils.PluginStateTest.uploadTest()<br/>Field org.openstreetmap.josm.Main.main<br/>At PluginStateTest.java:[line 39]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N65912');">
+<td>
+<span class="priority-2">UrF</span>
+</td>
+<td>Unread public/protected field: org.openstreetmap.josm.plugins.streetside.actions.MapObjectLayerActionTest.rules</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N65912" style="display: none;">
+<a href="#URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD">Bug type URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.actions.MapObjectLayerActionTest<br/>Field org.openstreetmap.josm.plugins.streetside.actions.MapObjectLayerActionTest.rules<br/>At MapObjectLayerActionTest.java:[line 17]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N65963');">
+<td>
+<span class="priority-2">UrF</span>
+</td>
+<td>Unread public/protected field: org.openstreetmap.josm.plugins.streetside.cache.StreetsideCacheTest.rules</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N65963" style="display: none;">
+<a href="#URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD">Bug type URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.cache.StreetsideCacheTest<br/>Field org.openstreetmap.josm.plugins.streetside.cache.StreetsideCacheTest.rules<br/>At StreetsideCacheTest.java:[line 19]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N66014');">
+<td>
+<span class="priority-2">UrF</span>
+</td>
+<td>Unread public/protected field: org.openstreetmap.josm.plugins.streetside.gui.ImageDisplayTest.rules</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N66014" style="display: none;">
+<a href="#URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD">Bug type URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.gui.ImageDisplayTest<br/>Field org.openstreetmap.josm.plugins.streetside.gui.ImageDisplayTest.rules<br/>At ImageDisplayTest.java:[line 25]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N66116');">
+<td>
+<span class="priority-2">UrF</span>
+</td>
+<td>Unread public/protected field: org.openstreetmap.josm.plugins.streetside.gui.layer.MapObjectLayerTest.rules</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N66116" style="display: none;">
+<a href="#URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD">Bug type URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.gui.layer.MapObjectLayerTest<br/>Field org.openstreetmap.josm.plugins.streetside.gui.layer.MapObjectLayerTest.rules<br/>At MapObjectLayerTest.java:[line 31]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N66065');">
+<td>
+<span class="priority-2">UrF</span>
+</td>
+<td>Unread public/protected field: org.openstreetmap.josm.plugins.streetside.gui.StreetsidePreferenceSettingTest.rules</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N66065" style="display: none;">
+<a href="#URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD">Bug type URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.gui.StreetsidePreferenceSettingTest<br/>Field org.openstreetmap.josm.plugins.streetside.gui.StreetsidePreferenceSettingTest.rules<br/>At StreetsidePreferenceSettingTest.java:[line 33]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N66167');">
+<td>
+<span class="priority-2">UrF</span>
+</td>
+<td>Unread public/protected field: org.openstreetmap.josm.plugins.streetside.history.StreetsideRecordTest.rules</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N66167" style="display: none;">
+<a href="#URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD">Bug type URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.history.StreetsideRecordTest<br/>Field org.openstreetmap.josm.plugins.streetside.history.StreetsideRecordTest.rules<br/>At StreetsideRecordTest.java:[line 34]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N66422');">
+<td>
+<span class="priority-2">UrF</span>
+</td>
+<td>Unread public/protected field: org.openstreetmap.josm.plugins.streetside.model.MapObjectTest.rules</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N66422" style="display: none;">
+<a href="#URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD">Bug type URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.model.MapObjectTest<br/>Field org.openstreetmap.josm.plugins.streetside.model.MapObjectTest.rules<br/>At MapObjectTest.java:[line 26]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N65759');">
+<td>
+<span class="priority-2">UrF</span>
+</td>
+<td>Unread public/protected field: org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImageTest.rules</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N65759" style="display: none;">
+<a href="#URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD">Bug type URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImageTest<br/>Field org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImageTest.rules<br/>At StreetsideAbstractImageTest.java:[line 22]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N65810');">
+<td>
+<span class="priority-2">UrF</span>
+</td>
+<td>Unread public/protected field: org.openstreetmap.josm.plugins.streetside.StreetsideDataTest.rules</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N65810" style="display: none;">
+<a href="#URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD">Bug type URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.StreetsideDataTest<br/>Field org.openstreetmap.josm.plugins.streetside.StreetsideDataTest.rules<br/>At StreetsideDataTest.java:[line 27]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N65861');">
+<td>
+<span class="priority-2">UrF</span>
+</td>
+<td>Unread public/protected field: org.openstreetmap.josm.plugins.streetside.StreetsideLayerTest.rules</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N65861" style="display: none;">
+<a href="#URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD">Bug type URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.StreetsideLayerTest<br/>Field org.openstreetmap.josm.plugins.streetside.StreetsideLayerTest.rules<br/>At StreetsideLayerTest.java:[line 25]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N66839');">
+<td>
+<span class="priority-2">UrF</span>
+</td>
+<td>Unread public/protected field: org.openstreetmap.josm.plugins.streetside.utils.api.JsonMapObjectDecoderTest.rules</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N66839" style="display: none;">
+<a href="#URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD">Bug type URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.utils.api.JsonMapObjectDecoderTest<br/>Field org.openstreetmap.josm.plugins.streetside.utils.api.JsonMapObjectDecoderTest.rules<br/>At JsonMapObjectDecoderTest.java:[line 26]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N66606');">
+<td>
+<span class="priority-2">UrF</span>
+</td>
+<td>Unread public/protected field: org.openstreetmap.josm.plugins.streetside.utils.StreetsidePropertiesTest.rules</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N66606" style="display: none;">
+<a href="#URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD">Bug type URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.utils.StreetsidePropertiesTest<br/>Field org.openstreetmap.josm.plugins.streetside.utils.StreetsidePropertiesTest.rules<br/>At StreetsidePropertiesTest.java:[line 12]</p>
+</td>
+</tr>
+</table>
+<h1>
+<a name="Details">Details</a>
+</h1>
+<h2>
+<a name="DLS_DEAD_LOCAL_STORE">DLS_DEAD_LOCAL_STORE: Dead store to local variable</a>
+</h2>
+
+<p>
+This instruction assigns a value to a local variable,
+but the value is not read or used in any subsequent instruction.
+Often, this indicates an error, because the value computed is never
+used.
+</p>
+<p>
+Note that Sun's javac compiler often generates dead stores for
+final local variables.  Because SpotBugs is a bytecode-based tool,
+there is no easy way to eliminate these false positives.
+</p>
+
+    
+<h2>
+<a name="DP_DO_INSIDE_DO_PRIVILEGED">DP_DO_INSIDE_DO_PRIVILEGED: Method invoked that should be only be invoked inside a doPrivileged block</a>
+</h2>
+
+  <p> This code invokes a method that requires a security permission check.
+  If this code will be granted security permissions, but might be invoked by code that does not
+  have security permissions, then the invocation needs to occur inside a doPrivileged block.</p>
+
+    
+<h2>
+<a name="OS_OPEN_STREAM">OS_OPEN_STREAM: Method may fail to close stream</a>
+</h2>
+
+<p> The method creates an IO stream object, does not assign it to any
+fields, pass it to other methods that might close it,
+or return it, and does not appear to close
+the stream on all paths out of the method.&nbsp; This may result in
+a file descriptor leak.&nbsp; It is generally a good
+idea to use a <code>finally</code> block to ensure that streams are
+closed.</p>
+
+    
+<h2>
+<a name="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD">ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD: Write to static field from instance method</a>
+</h2>
+
+  <p> This instance method writes to a static field. This is tricky to get
+correct if multiple instances are being manipulated,
+and generally bad practice.
+</p>
+
+    
+<h2>
+<a name="UI_INHERITANCE_UNSAFE_GETRESOURCE">UI_INHERITANCE_UNSAFE_GETRESOURCE: Usage of GetResource may be unsafe if class is extended</a>
+</h2>
+
+<p>Calling <code>this.getClass().getResource(...)</code> could give
+results other than expected if this class is extended by a class in
+another package.</p>
+
+    
+<h2>
+<a name="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD">URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD: Unread public/protected field</a>
+</h2>
+
+  <p> This field is never read.&nbsp;
+The field is public or protected, so perhaps
+    it is intended to be used with classes not seen as part of the analysis. If not,
+consider removing it from the class.</p>
+
+    </body>
+</html>

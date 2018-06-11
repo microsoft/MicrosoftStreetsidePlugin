@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MapObject.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.model</a> &gt; <span class="el_source">MapObject.java</span></div><h1>MapObject.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
+package org.openstreetmap.josm.plugins.streetside.model;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.function.Function;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
+import org.openstreetmap.josm.data.coor.LatLon;
+import org.openstreetmap.josm.plugins.streetside.cache.Caches.MapObjectIconCache;
+import org.openstreetmap.josm.plugins.streetside.utils.StreetsideURL.MainWebsite;
+import org.openstreetmap.josm.tools.ImageProvider;
+import org.openstreetmap.josm.tools.Logging;
+
+public class MapObject extends KeyIndexedObject {
+<span class="fc" id="L18">  private static final ImageIcon ICON_UNKNOWN_TYPE = ImageProvider.get(&quot;unknown-mapobject-type&quot;);</span>
+<span class="fc" id="L19">  private static Function&lt;String, URL&gt; iconUrlGen = MainWebsite::mapObjectIcon;</span>
+
+  private final LatLon coordinate;
+  private final String objPackage;
+  private final String value;
+  private final long firstSeenTime;
+  private final long lastSeenTime;
+  private final long updatedTime;
+
+  public MapObject(
+    final LatLon coordinate, final String key, final String objPackage, final String value,
+    long firstSeenTime, long lastSeenTime, long updatedTime
+  ) {
+<span class="fc" id="L32">    super(key);</span>
+<span class="fc bfc" id="L33" title="All 6 branches covered.">    if (objPackage == null || value == null || coordinate == null) {</span>
+<span class="fc" id="L34">      throw new IllegalArgumentException(&quot;The fields of a MapObject must not be null!&quot;);</span>
+    }
+<span class="fc" id="L36">    this.coordinate = coordinate;</span>
+<span class="fc" id="L37">    this.objPackage = objPackage;</span>
+<span class="fc" id="L38">    this.value = value;</span>
+<span class="fc" id="L39">    this.firstSeenTime = firstSeenTime;</span>
+<span class="fc" id="L40">    this.lastSeenTime = lastSeenTime;</span>
+<span class="fc" id="L41">    this.updatedTime = updatedTime;</span>
+<span class="fc" id="L42">  }</span>
+
+  public LatLon getCoordinate() {
+<span class="fc" id="L45">    return coordinate;</span>
+  }
+
+  /**
+   * @param objectTypeID the {@link String} representing the type of map object. This ID can be retrieved via
+   *   {@link #getValue()} for any given {@link MapObject}.
+   * @return the icon, which represents the given objectTypeID
+   */
+  public static ImageIcon getIcon(final String objectTypeID) {
+<span class="fc" id="L54">    final ImageIcon cachedIcon = MapObjectIconCache.getInstance().get(objectTypeID);</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">    if (&quot;not-in-set&quot;.equals(objectTypeID)) {</span>
+<span class="fc" id="L56">      return ICON_UNKNOWN_TYPE;</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">    } else if (cachedIcon == null) {</span>
+      try {
+<span class="fc" id="L59">        final ImageIcon downloadedIcon = new ImageIcon(ImageIO.read(iconUrlGen.apply(objectTypeID)));</span>
+<span class="fc" id="L60">        MapObjectIconCache.getInstance().put(objectTypeID, downloadedIcon);</span>
+<span class="fc" id="L61">        return downloadedIcon;</span>
+<span class="fc" id="L62">      } catch (IOException e) {</span>
+<span class="fc" id="L63">        Logging.log(Logging.LEVEL_WARN, &quot;Failed to download icon &quot; + objectTypeID, e);</span>
+<span class="fc" id="L64">        return ICON_UNKNOWN_TYPE;</span>
+      }
+    }
+<span class="fc" id="L67">    return cachedIcon;</span>
+  }
+
+  public String getPackage() {
+<span class="fc" id="L71">    return objPackage;</span>
+  }
+
+  public long getFirstSeenTime() {
+<span class="fc" id="L75">    return firstSeenTime;</span>
+  }
+
+  public long getLastSeenTime() {
+<span class="fc" id="L79">    return lastSeenTime;</span>
+  }
+
+  public long getUpdatedTime() {
+<span class="fc" id="L83">    return updatedTime;</span>
+  }
+
+  public String getValue() {
+<span class="fc" id="L87">    return value;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

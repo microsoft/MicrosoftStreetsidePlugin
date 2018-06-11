@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StreetsideRecord.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.history</a> &gt; <span class="el_source">StreetsideRecord.java</span></div><h1>StreetsideRecord.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
+package org.openstreetmap.josm.plugins.streetside.history;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImage;
+
+import org.openstreetmap.josm.plugins.streetside.history.commands.StreetsideCommand;
+import org.openstreetmap.josm.plugins.streetside.history.commands.StreetsideExecutableCommand;
+
+/**
+* History record system in order to let the user undo and redo commands.
+*
+* @author nokutu
+*
+*/
+public class StreetsideRecord {
+/** The unique instance of the class. */
+private static StreetsideRecord instance;
+
+<span class="fc" id="L23">private final List&lt;StreetsideRecordListener&gt; listeners = new ArrayList&lt;&gt;();</span>
+
+/** The set of commands that have taken place or that have been undone. */
+public List&lt;StreetsideCommand&gt; commandList;
+/** Last written command. */
+public int position;
+
+/**
+* Main constructor.
+*/
+<span class="fc" id="L33">public StreetsideRecord() {</span>
+<span class="fc" id="L34"> this.commandList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L35"> this.position = -1;</span>
+<span class="fc" id="L36">}</span>
+
+/**
+* Returns the unique instance of the class.
+*
+* @return The unique instance of the class.
+*/
+public static synchronized StreetsideRecord getInstance() {
+<span class="fc bfc" id="L44" title="All 2 branches covered."> if (StreetsideRecord.instance == null)</span>
+<span class="fc" id="L45">   StreetsideRecord.instance = new StreetsideRecord();</span>
+<span class="fc" id="L46"> return StreetsideRecord.instance;</span>
+}
+
+/**
+* Adds a listener.
+*
+* @param lis
+*          The listener to be added.
+*/
+public void addListener(StreetsideRecordListener lis) {
+<span class="nc" id="L56"> this.listeners.add(lis);</span>
+<span class="nc" id="L57">}</span>
+
+/**
+* Removes the given listener.
+*
+* @param lis
+*          The listener to be removed.
+*/
+public void removeListener(StreetsideRecordListener lis) {
+<span class="nc" id="L66"> this.listeners.remove(lis);</span>
+<span class="nc" id="L67">}</span>
+
+/**
+* Adds a new command to the list.
+*
+* @param command
+*          The command to be added.
+*/
+public void addCommand(final StreetsideCommand command) {
+
+<span class="fc bfc" id="L77" title="All 2 branches covered."> if (command instanceof StreetsideExecutableCommand)</span>
+<span class="fc" id="L78">   ((StreetsideExecutableCommand) command).execute();</span>
+ // Checks if it is a continuation of last command
+<span class="fc bfc" id="L80" title="All 2 branches covered."> if (this.position != -1) {</span>
+<span class="fc" id="L81">   boolean equalSets = true;</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">   for (StreetsideAbstractImage img : this.commandList.get(this.position).images) {</span>
+<span class="fc bfc" id="L83" title="All 4 branches covered.">     equalSets = command.images.contains(img) &amp;&amp; equalSets;</span>
+<span class="fc" id="L84">   }</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">   for (StreetsideAbstractImage img : command.images) {</span>
+<span class="fc bfc" id="L86" title="All 4 branches covered.">     equalSets = this.commandList.get(this.position).images.contains(img) &amp;&amp; equalSets;</span>
+<span class="fc" id="L87">   }</span>
+<span class="pc bpc" id="L88" title="1 of 4 branches missed.">   if (equalSets &amp;&amp; this.commandList.get(this.position).getClass() == command.getClass()) {</span>
+<span class="fc" id="L89">     this.commandList.get(this.position).sum(command);</span>
+<span class="fc" id="L90">     fireRecordChanged();</span>
+<span class="fc" id="L91">     return;</span>
+   }
+ }
+ // Adds the command to the last position of the list.
+<span class="fc" id="L95"> this.commandList.add(this.position + 1, command);</span>
+<span class="fc" id="L96"> this.position++;</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered."> while (this.commandList.size() &gt; this.position + 1) {</span>
+<span class="fc" id="L98">   this.commandList.remove(this.position + 1);</span>
+ }
+<span class="fc" id="L100"> fireRecordChanged();</span>
+<span class="fc" id="L101">}</span>
+
+/**
+* Undo latest command.
+*/
+public void undo() {
+<span class="pc bpc" id="L107" title="1 of 2 branches missed."> if (this.position &lt;= -1) {</span>
+<span class="nc" id="L108">   return;</span>
+ }
+<span class="fc" id="L110"> this.commandList.get(this.position).undo();</span>
+<span class="fc" id="L111"> this.position--;</span>
+<span class="fc" id="L112"> fireRecordChanged();</span>
+<span class="fc" id="L113">}</span>
+
+/**
+* Redoes latest undone action.
+*/
+public void redo() {
+<span class="pc bpc" id="L119" title="1 of 2 branches missed."> if (position + 1 &gt;= commandList.size()) {</span>
+<span class="nc" id="L120">   return;</span>
+ }
+<span class="fc" id="L122"> this.position++;</span>
+<span class="fc" id="L123"> this.commandList.get(this.position).redo();</span>
+<span class="fc" id="L124"> fireRecordChanged();</span>
+<span class="fc" id="L125">}</span>
+
+private void fireRecordChanged() {
+<span class="fc" id="L128"> this.listeners.stream().filter(Objects::nonNull).forEach(StreetsideRecordListener::recordChanged);</span>
+<span class="fc" id="L129">}</span>
+
+/**
+* Resets the object to its start state.
+*/
+public void reset() {
+<span class="fc" id="L135"> this.commandList.clear();</span>
+<span class="fc" id="L136"> this.position = -1;</span>
+<span class="fc" id="L137">}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GraphicsUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.cubemap</a> &gt; <span class="el_source">GraphicsUtils.java</span></div><h1>GraphicsUtils.java</h1><pre class="source lang-java linenums">package org.openstreetmap.josm.plugins.streetside.cubemap;
+
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+
+import org.openstreetmap.josm.plugins.streetside.utils.StreetsideProperties;
+import org.openstreetmap.josm.tools.Logging;
+
+import javafx.application.Platform;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
+
+@SuppressWarnings({ &quot;restriction&quot;})
+<span class="nc" id="L15">public class GraphicsUtils {</span>
+
+	public static javafx.scene.image.Image convertBufferedImage2JavaFXImage(BufferedImage bf) {
+<span class="nc" id="L18">		WritableImage wr = null;</span>
+<span class="nc bnc" id="L19" title="All 2 branches missed.">		if (bf != null) {</span>
+<span class="nc" id="L20">			wr = new WritableImage(bf.getWidth(), bf.getHeight());</span>
+<span class="nc" id="L21">			PixelWriter pw = wr.getPixelWriter();</span>
+<span class="nc bnc" id="L22" title="All 2 branches missed.">			for (int x = 0; x &lt; bf.getWidth(); x++) {</span>
+<span class="nc bnc" id="L23" title="All 2 branches missed.">				for (int y = 0; y &lt; bf.getHeight(); y++) {</span>
+<span class="nc" id="L24">					pw.setArgb(x, y, bf.getRGB(x, y));</span>
+				}
+			}
+		}
+<span class="nc" id="L28">		return wr;</span>
+	}
+
+<span class="nc" id="L31">	public static class PlatformHelper {</span>
+
+        public static void run(Runnable treatment) {
+<span class="nc bnc" id="L34" title="All 2 branches missed.">            if(treatment == null) throw new IllegalArgumentException(&quot;The treatment to perform can not be null&quot;);</span>
+
+<span class="nc bnc" id="L36" title="All 2 branches missed.">            if(Platform.isFxApplicationThread()) treatment.run();</span>
+<span class="nc" id="L37">            else Platform.runLater(treatment);</span>
+<span class="nc" id="L38">        }</span>
+    }
+
+	public static BufferedImage buildMultiTiledCubemapFaceImage(BufferedImage[] tiles) {
+		//TODO:  crop images so that they have a 1 pixel overlap
+		//int pixelBuffer = StreetsideProperties.CUBEFACE_SIZE.get().intValue()==16?2:1;
+<span class="nc" id="L44">		int pixelBuffer = 1;//StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get()?2:1;</span>
+
+<span class="nc" id="L46">		tiles = cropMultiTiledImages(tiles, pixelBuffer);</span>
+
+<span class="nc bnc" id="L48" title="All 2 branches missed.">		int rows = StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get()?4:2; //we assume the no. of rows and cols are known and each chunk has equal width and height</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        int cols = StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get()?4:2;</span>
+
+        int chunkWidth, chunkHeight;
+
+<span class="nc" id="L53">        chunkWidth = tiles[0].getWidth();</span>
+<span class="nc" id="L54">        chunkHeight = tiles[0].getHeight();</span>
+
+        //Initializing the final image
+<span class="nc" id="L57">        BufferedImage res = new BufferedImage(chunkWidth*cols, chunkHeight*rows, BufferedImage.TYPE_INT_ARGB);//type);</span>
+
+<span class="nc" id="L59">        int num = 0;</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">        for (int i = 0; i &lt; rows; i++) {</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">            for (int j = 0; j &lt; cols; j++) {</span>
+<span class="nc" id="L62">                res.createGraphics().drawImage(tiles[num], chunkWidth * j, chunkHeight * i, null);</span>
+<span class="nc" id="L63">                num++;</span>
+            }
+        }
+
+<span class="nc" id="L67">        Logging.info(&quot;Image concatenated.....&quot;);</span>
+
+<span class="nc" id="L69">        return res;</span>
+	}
+
+	public static BufferedImage rotateImage(BufferedImage bufImg) {
+<span class="nc" id="L73">		AffineTransform tx = AffineTransform.getScaleInstance(-1, -1);</span>
+<span class="nc" id="L74">	    tx.translate(-bufImg.getWidth(null), -bufImg.getHeight(null));</span>
+<span class="nc" id="L75">	    AffineTransformOp op = new AffineTransformOp(tx,</span>
+	        AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+<span class="nc" id="L77">	    bufImg = op.filter(bufImg, null);</span>
+<span class="nc" id="L78">	    return bufImg;</span>
+	}
+
+	private static BufferedImage[] cropMultiTiledImages(BufferedImage[] tiles, int pixelBuffer) {
+
+<span class="nc" id="L83">		BufferedImage[] res = new BufferedImage[tiles.length];</span>
+
+<span class="nc bnc" id="L85" title="All 2 branches missed.">			for(int i=0; i&lt;tiles.length;i++) {</span>
+				// TODO: works for 4-tiled but not 16, because of pixelBuffer? @rrh
+				// fix cropping!
+<span class="nc bnc" id="L88" title="All 2 branches missed.">				if(StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get()) {</span>
+<span class="nc" id="L89">					res[i] = tiles[i].getSubimage(0, 0, 255-pixelBuffer, 255-pixelBuffer);</span>
+				} else {
+<span class="nc" id="L91">					res[i] = tiles[i].getSubimage(2, 2, 254-pixelBuffer, 254-pixelBuffer);</span>
+				}
+			}
+<span class="nc" id="L94">		return res;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

@@ -1,0 +1,1848 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SpotBugs Report</title>
+<style type="text/css">
+		.tablerow0 {
+			background: #EEEEEE;
+		}
+
+		.tablerow1 {
+			background: white;
+		}
+
+		.detailrow0 {
+			background: #EEEEEE;
+		}
+
+		.detailrow1 {
+			background: white;
+		}
+
+		.tableheader {
+			background: #b9b9fe;
+			font-size: larger;
+		}
+
+		.tablerow0:hover, .tablerow1:hover {
+			background: #aaffaa;
+		}
+
+		.priority-1 {
+		    color: red;
+		    font-weight: bold;
+		}
+		.priority-2 {
+		    color: orange;
+		    font-weight: bold;
+		}
+		.priority-3 {
+		    color: green;
+		    font-weight: bold;
+		}
+		.priority-4 {
+		    color: blue;
+		    font-weight: bold;
+		}
+		</style>
+<script type="text/javascript">
+			function toggleRow(elid) {
+				if (document.getElementById) {
+					element = document.getElementById(elid);
+					if (element) {
+						if (element.style.display == 'none') {
+							element.style.display = 'block';
+							//window.status = 'Toggle on!';
+						} else {
+							element.style.display = 'none';
+							//window.status = 'Toggle off!';
+						}
+					}
+				}
+			}
+		</script>
+</head>
+<body>
+<h1>
+<a href="https://spotbugs.github.io/">SpotBugs</a> Report</h1>
+<h2>Project Information</h2>
+<p>Project: 
+		</p>
+<p>SpotBugs version: 3.1.1</p>
+<p>Code analyzed:</p>
+<ul>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/StreetsideImage.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/oauth/StreetsideLoginListener.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/oauth/OAuthPortListener.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/oauth/OAuthUtils.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/oauth/StreetsideUser.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/cache/Caches$CacheProxy.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/cache/CacheUtils.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/cache/Caches$UserProfileCache.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/cache/StreetsideCache$Type.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/cache/CacheUtils$IgnoreDownload.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/cache/Caches$CubemapCache.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/cache/CacheUtils$1.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/cache/Caches$MapObjectIconCache.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/cache/CacheUtils$PICTURE.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/cache/StreetsideCache.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/cache/Caches.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/cache/Caches$ImageCache.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/mode/SelectMode.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/mode/JoinMode.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/mode/AbstractMode$SemiautomaticThread.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/mode/AbstractMode.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/mode/AbstractMode$1.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/cubemap/CubemapUtils.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/cubemap/CameraTransformer.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/cubemap/CameraTransformer$RotateOrder.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/cubemap/CubemapUtils$CubefaceType.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/cubemap/CubemapBuilder.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/cubemap/CubemapUtils$CubemapFaces.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/cubemap/ITileDownloadingTaskListener.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/cubemap/CameraTransformer$1.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/cubemap/TileDownloadingTask.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/cubemap/GraphicsUtils$PlatformHelper.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/cubemap/GraphicsUtils.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/io/download/DetectionsDownloadRunnable.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/io/download/StreetsideSquareDownloadRunnable.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/io/download/StreetsideDownloader.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/io/download/MapObjectDownloadRunnable.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/io/download/StreetsideDownloader$DOWNLOAD_MODE.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/io/download/SequenceDownloadRunnable.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/io/download/ImageDetailsDownloadRunnable.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/io/download/BoundsDownloadRunnable.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/io/export/StreetsideExportWriterThread.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/io/export/StreetsideExportDownloadThread.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/io/export/StreetsideExportManager.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/StreetsideSequence.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/StreetsideImage$Rn.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/StreetsideProperties.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/ImageImportUtil.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/ImageImportUtil$ImageFileFilter.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/StreetsideSequenceIdGenerator.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/CubemapBox$CubemapBoxImageType.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/StreetsideColorScheme.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/StreetsideURL.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/StreetsideChangesetListener.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/ImageUtil.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/PluginState.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/ImageImportUtil$1.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/StreetsideURL$APIv3.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/StreetsideURL$VirtualEarth.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/MapViewGeometryUtil.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/StreetsideUtils.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/CubemapBox$3.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/CubemapBox$1.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/api/JsonSequencesDecoder.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/api/JsonImageDetectionDecoder.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/api/JsonStreetsideDecoder.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/api/JsonDecoder.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/api/JsonMapObjectDecoder.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/api/JsonLocationChangesetEncoder.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/api/JsonImageDetailsDecoder.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/api/JsonStreetsideSequencesDecoder.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/CubemapBox.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/StreetsideURL$MainWebsite.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/utils/CubemapBox$2.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/StreetsideLayer$NearestImgToTargetComparator.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/StreetsideAbstractImage.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/StreetsideLayer.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideMainDialog$StopAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideMainDialog$MODE.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideFilterDialog$DownloadCheckBoxAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideHistoryDialog$MouseEventHandler.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideMainDialog$NextPictureAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideFilterDialog$SignChooserAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideHistoryDialog$1.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideFilterDialog$OnlySignsAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/imageinfo/ImageInfoPanel.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/imageinfo/ImageInfoHelpPopup$1.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/imageinfo/AddTagToPrimitiveAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/imageinfo/StreetsideViewerPanel.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/imageinfo/WebLinkAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/imageinfo/StreetsideViewerPanel$1.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/imageinfo/StreetsideViewerHelpPopup.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/imageinfo/ThreeSixtyDegreeViewerPanel$1.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/imageinfo/StreetsideViewerHelpPopup$1.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/imageinfo/ImageInfoHelpPopup.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/imageinfo/ClipboardAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/imageinfo/ThreeSixtyDegreeViewerPanel.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideHistoryDialog$UndoAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideImageDisplay$ImgDisplayMouseListener.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideMainDialog$PauseAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideMainDialog$PreviousPictureAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsidePreferenceSetting.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideChangesetDialog.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideHistoryDialog$UndoRedoSelectionListener.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideMainDialog$BlueAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsidePreferenceSetting$LoginAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideFilterDialog$UpdateAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideFilterDialog$ResetAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideMainDialog$RedAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideHistoryDialog.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/dialog/ChooseGeoImageLayersDialog.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/dialog/ChooseGeoImageLayersDialog$BasicListModel.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/dialog/ChooseGeoImageLayersDialog$GeoImageLayerListCellRenderer.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideFilterDialog.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideMainDialog$1.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/layer/MapObjectLayer.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/layer/MapObjectLayer$STATUS.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideExportDialog$RewriteButtonAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideExportDialog.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideHistoryDialog$RedoAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideImageDisplay.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/boilerplate/SelectableLabel.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/boilerplate/StreetsideButton.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideMainDialog$PlayAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideImageDisplay$1.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsidePreferenceSetting$1.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideViewerDialog.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideMainDialog.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideWalkDialog.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsidePreferenceSetting$LogoutAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideFilterChooseSigns.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/gui/StreetsideImageTreeCellRenderer.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/model/ImageDetection.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/model/MapObject.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/model/KeyIndexedObject.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/model/UserProfile.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/model/SpecialImageArea.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/history/StreetsideRecordListener.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/history/commands/StreetsideExecutableCommand.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/history/commands/CommandImport.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/history/commands/CommandMove.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/history/commands/CommandTurn.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/history/commands/CommandJoin.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/history/commands/StreetsideCommand.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/history/commands/CommandUnjoin.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/history/StreetsideRecord.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/actions/StreetsideDownloadAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/actions/StreetsideSubmitCurrentChangesetAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/actions/WalkThread.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/actions/StreetsideZoomAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/actions/ImageReloadAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/actions/MapObjectLayerAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/actions/StreetsideExportAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/actions/StreetsideJoinAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/actions/WalkListener.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/actions/StreetsideDownloadViewAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/actions/StreetsideWalkAction.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/StreetsideData.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/StreetsideDataListener.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/StreetsideLayer$NearestCbToTargetComparator.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/StreetsideImportedImage.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/StreetsideLocationChangeset.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/StreetsideCubemap.class</li>
+<li>/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/classes/java/main/org/openstreetmap/josm/plugins/streetside/StreetsidePlugin.class</li>
+</ul>
+<p>
+<br/>
+<br/>
+</p>
+<h2>Metrics</h2>
+<p>6831 lines of code analyzed,
+	in 164 classes, 
+	in 18 packages.</p>
+<table width="500" cellpadding="5" cellspacing="2">
+<tr class="tableheader">
+<th align="left">Metric</th>
+<th align="right">Total</th>
+<th align="right">Density*</th>
+</tr>
+<tr class="tablerow0">
+<td>High Priority Warnings</td>
+<td align="right">10</td>
+<td align="right">1.46</td>
+</tr>
+<tr class="tablerow1">
+<td>Medium Priority Warnings</td>
+<td align="right">25</td>
+<td align="right">3.66</td>
+</tr>
+<tr class="tablerow1">
+<td>Low Priority Warnings</td>
+<td align="right">33</td>
+<td align="right">4.83</td>
+</tr>
+<tr class="$totalClass">
+<td>
+<b>Total Warnings</b>
+</td>
+<td align="right">
+<b>68</b>
+</td>
+<td align="right">
+<b>9.95</b>
+</td>
+</tr>
+</table>
+<p>
+<i>(* Defects per Thousand lines of non-commenting source statements)</i>
+</p>
+<p>
+<br/>
+<br/>
+</p>
+<h2>Contents</h2>
+<ul>
+<li>
+<a href="#Warnings_BAD_PRACTICE">Bad practice Warnings</a>
+</li>
+<li>
+<a href="#Warnings_CORRECTNESS">Correctness Warnings</a>
+</li>
+<li>
+<a href="#Warnings_MALICIOUS_CODE">Malicious code vulnerability Warnings</a>
+</li>
+<li>
+<a href="#Warnings_MT_CORRECTNESS">Multithreaded correctness Warnings</a>
+</li>
+<li>
+<a href="#Warnings_PERFORMANCE">Performance Warnings</a>
+</li>
+<li>
+<a href="#Warnings_STYLE">Dodgy code Warnings</a>
+</li>
+<li>
+<a href="#Details">Details</a>
+</li>
+</ul>
+<h1>Summary</h1>
+<table width="500" cellpadding="5" cellspacing="2">
+<tr class="tableheader">
+<th align="left">Warning Type</th>
+<th align="right">Number</th>
+</tr>
+<tr class="tablerow0">
+<td>
+<a href="#Warnings_BAD_PRACTICE">Bad practice Warnings</a>
+</td>
+<td align="right">16</td>
+</tr>
+<tr class="tablerow1">
+<td>
+<a href="#Warnings_CORRECTNESS">Correctness Warnings</a>
+</td>
+<td align="right">2</td>
+</tr>
+<tr class="tablerow0">
+<td>
+<a href="#Warnings_MALICIOUS_CODE">Malicious code vulnerability Warnings</a>
+</td>
+<td align="right">4</td>
+</tr>
+<tr class="tablerow1">
+<td>
+<a href="#Warnings_MT_CORRECTNESS">Multithreaded correctness Warnings</a>
+</td>
+<td align="right">4</td>
+</tr>
+<tr class="tablerow0">
+<td>
+<a href="#Warnings_PERFORMANCE">Performance Warnings</a>
+</td>
+<td align="right">13</td>
+</tr>
+<tr class="tablerow1">
+<td>
+<a href="#Warnings_STYLE">Dodgy code Warnings</a>
+</td>
+<td align="right">29</td>
+</tr>
+<tr class="tablerow0">
+<td>
+<b>Total</b>
+</td>
+<td align="right">
+<b>68</b>
+</td>
+</tr>
+</table>
+<h1>Warnings</h1>
+<p>Click on a warning row to see full context information.</p>
+<h2>
+<a name="Warnings_BAD_PRACTICE">Bad practice Warnings</a>
+</h2>
+<table class="warningtable" width="100%" cellspacing="0">
+<tr class="tableheader">
+<th align="left">Code</th>
+<th align="left">Warning</th>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N66184');">
+<td>
+<span class="priority-2">Eq</span>
+</td>
+<td>org.openstreetmap.josm.plugins.streetside.StreetsideCubemap defines compareTo(Object) and uses Object.equals()</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N66184" style="display: none;">
+<a href="#EQ_COMPARETO_USE_OBJECT_EQUALS">Bug type EQ_COMPARETO_USE_OBJECT_EQUALS (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.StreetsideCubemap<br/>In method org.openstreetmap.josm.plugins.streetside.StreetsideCubemap.compareTo(Object)<br/>At StreetsideCubemap.java:[line 14]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N66237');">
+<td>
+<span class="priority-3">HE</span>
+</td>
+<td>org.openstreetmap.josm.plugins.streetside.StreetsideCubemap defines hashCode and uses Object.equals()</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N66237" style="display: none;">
+<a href="#HE_HASHCODE_USE_OBJECT_EQUALS">Bug type HE_HASHCODE_USE_OBJECT_EQUALS (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.StreetsideCubemap<br/>In method org.openstreetmap.josm.plugins.streetside.StreetsideCubemap.hashCode()<br/>At StreetsideCubemap.java:[line 68]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N66918');">
+<td>
+<span class="priority-2">RV</span>
+</td>
+<td>Exceptional return value of java.io.File.mkdirs() ignored in org.openstreetmap.josm.plugins.streetside.cache.Caches.getCacheDirectory()</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N66918" style="display: none;">
+<a href="#RV_RETURN_VALUE_IGNORED_BAD_PRACTICE">Bug type RV_RETURN_VALUE_IGNORED_BAD_PRACTICE (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.cache.Caches<br/>In method org.openstreetmap.josm.plugins.streetside.cache.Caches.getCacheDirectory()<br/>Called method java.io.File.mkdirs()<br/>At Caches.java:[line 28]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N66734');">
+<td>
+<span class="priority-3">Se</span>
+</td>
+<td>Class org.openstreetmap.josm.plugins.streetside.actions.StreetsideWalkAction defines non-transient non-serializable instance field thread</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N66734" style="display: none;">
+<a href="#SE_BAD_FIELD">Bug type SE_BAD_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.actions.StreetsideWalkAction<br/>Field org.openstreetmap.josm.plugins.streetside.actions.StreetsideWalkAction.thread<br/>Actual type org.openstreetmap.josm.plugins.streetside.actions.WalkThread<br/>In StreetsideWalkAction.java</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N68777');">
+<td>
+<span class="priority-3">Se</span>
+</td>
+<td>Class org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ClipboardAction defines non-transient non-serializable instance field contents</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N68777" style="display: none;">
+<a href="#SE_BAD_FIELD">Bug type SE_BAD_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ClipboardAction<br/>Field org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ClipboardAction.contents<br/>Actual type java.awt.datatransfer.Transferable<br/>In ClipboardAction.java</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N68018');">
+<td>
+<span class="priority-2">Se</span>
+</td>
+<td>Class org.openstreetmap.josm.plugins.streetside.gui.StreetsideHistoryDialog defines non-transient non-serializable instance field map</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N68018" style="display: none;">
+<a href="#SE_BAD_FIELD">Bug type SE_BAD_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.gui.StreetsideHistoryDialog<br/>Field org.openstreetmap.josm.plugins.streetside.gui.StreetsideHistoryDialog.map<br/>Actual type org.openstreetmap.josm.plugins.streetside.history.commands.StreetsideCommand<br/>In StreetsideHistoryDialog.java</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N68164');">
+<td>
+<span class="priority-3">Se</span>
+</td>
+<td>Class org.openstreetmap.josm.plugins.streetside.gui.StreetsideImageDisplay defines non-transient non-serializable instance field detections</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N68164" style="display: none;">
+<a href="#SE_BAD_FIELD">Bug type SE_BAD_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.gui.StreetsideImageDisplay<br/>Field org.openstreetmap.josm.plugins.streetside.gui.StreetsideImageDisplay.detections<br/>Actual type org.openstreetmap.josm.plugins.streetside.model.ImageDetection<br/>In StreetsideImageDisplay.java</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N68224');">
+<td>
+<span class="priority-3">Se</span>
+</td>
+<td>Class org.openstreetmap.josm.plugins.streetside.gui.StreetsideImageDisplay defines non-transient non-serializable instance field image</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N68224" style="display: none;">
+<a href="#SE_BAD_FIELD">Bug type SE_BAD_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.gui.StreetsideImageDisplay<br/>Field org.openstreetmap.josm.plugins.streetside.gui.StreetsideImageDisplay.image<br/>Actual type java.awt.image.BufferedImage<br/>In StreetsideImageDisplay.java</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N68356');">
+<td>
+<span class="priority-3">Se</span>
+</td>
+<td>Class org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog defines non-transient non-serializable instance field image</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N68356" style="display: none;">
+<a href="#SE_BAD_FIELD">Bug type SE_BAD_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog<br/>Field org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog.image<br/>Actual type org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImage<br/>In StreetsideMainDialog.java</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N68416');">
+<td>
+<span class="priority-3">Se</span>
+</td>
+<td>Class org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog defines non-transient non-serializable instance field imageCache</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N68416" style="display: none;">
+<a href="#SE_BAD_FIELD">Bug type SE_BAD_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog<br/>Field org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog.imageCache<br/>Actual type org.openstreetmap.josm.plugins.streetside.cache.StreetsideCache<br/>In StreetsideMainDialog.java</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N68476');">
+<td>
+<span class="priority-3">Se</span>
+</td>
+<td>Class org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog defines non-transient non-serializable instance field thumbnailCache</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N68476" style="display: none;">
+<a href="#SE_BAD_FIELD">Bug type SE_BAD_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog<br/>Field org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog.thumbnailCache<br/>Actual type org.openstreetmap.josm.plugins.streetside.cache.StreetsideCache<br/>In StreetsideMainDialog.java</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N68657');">
+<td>
+<span class="priority-3">Se</span>
+</td>
+<td>Class org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog$PauseAction defines non-transient non-serializable instance field thread</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N68657" style="display: none;">
+<a href="#SE_BAD_FIELD">Bug type SE_BAD_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog$PauseAction<br/>Field org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog$PauseAction.thread<br/>Actual type org.openstreetmap.josm.plugins.streetside.actions.WalkThread<br/>In StreetsideMainDialog.java</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N68717');">
+<td>
+<span class="priority-3">Se</span>
+</td>
+<td>Class org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog$StopAction defines non-transient non-serializable instance field thread</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N68717" style="display: none;">
+<a href="#SE_BAD_FIELD">Bug type SE_BAD_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog$StopAction<br/>Field org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog$StopAction.thread<br/>Actual type org.openstreetmap.josm.plugins.streetside.actions.WalkThread<br/>In StreetsideMainDialog.java</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N69732');">
+<td>
+<span class="priority-1">Se</span>
+</td>
+<td>org.openstreetmap.josm.plugins.streetside.model.UserProfile is Serializable but its superclass doesn't define an accessible void constructor</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N69732" style="display: none;">
+<a href="#SE_NO_SUITABLE_CONSTRUCTOR">Bug type SE_NO_SUITABLE_CONSTRUCTOR (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.model.UserProfile<br/>At UserProfile.java:[lines 16-26]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N66521');">
+<td>
+<span class="priority-3">Se</span>
+</td>
+<td>org.openstreetmap.josm.plugins.streetside.StreetsideLayer$NearestCbToTargetComparator implements Comparator but not Serializable</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N66521" style="display: none;">
+<a href="#SE_COMPARATOR_SHOULD_BE_SERIALIZABLE">Bug type SE_COMPARATOR_SHOULD_BE_SERIALIZABLE (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.StreetsideLayer$NearestCbToTargetComparator<br/>At StreetsideLayer.java:[lines 605-618]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N66556');">
+<td>
+<span class="priority-3">Se</span>
+</td>
+<td>org.openstreetmap.josm.plugins.streetside.StreetsideLayer$NearestImgToTargetComparator implements Comparator but not Serializable</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N66556" style="display: none;">
+<a href="#SE_COMPARATOR_SHOULD_BE_SERIALIZABLE">Bug type SE_COMPARATOR_SHOULD_BE_SERIALIZABLE (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.StreetsideLayer$NearestImgToTargetComparator<br/>At StreetsideLayer.java:[lines 587-600]</p>
+</td>
+</tr>
+</table>
+<h2>
+<a name="Warnings_CORRECTNESS">Correctness Warnings</a>
+</h2>
+<table class="warningtable" width="100%" cellspacing="0">
+<tr class="tableheader">
+<th align="left">Code</th>
+<th align="left">Warning</th>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N66470');">
+<td>
+<span class="priority-3">UwF</span>
+</td>
+<td>Unwritten field: org.openstreetmap.josm.plugins.streetside.StreetsideImage.he</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N66470" style="display: none;">
+<a href="#UWF_UNWRITTEN_FIELD">Bug type UWF_UNWRITTEN_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.StreetsideImage<br/>Field org.openstreetmap.josm.plugins.streetside.StreetsideImage.he<br/>At StreetsideImage.java:[line 125]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N66591');">
+<td>
+<span class="priority-2">UwF</span>
+</td>
+<td>Unwritten field: org.openstreetmap.josm.plugins.streetside.StreetsideSequence.user</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N66591" style="display: none;">
+<a href="#UWF_UNWRITTEN_FIELD">Bug type UWF_UNWRITTEN_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.StreetsideSequence<br/>Field org.openstreetmap.josm.plugins.streetside.StreetsideSequence.user<br/>At StreetsideSequence.java:[line 232]</p>
+</td>
+</tr>
+</table>
+<h2>
+<a name="Warnings_MALICIOUS_CODE">Malicious code vulnerability Warnings</a>
+</h2>
+<table class="warningtable" width="100%" cellspacing="0">
+<tr class="tableheader">
+<th align="left">Code</th>
+<th align="left">Warning</th>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N69767');">
+<td>
+<span class="priority-2">EI</span>
+</td>
+<td>org.openstreetmap.josm.plugins.streetside.utils.CubemapBox.getViews() may expose internal representation by returning CubemapBox.views</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N69767" style="display: none;">
+<a href="#EI_EXPOSE_REP">Bug type EI_EXPOSE_REP (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.utils.CubemapBox<br/>In method org.openstreetmap.josm.plugins.streetside.utils.CubemapBox.getViews()<br/>Field org.openstreetmap.josm.plugins.streetside.utils.CubemapBox.views<br/>At CubemapBox.java:[line 326]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N67697');">
+<td>
+<span class="priority-3">MS</span>
+</td>
+<td>org.openstreetmap.josm.plugins.streetside.cubemap.CubemapUtils.directionConversion isn't final but should be</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N67697" style="display: none;">
+<a href="#MS_SHOULD_BE_FINAL">Bug type MS_SHOULD_BE_FINAL (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.cubemap.CubemapUtils<br/>Field org.openstreetmap.josm.plugins.streetside.cubemap.CubemapUtils.directionConversion<br/>At CubemapUtils.java:[line 64]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N67749');">
+<td>
+<span class="priority-1">MS</span>
+</td>
+<td>org.openstreetmap.josm.plugins.streetside.cubemap.CubemapUtils.rowCol2StreetsideCellAddressMap isn't final but should be refactored to be so</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N67749" style="display: none;">
+<a href="#MS_SHOULD_BE_REFACTORED_TO_BE_FINAL">Bug type MS_SHOULD_BE_REFACTORED_TO_BE_FINAL (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.cubemap.CubemapUtils<br/>Field org.openstreetmap.josm.plugins.streetside.cubemap.CubemapUtils.rowCol2StreetsideCellAddressMap<br/>At CubemapUtils.java:[line 71]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N67966');">
+<td>
+<span class="priority-2">MS</span>
+</td>
+<td>org.openstreetmap.josm.plugins.streetside.gui.StreetsideFilterChooseSigns.SIGN_TAGS should be package protected</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N67966" style="display: none;">
+<a href="#MS_PKGPROTECT">Bug type MS_PKGPROTECT (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.gui.StreetsideFilterChooseSigns<br/>Field org.openstreetmap.josm.plugins.streetside.gui.StreetsideFilterChooseSigns.SIGN_TAGS<br/>At StreetsideFilterChooseSigns.java:[line 54]</p>
+</td>
+</tr>
+</table>
+<h2>
+<a name="Warnings_MT_CORRECTNESS">Multithreaded correctness Warnings</a>
+</h2>
+<table class="warningtable" width="100%" cellspacing="0">
+<tr class="tableheader">
+<th align="left">Code</th>
+<th align="left">Warning</th>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N68284');">
+<td>
+<span class="priority-3">IS</span>
+</td>
+<td>Inconsistent synchronization of org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog.streetsideViewerHelp; locked 50% of time</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N68284" style="display: none;">
+<a href="#IS2_INCONSISTENT_SYNC">Bug type IS2_INCONSISTENT_SYNC (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog<br/>Field org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog.streetsideViewerHelp<br/>Synchronized 50% of the time<br/>Unsynchronized access at StreetsideMainDialog.java:[line 167]<br/>Synchronized access at StreetsideMainDialog.java:[line 160]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N67336');">
+<td>
+<span class="priority-2">LI</span>
+</td>
+<td>Incorrect lazy initialization of static field org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder.instance in org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder.getInstance()</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N67336" style="display: none;">
+<a href="#LI_LAZY_INIT_STATIC">Bug type LI_LAZY_INIT_STATIC (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder<br/>In method org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder.getInstance()<br/>On field org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder.instance<br/>At CubemapBuilder.java:[lines 267-268]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N68589');">
+<td>
+<span class="priority-2">UG</span>
+</td>
+<td>org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog.getStreetsideViewerHelp() is unsynchronized, org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog.setStreetsideViewerHelp(StreetsideViewerHelpPopup) is synchronized</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N68589" style="display: none;">
+<a href="#UG_SYNC_SET_UNSYNC_GET">Bug type UG_SYNC_SET_UNSYNC_GET (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog<br/>In method org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog.getStreetsideViewerHelp()<br/>In method org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog.setStreetsideViewerHelp(StreetsideViewerHelpPopup)<br/>At StreetsideMainDialog.java:[line 167]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N66116');">
+<td>
+<span class="priority-2">UG</span>
+</td>
+<td>org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImage.getCd() is unsynchronized, org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImage.setCd(long) is synchronized</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N66116" style="display: none;">
+<a href="#UG_SYNC_SET_UNSYNC_GET">Bug type UG_SYNC_SET_UNSYNC_GET (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImage<br/>In method org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImage.getCd()<br/>In method org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImage.setCd(long)<br/>At StreetsideAbstractImage.java:[line 112]</p>
+</td>
+</tr>
+</table>
+<h2>
+<a name="Warnings_PERFORMANCE">Performance Warnings</a>
+</h2>
+<table class="warningtable" width="100%" cellspacing="0">
+<tr class="tableheader">
+<th align="left">Code</th>
+<th align="left">Warning</th>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N67083');">
+<td>
+<span class="priority-1">Bx</span>
+</td>
+<td>Primitive boxed just to call toString in org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder.buildCubemapFaces()</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N67083" style="display: none;">
+<a href="#DM_BOXED_PRIMITIVE_TOSTRING">Bug type DM_BOXED_PRIMITIVE_TOSTRING (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder<br/>In method org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder.buildCubemapFaces()<br/>Called method Integer.toString()<br/>Should call Integer.toString(int) instead<br/>At CubemapBuilder.java:[line 192]<br/>Another occurrence at CubemapBuilder.java:[line 222]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N67171');">
+<td>
+<span class="priority-1">Bx</span>
+</td>
+<td>Primitive boxed just to call toString in org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder.downloadCubemapImages(String)</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N67171" style="display: none;">
+<a href="#DM_BOXED_PRIMITIVE_TOSTRING">Bug type DM_BOXED_PRIMITIVE_TOSTRING (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder<br/>In method org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder.downloadCubemapImages(String)<br/>Called method Integer.toString()<br/>Should call Integer.toString(int) instead<br/>At CubemapBuilder.java:[line 89]<br/>Another occurrence at CubemapBuilder.java:[line 112]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N67259');">
+<td>
+<span class="priority-1">Bx</span>
+</td>
+<td>Primitive boxed just to call toString in org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder.tileAdded(String)</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N67259" style="display: none;">
+<a href="#DM_BOXED_PRIMITIVE_TOSTRING">Bug type DM_BOXED_PRIMITIVE_TOSTRING (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder<br/>In method org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder.tileAdded(String)<br/>Called method Integer.toString()<br/>Should call Integer.toString(int) instead<br/>At CubemapBuilder.java:[line 168]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N67620');">
+<td>
+<span class="priority-1">Bx</span>
+</td>
+<td>Boxing/unboxing to parse a primitive org.openstreetmap.josm.plugins.streetside.cubemap.CubemapUtils.convertQuaternary2Decimal(String)</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N67620" style="display: none;">
+<a href="#DM_BOXED_PRIMITIVE_FOR_PARSING">Bug type DM_BOXED_PRIMITIVE_FOR_PARSING (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.cubemap.CubemapUtils<br/>In method org.openstreetmap.josm.plugins.streetside.cubemap.CubemapUtils.convertQuaternary2Decimal(String)<br/>Called method Integer.intValue()<br/>Should call Integer.parseInt(String) instead<br/>At CubemapUtils.java:[line 121]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N69258');">
+<td>
+<span class="priority-1">Bx</span>
+</td>
+<td>Primitive boxed just to call toString in org.openstreetmap.josm.plugins.streetside.io.download.SequenceDownloadRunnable.lambda$run$0(StreetsideImage, List, CubemapUtils$CubemapFaces)</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N69258" style="display: none;">
+<a href="#DM_BOXED_PRIMITIVE_TOSTRING">Bug type DM_BOXED_PRIMITIVE_TOSTRING (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.io.download.SequenceDownloadRunnable<br/>In method org.openstreetmap.josm.plugins.streetside.io.download.SequenceDownloadRunnable.lambda$run$0(StreetsideImage, List, CubemapUtils$CubemapFaces)<br/>Called method Integer.toString()<br/>Should call Integer.toString(int) instead<br/>At SequenceDownloadRunnable.java:[line 127]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N66794');">
+<td>
+<span class="priority-3">UPM</span>
+</td>
+<td>Private method org.openstreetmap.josm.plugins.streetside.actions.WalkThread.preDownloadCubemaps(StreetsideImage, int, CacheUtils$PICTURE) is never called</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N66794" style="display: none;">
+<a href="#UPM_UNCALLED_PRIVATE_METHOD">Bug type UPM_UNCALLED_PRIVATE_METHOD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.actions.WalkThread<br/>In method org.openstreetmap.josm.plugins.streetside.actions.WalkThread.preDownloadCubemaps(StreetsideImage, int, CacheUtils$PICTURE)<br/>At WalkThread.java:[lines 155-169]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N69103');">
+<td>
+<span class="priority-3">UPM</span>
+</td>
+<td>Private method org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ThreeSixtyDegreeViewerPanel.createDefaultScene() is never called</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N69103" style="display: none;">
+<a href="#UPM_UNCALLED_PRIVATE_METHOD">Bug type UPM_UNCALLED_PRIVATE_METHOD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ThreeSixtyDegreeViewerPanel<br/>In method org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ThreeSixtyDegreeViewerPanel.createDefaultScene()<br/>At ThreeSixtyDegreeViewerPanel.java:[lines 235-243]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N67915');">
+<td>
+<span class="priority-2">UrF</span>
+</td>
+<td>Unread field: org.openstreetmap.josm.plugins.streetside.cubemap.TileDownloadingTask.cancelled</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N67915" style="display: none;">
+<a href="#URF_UNREAD_FIELD">Bug type URF_UNREAD_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.cubemap.TileDownloadingTask<br/>Field org.openstreetmap.josm.plugins.streetside.cubemap.TileDownloadingTask.cancelled<br/>At TileDownloadingTask.java:[line 33]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N69156');">
+<td>
+<span class="priority-3">UrF</span>
+</td>
+<td>Unread field: org.openstreetmap.josm.plugins.streetside.io.download.DetectionsDownloadRunnable.data</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N69156" style="display: none;">
+<a href="#URF_UNREAD_FIELD">Bug type URF_UNREAD_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.io.download.DetectionsDownloadRunnable<br/>Field org.openstreetmap.josm.plugins.streetside.io.download.DetectionsDownloadRunnable.data<br/>At DetectionsDownloadRunnable.java:[line 21]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N69207');">
+<td>
+<span class="priority-3">UrF</span>
+</td>
+<td>Unread field: org.openstreetmap.josm.plugins.streetside.io.download.ImageDetailsDownloadRunnable.data</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N69207" style="display: none;">
+<a href="#URF_UNREAD_FIELD">Bug type URF_UNREAD_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.io.download.ImageDetailsDownloadRunnable<br/>Field org.openstreetmap.josm.plugins.streetside.io.download.ImageDetailsDownloadRunnable.data<br/>At ImageDetailsDownloadRunnable.java:[line 29]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N67459');">
+<td>
+<span class="priority-2">UuF</span>
+</td>
+<td>Unused field: org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder.streetsideViewerHelp</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N67459" style="display: none;">
+<a href="#UUF_UNUSED_FIELD">Bug type UUF_UNUSED_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder<br/>Field org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder.streetsideViewerHelp<br/>In CubemapBuilder.java</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N69888');">
+<td>
+<span class="priority-2">UuF</span>
+</td>
+<td>Unused field: org.openstreetmap.josm.plugins.streetside.utils.CubemapBox.convertedImage</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N69888" style="display: none;">
+<a href="#UUF_UNUSED_FIELD">Bug type UUF_UNUSED_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.utils.CubemapBox<br/>Field org.openstreetmap.josm.plugins.streetside.utils.CubemapBox.convertedImage<br/>In CubemapBox.java</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N69935');">
+<td>
+<span class="priority-2">UuF</span>
+</td>
+<td>Unused field: org.openstreetmap.josm.plugins.streetside.utils.CubemapBox.instance</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N69935" style="display: none;">
+<a href="#UUF_UNUSED_FIELD">Bug type UUF_UNUSED_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.utils.CubemapBox<br/>Field org.openstreetmap.josm.plugins.streetside.utils.CubemapBox.instance<br/>In CubemapBox.java</p>
+</td>
+</tr>
+</table>
+<h2>
+<a name="Warnings_STYLE">Dodgy code Warnings</a>
+</h2>
+<table class="warningtable" width="100%" cellspacing="0">
+<tr class="tableheader">
+<th align="left">Code</th>
+<th align="left">Warning</th>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N66988');">
+<td>
+<span class="priority-3">BC</span>
+</td>
+<td>Unchecked/unconfirmed cast from org.openstreetmap.josm.data.cache.CacheEntry to org.openstreetmap.josm.data.cache.BufferedImageCacheEntry in org.openstreetmap.josm.plugins.streetside.cache.StreetsideCache.isObjectLoadable()</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N66988" style="display: none;">
+<a href="#BC_UNCONFIRMED_CAST">Bug type BC_UNCONFIRMED_CAST (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.cache.StreetsideCache<br/>In method org.openstreetmap.josm.plugins.streetside.cache.StreetsideCache.isObjectLoadable()<br/>Actual type org.openstreetmap.josm.data.cache.CacheEntry<br/>Expected org.openstreetmap.josm.data.cache.BufferedImageCacheEntry<br/>Value loaded from field org.openstreetmap.josm.data.cache.JCSCachedTileLoaderJob.cacheData<br/>At StreetsideCache.java:[line 85]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N68078');">
+<td>
+<span class="priority-3">BC</span>
+</td>
+<td>Unchecked/unconfirmed cast from java.awt.Graphics to java.awt.Graphics2D in org.openstreetmap.josm.plugins.streetside.gui.StreetsideImageDisplay.paintComponent(Graphics)</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N68078" style="display: none;">
+<a href="#BC_UNCONFIRMED_CAST">Bug type BC_UNCONFIRMED_CAST (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.gui.StreetsideImageDisplay<br/>In method org.openstreetmap.josm.plugins.streetside.gui.StreetsideImageDisplay.paintComponent(Graphics)<br/>Actual type java.awt.Graphics<br/>Expected java.awt.Graphics2D<br/>Value loaded from g<br/>At StreetsideImageDisplay.java:[line 429]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N67852');">
+<td>
+<span class="priority-2">DB</span>
+</td>
+<td>org.openstreetmap.josm.plugins.streetside.cubemap.GraphicsUtils.cropMultiTiledImages(BufferedImage[], int) uses the same code for two branches</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N67852" style="display: none;">
+<a href="#DB_DUPLICATE_BRANCHES">Bug type DB_DUPLICATE_BRANCHES (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.cubemap.GraphicsUtils<br/>In method org.openstreetmap.josm.plugins.streetside.cubemap.GraphicsUtils.cropMultiTiledImages(BufferedImage[], int)<br/>At GraphicsUtils.java:[line 154]<br/>At GraphicsUtils.java:[line 165]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N69516');">
+<td>
+<span class="priority-2">Eq</span>
+</td>
+<td>org.openstreetmap.josm.plugins.streetside.model.ImageDetection doesn't override KeyIndexedObject.equals(Object)</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N69516" style="display: none;">
+<a href="#EQ_DOESNT_OVERRIDE_EQUALS">Bug type EQ_DOESNT_OVERRIDE_EQUALS (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.model.ImageDetection<br/>At ImageDetection.java:[line 1]<br/>Did you intend to override org.openstreetmap.josm.plugins.streetside.model.KeyIndexedObject.equals(Object)</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N69570');">
+<td>
+<span class="priority-2">Eq</span>
+</td>
+<td>org.openstreetmap.josm.plugins.streetside.model.MapObject doesn't override KeyIndexedObject.equals(Object)</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N69570" style="display: none;">
+<a href="#EQ_DOESNT_OVERRIDE_EQUALS">Bug type EQ_DOESNT_OVERRIDE_EQUALS (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.model.MapObject<br/>At MapObject.java:[line 1]<br/>Did you intend to override org.openstreetmap.josm.plugins.streetside.model.KeyIndexedObject.equals(Object)</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N69624');">
+<td>
+<span class="priority-2">Eq</span>
+</td>
+<td>org.openstreetmap.josm.plugins.streetside.model.SpecialImageArea doesn't override KeyIndexedObject.equals(Object)</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N69624" style="display: none;">
+<a href="#EQ_DOESNT_OVERRIDE_EQUALS">Bug type EQ_DOESNT_OVERRIDE_EQUALS (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.model.SpecialImageArea<br/>At SpecialImageArea.java:[line 1]<br/>Did you intend to override org.openstreetmap.josm.plugins.streetside.model.KeyIndexedObject.equals(Object)</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N69678');">
+<td>
+<span class="priority-2">Eq</span>
+</td>
+<td>org.openstreetmap.josm.plugins.streetside.model.UserProfile doesn't override KeyIndexedObject.equals(Object)</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N69678" style="display: none;">
+<a href="#EQ_DOESNT_OVERRIDE_EQUALS">Bug type EQ_DOESNT_OVERRIDE_EQUALS (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.model.UserProfile<br/>At UserProfile.java:[line 1]<br/>Did you intend to override org.openstreetmap.josm.plugins.streetside.model.KeyIndexedObject.equals(Object)</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N69835');">
+<td>
+<span class="priority-1">FE</span>
+</td>
+<td>Test for floating point equality in org.openstreetmap.josm.plugins.streetside.utils.CubemapBox.loadSingleImageViewports()</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N69835" style="display: none;">
+<a href="#FE_FLOATING_POINT_EQUALITY">Bug type FE_FLOATING_POINT_EQUALITY (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.utils.CubemapBox<br/>In method org.openstreetmap.josm.plugins.streetside.utils.CubemapBox.loadSingleImageViewports()<br/>At CubemapBox.java:[line 212]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N69335');">
+<td>
+<span class="priority-3">NP</span>
+</td>
+<td>Load of known null value in org.openstreetmap.josm.plugins.streetside.io.download.SequenceDownloadRunnable.run(URLConnection)</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N69335" style="display: none;">
+<a href="#NP_LOAD_OF_KNOWN_NULL_VALUE">Bug type NP_LOAD_OF_KNOWN_NULL_VALUE (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.io.download.SequenceDownloadRunnable<br/>In method org.openstreetmap.josm.plugins.streetside.io.download.SequenceDownloadRunnable.run(URLConnection)<br/>Value loaded from previous<br/>At SequenceDownloadRunnable.java:[line 85]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N70036');">
+<td>
+<span class="priority-3">PZLA</span>
+</td>
+<td>Should org.openstreetmap.josm.plugins.streetside.utils.api.JsonDecoder.decodeDoublePair(JsonArray) return a zero length array rather than null?</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N70036" style="display: none;">
+<a href="#PZLA_PREFER_ZERO_LENGTH_ARRAYS">Bug type PZLA_PREFER_ZERO_LENGTH_ARRAYS (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.utils.api.JsonDecoder<br/>In method org.openstreetmap.josm.plugins.streetside.utils.api.JsonDecoder.decodeDoublePair(JsonArray)<br/>At JsonDecoder.java:[line 85]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N70089');">
+<td>
+<span class="priority-3">PZLA</span>
+</td>
+<td>Should org.openstreetmap.josm.plugins.streetside.utils.api.JsonStreetsideDecoder.decodeDoublePair(JsonArray) return a zero length array rather than null?</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N70089" style="display: none;">
+<a href="#PZLA_PREFER_ZERO_LENGTH_ARRAYS">Bug type PZLA_PREFER_ZERO_LENGTH_ARRAYS (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.utils.api.JsonStreetsideDecoder<br/>In method org.openstreetmap.josm.plugins.streetside.utils.api.JsonStreetsideDecoder.decodeDoublePair(JsonArray)<br/>At JsonStreetsideDecoder.java:[line 85]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N66847');">
+<td>
+<span class="priority-2">RCN</span>
+</td>
+<td>Redundant nullcheck of org.openstreetmap.josm.plugins.streetside.StreetsideImage.getId(), which is known to be non-null in org.openstreetmap.josm.plugins.streetside.cache.CacheUtils.downloadPicture(StreetsideImage, CacheUtils$PICTURE)</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N66847" style="display: none;">
+<a href="#RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE">Bug type RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.cache.CacheUtils<br/>In method org.openstreetmap.josm.plugins.streetside.cache.CacheUtils.downloadPicture(StreetsideImage, CacheUtils$PICTURE)<br/>Return value of org.openstreetmap.josm.plugins.streetside.StreetsideImage.getId() of type String<br/>Redundant null check at CacheUtils.java:[line 87]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N70142');">
+<td>
+<span class="priority-3">RCN</span>
+</td>
+<td>Redundant nullcheck of org.openstreetmap.josm.plugins.streetside.StreetsideImage.getId(), which is known to be non-null in org.openstreetmap.josm.plugins.streetside.utils.api.JsonStreetsideSequencesDecoder.decodeBubbleData(StreetsideImage)</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N70142" style="display: none;">
+<a href="#RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE">Bug type RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.utils.api.JsonStreetsideSequencesDecoder<br/>In method org.openstreetmap.josm.plugins.streetside.utils.api.JsonStreetsideSequencesDecoder.decodeBubbleData(StreetsideImage)<br/>Return value of org.openstreetmap.josm.plugins.streetside.StreetsideImage.getId() of type String<br/>Redundant null check at JsonStreetsideSequencesDecoder.java:[line 84]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N67405');">
+<td>
+<span class="priority-3">REC</span>
+</td>
+<td>Exception is caught when Exception is not thrown in org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder.downloadCubemapImages(String)</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N67405" style="display: none;">
+<a href="#REC_CATCH_EXCEPTION">Bug type REC_CATCH_EXCEPTION (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder<br/>In method org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder.downloadCubemapImages(String)<br/>At CubemapBuilder.java:[line 127]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N66290');">
+<td>
+<span class="priority-3">RI</span>
+</td>
+<td>Class org.openstreetmap.josm.plugins.streetside.StreetsideCubemap implements same interface as superclass</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N66290" style="display: none;">
+<a href="#RI_REDUNDANT_INTERFACES">Bug type RI_REDUNDANT_INTERFACES (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.StreetsideCubemap<br/>Interface java.lang.Comparable<br/>At StreetsideCubemap.java:[lines 14-91]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N66642');">
+<td>
+<span class="priority-2">RV</span>
+</td>
+<td>Return value of org.openstreetmap.josm.tools.I18n.marktr(String) ignored, but method has no side effect</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N66642" style="display: none;">
+<a href="#RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT">Bug type RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.actions.StreetsideSubmitCurrentChangesetAction<br/>In method org.openstreetmap.josm.plugins.streetside.actions.StreetsideSubmitCurrentChangesetAction.lambda$actionPerformed$0()<br/>Called method org.openstreetmap.josm.tools.I18n.marktr(String)<br/>At StreetsideSubmitCurrentChangesetAction.java:[line 84]<br/>Another occurrence at StreetsideSubmitCurrentChangesetAction.java:[line 85]<br/>Another occurrence at StreetsideSubmitCurrentChangesetAction.java:[line 86]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N68536');">
+<td>
+<span class="priority-2">SF</span>
+</td>
+<td>Switch statement found in org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog.setMode(StreetsideMainDialog$MODE) where default case is missing</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N68536" style="display: none;">
+<a href="#SF_SWITCH_NO_DEFAULT">Bug type SF_SWITCH_NO_DEFAULT (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog<br/>In method org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog.setMode(StreetsideMainDialog$MODE)<br/>At StreetsideMainDialog.java:[lines 176-178]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N69982');">
+<td>
+<span class="priority-2">SF</span>
+</td>
+<td>Switch statement found in org.openstreetmap.josm.plugins.streetside.utils.StreetsideURL.string2URLs(String, String, String) where one case falls through to the next case</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N69982" style="display: none;">
+<a href="#SF_SWITCH_FALLTHROUGH">Bug type SF_SWITCH_FALLTHROUGH (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.utils.StreetsideURL<br/>In method org.openstreetmap.josm.plugins.streetside.utils.StreetsideURL.string2URLs(String, String, String)<br/>At StreetsideURL.java:[lines 245-264]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N68835');">
+<td>
+<span class="priority-2">ST</span>
+</td>
+<td>Write to static field org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ThreeSixtyDegreeViewerPanel.camera from instance method org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ThreeSixtyDegreeViewerPanel.initialize()</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N68835" style="display: none;">
+<a href="#ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD">Bug type ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ThreeSixtyDegreeViewerPanel<br/>In method org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ThreeSixtyDegreeViewerPanel.initialize()<br/>Field org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ThreeSixtyDegreeViewerPanel.camera<br/>At ThreeSixtyDegreeViewerPanel.java:[line 66]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N68902');">
+<td>
+<span class="priority-2">ST</span>
+</td>
+<td>Write to static field org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ThreeSixtyDegreeViewerPanel.root from instance method org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ThreeSixtyDegreeViewerPanel.initialize()</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N68902" style="display: none;">
+<a href="#ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD">Bug type ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ThreeSixtyDegreeViewerPanel<br/>In method org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ThreeSixtyDegreeViewerPanel.initialize()<br/>Field org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ThreeSixtyDegreeViewerPanel.root<br/>At ThreeSixtyDegreeViewerPanel.java:[line 64]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N68969');">
+<td>
+<span class="priority-3">ST</span>
+</td>
+<td>Write to static field org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ThreeSixtyDegreeViewerPanel.cubemapBox from instance method org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ThreeSixtyDegreeViewerPanel.initialize()</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N68969" style="display: none;">
+<a href="#ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD">Bug type ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ThreeSixtyDegreeViewerPanel<br/>In method org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ThreeSixtyDegreeViewerPanel.initialize()<br/>Field org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ThreeSixtyDegreeViewerPanel.cubemapBox<br/>At ThreeSixtyDegreeViewerPanel.java:[line 87]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N69036');">
+<td>
+<span class="priority-3">ST</span>
+</td>
+<td>Write to static field org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ThreeSixtyDegreeViewerPanel.subGroup from instance method org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ThreeSixtyDegreeViewerPanel.initialize()</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N69036" style="display: none;">
+<a href="#ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD">Bug type ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ThreeSixtyDegreeViewerPanel<br/>In method org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ThreeSixtyDegreeViewerPanel.initialize()<br/>Field org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ThreeSixtyDegreeViewerPanel.subGroup<br/>At ThreeSixtyDegreeViewerPanel.java:[line 89]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N66336');">
+<td>
+<span class="priority-1">ST</span>
+</td>
+<td>Write to static field org.openstreetmap.josm.plugins.streetside.StreetsideCubemap.face2TilesMap from instance method new org.openstreetmap.josm.plugins.streetside.StreetsideCubemap(String, LatLon, double)</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N66336" style="display: none;">
+<a href="#ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD">Bug type ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.StreetsideCubemap<br/>In method new org.openstreetmap.josm.plugins.streetside.StreetsideCubemap(String, LatLon, double)<br/>Field org.openstreetmap.josm.plugins.streetside.StreetsideCubemap.face2TilesMap<br/>At StreetsideCubemap.java:[line 34]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N66403');">
+<td>
+<span class="priority-1">ST</span>
+</td>
+<td>Write to static field org.openstreetmap.josm.plugins.streetside.StreetsideCubemap.face2TilesMap from instance method org.openstreetmap.josm.plugins.streetside.StreetsideCubemap.resetFaces2TileMap()</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N66403" style="display: none;">
+<a href="#ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD">Bug type ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.StreetsideCubemap<br/>In method org.openstreetmap.josm.plugins.streetside.StreetsideCubemap.resetFaces2TileMap()<br/>Field org.openstreetmap.josm.plugins.streetside.StreetsideCubemap.face2TilesMap<br/>At StreetsideCubemap.java:[line 86]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N69396');">
+<td>
+<span class="priority-3">UCF</span>
+</td>
+<td>Useless control flow in org.openstreetmap.josm.plugins.streetside.io.download.SequenceDownloadRunnable.run(URLConnection)</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N69396" style="display: none;">
+<a href="#UCF_USELESS_CONTROL_FLOW">Bug type UCF_USELESS_CONTROL_FLOW (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.io.download.SequenceDownloadRunnable<br/>In method org.openstreetmap.josm.plugins.streetside.io.download.SequenceDownloadRunnable.run(URLConnection)<br/>At SequenceDownloadRunnable.java:[line 85]</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N67801');">
+<td>
+<span class="priority-3">UrF</span>
+</td>
+<td>Unread public/protected field: org.openstreetmap.josm.plugins.streetside.cubemap.CubemapUtils.directionConversion</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N67801" style="display: none;">
+<a href="#URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD">Bug type URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.cubemap.CubemapUtils<br/>Field org.openstreetmap.josm.plugins.streetside.cubemap.CubemapUtils.directionConversion<br/>At CubemapUtils.java:[line 64]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N67506');">
+<td>
+<span class="priority-2">UuF</span>
+</td>
+<td>Unused public or protected field: org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder.cancelled</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N67506" style="display: none;">
+<a href="#UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD">Bug type UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder<br/>Field org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder.cancelled<br/>In CubemapBuilder.java</p>
+</td>
+</tr>
+<tr class="tablerow0" onclick="toggleRow('N67553');">
+<td>
+<span class="priority-3">UwF</span>
+</td>
+<td>CubemapBuilder.cubemap not initialized in constructor and dereferenced in org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder.buildCubemapFaces()</td>
+</tr>
+<tr class="detailrow0">
+<td/>
+<td>
+<p id="N67553" style="display: none;">
+<a href="#UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR">Bug type UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder<br/>Field org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder.cubemap<br/>In method org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder.buildCubemapFaces()<br/>At CubemapBuilder.java:[line 248]</p>
+</td>
+</tr>
+<tr class="tablerow1" onclick="toggleRow('N69449');">
+<td>
+<span class="priority-3">UwF</span>
+</td>
+<td>JoinMode.lastPos not initialized in constructor and dereferenced in org.openstreetmap.josm.plugins.streetside.mode.JoinMode.paint(Graphics2D, MapView, Bounds)</td>
+</tr>
+<tr class="detailrow1">
+<td/>
+<td>
+<p id="N69449" style="display: none;">
+<a href="#UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR">Bug type UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR (click for details)</a>
+<br/>In class org.openstreetmap.josm.plugins.streetside.mode.JoinMode<br/>Field org.openstreetmap.josm.plugins.streetside.mode.JoinMode.lastPos<br/>In method org.openstreetmap.josm.plugins.streetside.mode.JoinMode.paint(Graphics2D, MapView, Bounds)<br/>At JoinMode.java:[line 85]</p>
+</td>
+</tr>
+</table>
+<h1>
+<a name="Details">Details</a>
+</h1>
+<h2>
+<a name="BC_UNCONFIRMED_CAST">BC_UNCONFIRMED_CAST: Unchecked/unconfirmed cast</a>
+</h2>
+
+<p>
+This cast is unchecked, and not all instances of the type casted from can be cast to
+the type it is being cast to. Check that your program logic ensures that this
+cast will not fail.
+</p>
+
+    
+<h2>
+<a name="DM_BOXED_PRIMITIVE_FOR_PARSING">DM_BOXED_PRIMITIVE_FOR_PARSING: Boxing/unboxing to parse a primitive</a>
+</h2>
+
+  <p>A boxed primitive is created from a String, just to extract the unboxed primitive value.
+  It is more efficient to just call the static parseXXX method.</p>
+
+    
+<h2>
+<a name="DM_BOXED_PRIMITIVE_TOSTRING">DM_BOXED_PRIMITIVE_TOSTRING: Method allocates a boxed primitive just to call toString</a>
+</h2>
+
+  <p>A boxed primitive is allocated just to call toString(). It is more effective to just use the static
+  form of toString which takes the primitive value. So,</p>
+  <table>
+     <tr><th>Replace...</th><th>With this...</th></tr>
+     <tr><td>new Integer(1).toString()</td><td>Integer.toString(1)</td></tr>
+     <tr><td>new Long(1).toString()</td><td>Long.toString(1)</td></tr>
+     <tr><td>new Float(1.0).toString()</td><td>Float.toString(1.0)</td></tr>
+     <tr><td>new Double(1.0).toString()</td><td>Double.toString(1.0)</td></tr>
+     <tr><td>new Byte(1).toString()</td><td>Byte.toString(1)</td></tr>
+     <tr><td>new Short(1).toString()</td><td>Short.toString(1)</td></tr>
+     <tr><td>new Boolean(true).toString()</td><td>Boolean.toString(true)</td></tr>
+  </table>
+
+    
+<h2>
+<a name="DB_DUPLICATE_BRANCHES">DB_DUPLICATE_BRANCHES: Method uses the same code for two branches</a>
+</h2>
+      
+      <p>
+      This method uses the same code to implement two branches of a conditional branch.
+    Check to ensure that this isn't a coding mistake.
+      </p>
+      
+   
+<h2>
+<a name="EI_EXPOSE_REP">EI_EXPOSE_REP: May expose internal representation by returning reference to mutable object</a>
+</h2>
+
+  <p> Returning a reference to a mutable object value stored in one of the object's fields
+  exposes the internal representation of the object.&nbsp;
+   If instances
+   are accessed by untrusted code, and unchecked changes to
+   the mutable object would compromise security or other
+   important properties, you will need to do something different.
+  Returning a new copy of the object is better approach in many situations.</p>
+
+    
+<h2>
+<a name="EQ_COMPARETO_USE_OBJECT_EQUALS">EQ_COMPARETO_USE_OBJECT_EQUALS: Class defines compareTo(...) and uses Object.equals()</a>
+</h2>
+
+  <p> This class defines a <code>compareTo(...)</code> method but inherits its
+  <code>equals()</code> method from <code>java.lang.Object</code>.
+    Generally, the value of compareTo should return zero if and only if
+    equals returns true. If this is violated, weird and unpredictable
+    failures will occur in classes such as PriorityQueue.
+    In Java 5 the PriorityQueue.remove method uses the compareTo method,
+    while in Java 6 it uses the equals method.</p>
+
+<p>From the JavaDoc for the compareTo method in the Comparable interface:
+<blockquote>
+It is strongly recommended, but not strictly required that <code>(x.compareTo(y)==0) == (x.equals(y))</code>.
+Generally speaking, any class that implements the Comparable interface and violates this condition
+should clearly indicate this fact. The recommended language
+is "Note: this class has a natural ordering that is inconsistent with equals."
+</blockquote></p>
+
+    
+<h2>
+<a name="EQ_DOESNT_OVERRIDE_EQUALS">EQ_DOESNT_OVERRIDE_EQUALS: Class doesn't override equals in superclass</a>
+</h2>
+
+  <p> This class extends a class that defines an equals method and adds fields, but doesn't
+define an equals method itself. Thus, equality on instances of this class will
+ignore the identity of the subclass and the added fields. Be sure this is what is intended,
+and that you don't need to override the equals method. Even if you don't need to override
+the equals method, consider overriding it anyway to document the fact
+that the equals method for the subclass just return the result of
+invoking super.equals(o).
+  </p>
+
+    
+<h2>
+<a name="FE_FLOATING_POINT_EQUALITY">FE_FLOATING_POINT_EQUALITY: Test for floating point equality</a>
+</h2>
+   
+    <p>
+    This operation compares two floating point values for equality.
+    Because floating point calculations may involve rounding,
+   calculated float and double values may not be accurate.
+    For values that must be precise, such as monetary values,
+   consider using a fixed-precision type such as BigDecimal.
+    For values that need not be precise, consider comparing for equality
+    within some range, for example:
+    <code>if ( Math.abs(x - y) &lt; .0000001 )</code>.
+   See the Java Language Specification, section 4.2.4.
+    </p>
+    
+     
+<h2>
+<a name="HE_HASHCODE_USE_OBJECT_EQUALS">HE_HASHCODE_USE_OBJECT_EQUALS: Class defines hashCode() and uses Object.equals()</a>
+</h2>
+
+  <p> This class defines a <code>hashCode()</code> method but inherits its
+  <code>equals()</code> method from <code>java.lang.Object</code>
+  (which defines equality by comparing object references).&nbsp; Although
+  this will probably satisfy the contract that equal objects must have
+  equal hashcodes, it is probably not what was intended by overriding
+  the <code>hashCode()</code> method.&nbsp; (Overriding <code>hashCode()</code>
+  implies that the object's identity is based on criteria more complicated
+  than simple reference equality.)</p>
+<p>If you don't think instances of this class will ever be inserted into a HashMap/HashTable,
+the recommended <code>hashCode</code> implementation to use is:</p>
+<pre><code>public int hashCode() {
+    assert false : "hashCode not designed";
+    return 42; // any arbitrary constant will do
+}
+</code></pre>
+
+    
+<h2>
+<a name="IS2_INCONSISTENT_SYNC">IS2_INCONSISTENT_SYNC: Inconsistent synchronization</a>
+</h2>
+
+  <p> The fields of this class appear to be accessed inconsistently with respect
+  to synchronization.&nbsp; This bug report indicates that the bug pattern detector
+  judged that
+  </p>
+  <ul>
+  <li> The class contains a mix of locked and unlocked accesses,</li>
+  <li> The class is <b>not</b> annotated as javax.annotation.concurrent.NotThreadSafe,</li>
+  <li> At least one locked access was performed by one of the class's own methods, and</li>
+  <li> The number of unsynchronized field accesses (reads and writes) was no more than
+       one third of all accesses, with writes being weighed twice as high as reads</li>
+  </ul>
+
+  <p> A typical bug matching this bug pattern is forgetting to synchronize
+  one of the methods in a class that is intended to be thread-safe.</p>
+
+  <p> You can select the nodes labeled "Unsynchronized access" to show the
+  code locations where the detector believed that a field was accessed
+  without synchronization.</p>
+
+  <p> Note that there are various sources of inaccuracy in this detector;
+  for example, the detector cannot statically detect all situations in which
+  a lock is held.&nbsp; Also, even when the detector is accurate in
+  distinguishing locked vs. unlocked accesses, the code in question may still
+  be correct.</p>
+
+
+    
+<h2>
+<a name="LI_LAZY_INIT_STATIC">LI_LAZY_INIT_STATIC: Incorrect lazy initialization of static field</a>
+</h2>
+
+<p> This method contains an unsynchronized lazy initialization of a non-volatile static field.
+Because the compiler or processor may reorder instructions,
+threads are not guaranteed to see a completely initialized object,
+<em>if the method can be called by multiple threads</em>.
+You can make the field volatile to correct the problem.
+For more information, see the
+<a href="http://www.cs.umd.edu/~pugh/java/memoryModel/">Java Memory Model web site</a>.
+</p>
+
+    
+<h2>
+<a name="MS_SHOULD_BE_FINAL">MS_SHOULD_BE_FINAL: Field isn't final but should be</a>
+</h2>
+
+   <p>
+This static field public but not final, and
+could be changed by malicious code or
+        by accident from another package.
+        The field could be made final to avoid
+        this vulnerability.</p>
+
+    
+<h2>
+<a name="MS_SHOULD_BE_REFACTORED_TO_BE_FINAL">MS_SHOULD_BE_REFACTORED_TO_BE_FINAL: Field isn't final but should be refactored to be so</a>
+</h2>
+
+   <p>
+This static field public but not final, and
+could be changed by malicious code or
+by accident from another package.
+The field could be made final to avoid
+this vulnerability. However, the static initializer contains more than one write
+to the field, so doing so will require some refactoring.
+</p>
+
+    
+<h2>
+<a name="MS_PKGPROTECT">MS_PKGPROTECT: Field should be package protected</a>
+</h2>
+
+  <p> A mutable static field could be changed by malicious code or
+   by accident.
+   The field could be made package protected to avoid
+   this vulnerability.</p>
+
+    
+<h2>
+<a name="NP_LOAD_OF_KNOWN_NULL_VALUE">NP_LOAD_OF_KNOWN_NULL_VALUE: Load of known null value</a>
+</h2>
+
+  <p> The variable referenced at this point is known to be null due to an earlier
+   check against null. Although this is valid, it might be a mistake (perhaps you
+intended to refer to a different variable, or perhaps the earlier check to see if the
+variable is null should have been a check to see if it was non-null).
+</p>
+
+    
+<h2>
+<a name="PZLA_PREFER_ZERO_LENGTH_ARRAYS">PZLA_PREFER_ZERO_LENGTH_ARRAYS: Consider returning a zero length array rather than null</a>
+</h2>
+
+<p> It is often a better design to
+return a length zero array rather than a null reference to indicate that there
+are no results (i.e., an empty list of results).
+This way, no explicit check for null is needed by clients of the method.</p>
+
+<p>On the other hand, using null to indicate
+"there is no answer to this question" is probably appropriate.
+For example, <code>File.listFiles()</code> returns an empty list
+if given a directory containing no files, and returns null if the file
+is not a directory.</p>
+
+    
+<h2>
+<a name="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE">RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE: Redundant nullcheck of value known to be non-null</a>
+</h2>
+
+<p> This method contains a redundant check of a known non-null value against
+the constant null.</p>
+
+    
+<h2>
+<a name="REC_CATCH_EXCEPTION">REC_CATCH_EXCEPTION: Exception is caught when Exception is not thrown</a>
+</h2>
+  
+  <p>
+  This method uses a try-catch block that catches Exception objects, but Exception is not
+  thrown within the try block, and RuntimeException is not explicitly caught.  It is a common bug pattern to
+  say try { ... } catch (Exception e) { something } as a shorthand for catching a number of types of exception
+  each of whose catch blocks is identical, but this construct also accidentally catches RuntimeException as well,
+  masking potential bugs.
+  </p>
+  <p>A better approach is to either explicitly catch the specific exceptions that are thrown,
+  or to explicitly catch RuntimeException exception, rethrow it, and then catch all non-Runtime Exceptions, as shown below:</p>
+<pre><code>try {
+    ...
+} catch (RuntimeException e) {
+    throw e;
+} catch (Exception e) {
+    ... deal with all non-runtime exceptions ...
+}
+</code></pre>
+  
+     
+<h2>
+<a name="RI_REDUNDANT_INTERFACES">RI_REDUNDANT_INTERFACES: Class implements same interface as superclass</a>
+</h2>
+   
+    <p>
+    This class declares that it implements an interface that is also implemented by a superclass.
+    This is redundant because once a superclass implements an interface, all subclasses by default also
+    implement this interface. It may point out that the inheritance hierarchy has changed since
+    this class was created, and consideration should be given to the ownership of
+    the interface's implementation.
+    </p>
+    
+     
+<h2>
+<a name="RV_RETURN_VALUE_IGNORED_BAD_PRACTICE">RV_RETURN_VALUE_IGNORED_BAD_PRACTICE: Method ignores exceptional return value</a>
+</h2>
+
+   <p> This method returns a value that is not checked. The return value should be checked
+since it can indicate an unusual or unexpected function execution. For
+example, the <code>File.delete()</code> method returns false
+if the file could not be successfully deleted (rather than
+throwing an Exception).
+If you don't check the result, you won't notice if the method invocation
+signals unexpected behavior by returning an atypical return value.
+</p>
+
+    
+<h2>
+<a name="RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT">RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT: Return value of method without side effect is ignored</a>
+</h2>
+
+<p>This code calls a method and ignores the return value. However our analysis shows that
+the method (including its implementations in subclasses if any) does not produce any effect
+other than return value. Thus this call can be removed.
+</p>
+<p>We are trying to reduce the false positives as much as possible, but in some cases this warning might be wrong.
+Common false-positive cases include:</p>
+<p>- The method is designed to be overridden and produce a side effect in other projects which are out of the scope of the analysis.</p>
+<p>- The method is called to trigger the class loading which may have a side effect.</p>
+<p>- The method is called just to get some exception.</p>
+<p>If you feel that our assumption is incorrect, you can use a @CheckReturnValue annotation
+to instruct SpotBugs that ignoring the return value of this method is acceptable.
+</p>
+
+    
+<h2>
+<a name="SE_NO_SUITABLE_CONSTRUCTOR">SE_NO_SUITABLE_CONSTRUCTOR: Class is Serializable but its superclass doesn't define a void constructor</a>
+</h2>
+
+  <p> This class implements the <code>Serializable</code> interface
+   and its superclass does not. When such an object is deserialized,
+   the fields of the superclass need to be initialized by
+   invoking the void constructor of the superclass.
+   Since the superclass does not have one,
+   serialization and deserialization will fail at runtime.</p>
+
+    
+<h2>
+<a name="SE_COMPARATOR_SHOULD_BE_SERIALIZABLE">SE_COMPARATOR_SHOULD_BE_SERIALIZABLE: Comparator doesn't implement Serializable</a>
+</h2>
+
+  <p> This class implements the <code>Comparator</code> interface. You
+should consider whether or not it should also implement the <code>Serializable</code>
+interface. If a comparator is used to construct an ordered collection
+such as a <code>TreeMap</code>, then the <code>TreeMap</code>
+will be serializable only if the comparator is also serializable.
+As most comparators have little or no state, making them serializable
+is generally easy and good defensive programming.
+</p>
+
+    
+<h2>
+<a name="SE_BAD_FIELD">SE_BAD_FIELD: Non-transient non-serializable instance field in serializable class</a>
+</h2>
+
+<p> This Serializable class defines a non-primitive instance field which is neither transient,
+Serializable, or <code>java.lang.Object</code>, and does not appear to implement
+the <code>Externalizable</code> interface or the
+<code>readObject()</code> and <code>writeObject()</code> methods.&nbsp;
+Objects of this class will not be deserialized correctly if a non-Serializable
+object is stored in this field.</p>
+
+    
+<h2>
+<a name="SF_SWITCH_NO_DEFAULT">SF_SWITCH_NO_DEFAULT: Switch statement found where default case is missing</a>
+</h2>
+
+  <p> This method contains a switch statement where default case is missing.
+  Usually you need to provide a default case.</p>
+  <p>Because the analysis only looks at the generated bytecode, this warning can be incorrect triggered if
+the default case is at the end of the switch statement and the switch statement doesn't contain break statements for other
+cases.
+
+    
+<h2>
+<a name="SF_SWITCH_FALLTHROUGH">SF_SWITCH_FALLTHROUGH: Switch statement found where one case falls through to the next case</a>
+</h2>
+
+  <p> This method contains a switch statement where one case branch will fall through to the next case.
+  Usually you need to end this case with a break or return.</p>
+
+    
+<h2>
+<a name="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD">ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD: Write to static field from instance method</a>
+</h2>
+
+  <p> This instance method writes to a static field. This is tricky to get
+correct if multiple instances are being manipulated,
+and generally bad practice.
+</p>
+
+    
+<h2>
+<a name="UCF_USELESS_CONTROL_FLOW">UCF_USELESS_CONTROL_FLOW: Useless control flow</a>
+</h2>
+
+<p> This method contains a useless control flow statement, where
+control flow continues onto the same place regardless of whether or not
+the branch is taken. For example,
+this is caused by having an empty statement
+block for an <code>if</code> statement:</p>
+<pre><code>if (argv.length == 0) {
+    // TODO: handle this case
+}
+</code></pre>
+
+    
+<h2>
+<a name="UG_SYNC_SET_UNSYNC_GET">UG_SYNC_SET_UNSYNC_GET: Unsynchronized get method, synchronized set method</a>
+</h2>
+
+  <p> This class contains similarly-named get and set
+  methods where the set method is synchronized and the get method is not.&nbsp;
+  This may result in incorrect behavior at runtime, as callers of the get
+  method will not necessarily see a consistent state for the object.&nbsp;
+  The get method should be made synchronized.</p>
+
+    
+<h2>
+<a name="UPM_UNCALLED_PRIVATE_METHOD">UPM_UNCALLED_PRIVATE_METHOD: Private method is never called</a>
+</h2>
+
+<p> This private method is never called. Although it is
+possible that the method will be invoked through reflection,
+it is more likely that the method is never used, and should be
+removed.
+</p>
+
+
+<h2>
+<a name="URF_UNREAD_FIELD">URF_UNREAD_FIELD: Unread field</a>
+</h2>
+
+  <p> This field is never read.&nbsp; Consider removing it from the class.</p>
+
+    
+<h2>
+<a name="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD">URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD: Unread public/protected field</a>
+</h2>
+
+  <p> This field is never read.&nbsp;
+The field is public or protected, so perhaps
+    it is intended to be used with classes not seen as part of the analysis. If not,
+consider removing it from the class.</p>
+
+    
+<h2>
+<a name="UUF_UNUSED_FIELD">UUF_UNUSED_FIELD: Unused field</a>
+</h2>
+
+  <p> This field is never used.&nbsp; Consider removing it from the class.</p>
+
+    
+<h2>
+<a name="UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD">UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD: Unused public or protected field</a>
+</h2>
+
+  <p> This field is never used.&nbsp;
+The field is public or protected, so perhaps
+    it is intended to be used with classes not seen as part of the analysis. If not,
+consider removing it from the class.</p>
+
+    
+<h2>
+<a name="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR">UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR: Field not initialized in constructor but dereferenced without null check</a>
+</h2>
+
+  <p> This field is never initialized within any constructor, and is therefore could be null after
+the object is constructed. Elsewhere, it is loaded and dereferenced without a null check.
+This could be a either an error or a questionable design, since
+it means a null pointer exception will be generated if that field is dereferenced
+before being initialized.
+</p>
+
+    
+<h2>
+<a name="UWF_UNWRITTEN_FIELD">UWF_UNWRITTEN_FIELD: Unwritten field</a>
+</h2>
+
+  <p> This field is never written.&nbsp; All reads of it will return the default
+value. Check for errors (should it have been initialized?), or remove it if it is useless.</p>
+
+    </body>
+</html>

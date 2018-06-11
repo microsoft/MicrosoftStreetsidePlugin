@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandTurn.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.history.commands</a> &gt; <span class="el_source">CommandTurn.java</span></div><h1>CommandTurn.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
+package org.openstreetmap.josm.plugins.streetside.history.commands;
+
+import static org.openstreetmap.josm.tools.I18n.trn;
+
+import java.util.Set;
+
+import org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImage;
+import org.openstreetmap.josm.plugins.streetside.StreetsideLayer;
+
+/**
+ * Command created when an image's direction is changed.
+ *
+ * @author nokutu
+ *
+ */
+public class CommandTurn extends StreetsideCommand {
+  private double ca;
+
+  /**
+   * Main constructor.
+   *
+   * @param images
+   *          Set of images that is turned.
+   * @param cd
+   *          How much the images turn.
+   */
+  public CommandTurn(Set&lt;StreetsideAbstractImage&gt; images, double ca) {
+<span class="fc" id="L29">    super(images);</span>
+<span class="fc" id="L30">    this.ca = ca;</span>
+<span class="fc" id="L31">  }</span>
+
+  @Override
+  public void undo() {
+<span class="fc bfc" id="L35" title="All 2 branches covered.">    for (StreetsideAbstractImage image : this.images) {</span>
+<span class="fc" id="L36">      image.turn(-this.ca);</span>
+<span class="fc" id="L37">      image.stopMoving();</span>
+<span class="fc" id="L38">    }</span>
+<span class="fc" id="L39">    StreetsideLayer.invalidateInstance();</span>
+<span class="fc" id="L40">  }</span>
+
+  @Override
+  public void redo() {
+<span class="fc bfc" id="L44" title="All 2 branches covered.">    for (StreetsideAbstractImage image : this.images) {</span>
+<span class="fc" id="L45">      image.turn(this.ca);</span>
+<span class="fc" id="L46">      image.stopMoving();</span>
+<span class="fc" id="L47">    }</span>
+<span class="fc" id="L48">    StreetsideLayer.invalidateInstance();</span>
+<span class="fc" id="L49">  }</span>
+
+  @Override
+  public String toString() {
+    // TODO: trn( RRH
+<span class="nc" id="L54">    return trn(&quot;Turned {0} image&quot;, &quot;Turned {0} images&quot;, this.images.size(),</span>
+<span class="nc" id="L55">        this.images.size());</span>
+  }
+
+  @Override
+  public void sum(StreetsideCommand command) {
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">    if (command instanceof CommandTurn) {</span>
+<span class="fc" id="L61">      this.ca += ((CommandTurn) command).ca;</span>
+    }
+<span class="fc" id="L63">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

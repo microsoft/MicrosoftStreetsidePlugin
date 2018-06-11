@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StreetsideData.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside</a> &gt; <span class="el_source">StreetsideData.java</span></div><h1>StreetsideData.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
+package org.openstreetmap.josm.plugins.streetside;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
+
+import org.apache.commons.jcs.access.CacheAccess;
+import org.openstreetmap.josm.Main;
+import org.openstreetmap.josm.data.Bounds;
+import org.openstreetmap.josm.data.cache.BufferedImageCacheEntry;
+import org.openstreetmap.josm.gui.MainApplication;
+import org.openstreetmap.josm.gui.MapView;
+import org.openstreetmap.josm.plugins.streetside.cache.CacheUtils;
+import org.openstreetmap.josm.plugins.streetside.cache.Caches;
+import org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder;
+import org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog;
+import org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ImageInfoPanel;
+import org.openstreetmap.josm.plugins.streetside.utils.StreetsideProperties;
+
+/**
+ * Database class for all the {@link StreetsideAbstractImage} objects.
+ *
+ * @author nokutu
+ * @author renerr18 (extended for Streetside)
+ * @see StreetsideAbstractImage
+ * @see StreetsideSequence
+ */
+public class StreetsideData {
+<span class="nc" id="L35">  private final Set&lt;StreetsideAbstractImage&gt; images = ConcurrentHashMap.newKeySet();</span>
+  /**
+   * The image currently selected, this is the one being shown.
+   */
+  private StreetsideAbstractImage selectedImage;
+  /**
+   * The image under the cursor.
+   */
+  private StreetsideAbstractImage highlightedImage;
+  /**
+   * All the images selected, can be more than one.
+   */
+<span class="nc" id="L47">  private final Set&lt;StreetsideAbstractImage&gt; multiSelectedImages = ConcurrentHashMap.newKeySet();</span>
+  /**
+   * Listeners of the class.
+   */
+<span class="nc" id="L51">  private final List&lt;StreetsideDataListener&gt; listeners = new CopyOnWriteArrayList&lt;&gt;();</span>
+  /**
+   * The bounds of the areas for which the pictures have been downloaded.
+   */
+  private final List&lt;Bounds&gt; bounds;
+
+  /**
+   * Creates a new object and adds the initial set of listeners.
+   */
+<span class="nc" id="L60">  protected StreetsideData() {</span>
+<span class="nc" id="L61">    selectedImage = null;</span>
+<span class="nc" id="L62">    bounds = new CopyOnWriteArrayList&lt;&gt;();</span>
+
+ // Adds the basic set of listeners.
+<span class="nc" id="L65">    Arrays.stream(StreetsidePlugin.getStreetsideDataListeners()).forEach(this::addListener);</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">    if (Main.main != null) {</span>
+<span class="nc" id="L67">      addListener(StreetsideMainDialog.getInstance());</span>
+<span class="nc" id="L68">      addListener(ImageInfoPanel.getInstance());</span>
+    }
+<span class="nc" id="L70">  }</span>
+
+  /**
+   * Adds an StreetsideImage to the object, and then repaints mapView.
+   *
+   * @param image The image to be added.
+   */
+  public void add(StreetsideAbstractImage image) {
+<span class="nc" id="L78">    add(image, true);</span>
+<span class="nc" id="L79">  }</span>
+
+  /**
+   * Adds a StreetsideImage to the object, but doesn't repaint mapView. This is
+   * needed for concurrency.
+   *
+   * @param image  The image to be added.
+   * @param update Whether the map must be updated or not.
+   * @throws NullPointerException if parameter &lt;code&gt;image&lt;/code&gt; is &lt;code&gt;null&lt;/code&gt;
+   */
+  public void add(StreetsideAbstractImage image, boolean update) {
+<span class="nc" id="L90">    	images.add(image);</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">    	if (update) {</span>
+<span class="nc" id="L92">    		StreetsideLayer.invalidateInstance();</span>
+    	}
+<span class="nc" id="L94">    	fireImagesAdded();</span>
+<span class="nc" id="L95">  }</span>
+
+  /**
+   * Adds a set of StreetsideImages to the object, and then repaints mapView.
+   *
+   * @param images The set of images to be added.
+   */
+  public void addAll(Collection&lt;? extends StreetsideAbstractImage&gt; images) {
+<span class="nc" id="L103">    addAll(images, true);</span>
+<span class="nc" id="L104">  }</span>
+
+  /**
+   * Adds a set of {link StreetsideAbstractImage} objects to this object.
+   *
+   * @param newImages The set of images to be added.
+   * @param update Whether the map must be updated or not.
+   */
+  public void addAll(Collection&lt;? extends StreetsideAbstractImage&gt; newImages, boolean update) {
+<span class="nc" id="L113">    images.addAll(newImages);</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">    if (update) {</span>
+<span class="nc" id="L115">      StreetsideLayer.invalidateInstance();</span>
+    }
+<span class="nc" id="L117">    fireImagesAdded();</span>
+<span class="nc" id="L118">  }</span>
+
+ /**
+   * Adds a new listener.
+   *
+   * @param lis Listener to be added.
+   */
+  public final void addListener(final StreetsideDataListener lis) {
+<span class="nc" id="L126">    listeners.add(lis);</span>
+<span class="nc" id="L127">  }</span>
+
+  /**
+   * Adds a {@link StreetsideImage} object to the list of selected images, (when
+   * ctrl + click)
+   *
+   * @param image The {@link StreetsideImage} object to be added.
+   */
+  public void addMultiSelectedImage(final StreetsideAbstractImage image) {
+<span class="nc bnc" id="L136" title="All 2 branches missed.">    if (!multiSelectedImages.contains(image)) {</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">      if (getSelectedImage() == null) {</span>
+<span class="nc" id="L138">        this.setSelectedImage(image);</span>
+      } else {
+<span class="nc" id="L140">        multiSelectedImages.add(image);</span>
+      }
+    }
+<span class="nc" id="L143">    StreetsideLayer.invalidateInstance();</span>
+<span class="nc" id="L144">  }</span>
+
+  /**
+   * Adds a set of {@code StreetsideAbstractImage} objects to the list of
+   * selected images.
+   *
+   * @param images A {@link Collection} object containing the set of images to be added.
+   */
+  public void addMultiSelectedImage(Collection&lt;StreetsideAbstractImage&gt; images) {
+<span class="nc bnc" id="L153" title="All 2 branches missed.">    images.stream().filter(image -&gt; !multiSelectedImages.contains(image)).forEach(image -&gt; {</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">      if (getSelectedImage() == null) {</span>
+<span class="nc" id="L155">        this.setSelectedImage(image);</span>
+      } else {
+<span class="nc" id="L157">        multiSelectedImages.add(image);</span>
+      }
+<span class="nc" id="L159">    });</span>
+<span class="nc" id="L160">    StreetsideLayer.invalidateInstance();</span>
+<span class="nc" id="L161">  }</span>
+
+  public List&lt;Bounds&gt; getBounds() {
+<span class="nc" id="L164">    return bounds;</span>
+  }
+
+  /**
+   * Removes an image from the database. From the {@link List} in this object
+   * and from its {@link MapillarySequence}.
+   *
+   * @param image The {@link MapillaryAbstractImage} that is going to be deleted.
+   */
+  /*public void remove(MapillaryAbstractImage image) {
+    images.remove(image);
+    if (getMultiSelectedImages().contains(image)) {
+      setSelectedImage(null);
+    }
+    if (image.getSequence() != null) {
+      image.getSequence().remove(image);
+    }
+    MapillaryLayer.invalidateInstance();
+  }*/
+
+  /**
+   * Removes a set of images from the database.
+   *
+   * @param images A {@link Collection} of {@link MapillaryAbstractImage} objects that are
+   *               going to be removed.
+   */
+  /*public void remove(Collection&lt;MapillaryAbstractImage&gt; images) {
+    images.forEach(this::remove);
+  }*/
+
+  /**
+   * Removes a listener.
+   *
+   * @param lis Listener to be removed.
+   */
+  public void removeListener(StreetsideDataListener lis) {
+<span class="nc" id="L200">    listeners.remove(lis);</span>
+<span class="nc" id="L201">  }</span>
+
+  /**
+   * Highlights the image under the cursor.
+   *
+   * @param image The image under the cursor.
+   */
+  public void setHighlightedImage(StreetsideAbstractImage image) {
+<span class="nc" id="L209">    highlightedImage = image;</span>
+<span class="nc" id="L210">  }</span>
+
+  /**
+   * Returns the image under the mouse cursor.
+   *
+   * @return The image under the mouse cursor.
+   */
+  public StreetsideAbstractImage getHighlightedImage() {
+<span class="nc" id="L218">    return highlightedImage;</span>
+  }
+
+  /**
+   * Returns a Set containing all images.
+   *
+   * @return A Set object containing all images.
+   */
+  public Set&lt;StreetsideAbstractImage&gt; getImages() {
+<span class="nc" id="L227">    return images;</span>
+  }
+
+  /**
+   * Returns a Set of all sequences, that the images are part of.
+   * @return all sequences that are contained in the Streetside data
+   */
+  public Set&lt;StreetsideSequence&gt; getSequences() {
+<span class="nc" id="L235">    return images.stream().map(StreetsideAbstractImage::getSequence).collect(Collectors.toSet());</span>
+  }
+
+  /**
+   * Returns the StreetsideImage object that is currently selected.
+   *
+   * @return The selected StreetsideImage object.
+   */
+  public StreetsideAbstractImage getSelectedImage() {
+<span class="nc" id="L244">    return selectedImage;</span>
+  }
+
+  private void fireImagesAdded() {
+<span class="nc" id="L248">    listeners.stream().filter(Objects::nonNull).forEach(StreetsideDataListener::imagesAdded);</span>
+<span class="nc" id="L249">  }</span>
+
+  /**
+   * If the selected StreetsideImage is part of a StreetsideSequence then the
+   * following visible StreetsideImage is selected. In case there is none, does
+   * nothing.
+   *
+   * @throws IllegalStateException if the selected image is null or the selected image doesn't
+   *                               belong to a sequence.
+   */
+  public void selectNext() {
+<span class="nc" id="L260">    selectNext(StreetsideProperties.MOVE_TO_IMG.get());</span>
+<span class="nc" id="L261">  }</span>
+
+  /**
+   * If the selected StreetsideImage is part of a StreetsideSequence then the
+   * following visible StreetsideImage is selected. In case there is none, does
+   * nothing.
+   *
+   * @param moveToPicture True if the view must me moved to the next picture.
+   * @throws IllegalStateException if the selected image is null or the selected image doesn't
+   *                               belong to a sequence.
+   */
+  public void selectNext(boolean moveToPicture) {
+<span class="nc bnc" id="L273" title="All 2 branches missed.">    if (getSelectedImage() == null) {</span>
+<span class="nc" id="L274">		throw new IllegalStateException();</span>
+	}
+<span class="nc bnc" id="L276" title="All 2 branches missed.">    if (getSelectedImage().getSequence() == null) {</span>
+<span class="nc" id="L277">		throw new IllegalStateException();</span>
+	}
+<span class="nc" id="L279">    StreetsideAbstractImage tempImage = selectedImage;</span>
+<span class="nc bnc" id="L280" title="All 2 branches missed.">    while (tempImage.next() != null) {</span>
+<span class="nc" id="L281">      tempImage = tempImage.next();</span>
+<span class="nc bnc" id="L282" title="All 2 branches missed.">      if (tempImage.isVisible()) {</span>
+<span class="nc" id="L283">        setSelectedImage(tempImage, moveToPicture);</span>
+<span class="nc" id="L284">        break;</span>
+      }
+    }
+<span class="nc" id="L287">  }</span>
+
+  /**
+   * If the selected StreetsideImage is part of a StreetsideSequence then the
+   * previous visible StreetsideImage is selected. In case there is none, does
+   * nothing.
+   *
+   * @throws IllegalStateException if the selected image is null or the selected image doesn't
+   *                               belong to a sequence.
+   */
+  public void selectPrevious() {
+<span class="nc" id="L298">    selectPrevious(StreetsideProperties.MOVE_TO_IMG.get());</span>
+<span class="nc" id="L299">  }</span>
+
+  /**
+   * If the selected StreetsideImage is part of a StreetsideSequence then the
+   * previous visible StreetsideImage is selected. In case there is none, does
+   * nothing. * @throws IllegalStateException if the selected image is null or
+   * the selected image doesn't belong to a sequence.
+   *
+   * @param moveToPicture True if the view must me moved to the previous picture.
+   * @throws IllegalStateException if the selected image is null or the selected image doesn't
+   *                               belong to a sequence.
+   */
+  public void selectPrevious(boolean moveToPicture) {
+<span class="nc bnc" id="L312" title="All 2 branches missed.">    if (getSelectedImage() == null) {</span>
+<span class="nc" id="L313">		throw new IllegalStateException();</span>
+	}
+<span class="nc bnc" id="L315" title="All 2 branches missed.">    if (getSelectedImage().getSequence() == null) {</span>
+<span class="nc" id="L316">		throw new IllegalStateException();</span>
+	}
+<span class="nc" id="L318">    StreetsideAbstractImage tempImage = selectedImage;</span>
+<span class="nc bnc" id="L319" title="All 2 branches missed.">    while (tempImage.previous() != null) {</span>
+<span class="nc" id="L320">      tempImage = tempImage.previous();</span>
+<span class="nc bnc" id="L321" title="All 2 branches missed.">      if (tempImage.isVisible()) {</span>
+<span class="nc" id="L322">        setSelectedImage(tempImage, moveToPicture);</span>
+<span class="nc" id="L323">        break;</span>
+      }
+    }
+<span class="nc" id="L326">  }</span>
+
+  /**
+   * Selects a new image.If the user does ctrl + click, this isn't triggered.
+   *
+   * @param image The StreetsideImage which is going to be selected
+   */
+  public void setSelectedImage(StreetsideAbstractImage image) {
+<span class="nc" id="L334">    setSelectedImage(image, false);</span>
+<span class="nc" id="L335">  }</span>
+
+  /**
+   * Selects a new image.If the user does ctrl+click, this isn't triggered. You
+   * can choose whether to center the view on the new image or not.
+   *
+   * @param image The {@link StreetsideImage} which is going to be selected.
+   * @param zoom  True if the view must be centered on the image; false otherwise.
+   */
+  public void setSelectedImage(StreetsideAbstractImage image, boolean zoom) {
+<span class="nc" id="L345">    StreetsideAbstractImage oldImage = selectedImage;</span>
+<span class="nc" id="L346">    selectedImage = image;</span>
+<span class="nc" id="L347">    multiSelectedImages.clear();</span>
+<span class="nc" id="L348">    final MapView mv = StreetsidePlugin.getMapView();</span>
+<span class="nc bnc" id="L349" title="All 2 branches missed.">    if (image != null) {</span>
+<span class="nc" id="L350">      multiSelectedImages.add(image);</span>
+<span class="nc bnc" id="L351" title="All 4 branches missed.">      if (mv != null &amp;&amp; image instanceof StreetsideImage) {</span>
+<span class="nc" id="L352">        StreetsideImage streetsideImage = (StreetsideImage) image;</span>
+
+        // Downloading thumbnails of surrounding pictures.
+<span class="nc" id="L355">        StreetsideData.downloadSurroundingImages(streetsideImage);</span>
+      }
+    }
+<span class="nc bnc" id="L358" title="All 6 branches missed.">    if (mv != null &amp;&amp; zoom &amp;&amp; selectedImage != null) {</span>
+<span class="nc" id="L359">      mv.zoomTo(selectedImage.getMovingLatLon());</span>
+    }
+<span class="nc" id="L361">    fireSelectedImageChanged(oldImage, selectedImage);</span>
+<span class="nc" id="L362">    StreetsideLayer.invalidateInstance();</span>
+<span class="nc" id="L363">  }</span>
+
+  /**
+   * Downloads surrounding images of this mapillary image in background threads
+   * @param streetsideImage the image for which the surrounding images should be downloaded
+   */
+  private static void downloadSurroundingImages (StreetsideImage streetsideImage) {
+<span class="nc" id="L370">    MainApplication.worker.execute(() -&gt; {</span>
+<span class="nc" id="L371">      final int prefetchCount = StreetsideProperties.PRE_FETCH_IMAGE_COUNT.get();</span>
+<span class="nc" id="L372">      CacheAccess &lt;String, BufferedImageCacheEntry&gt; imageCache = Caches.ImageCache.getInstance().getCache();</span>
+
+<span class="nc" id="L374">      StreetsideAbstractImage nextImage = streetsideImage.next();</span>
+<span class="nc" id="L375">      StreetsideAbstractImage prevImage = streetsideImage.previous();</span>
+
+<span class="nc bnc" id="L377" title="All 2 branches missed.">      for (int i = 0; i &lt; prefetchCount; i++) {</span>
+<span class="nc bnc" id="L378" title="All 2 branches missed.">        if (nextImage != null) {</span>
+<span class="nc bnc" id="L379" title="All 2 branches missed.">          if (nextImage instanceof StreetsideImage &amp;&amp;</span>
+<span class="nc bnc" id="L380" title="All 2 branches missed.">            imageCache.get(((StreetsideImage) nextImage).getId()) == null) {</span>
+<span class="nc" id="L381">            CacheUtils.downloadPicture((StreetsideImage) nextImage);</span>
+          }
+<span class="nc" id="L383">          nextImage = nextImage.next();</span>
+        }
+<span class="nc bnc" id="L385" title="All 2 branches missed.">        if (prevImage != null) {</span>
+<span class="nc bnc" id="L386" title="All 2 branches missed.">          if (prevImage instanceof StreetsideImage &amp;&amp;</span>
+<span class="nc bnc" id="L387" title="All 2 branches missed.">            imageCache.get(((StreetsideImage) prevImage).getId()) == null) {</span>
+<span class="nc" id="L388">            CacheUtils.downloadPicture((StreetsideImage) prevImage);</span>
+          }
+<span class="nc" id="L390">          prevImage = prevImage.previous();</span>
+        }
+      }
+<span class="nc" id="L393">    });</span>
+<span class="nc" id="L394">  }</span>
+
+  private void fireSelectedImageChanged(StreetsideAbstractImage oldImage, StreetsideAbstractImage newImage) {
+<span class="nc" id="L397">	listeners.stream().filter(Objects::nonNull).forEach(lis -&gt; lis.selectedImageChanged(oldImage, newImage));</span>
+<span class="nc" id="L398">  }</span>
+
+  /**
+   * Returns a List containing all {@code StreetsideAbstractImage} objects
+   * selected with ctrl + click.
+   *
+   * @return A List object containing all the images selected.
+   */
+  public Set&lt;StreetsideAbstractImage&gt; getMultiSelectedImages() {
+<span class="nc" id="L407">    return multiSelectedImages;</span>
+  }
+
+  /**
+   * Sets a new {@link Collection} object as the used set of images.
+   * Any images that are already present, are removed.
+   *
+   * @param newImages the new image list (previously set images are completely replaced)
+   */
+  public void setImages(Collection&lt;StreetsideAbstractImage&gt; newImages) {
+<span class="nc" id="L417">    synchronized (this) {</span>
+<span class="nc" id="L418">      images.clear();</span>
+<span class="nc" id="L419">      images.addAll(newImages);</span>
+<span class="nc" id="L420">    }</span>
+<span class="nc" id="L421">  }</span>
+//Old Mapillary implementation from line 63
+  // Adds the basic set of listeners.
+  //addListener(StreetsidePlugin.getStreetsideWalkAction());
+  //addListener(StreetsidePlugin.getZoomAction());
+  //if (Main.main != null) {
+    //addListener(StreetsideMainDialog.getInstance());
+    //addListener(ImageInfoPanel.getInstance());
+    //// TODO: readd CubemapBuilder after fixing ImageDisplay! @rrh
+    ////addListener(CubemapBuilder.getInstance());
+  //}
+//}
+
+  //// Old implementation from Mapillary line 166
+  ///**
+   //* Removes a listener.
+   //*
+   //* @param lis Listener to be removed.
+   //*/
+  //public void removeListener(StreetsideDataListener lis) {
+    //listeners.remove(lis);
+  //}
+
+  /**
+   * Downloads surrounding cubemaps of this Streetside cubemap in background threads
+   * @param streetsideImage the image for which the surrounding images should be downloaded
+   */
+	/*public static void _downloadSurroundingCubemaps(StreetsideImage streetsideImage) {
+		// TODO: how does JOSM worker execution work?
+		//MainApplication.worker.execute(() -&gt; {
+			final int prefetchCount = StreetsideProperties.PRE_FETCH_CUBEMAP_COUNT.get();
+			CacheAccess&lt;String, BufferedImageCacheEntry&gt; cubemapCache = Caches.CubemapCache.getInstance().getCache();
+
+			StreetsideAbstractImage nextImage = streetsideImage.next();
+			StreetsideAbstractImage prevImage = streetsideImage.previous();
+
+			for (int i = 0; i &lt; prefetchCount; i++) {
+
+				if (nextImage != null) {
+					if (nextImage instanceof StreetsideImage
+							&amp;&amp; cubemapCache.get(((StreetsideImage) nextImage).getId()) == null) {
+						CubemapBuilder.getInstance().downloadCubemapImages(nextImage.getId());
+					}
+					nextImage = nextImage.next();
+				}
+				if (prevImage != null) {
+					if (prevImage instanceof StreetsideImage
+							&amp;&amp; cubemapCache.get(((StreetsideImage) prevImage).getId()) == null) {
+						CubemapBuilder.getInstance().downloadCubemapImages(nextImage.getId());
+					}
+					prevImage = prevImage.previous();
+				}
+			}*/
+		//});
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

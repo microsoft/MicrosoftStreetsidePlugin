@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.openstreetmap.josm.plugins.streetside.utils.api.JsonMapObjectDecoderTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2018-06-11T22:57:31" hostname="Renes-MBP.lan" time="0.57">
+  <properties/>
+  <testcase name="testDecodeMapObject" classname="org.openstreetmap.josm.plugins.streetside.utils.api.JsonMapObjectDecoderTest" time="0.251"/>
+  <testcase name="testDecodeMapObjects" classname="org.openstreetmap.josm.plugins.streetside.utils.api.JsonMapObjectDecoderTest" time="0.122"/>
+  <testcase name="testUtilityClass" classname="org.openstreetmap.josm.plugins.streetside.utils.api.JsonMapObjectDecoderTest" time="0.111"/>
+  <testcase name="testDecodeMapObjectInvalid" classname="org.openstreetmap.josm.plugins.streetside.utils.api.JsonMapObjectDecoderTest" time="0.084"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

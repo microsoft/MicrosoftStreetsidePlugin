@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MapObjectLayer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.gui.layer</a> &gt; <span class="el_source">MapObjectLayer.java</span></div><h1>MapObjectLayer.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
+package org.openstreetmap.josm.plugins.streetside.gui.layer;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+
+import javax.swing.Action;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
+import org.openstreetmap.josm.data.Bounds;
+import org.openstreetmap.josm.data.osm.visitor.BoundingXYVisitor;
+import org.openstreetmap.josm.gui.MapView;
+import org.openstreetmap.josm.gui.NavigatableComponent;
+import org.openstreetmap.josm.gui.NavigatableComponent.ZoomChangeListener;
+import org.openstreetmap.josm.gui.layer.Layer;
+import org.openstreetmap.josm.plugins.streetside.StreetsidePlugin;
+import org.openstreetmap.josm.plugins.streetside.io.download.MapObjectDownloadRunnable;
+import org.openstreetmap.josm.plugins.streetside.model.MapObject;
+import org.openstreetmap.josm.plugins.streetside.utils.ImageUtil;
+import org.openstreetmap.josm.plugins.streetside.utils.StreetsideProperties;
+import org.openstreetmap.josm.tools.I18n;
+import org.openstreetmap.josm.tools.ImageProvider.ImageSizes;
+import org.openstreetmap.josm.tools.Logging;
+
+public final class MapObjectLayer extends Layer implements ZoomChangeListener {
+
+<span class="fc" id="L35">  public enum STATUS {</span>
+<span class="fc" id="L36">    DOWNLOADING(I18n.marktr(&quot;Downloading map objects…&quot;), Color.YELLOW),</span>
+<span class="fc" id="L37">    COMPLETE(I18n.marktr(&quot;All map objects loaded.&quot;), Color.GREEN),</span>
+<span class="fc" id="L38">    INCOMPLETE(I18n.marktr(&quot;Too many map objects, zoom in to see all.&quot;), Color.ORANGE),</span>
+<span class="fc" id="L39">    FAILED(I18n.marktr(&quot;Downloading map objects failed!&quot;), Color.RED);</span>
+
+    private final int colorValue;
+    public final String message;
+
+<span class="fc" id="L44">    STATUS(final String message, final Color color) {</span>
+<span class="fc" id="L45">      colorValue = color.getRGB();</span>
+<span class="fc" id="L46">      this.message = message;</span>
+<span class="fc" id="L47">    }</span>
+
+    /**
+     * Note: The color is stored as int and each time returned as new {@link Color} instance,
+     * because the class {@link Color} is not strictly immutable.
+     * @return the color associated with the current status
+     */
+    public Color getColor() {
+<span class="nc" id="L55">      return new Color(colorValue, true);</span>
+    }
+  }
+
+  private static MapObjectLayer instance;
+
+<span class="nc" id="L61">  private STATUS status = STATUS.COMPLETE;</span>
+  private MapObjectDownloadRunnable downloadRunnable;
+  private MapObjectDownloadRunnable nextDownloadRunnable;
+<span class="nc" id="L64">  private final Collection&lt;MapObject&gt; objects = new HashSet&lt;&gt;();</span>
+
+<span class="nc" id="L66">  private final Map&lt;String, ImageIcon&gt; scaledIcons = new HashMap&lt;&gt;();</span>
+
+  private MapObjectLayer() {
+<span class="nc" id="L69">    super(I18n.tr(&quot;Display Mapillary street signs&quot;));</span>
+<span class="nc" id="L70">    NavigatableComponent.addZoomChangeListener(this);</span>
+<span class="nc" id="L71">    StreetsideProperties.MAPOBJECT_ICON_SIZE.addListener(val -&gt; {</span>
+<span class="nc" id="L72">      scaledIcons.clear();</span>
+<span class="nc" id="L73">      finishDownload(false);</span>
+<span class="nc" id="L74">    });</span>
+<span class="nc" id="L75">    zoomChanged();</span>
+<span class="nc" id="L76">  }</span>
+
+  private static void clearInstance() {
+<span class="nc" id="L79">    synchronized (MapObjectLayer.class) {</span>
+<span class="nc" id="L80">      instance = null;</span>
+<span class="nc" id="L81">    }</span>
+<span class="nc" id="L82">  }</span>
+
+  public static MapObjectLayer getInstance() {
+<span class="nc" id="L85">    synchronized (MapObjectLayer.class) {</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">      if (instance == null) {</span>
+<span class="nc" id="L87">        instance = new MapObjectLayer();</span>
+      }
+<span class="nc" id="L89">      return instance;</span>
+<span class="nc" id="L90">    }</span>
+  }
+
+  public boolean isDownloadRunnableScheduled() {
+<span class="nc" id="L94">    synchronized (this) {</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">      return nextDownloadRunnable != null;</span>
+<span class="nc" id="L96">    }</span>
+  }
+
+  public void finishDownload(boolean replaceMapObjects) {
+<span class="nc" id="L100">    synchronized (this) {</span>
+<span class="nc" id="L101">      final MapObjectDownloadRunnable currentRunnable = downloadRunnable;</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">      if (currentRunnable != null) {</span>
+<span class="nc" id="L103">        synchronized (objects) {</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">          if (replaceMapObjects) {</span>
+<span class="nc" id="L105">            objects.clear();</span>
+          }
+<span class="nc" id="L107">          objects.addAll(currentRunnable.getMapObjects());</span>
+<span class="nc" id="L108">        }</span>
+      }
+<span class="nc" id="L110">      downloadRunnable = null;</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">      if (nextDownloadRunnable != null) {</span>
+<span class="nc" id="L112">        downloadRunnable = nextDownloadRunnable;</span>
+<span class="nc" id="L113">        nextDownloadRunnable = null;</span>
+<span class="nc" id="L114">        new Thread(downloadRunnable, &quot;downloadMapObjects&quot;).start();</span>
+      }
+<span class="nc" id="L116">    }</span>
+<span class="nc" id="L117">    new Thread(() -&gt; {</span>
+<span class="nc" id="L118">      synchronized (objects) {</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        for (MapObject object : objects) {</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">          if (!scaledIcons.containsKey(object.getValue())) {</span>
+<span class="nc" id="L121">            scaledIcons.put(</span>
+<span class="nc" id="L122">              object.getValue(),</span>
+<span class="nc" id="L123">              ImageUtil.scaleImageIcon(MapObject.getIcon(object.getValue()), StreetsideProperties.MAPOBJECT_ICON_SIZE.get())</span>
+            );
+          }
+<span class="nc" id="L126">        }</span>
+<span class="nc" id="L127">      }</span>
+<span class="nc" id="L128">      invalidate();</span>
+<span class="nc" id="L129">    }, &quot;downloadMapObjectIcons&quot;).start();</span>
+<span class="nc" id="L130">  }</span>
+
+  public int getObjectCount() {
+<span class="nc" id="L133">    return objects.size();</span>
+  }
+
+  public void setStatus(STATUS status) {
+<span class="nc" id="L137">    this.status = status;</span>
+<span class="nc" id="L138">    invalidate();</span>
+<span class="nc" id="L139">  }</span>
+
+  @Override
+  public void paint(Graphics2D g, MapView mv, Bounds bbox) {
+<span class="nc" id="L143">    final long startTime = System.currentTimeMillis();</span>
+<span class="nc" id="L144">    final Collection&lt;MapObject&gt; displayedObjects = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L145">    synchronized (this) {</span>
+<span class="nc" id="L146">      final MapObjectDownloadRunnable currentRunnable = downloadRunnable;</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">      if (currentRunnable != null) {</span>
+<span class="nc" id="L148">        displayedObjects.addAll(currentRunnable.getMapObjects());</span>
+      }
+<span class="nc" id="L150">    }</span>
+<span class="nc" id="L151">    displayedObjects.addAll(objects);</span>
+
+<span class="nc bnc" id="L153" title="All 2 branches missed.">    for (MapObject object : displayedObjects) {</span>
+<span class="nc" id="L154">      final ImageIcon icon = scaledIcons.get(object.getValue());</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">      if (icon != null) {</span>
+<span class="nc" id="L156">        final Point p = mv.getPoint(object.getCoordinate());</span>
+<span class="nc" id="L157">        g.drawImage(</span>
+<span class="nc" id="L158">          icon.getImage(),</span>
+<span class="nc" id="L159">          p.x - icon.getIconWidth() / 2,</span>
+<span class="nc" id="L160">          p.y - icon.getIconHeight() / 2,</span>
+          null
+        );
+      }
+<span class="nc" id="L164">    }</span>
+
+<span class="nc" id="L166">    final STATUS currentStatus = status;</span>
+<span class="nc" id="L167">    g.setFont(g.getFont().deriveFont(Font.PLAIN).deriveFont(12f));</span>
+<span class="nc" id="L168">    g.setColor(currentStatus.getColor());</span>
+<span class="nc" id="L169">    final FontMetrics fm = g.getFontMetrics();</span>
+<span class="nc" id="L170">    g.fillRect(0, mv.getHeight() - fm.getAscent() - fm.getDescent(), fm.stringWidth(I18n.tr(currentStatus.message)), fm.getAscent() + fm.getDescent());</span>
+<span class="nc" id="L171">    g.setColor(Color.BLACK);</span>
+<span class="nc" id="L172">    g.drawString(I18n.tr(currentStatus.message), 0, mv.getHeight() - fm.getDescent());</span>
+<span class="nc" id="L173">    Logging.debug(&quot;{0} painted in {1} milliseconds.&quot;, MapObjectLayer.class.getName(), System.currentTimeMillis() - startTime);</span>
+<span class="nc" id="L174">  }</span>
+
+  @Override
+  public Icon getIcon() {
+<span class="nc" id="L178">    return StreetsidePlugin.LOGO.setSize(ImageSizes.LAYER).get();</span>
+  }
+
+  @Override
+  public String getToolTipText() {
+<span class="nc" id="L183">    return I18n.tr(&quot;Displays objects detected by Streetside from their street view imagery&quot;);</span>
+  }
+
+  @Override
+  public void mergeFrom(Layer from) {
+    // Not mergeable
+<span class="nc" id="L189">  }</span>
+
+  @Override
+  public boolean isMergable(Layer other) {
+<span class="nc" id="L193">    return false;</span>
+  }
+
+  @Override
+  public void visitBoundingBox(BoundingXYVisitor v) {
+    // Unused method enforced by the Layer class
+<span class="nc" id="L199">  }</span>
+
+  @Override
+  public Object getInfoComponent() {
+<span class="nc" id="L203">    return null;</span>
+  }
+
+  @Override
+  public Action[] getMenuEntries() {
+<span class="nc" id="L208">    return new Action[0];</span>
+  }
+
+  public void scheduleDownload(final Bounds bounds) {
+<span class="nc" id="L212">    synchronized(this) {</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">      if (downloadRunnable == null) {</span>
+<span class="nc" id="L214">        downloadRunnable = new MapObjectDownloadRunnable(this, bounds);</span>
+<span class="nc" id="L215">        new Thread(downloadRunnable).start();</span>
+      } else {
+<span class="nc" id="L217">        nextDownloadRunnable = new MapObjectDownloadRunnable(this, bounds);</span>
+      }
+<span class="nc" id="L219">    }</span>
+<span class="nc" id="L220">  }</span>
+
+  /* (non-Javadoc)
+   * @see org.openstreetmap.josm.gui.layer.Layer#destroy()
+   */
+  @Override
+  public synchronized void destroy() {
+<span class="nc" id="L227">    clearInstance();</span>
+<span class="nc" id="L228">    super.destroy();</span>
+<span class="nc" id="L229">  }</span>
+
+  @Override
+  public void zoomChanged() {
+<span class="nc" id="L233">    MapView mv = StreetsidePlugin.getMapView();</span>
+<span class="nc bnc" id="L234" title="All 2 branches missed.">    if (mv != null) {</span>
+<span class="nc" id="L235">      scheduleDownload(mv.getState().getViewArea().getLatLonBoundsBox());</span>
+    }
+<span class="nc" id="L237">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

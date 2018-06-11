@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImageTest" tests="2" skipped="1" failures="0" errors="0" timestamp="2018-06-11T22:57:32" hostname="Renes-MBP.lan" time="0.096">
+  <properties/>
+  <testcase name="testIsModified" classname="org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImageTest" time="0.096"/>
+  <testcase name="testGetDate" classname="org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImageTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

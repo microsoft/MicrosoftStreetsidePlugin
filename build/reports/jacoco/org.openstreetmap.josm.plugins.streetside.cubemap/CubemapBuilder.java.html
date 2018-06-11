@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CubemapBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.cubemap</a> &gt; <span class="el_source">CubemapBuilder.java</span></div><h1>CubemapBuilder.java</h1><pre class="source lang-java linenums">package org.openstreetmap.josm.plugins.streetside.cubemap;
+
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+import org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImage;
+import org.openstreetmap.josm.plugins.streetside.StreetsideCubemap;
+import org.openstreetmap.josm.plugins.streetside.StreetsideDataListener;
+import org.openstreetmap.josm.plugins.streetside.gui.StreetsideViewerDialog;
+import org.openstreetmap.josm.plugins.streetside.gui.imageinfo.StreetsideViewerHelpPopup;
+import org.openstreetmap.josm.plugins.streetside.gui.imageinfo.StreetsideViewerPanel;
+import org.openstreetmap.josm.plugins.streetside.utils.CubemapBox;
+import org.openstreetmap.josm.plugins.streetside.utils.StreetsideProperties;
+import org.openstreetmap.josm.tools.I18n;
+import org.openstreetmap.josm.tools.Logging;
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+@SuppressWarnings(&quot;restriction&quot;)
+public class CubemapBuilder implements ITileDownloadingTaskListener, StreetsideDataListener {
+
+	private static CubemapBuilder instance;
+	// TODO: Viewer Help and Tooltips? @rrh
+	private StreetsideViewerHelpPopup streetsideViewerHelp;
+
+	private StreetsideCubemap cubemap;
+
+	protected boolean cancelled;
+
+	private long startTime;
+
+<span class="nc" id="L39">	private CubemapBuilder() {</span>
+		// private constructor to avoid instantiation
+<span class="nc" id="L41">	}</span>
+
+	@Override
+	public void imagesAdded() {
+		// Do nothing
+<span class="nc" id="L46">	}</span>
+
+	@Override
+	public void selectedImageChanged(StreetsideAbstractImage oldImage, StreetsideAbstractImage newImage) {
+<span class="nc" id="L50">		startTime = System.currentTimeMillis();</span>
+
+<span class="nc" id="L52">		cubemap = null;</span>
+<span class="nc" id="L53">		cubemap = new StreetsideCubemap(newImage.getId(), newImage.getLatLon(), newImage.getHe());</span>
+<span class="nc" id="L54">		cubemap.setCd(newImage.getCd());</span>
+
+		// download cubemap images in different threads and then subsequently
+		// set the cubeface images in JavaFX
+<span class="nc" id="L58">		downloadCubemapImages(cubemap.getId());</span>
+<span class="nc" id="L59">	}</span>
+
+	public void downloadCubemapImages(String imageId) {
+
+<span class="nc bnc" id="L63" title="All 2 branches missed.">		final int maxCols = StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get()?4:2;</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">		final int maxRows = StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get()?4:2;</span>
+
+<span class="nc" id="L66">		final int maxThreadCount = 6 * maxCols * maxRows;</span>
+
+<span class="nc" id="L68">		int fails = 0;</span>
+
+<span class="nc" id="L70">		long startTime = System.currentTimeMillis();</span>
+
+		try {
+
+<span class="nc" id="L74">			ExecutorService pool = Executors.newFixedThreadPool(maxThreadCount);</span>
+<span class="nc" id="L75">			List&lt;Callable&lt;String&gt;&gt; tasks = new ArrayList&lt;Callable&lt;String&gt;&gt;(maxThreadCount);</span>
+
+			// launch 4-tiled (low-res) downloading tasks . . .
+<span class="nc bnc" id="L78" title="All 2 branches missed.">			if(!StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get()) {</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">				for (int i = 0; i &lt; CubemapUtils.NUM_SIDES; i++) {</span>
+<span class="nc" id="L80">					int tileNr = 0;</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">					for (int j = 0; j &lt; maxCols; j++) {</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">						for (int k = 0; k &lt; maxRows; k++) {</span>
+
+<span class="nc" id="L84">							String tileId = String.valueOf(imageId + CubemapUtils.getFaceNumberForCount(i)</span>
+<span class="nc" id="L85">									+ Integer.valueOf(tileNr++).toString());// + Integer.valueOf(k).toString()));</span>
+<span class="nc" id="L86">							tasks.add(new TileDownloadingTask(tileId));</span>
+<span class="nc" id="L87">							Logging.debug(I18n.tr(&quot;Starting tile downloading task for imageId {0}, cubeface {1}, tileNr {2}&quot;, tileId,</span>
+<span class="nc" id="L88">							CubemapUtils.getFaceNumberForCount(i), String.valueOf(tileNr)));</span>
+						}
+					}
+				}
+
+<span class="nc" id="L93">				List&lt;Future&lt;String&gt;&gt; results = pool.invokeAll(tasks);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">				for (Future&lt;String&gt; ff : results) {</span>
+
+<span class="nc" id="L96">					Logging.info(I18n.tr(&quot;Completed tile downloading task {0} in {1}&quot;,ff.get(), CubemapUtils.msToString(startTime - System.currentTimeMillis())));</span>
+<span class="nc" id="L97">				}</span>
+
+				// launch 16-tiled (high-res) downloading tasks
+<span class="nc bnc" id="L100" title="All 2 branches missed.">			} else if (StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get()) {</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">				for (int i = 0; i &lt; CubemapUtils.NUM_SIDES; i++) {</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">					for (int j = 0; j &lt; maxCols; j++) {</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">						for (int k = 0; k &lt; maxRows; k++) {</span>
+
+<span class="nc" id="L105">							String tileId = String.valueOf(imageId + CubemapUtils.getFaceNumberForCount(i)</span>
+<span class="nc" id="L106">									+ String.valueOf(Integer.valueOf(j).toString() + Integer.valueOf(k).toString()));</span>
+<span class="nc" id="L107">							tasks.add(new TileDownloadingTask(tileId));</span>
+<span class="nc" id="L108">							Logging.debug(I18n.tr(&quot;Starting tile downloading task for imageId {0}, cubeface {1}, tileID {2}&quot;, imageId,</span>
+<span class="nc" id="L109">							CubemapUtils.getFaceNumberForCount(i), tileId));</span>
+						}
+					}
+				}
+
+<span class="nc" id="L114">				List&lt;Future&lt;String&gt;&gt; results = pool.invokeAll(tasks);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">				for (Future&lt;String&gt; ff : results) {</span>
+<span class="nc" id="L116">					Logging.info(I18n.tr(&quot;Completed tile downloading task {0} in {1}&quot;,ff.get(), CubemapUtils.msToString(startTime - System.currentTimeMillis())));</span>
+<span class="nc" id="L117">				}</span>
+			}
+<span class="nc" id="L119">		} catch (Exception ee) {</span>
+<span class="nc" id="L120">			fails++;</span>
+<span class="nc" id="L121">			Logging.error(&quot;Error loading tile for image {0}&quot;, imageId);</span>
+<span class="nc" id="L122">			ee.printStackTrace();</span>
+<span class="nc" id="L123">		}</span>
+
+<span class="nc" id="L125">		long stopTime = System.currentTimeMillis();</span>
+<span class="nc" id="L126">		long runTime = stopTime - startTime;</span>
+
+<span class="nc" id="L128">		Logging.info(I18n.tr(&quot;Tile imagery downloading tasks completed in {0}&quot;, CubemapUtils.msToString(runTime)));</span>
+
+<span class="nc bnc" id="L130" title="All 2 branches missed.">		if(fails&gt;0) {</span>
+<span class="nc" id="L131">			Logging.error(I18n.tr(&quot;{0} downloading tasks failed.&quot;, Integer.valueOf(fails)));</span>
+		}
+
+<span class="nc" id="L134">	}</span>
+
+	@Override
+	public void tileAdded(String tileId) {
+		// determine whether four tiles have been set for each of the
+		// six cubemap faces. If so, build the images for the faces
+		// and set the views in the cubemap box.
+
+<span class="nc" id="L142">		int tileCount = 0;</span>
+
+<span class="nc bnc" id="L144" title="All 2 branches missed.">		for(int i=0;i&lt;CubemapUtils.NUM_SIDES;i++) {</span>
+<span class="nc" id="L145">			String faceNumber = CubemapUtils.getFaceNumberForCount(i);</span>
+<span class="nc" id="L146">			Map&lt;String,BufferedImage&gt; faceTileImages = CubemapBuilder.getInstance().getCubemap().getFace2TilesMap().get(faceNumber);</span>
+<span class="nc" id="L147">			tileCount+=faceTileImages.values().size();</span>
+		}
+
+<span class="nc bnc" id="L150" title="All 2 branches missed.">		int maxCols = StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get()?4:2;</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">		int maxRows = StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get()?4:2;</span>
+
+<span class="nc bnc" id="L153" title="All 2 branches missed.">		if(tileCount==(CubemapUtils.NUM_SIDES * maxCols * maxRows)) {</span>
+<span class="nc" id="L154">			Logging.info(I18n.tr(&quot;{0} tile images ready for building cumbemap faces for cubemap {0}&quot;, tileCount, CubemapBuilder.getInstance().getCubemap().getId()));</span>
+
+<span class="nc" id="L156">			buildCubemapFaces();</span>
+		} else {
+<span class="nc" id="L158">			Logging.info(I18n.tr(&quot;{0} tile images received for cubemap {1}&quot;, Integer.valueOf(tileCount).toString(), CubemapBuilder.getInstance().getCubemap().getId()));</span>
+
+		}
+<span class="nc" id="L161">	}</span>
+
+	private void buildCubemapFaces() {
+<span class="nc" id="L164">			CubemapBox cmb = StreetsideViewerDialog.getInstance().getStreetsideViewerPanel().getCubemapBox();</span>
+<span class="nc" id="L165">			ImageView[] views = cmb.getViews();</span>
+
+<span class="nc bnc" id="L167" title="All 2 branches missed.">			final int maxCols = StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get()?4:2;</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">			final int maxRows = StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get()?4:2;</span>
+
+			//Image finalImages[] = new Image[StreetsideProperties.CUBEFACE_SIZE.get().intValue()];
+<span class="nc" id="L171">			Image finalImages[] = new Image[CubemapUtils.NUM_SIDES];</span>
+
+
+		// build 4-tiled cubemap faces and crop buffers
+<span class="nc bnc" id="L175" title="All 2 branches missed.">		if (!StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get()) {</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">			for (int i = 0; i &lt; CubemapUtils.NUM_SIDES; i++) {</span>
+
+<span class="nc" id="L178">				Map&lt;String, BufferedImage&gt; tileImages = CubemapBuilder.getInstance().getCubemap().getFace2TilesMap()</span>
+<span class="nc" id="L179">						.get(CubemapUtils.getFaceNumberForCount(i));</span>
+<span class="nc" id="L180">				BufferedImage[] faceTileImages = new BufferedImage[maxCols * maxRows];</span>
+
+<span class="nc bnc" id="L182" title="All 2 branches missed.">				for (int j = 0; j &lt; (maxCols * maxRows); j++) {</span>
+<span class="nc" id="L183">					String tileId = String.valueOf(getCubemap().getId() + CubemapUtils.getFaceNumberForCount(i)</span>
+<span class="nc" id="L184">							+ Integer.valueOf(j).toString());</span>
+<span class="nc" id="L185">					BufferedImage currentTile = tileImages.get(tileId);</span>
+<span class="nc" id="L186">					faceTileImages[j] = currentTile;</span>
+				}
+				// TODO: workaround for misaligned top cube face - rotate 180 degrees @rrh
+<span class="nc bnc" id="L189" title="All 2 branches missed.">				BufferedImage finalImg = GraphicsUtils.buildMultiTiledCubemapFaceImage(faceTileImages);if(i==4) {</span>
+<span class="nc" id="L190">					finalImg = GraphicsUtils.rotateImage(finalImg);</span>
+				}
+<span class="nc" id="L192">				finalImages[i] = GraphicsUtils.convertBufferedImage2JavaFXImage(finalImg);</span>
+			}
+		// build 16-tiled cubemap faces and crop buffers
+<span class="nc bnc" id="L195" title="All 2 branches missed.">		} else if (StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get()) {</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">			for (int i = 0; i &lt; CubemapUtils.NUM_SIDES; i++) {</span>
+
+<span class="nc" id="L198">				int tileCount = 0;</span>
+
+<span class="nc" id="L200">				Map&lt;String, Map&lt;String, BufferedImage&gt;&gt; face2TilesMap = CubemapBuilder.getInstance().getCubemap().getFace2TilesMap();</span>
+<span class="nc" id="L201">				Map&lt;String, BufferedImage&gt; tileImages = face2TilesMap.get(CubemapUtils.getFaceNumberForCount(i));</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">				BufferedImage[] faceTileImages = new BufferedImage[StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get()?16:4];</span>
+
+<span class="nc bnc" id="L204" title="All 2 branches missed.">				for (int j = 0; j &lt; maxCols; j++) {</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">					for (int k = 0; k &lt; maxRows; k++) {</span>
+<span class="nc" id="L206">						String tileId = String.valueOf(getCubemap().getId() + CubemapUtils.getFaceNumberForCount(i)</span>
+<span class="nc" id="L207">								+ CubemapUtils.convertDoubleCountNrto16TileNr(String.valueOf(Integer.valueOf(j).toString() + Integer.valueOf(k).toString())));</span>
+<span class="nc" id="L208">						BufferedImage currentTile = tileImages.get(tileId);</span>
+<span class="nc" id="L209">						faceTileImages[tileCount++] = currentTile;</span>
+					}
+				}
+<span class="nc" id="L212">				BufferedImage finalImg = GraphicsUtils.buildMultiTiledCubemapFaceImage(faceTileImages);</span>
+				// TODO: workaround for misaligned top cube face - rotate 180 degrees @rrh
+<span class="nc bnc" id="L214" title="All 2 branches missed.">				if(i==4) {</span>
+<span class="nc" id="L215">					finalImg = GraphicsUtils.rotateImage(finalImg);</span>
+				}
+<span class="nc" id="L217">				finalImages[i] = GraphicsUtils.convertBufferedImage2JavaFXImage(finalImg);</span>
+			}
+		}
+
+<span class="nc bnc" id="L221" title="All 2 branches missed.">            	for (int i=0; i&lt; CubemapUtils.NUM_SIDES;i++) {</span>
+	    				// TODO: swap right and left and figure out where the culprit is @rrh
+<span class="nc bnc" id="L223" title="All 2 branches missed.">	            		if(i==1) {</span>
+<span class="nc" id="L224">	    					views[3].setImage(finalImages[i]);</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">	    				} else if (i==3) {</span>
+<span class="nc" id="L226">	    					views[1].setImage(finalImages[i]);</span>
+	    				} else {
+<span class="nc" id="L228">	    					views[i].setImage(finalImages[i]);</span>
+	    				}
+	    			}
+
+<span class="nc" id="L232">	            	StreetsideViewerDialog.getInstance().getStreetsideViewerPanel().revalidate();</span>
+<span class="nc" id="L233">	            	StreetsideViewerDialog.getInstance().getStreetsideViewerPanel().repaint();</span>
+<span class="nc" id="L234">	            	StreetsideViewerDialog.getInstance().getStreetsideViewerPanel();</span>
+<span class="nc" id="L235">					StreetsideViewerPanel.getThreeSixtyDegreeViewerPanel().revalidate();</span>
+<span class="nc" id="L236">	            	StreetsideViewerDialog.getInstance().getStreetsideViewerPanel();</span>
+<span class="nc" id="L237">					StreetsideViewerPanel.getThreeSixtyDegreeViewerPanel().repaint();</span>
+
+<span class="nc" id="L239">		long endTime = System.currentTimeMillis();</span>
+<span class="nc" id="L240">		long runTime = endTime-startTime;</span>
+<span class="nc" id="L241">		Logging.info(I18n.tr(&quot;Completed downloading, assembling and setting cubemap imagery for cubemap {0} in {1}&quot;, cubemap.getId(), CubemapUtils.msToString(runTime)));</span>
+<span class="nc" id="L242">	}</span>
+
+	/**
+	 * @return the cubemap
+	 */
+	public synchronized StreetsideCubemap getCubemap() {
+<span class="nc" id="L248">		return cubemap;</span>
+	}
+
+	/**
+	 * @param cubemap the cubemap to set
+	 */
+	public static void setCubemap(StreetsideCubemap cubemap) {
+<span class="nc" id="L255">		CubemapBuilder.getInstance().cubemap = cubemap;</span>
+<span class="nc" id="L256">	}</span>
+
+	public static CubemapBuilder getInstance() {
+<span class="nc bnc" id="L259" title="All 2 branches missed.">		if(instance==null) {</span>
+<span class="nc" id="L260">			instance = new CubemapBuilder();</span>
+		}
+<span class="nc" id="L262">		return instance;</span>
+	}
+
+	/**
+	 * @return true, iff the singleton instance is present
+	 */
+	public static boolean hasInstance() {
+<span class="nc bnc" id="L269" title="All 2 branches missed.">		return CubemapBuilder.instance != null;</span>
+	}
+
+	/**
+	 * Destroys the unique instance of the class.
+	 */
+	public static synchronized void destroyInstance() {
+<span class="nc" id="L276">		CubemapBuilder.instance = null;</span>
+<span class="nc" id="L277">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

@@ -1,0 +1,652 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StreetsideMainDialog.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.gui</a> &gt; <span class="el_source">StreetsideMainDialog.java</span></div><h1>StreetsideMainDialog.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
+package org.openstreetmap.josm.plugins.streetside.gui;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.imageio.ImageIO;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JComponent;
+import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
+
+import org.openstreetmap.josm.data.cache.CacheEntry;
+import org.openstreetmap.josm.data.cache.CacheEntryAttributes;
+import org.openstreetmap.josm.data.cache.ICachedLoaderListener;
+import org.openstreetmap.josm.gui.SideButton;
+import org.openstreetmap.josm.gui.dialogs.ToggleDialog;
+import org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImage;
+import org.openstreetmap.josm.plugins.streetside.StreetsideDataListener;
+import org.openstreetmap.josm.plugins.streetside.StreetsideImage;
+import org.openstreetmap.josm.plugins.streetside.StreetsideImportedImage;
+import org.openstreetmap.josm.plugins.streetside.StreetsideLayer;
+import org.openstreetmap.josm.plugins.streetside.StreetsidePlugin;
+import org.openstreetmap.josm.plugins.streetside.actions.WalkListener;
+import org.openstreetmap.josm.plugins.streetside.actions.WalkThread;
+import org.openstreetmap.josm.plugins.streetside.cache.StreetsideCache;
+import org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ImageInfoHelpPopup;
+import org.openstreetmap.josm.plugins.streetside.gui.imageinfo.StreetsideViewerHelpPopup;
+import org.openstreetmap.josm.plugins.streetside.utils.StreetsideProperties;
+import org.openstreetmap.josm.tools.I18n;
+import org.openstreetmap.josm.tools.ImageProvider;
+import org.openstreetmap.josm.tools.Logging;
+
+/**
+ * Toggle dialog that shows an image and some buttons.
+ *
+ * @author nokutu
+ * @author renerr18
+ */
+public final class StreetsideMainDialog extends ToggleDialog implements
+		ICachedLoaderListener, StreetsideDataListener {
+
+	private static final long serialVersionUID = 2645654786827812861L;
+
+<span class="nc" id="L53">	public static final String BASE_TITLE = I18n.marktr(&quot;Microsoft Streetside image&quot;);</span>
+	private static final String MESSAGE_SEPARATOR = &quot; — &quot;;
+
+	private static StreetsideMainDialog instance;
+
+	private volatile StreetsideAbstractImage image;
+
+<span class="nc" id="L60">	public final SideButton nextButton = new SideButton(new NextPictureAction());</span>
+<span class="nc" id="L61">	public final SideButton previousButton = new SideButton(new PreviousPictureAction());</span>
+	/**
+	 * Button used to jump to the image following the red line
+	 */
+<span class="nc" id="L65">	public final SideButton redButton = new SideButton(new RedAction());</span>
+	/**
+	 * Button used to jump to the image following the blue line
+	 */
+<span class="nc" id="L69">	public final SideButton blueButton = new SideButton(new BlueAction());</span>
+
+<span class="nc" id="L71">	private final SideButton playButton = new SideButton(new PlayAction());</span>
+<span class="nc" id="L72">	private final SideButton pauseButton = new SideButton(new PauseAction());</span>
+<span class="nc" id="L73">	private final SideButton stopButton = new SideButton(new StopAction());</span>
+
+	private ImageInfoHelpPopup imageInfoHelp;
+
+	private StreetsideViewerHelpPopup streetsideViewerHelp;
+
+	/**
+	 * Buttons mode.
+	 *
+	 * @author nokutu
+	 */
+<span class="nc" id="L84">	public enum MODE {</span>
+		/**
+		 * Standard mode to view pictures.
+		 */
+<span class="nc" id="L88">		NORMAL,</span>
+		/**
+		 * Mode when in walk.
+		 */
+<span class="nc" id="L92">		WALK</span>
+	}
+
+	/**
+	 * Object containing the shown image and that handles zoom and drag
+	 */
+	public StreetsideImageDisplay streetsideImageDisplay;
+
+	private StreetsideCache imageCache;
+	public StreetsideCache thumbnailCache;
+
+	private StreetsideMainDialog() {
+<span class="nc" id="L104">		super(I18n.tr(StreetsideMainDialog.BASE_TITLE), &quot;streetside-main&quot;, I18n.tr(&quot;Open Streetside window&quot;), null, 200,</span>
+				true, StreetsidePreferenceSetting.class);
+<span class="nc" id="L106">		addShortcuts();</span>
+
+<span class="nc" id="L108">		streetsideImageDisplay = new StreetsideImageDisplay();</span>
+
+<span class="nc" id="L110">		blueButton.setForeground(Color.BLUE);</span>
+<span class="nc" id="L111">		redButton.setForeground(Color.RED);</span>
+
+		// TODO: Modes for cubemaps? @rrh
+<span class="nc" id="L114">		setMode(MODE.NORMAL);</span>
+<span class="nc" id="L115">	}</span>
+
+	/**
+	 * Adds the shortcuts to the buttons.
+	 */
+	private void addShortcuts() {
+<span class="nc" id="L121">		nextButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(</span>
+<span class="nc" id="L122">				KeyStroke.getKeyStroke(&quot;PAGE_DOWN&quot;), &quot;next&quot;);</span>
+<span class="nc" id="L123">		nextButton.getActionMap().put(&quot;next&quot;, new NextPictureAction());</span>
+<span class="nc" id="L124">		previousButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(</span>
+<span class="nc" id="L125">				KeyStroke.getKeyStroke(&quot;PAGE_UP&quot;), &quot;previous&quot;);</span>
+<span class="nc" id="L126">		previousButton.getActionMap().put(&quot;previous&quot;,</span>
+				new PreviousPictureAction());
+<span class="nc" id="L128">		blueButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(</span>
+<span class="nc" id="L129">				KeyStroke.getKeyStroke(&quot;control PAGE_UP&quot;), &quot;blue&quot;);</span>
+<span class="nc" id="L130">		blueButton.getActionMap().put(&quot;blue&quot;, new BlueAction());</span>
+<span class="nc" id="L131">		redButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(</span>
+<span class="nc" id="L132">				KeyStroke.getKeyStroke(&quot;control PAGE_DOWN&quot;), &quot;red&quot;);</span>
+<span class="nc" id="L133">		redButton.getActionMap().put(&quot;red&quot;, new RedAction());</span>
+<span class="nc" id="L134">	}</span>
+
+	/**
+	 * Returns the unique instance of the class.
+	 *
+	 * @return The unique instance of the class.
+	 */
+	public static synchronized StreetsideMainDialog getInstance() {
+<span class="nc bnc" id="L142" title="All 2 branches missed.">		if (StreetsideMainDialog.instance == null) {</span>
+<span class="nc" id="L143">			StreetsideMainDialog.instance = new StreetsideMainDialog();</span>
+		}
+<span class="nc" id="L145">		return StreetsideMainDialog.instance;</span>
+	}
+
+	/**
+	 * @return true, iff the singleton instance is present
+	 */
+	public static boolean hasInstance() {
+<span class="nc bnc" id="L152" title="All 2 branches missed.">		return StreetsideMainDialog.instance != null;</span>
+	}
+
+	public synchronized void setImageInfoHelp(ImageInfoHelpPopup popup) {
+<span class="nc" id="L156">		imageInfoHelp = popup;</span>
+<span class="nc" id="L157">	}</span>
+
+	public synchronized void setStreetsideViewerHelp(StreetsideViewerHelpPopup popup) {
+<span class="nc" id="L160">		streetsideViewerHelp = popup;</span>
+<span class="nc" id="L161">	}</span>
+
+	/**
+	 * @return the streetsideViewerHelp
+	 */
+	public StreetsideViewerHelpPopup getStreetsideViewerHelp() {
+<span class="nc" id="L167">		return streetsideViewerHelp;</span>
+	}
+
+	/**
+	 * Sets a new mode for the dialog.
+	 *
+	 * @param mode The mode to be set. Must not be {@code null}.
+	 */
+	public void setMode(MODE mode) {
+<span class="nc bnc" id="L176" title="All 2 branches missed.">		switch (mode) {</span>
+		case WALK:
+<span class="nc" id="L178">			createLayout(</span>
+				streetsideImageDisplay,
+<span class="nc" id="L180">				Arrays.asList(playButton, pauseButton, stopButton)</span>
+			);
+		case NORMAL:
+		default:
+<span class="nc" id="L184">			createLayout(</span>
+		        streetsideImageDisplay,
+<span class="nc" id="L186">		        Arrays.asList(blueButton, previousButton, nextButton, redButton)</span>
+		    );
+		}
+<span class="nc" id="L189">		disableAllButtons();</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">		if (MODE.NORMAL.equals(mode)) {</span>
+<span class="nc" id="L191">			updateImage();</span>
+<span class="nc" id="L192">		} 	}</span>
+
+	/**
+	 * Destroys the unique instance of the class.
+	 */
+	public static synchronized void destroyInstance() {
+<span class="nc" id="L198">		StreetsideMainDialog.instance = null;</span>
+<span class="nc" id="L199">	}</span>
+
+	/**
+	 * Downloads the full quality picture of the selected StreetsideImage and sets
+	 * in the StreetsideImageDisplay object.
+	 */
+	public synchronized void updateImage() {
+<span class="nc" id="L206">		updateImage(true);</span>
+<span class="nc" id="L207">	}</span>
+
+	/**
+	 * Downloads the picture of the selected StreetsideImage and sets in the
+	 * StreetsideImageDisplay object.
+	 *
+	 * @param fullQuality If the full quality picture must be downloaded or just the
+	 *                    thumbnail.
+	 */
+	public synchronized void updateImage(boolean fullQuality) {
+<span class="nc bnc" id="L217" title="All 2 branches missed.">		if (!SwingUtilities.isEventDispatchThread()) {</span>
+<span class="nc" id="L218">			SwingUtilities.invokeLater(this::updateImage);</span>
+		} else {
+<span class="nc bnc" id="L220" title="All 2 branches missed.">			if (!StreetsideLayer.hasInstance()) {</span>
+<span class="nc" id="L221">				return;</span>
+			}
+<span class="nc bnc" id="L223" title="All 2 branches missed.">			if (image == null) {</span>
+<span class="nc" id="L224">				streetsideImageDisplay.setImage(null, null);</span>
+<span class="nc" id="L225">				setTitle(I18n.tr(StreetsideMainDialog.BASE_TITLE));</span>
+<span class="nc" id="L226">				disableAllButtons();</span>
+<span class="nc" id="L227">				return;</span>
+			}
+
+			// TODO: help for cubemaps? @rrh
+<span class="nc bnc" id="L231" title="All 6 branches missed.">			if (imageInfoHelp != null &amp;&amp; StreetsideProperties.IMAGEINFO_HELP_COUNTDOWN.get() &gt; 0 &amp;&amp; imageInfoHelp.showPopup()) {</span>
+				// Count down the number of times the popup will be displayed
+<span class="nc" id="L233">				StreetsideProperties.IMAGEINFO_HELP_COUNTDOWN.put(StreetsideProperties.IMAGEINFO_HELP_COUNTDOWN.get() - 1);</span>
+			}
+
+			// Enables/disables next/previous buttons
+<span class="nc" id="L237">			nextButton.setEnabled(false);</span>
+<span class="nc" id="L238">			previousButton.setEnabled(false);</span>
+<span class="nc bnc" id="L239" title="All 2 branches missed.">			if (image.getSequence() != null) {</span>
+<span class="nc" id="L240">				StreetsideAbstractImage tempImage = image;</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">				while (tempImage.next() != null) {</span>
+<span class="nc" id="L242">					tempImage = tempImage.next();</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">					if (tempImage.isVisible()) {</span>
+<span class="nc" id="L244">						nextButton.setEnabled(true);</span>
+<span class="nc" id="L245">						break;</span>
+					}
+				}
+			}
+<span class="nc bnc" id="L249" title="All 2 branches missed.">			if (image.getSequence() != null) {</span>
+<span class="nc" id="L250">				StreetsideAbstractImage tempImage = image;</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">				while (tempImage.previous() != null) {</span>
+<span class="nc" id="L252">					tempImage = tempImage.previous();</span>
+<span class="nc bnc" id="L253" title="All 2 branches missed.">					if (tempImage.isVisible()) {</span>
+<span class="nc" id="L254">						previousButton.setEnabled(true);</span>
+<span class="nc" id="L255">						break;</span>
+					}
+				}
+			}
+<span class="nc bnc" id="L259" title="All 2 branches missed.">			if (image instanceof StreetsideImage) {</span>
+<span class="nc" id="L260">				final StreetsideImage streetsideImage = (StreetsideImage) image;</span>
+				// Downloads the thumbnail.
+<span class="nc" id="L262">				streetsideImageDisplay.setImage(null, null);</span>
+<span class="nc bnc" id="L263" title="All 2 branches missed.">				if (thumbnailCache != null) {</span>
+<span class="nc" id="L264">					thumbnailCache.cancelOutstandingTasks();</span>
+				}
+<span class="nc" id="L266">				thumbnailCache = new StreetsideCache(streetsideImage.getId(),</span>
+						StreetsideCache.Type.THUMBNAIL);
+				try {
+<span class="nc" id="L269">					thumbnailCache.submit(this, false);</span>
+<span class="nc" id="L270">				} catch (final IOException e) {</span>
+<span class="nc" id="L271">					Logging.error(e);</span>
+<span class="nc" id="L272">				}</span>
+
+				// Downloads the full resolution image.
+<span class="nc bnc" id="L275" title="All 2 branches missed.">				if (fullQuality || new StreetsideCache(streetsideImage.getId(),</span>
+<span class="nc bnc" id="L276" title="All 2 branches missed.">						StreetsideCache.Type.FULL_IMAGE).get() != null) {</span>
+<span class="nc bnc" id="L277" title="All 2 branches missed.">					if (imageCache != null) {</span>
+<span class="nc" id="L278">						imageCache.cancelOutstandingTasks();</span>
+					}
+<span class="nc" id="L280">					imageCache = new StreetsideCache(streetsideImage.getId(),</span>
+							StreetsideCache.Type.FULL_IMAGE);
+					try {
+<span class="nc" id="L283">						imageCache.submit(this, false);</span>
+<span class="nc" id="L284">					} catch (final IOException e) {</span>
+<span class="nc" id="L285">						Logging.error(e);</span>
+<span class="nc" id="L286">					}</span>
+				}
+			// TODO: handle/convert/remove &quot;imported images&quot;
+			} /*else if (image instanceof StreetsideImportedImage) {
+				final StreetsideImportedImage streetsideImage = (StreetsideImportedImage) image;
+				try {
+					streetsideImageDisplay.setImage(streetsideImage.getImage(), null);
+				} catch (final IOException e) {
+					Logging.error(e);
+				}
+			}*/
+<span class="nc" id="L297">			updateTitle();</span>
+		}
+<span class="nc" id="L299">	}</span>
+
+	/**
+	 * Disables all the buttons in the dialog
+	 */
+	public /*private*/ void disableAllButtons() {
+<span class="nc" id="L305">		nextButton.setEnabled(false);</span>
+<span class="nc" id="L306">		previousButton.setEnabled(false);</span>
+<span class="nc" id="L307">		blueButton.setEnabled(false);</span>
+<span class="nc" id="L308">		redButton.setEnabled(false);</span>
+<span class="nc" id="L309">	}</span>
+
+	/**
+	 * Sets a new StreetsideImage to be shown.
+	 *
+	 * @param image The image to be shown.
+	 */
+	public synchronized void setImage(StreetsideAbstractImage image) {
+<span class="nc" id="L317">		this.image = image;</span>
+<span class="nc" id="L318">	}</span>
+
+	/**
+	 * Updates the title of the dialog.
+	 */
+	// TODO: update title for 360 degree viewer? @rrh
+	public synchronized void updateTitle() {
+<span class="nc bnc" id="L325" title="All 2 branches missed.">		if (!SwingUtilities.isEventDispatchThread()) {</span>
+<span class="nc" id="L326">			SwingUtilities.invokeLater(this::updateTitle);</span>
+<span class="nc bnc" id="L327" title="All 2 branches missed.">		} else if (image != null) {</span>
+<span class="nc" id="L328">			final StringBuilder title = new StringBuilder(I18n.tr(StreetsideMainDialog.BASE_TITLE));</span>
+<span class="nc bnc" id="L329" title="All 2 branches missed.">			if (image instanceof StreetsideImage) {</span>
+<span class="nc" id="L330">				final StreetsideImage streetsideImage = (StreetsideImage) image;</span>
+<span class="nc bnc" id="L331" title="All 2 branches missed.">				if (streetsideImage.getCd() != 0) {</span>
+<span class="nc" id="L332">					title.append(StreetsideMainDialog.MESSAGE_SEPARATOR).append(streetsideImage.getDate());</span>
+				}
+<span class="nc" id="L334">				setTitle(title.toString());</span>
+<span class="nc bnc" id="L335" title="All 2 branches missed.">			} else if (image instanceof StreetsideImportedImage) {</span>
+<span class="nc" id="L336">				final StreetsideImportedImage mapillaryImportedImage = (StreetsideImportedImage) image;</span>
+<span class="nc" id="L337">				title.append(StreetsideMainDialog.MESSAGE_SEPARATOR).append(mapillaryImportedImage.getFile().getName());</span>
+<span class="nc" id="L338">				title.append(StreetsideMainDialog.MESSAGE_SEPARATOR).append(mapillaryImportedImage.getDate());</span>
+<span class="nc" id="L339">				setTitle(title.toString());</span>
+			}
+		}
+<span class="nc" id="L342">	}</span>
+
+	/**
+	 * Returns the {@link StreetsideAbstractImage} object which is being shown.
+	 *
+	 * @return The {@link StreetsideAbstractImage} object which is being shown.
+	 */
+	public synchronized StreetsideAbstractImage getImage() {
+<span class="nc" id="L350">		return image;</span>
+	}
+
+	/**
+	 * Action class form the next image button.
+	 *
+	 * @author nokutu
+	 */
+	private static class NextPictureAction extends AbstractAction {
+
+		private static final long serialVersionUID = 6333692154558730392L;
+
+		/**
+		 * Constructs a normal NextPictureAction
+		 */
+		NextPictureAction() {
+<span class="nc" id="L366">			super(I18n.tr(&quot;Next picture&quot;));</span>
+<span class="nc" id="L367">			putValue(Action.SHORT_DESCRIPTION, I18n.tr(&quot;Shows the next picture in the sequence&quot;));</span>
+<span class="nc" id="L368">			new ImageProvider(&quot;help&quot;, &quot;next&quot;).getResource().attachImageIcon(this, true);</span>
+<span class="nc" id="L369">		}</span>
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L373">			StreetsideLayer.getInstance().getData().selectNext();</span>
+<span class="nc" id="L374">		}</span>
+	}
+
+	/**
+	 * Action class for the previous image button.
+	 *
+	 * @author nokutu
+	 */
+	private static class PreviousPictureAction extends AbstractAction {
+
+		private static final long serialVersionUID = 4390593660514657107L;
+
+		/**
+		 * Constructs a normal PreviousPictureAction
+		 */
+		PreviousPictureAction() {
+<span class="nc" id="L390">			super(I18n.tr(&quot;Previous picture&quot;));</span>
+<span class="nc" id="L391">			putValue(Action.SHORT_DESCRIPTION, I18n.tr(&quot;Shows the previous picture in the sequence&quot;));</span>
+<span class="nc" id="L392">			new ImageProvider(&quot;help&quot;, &quot;previous&quot;).getResource().attachImageIcon(this, true);</span>
+<span class="nc" id="L393">		}</span>
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L397">			StreetsideLayer.getInstance().getData().selectPrevious();</span>
+<span class="nc" id="L398">		}</span>
+	}
+
+	/**
+	 * Action class to jump to the image following the red line.
+	 *
+	 * @author nokutu
+	 */
+	private static class RedAction extends AbstractAction {
+
+		private static final long serialVersionUID = -1244456062285831231L;
+
+		/**
+		 * Constructs a normal RedAction
+		 */
+<span class="nc" id="L413">		RedAction() {</span>
+<span class="nc" id="L414">			putValue(Action.NAME, I18n.tr(&quot;Jump to red&quot;));</span>
+<span class="nc" id="L415">			putValue(Action.SHORT_DESCRIPTION,</span>
+<span class="nc" id="L416">					I18n.tr(&quot;Jumps to the picture at the other side of the red line&quot;));</span>
+<span class="nc" id="L417">			new ImageProvider(&quot;dialogs&quot;, &quot;red&quot;).getResource().attachImageIcon(this, true);</span>
+<span class="nc" id="L418">		}</span>
+
+		// TODO: RedAction for cubemaps? @rrh
+		@Override
+		public void actionPerformed(ActionEvent e) {
+<span class="nc bnc" id="L423" title="All 2 branches missed.">			if (StreetsideMainDialog.getInstance().getImage() != null) {</span>
+<span class="nc" id="L424">				StreetsideLayer.getInstance().getData()</span>
+<span class="nc" id="L425">				.setSelectedImage(StreetsideLayer.getInstance().getNNearestImage(1), true);</span>
+			}
+<span class="nc" id="L427">		}</span>
+	}
+
+	/**
+	 * Action class to jump to the image following the blue line.
+	 *
+	 * @author nokutu
+	 */
+	private static class BlueAction extends AbstractAction {
+
+		private static final long serialVersionUID = 5951233534212838780L;
+
+		/**
+		 * Constructs a normal BlueAction
+		 */
+<span class="nc" id="L442">		BlueAction() {</span>
+<span class="nc" id="L443">			putValue(Action.NAME, I18n.tr(&quot;Jump to blue&quot;));</span>
+<span class="nc" id="L444">			putValue(Action.SHORT_DESCRIPTION,</span>
+<span class="nc" id="L445">					I18n.tr(&quot;Jumps to the picture at the other side of the blue line&quot;));</span>
+<span class="nc" id="L446">			new ImageProvider(&quot;dialogs&quot;, &quot;blue&quot;).getResource().attachImageIcon(this, true);</span>
+<span class="nc" id="L447">		}</span>
+
+		// TODO: BlueAction for cubemaps?
+		@Override
+		public void actionPerformed(ActionEvent e) {
+<span class="nc bnc" id="L452" title="All 2 branches missed.">			if (StreetsideMainDialog.getInstance().getImage() != null) {</span>
+<span class="nc" id="L453">				StreetsideLayer.getInstance().getData()</span>
+<span class="nc" id="L454">				.setSelectedImage(StreetsideLayer.getInstance().getNNearestImage(2), true);</span>
+			}
+<span class="nc" id="L456">		}</span>
+	}
+
+	private static class StopAction extends AbstractAction implements WalkListener {
+
+		private static final long serialVersionUID = 8789972456611625341L;
+
+		private WalkThread thread;
+
+		/**
+		 * Constructs a normal StopAction
+		 */
+<span class="nc" id="L468">		StopAction() {</span>
+<span class="nc" id="L469">			putValue(Action.NAME, I18n.tr(&quot;Stop&quot;));</span>
+<span class="nc" id="L470">			putValue(Action.SHORT_DESCRIPTION, I18n.tr(&quot;Stops the walk.&quot;));</span>
+<span class="nc" id="L471">			new ImageProvider(&quot;dialogs/streetsideStop.png&quot;).getResource().attachImageIcon(this, true);</span>
+<span class="nc" id="L472">			StreetsidePlugin.getStreetsideWalkAction().addListener(this);</span>
+<span class="nc" id="L473">		}</span>
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+<span class="nc bnc" id="L477" title="All 2 branches missed.">			if (thread != null) {</span>
+<span class="nc" id="L478">				thread.stopWalk();</span>
+			}
+<span class="nc" id="L480">		}</span>
+
+		@Override
+		public void walkStarted(WalkThread thread) {
+<span class="nc" id="L484">			this.thread = thread;</span>
+<span class="nc" id="L485">		}</span>
+	}
+
+	private static class PlayAction extends AbstractAction implements WalkListener {
+
+		private static final long serialVersionUID = -1572747020946842769L;
+
+		private transient WalkThread thread;
+
+		/**
+		 * Constructs a normal PlayAction
+		 */
+<span class="nc" id="L497">		PlayAction() {</span>
+<span class="nc" id="L498">			putValue(Action.NAME, I18n.tr(&quot;Play&quot;));</span>
+<span class="nc" id="L499">			putValue(Action.SHORT_DESCRIPTION, I18n.tr(&quot;Continues with the paused walk.&quot;));</span>
+<span class="nc" id="L500">			new ImageProvider(&quot;dialogs/streetsidePlay.png&quot;).getResource().attachImageIcon(this, true);</span>
+<span class="nc" id="L501">			StreetsidePlugin.getStreetsideWalkAction().addListener(this);</span>
+<span class="nc" id="L502">		}</span>
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+<span class="nc bnc" id="L506" title="All 2 branches missed.">			if (thread != null) {</span>
+<span class="nc" id="L507">				thread.play();</span>
+			}
+<span class="nc" id="L509">		}</span>
+
+		@Override
+		public void walkStarted(WalkThread thread) {
+<span class="nc bnc" id="L513" title="All 2 branches missed.">			if (thread != null) {</span>
+<span class="nc" id="L514">				this.thread = thread;</span>
+			}
+<span class="nc" id="L516">		}</span>
+	}
+
+	private static class PauseAction extends AbstractAction implements WalkListener {
+
+		/**
+		 *
+		 */
+		private static final long serialVersionUID = -8758326399460817222L;
+		private WalkThread thread;
+
+		/**
+		 * Constructs a normal PauseAction
+		 */
+<span class="nc" id="L530">		PauseAction() {</span>
+<span class="nc" id="L531">			putValue(Action.NAME, I18n.tr(&quot;Pause&quot;));</span>
+<span class="nc" id="L532">			putValue(Action.SHORT_DESCRIPTION, I18n.tr(&quot;Pauses the walk.&quot;));</span>
+<span class="nc" id="L533">			new ImageProvider(&quot;dialogs/streetsidePause.png&quot;).getResource().attachImageIcon(this, true);</span>
+<span class="nc" id="L534">			StreetsidePlugin.getStreetsideWalkAction().addListener(this);</span>
+<span class="nc" id="L535">		}</span>
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+<span class="nc" id="L539">			thread.pause();</span>
+<span class="nc" id="L540">		}</span>
+
+		@Override
+		public void walkStarted(WalkThread thread) {
+<span class="nc" id="L544">			this.thread = thread;</span>
+<span class="nc" id="L545">		}</span>
+	}
+
+	/**
+	 * When the pictures are returned from the cache, they are set in the
+	 * {@link StreetsideImageDisplay} object.
+	 */
+	@Override
+	public void loadingFinished(final CacheEntry data, final CacheEntryAttributes attributes, final LoadResult result) {
+<span class="nc bnc" id="L554" title="All 2 branches missed.">		if (!SwingUtilities.isEventDispatchThread()) {</span>
+<span class="nc" id="L555">			SwingUtilities.invokeLater(() -&gt; loadingFinished(data, attributes, result));</span>
+
+<span class="nc bnc" id="L557" title="All 4 branches missed.">		} else if (data != null &amp;&amp; result == LoadResult.SUCCESS) {</span>
+			try {
+<span class="nc" id="L559">				final BufferedImage img = ImageIO.read(new ByteArrayInputStream(data.getContent()));</span>
+<span class="nc bnc" id="L560" title="All 2 branches missed.">				if (img == null) {</span>
+<span class="nc" id="L561">					return;</span>
+				}
+<span class="nc" id="L563">				if (</span>
+<span class="nc bnc" id="L564" title="All 2 branches missed.">						streetsideImageDisplay.getImage() == null</span>
+<span class="nc bnc" id="L565" title="All 2 branches missed.">						|| img.getHeight() &gt; streetsideImageDisplay.getImage().getHeight()</span>
+						) {
+<span class="nc" id="L567">					final StreetsideAbstractImage mai = getImage();</span>
+<span class="nc" id="L568">					streetsideImageDisplay.setImage(</span>
+							img,
+<span class="nc bnc" id="L570" title="All 2 branches missed.">							mai instanceof StreetsideImage ? ((StreetsideImage) getImage()).getDetections() : null</span>
+							);
+				}
+<span class="nc" id="L573">			} catch (final IOException e) {</span>
+<span class="nc" id="L574">				Logging.error(e);</span>
+<span class="nc" id="L575">			}</span>
+		}
+<span class="nc" id="L577">	}</span>
+
+
+	/**
+	 * Creates the layout of the dialog.
+	 *
+	 * @param data    The content of the dialog
+	 * @param buttons The buttons where you can click
+	 */
+	public void createLayout(Component data, List&lt;SideButton&gt; buttons) {
+<span class="nc" id="L587">		removeAll();</span>
+<span class="nc" id="L588">		createLayout(data, true, buttons);</span>
+<span class="nc" id="L589">		add(titleBar, BorderLayout.NORTH);</span>
+<span class="nc" id="L590">	}</span>
+
+	@Override
+	public void selectedImageChanged(StreetsideAbstractImage oldImage, StreetsideAbstractImage newImage) {
+<span class="nc" id="L594">		setImage(newImage);</span>
+<span class="nc" id="L595">		updateImage();</span>
+<span class="nc" id="L596">	}</span>
+
+	@Override
+	public void imagesAdded() {
+		// This method is enforced by StreetsideDataListener, but only selectedImageChanged() is needed
+<span class="nc" id="L601">	}</span>
+
+	/**
+	 * @return the streetsideImageDisplay
+	 */
+	public StreetsideImageDisplay getStreetsideImageDisplay() {
+<span class="nc" id="L607">		return streetsideImageDisplay;</span>
+	}
+
+	/**
+	 * @param streetsideImageDisplay the streetsideImageDisplay to set
+	 */
+	public void setStreetsideImageDisplay(StreetsideImageDisplay streetsideImageDisplay) {
+<span class="nc" id="L614">		this.streetsideImageDisplay = streetsideImageDisplay;</span>
+<span class="nc" id="L615">	}</span>
+
+	/**
+	 * @return the streetsideImageDisplay
+	 */
+	/*public StreetsideViewerDisplay getStreetsideViewerDisplay() {
+		return streetsideViewerDisplay;
+	}*/
+
+	/**
+	 * @param streetsideImageDisplay the streetsideImageDisplay to set
+	 */
+	/*public void setStreetsideViewerDisplay(StreetsideViewerDisplay streetsideViewerDisplay) {
+		streetsideViewerDisplay = streetsideViewerDisplay;
+	}*/
+
+	/*private StreetsideViewerDisplay initStreetsideViewerDisplay() {
+		StreetsideViewerDisplay res = new StreetsideViewerDisplay();
+        //this.add(streetsideViewerDisplay);
+
+
+		Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+            	Scene scene;
+				try {
+					scene = StreetsideViewerDisplay.createScene();
+					res.setScene(scene);
+				} catch (NonInvertibleTransformException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+       });
+		return res;
+	}*/
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

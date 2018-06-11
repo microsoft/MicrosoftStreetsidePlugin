@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StreetsideFilterDialog.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.gui</a> &gt; <span class="el_source">StreetsideFilterDialog.java</span></div><h1>StreetsideFilterDialog.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
+package org.openstreetmap.josm.plugins.streetside.gui;
+
+import static org.openstreetmap.josm.tools.I18n.tr;
+
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.function.Predicate;
+import java.util.regex.Pattern;
+
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+
+import org.openstreetmap.josm.Main;
+import org.openstreetmap.josm.gui.SideButton;
+import org.openstreetmap.josm.gui.dialogs.ToggleDialog;
+import org.openstreetmap.josm.gui.widgets.DisableShortcutsOnFocusGainedTextField;
+import org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImage;
+import org.openstreetmap.josm.plugins.streetside.StreetsideDataListener;
+import org.openstreetmap.josm.plugins.streetside.StreetsideImage;
+import org.openstreetmap.josm.plugins.streetside.StreetsideImportedImage;
+import org.openstreetmap.josm.plugins.streetside.StreetsideLayer;
+import org.openstreetmap.josm.tools.ImageProvider;
+
+import org.openstreetmap.josm.plugins.streetside.model.ImageDetection;
+import org.openstreetmap.josm.plugins.streetside.model.UserProfile;
+
+/**
+ * ToggleDialog that lets you filter the images that are being shown.
+ *
+ * @author nokutu
+ * @see StreetsideFilterChooseSigns
+ */
+public class StreetsideFilterDialog extends ToggleDialog implements StreetsideDataListener {
+
+  private static final long serialVersionUID = -6465343076946050909L;
+
+  private static StreetsideFilterDialog instance;
+
+<span class="nc" id="L53">  private static final String[] TIME_LIST = {tr(&quot;Years&quot;), tr(&quot;Months&quot;), tr(&quot;Days&quot;)};</span>
+
+<span class="nc" id="L55">  private static final long[] TIME_FACTOR = new long[]{</span>
+    31_536_000_000L, // = 365 * 24 * 60 * 60 * 1000 = number of ms in a year
+    2_592_000_000L, // = 30 * 24 * 60 * 60 * 1000 = number of ms in a month
+    86_400_000 // = 24 * 60 * 60 * 1000 = number of ms in a day
+  };
+
+  private final JCheckBox filterByDateCheckbox;
+  /**
+   * Spinner to choose the range of dates.
+   */
+  private final SpinnerNumberModel spinnerModel;
+
+<span class="nc" id="L67">  private final JCheckBox imported = new JCheckBox(tr(&quot;Imported images&quot;));</span>
+<span class="nc" id="L68">  private final JCheckBox downloaded = new JCheckBox(new DownloadCheckBoxAction());</span>
+<span class="nc" id="L69">  private final JCheckBox onlySigns = new JCheckBox(new OnlySignsAction());</span>
+  private final JComboBox&lt;String&gt; time;
+  private final JTextField user;
+
+<span class="nc" id="L73">  private final JButton signChooser = new JButton(new SignChooserAction());</span>
+
+  private StreetsideFilterDialog() {
+<span class="nc" id="L76">    super(tr(&quot;Streetside filter&quot;), &quot;streetside-filter&quot;, tr(&quot;Open Streetside filter dialog&quot;), null, 200,</span>
+        false, StreetsidePreferenceSetting.class);
+
+<span class="nc" id="L79">    signChooser.setEnabled(false);</span>
+<span class="nc" id="L80">    JPanel signChooserPanel = new JPanel();</span>
+<span class="nc" id="L81">    signChooserPanel.setLayout(new FlowLayout(FlowLayout.LEFT));</span>
+<span class="nc" id="L82">    signChooserPanel.add(signChooser);</span>
+
+<span class="nc" id="L84">    JPanel fromPanel = new JPanel();</span>
+<span class="nc" id="L85">    fromPanel.setLayout(new FlowLayout(FlowLayout.LEFT));</span>
+<span class="nc" id="L86">    filterByDateCheckbox = new JCheckBox(tr(&quot;Not older than: &quot;));</span>
+<span class="nc" id="L87">    fromPanel.add(filterByDateCheckbox);</span>
+<span class="nc" id="L88">    spinnerModel = new SpinnerNumberModel(1.0, 0, 10000, .1);</span>
+<span class="nc" id="L89">    JSpinner spinner = new JSpinner(spinnerModel);</span>
+<span class="nc" id="L90">    spinner.setEnabled(false);</span>
+<span class="nc" id="L91">    fromPanel.add(spinner);</span>
+<span class="nc" id="L92">    time = new JComboBox&lt;&gt;(TIME_LIST);</span>
+<span class="nc" id="L93">    time.setEnabled(false);</span>
+<span class="nc" id="L94">    fromPanel.add(time);</span>
+
+<span class="nc" id="L96">    filterByDateCheckbox.addItemListener(itemE -&gt; {</span>
+<span class="nc" id="L97">      spinner.setEnabled(filterByDateCheckbox.isSelected());</span>
+<span class="nc" id="L98">      time.setEnabled(filterByDateCheckbox.isSelected());</span>
+<span class="nc" id="L99">    });</span>
+
+<span class="nc" id="L101">    JPanel userSearchPanel = new JPanel();</span>
+<span class="nc" id="L102">    userSearchPanel.setLayout(new FlowLayout(FlowLayout.LEFT));</span>
+<span class="nc" id="L103">    user = new DisableShortcutsOnFocusGainedTextField(10);</span>
+<span class="nc" id="L104">    user.addActionListener(new UpdateAction());</span>
+<span class="nc" id="L105">    userSearchPanel.add(new JLabel(tr(&quot;User&quot;)));</span>
+<span class="nc" id="L106">    userSearchPanel.add(user);</span>
+
+<span class="nc" id="L108">    imported.setSelected(true);</span>
+<span class="nc" id="L109">    downloaded.setSelected(true);</span>
+
+<span class="nc" id="L111">    JPanel panel = new JPanel();</span>
+<span class="nc" id="L112">    panel.setLayout(new GridBagLayout());</span>
+<span class="nc" id="L113">    GridBagConstraints c = new GridBagConstraints();</span>
+<span class="nc" id="L114">    c.anchor = GridBagConstraints.LINE_START;</span>
+<span class="nc" id="L115">    panel.add(downloaded, c);</span>
+<span class="nc" id="L116">    c.gridx = 1;</span>
+<span class="nc" id="L117">    panel.add(imported, c);</span>
+<span class="nc" id="L118">    c.gridx = 0;</span>
+<span class="nc" id="L119">    c.gridy = 1;</span>
+<span class="nc" id="L120">    c.gridwidth = 2;</span>
+<span class="nc" id="L121">    panel.add(fromPanel, c);</span>
+<span class="nc" id="L122">    c.gridy = 2;</span>
+<span class="nc" id="L123">    panel.add(userSearchPanel, c);</span>
+<span class="nc" id="L124">    c.gridwidth = 1;</span>
+<span class="nc" id="L125">    c.gridy = 3;</span>
+<span class="nc" id="L126">    panel.add(onlySigns, c);</span>
+<span class="nc" id="L127">    c.gridx = 1;</span>
+<span class="nc" id="L128">    panel.add(signChooserPanel, c);</span>
+
+<span class="nc" id="L130">    createLayout(panel, true, Arrays.asList(new SideButton(new UpdateAction()), new SideButton(new ResetAction())));</span>
+<span class="nc" id="L131">  }</span>
+
+  /**
+   * @return the unique instance of the class.
+   */
+  public static synchronized StreetsideFilterDialog getInstance() {
+<span class="nc bnc" id="L137" title="All 2 branches missed.">    if (instance == null)</span>
+<span class="nc" id="L138">      instance = new StreetsideFilterDialog();</span>
+<span class="nc" id="L139">    return instance;</span>
+  }
+
+  @Override
+  public void imagesAdded() {
+<span class="nc" id="L144">    refresh();</span>
+<span class="nc" id="L145">  }</span>
+
+  @Override
+  public void selectedImageChanged(StreetsideAbstractImage oldImage, StreetsideAbstractImage newImage) {
+    // Do nothing when image selection changed
+<span class="nc" id="L150">  }</span>
+
+  /**
+   * Resets the dialog to its default state.
+   */
+  public void reset() {
+<span class="nc" id="L156">    imported.setSelected(true);</span>
+<span class="nc" id="L157">    downloaded.setSelected(true);</span>
+<span class="nc" id="L158">    onlySigns.setEnabled(true);</span>
+<span class="nc" id="L159">    onlySigns.setSelected(false);</span>
+<span class="nc" id="L160">    user.setText(&quot;&quot;);</span>
+<span class="nc" id="L161">    time.setSelectedItem(TIME_LIST[0]);</span>
+<span class="nc" id="L162">    spinnerModel.setValue(1);</span>
+<span class="nc" id="L163">    refresh();</span>
+<span class="nc" id="L164">  }</span>
+
+  /**
+   * Applies the selected filter.
+   */
+  public synchronized void refresh() {
+<span class="nc bnc" id="L170" title="All 4 branches missed.">    final boolean layerVisible = StreetsideLayer.hasInstance() &amp;&amp; StreetsideLayer.getInstance().isVisible();</span>
+<span class="nc" id="L171">    final boolean imported = this.imported.isSelected();</span>
+<span class="nc" id="L172">    final boolean downloaded = this.downloaded.isSelected();</span>
+<span class="nc" id="L173">    final boolean timeFilter = filterByDateCheckbox.isSelected();</span>
+<span class="nc" id="L174">    final boolean onlySigns = this.onlySigns.isSelected();</span>
+
+    // This predicate returns true is the image should be made invisible
+<span class="nc" id="L177">    Predicate&lt;StreetsideAbstractImage&gt; shouldHide =</span>
+      img -&gt; {
+<span class="nc bnc" id="L179" title="All 2 branches missed.">        if (!layerVisible) {</span>
+<span class="nc" id="L180">          return true;</span>
+        }
+<span class="nc bnc" id="L182" title="All 4 branches missed.">        if (timeFilter &amp;&amp; checkValidTime(img)) {</span>
+<span class="nc" id="L183">          return true;</span>
+        }
+<span class="nc bnc" id="L185" title="All 4 branches missed.">        if (!imported &amp;&amp; img instanceof StreetsideImportedImage) {</span>
+<span class="nc" id="L186">          return true;</span>
+        }
+<span class="nc bnc" id="L188" title="All 2 branches missed.">        if (img instanceof StreetsideImage) {</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">          if (!downloaded) {</span>
+<span class="nc" id="L190">            return true;</span>
+          }
+<span class="nc bnc" id="L192" title="All 6 branches missed.">          if (onlySigns &amp;&amp; (((StreetsideImage) img).getDetections().isEmpty() || !checkSigns((StreetsideImage) img))) {</span>
+<span class="nc" id="L193">            return true;</span>
+          }
+<span class="nc" id="L195">          UserProfile userProfile = ((StreetsideImage) img).getUser();</span>
+<span class="nc bnc" id="L196" title="All 6 branches missed.">          if (!&quot;&quot;.equals(user.getText()) &amp;&amp; (userProfile == null || !user.getText().equals(userProfile.getUsername()))) {</span>
+<span class="nc" id="L197">            return true;</span>
+          }
+        }
+<span class="nc" id="L200">        return false;</span>
+      };
+
+<span class="nc bnc" id="L203" title="All 2 branches missed.">    if (StreetsideLayer.hasInstance()) {</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">      StreetsideLayer.getInstance().getData().getImages().parallelStream().forEach(img -&gt; img.setVisible(!shouldHide.test(img)));</span>
+    }
+
+<span class="nc" id="L207">    StreetsideLayer.invalidateInstance();</span>
+<span class="nc" id="L208">  }</span>
+
+  private boolean checkValidTime(StreetsideAbstractImage img) {
+<span class="nc" id="L211">    Long currentTime = currentTime();</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">    for (int i = 0; i &lt; 3; i++) {</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">      if (TIME_LIST[i].equals(time.getSelectedItem()) &amp;&amp;</span>
+        //img.getCapturedAt() &lt; currentTime - spinnerModel.getNumber().doubleValue() * TIME_FACTOR[i]) {
+<span class="nc bnc" id="L215" title="All 2 branches missed.">    	img.getCd() &lt; currentTime - spinnerModel.getNumber().doubleValue() * TIME_FACTOR[i]) {</span>
+<span class="nc" id="L216">    	return true;</span>
+      }
+    }
+<span class="nc" id="L219">    return false;</span>
+  }
+
+  /**
+   * Checks if the image fulfills the sign conditions.
+   *
+   * @param img The {@link StreetsideAbstractImage} object that is going to be
+   * checked.
+   *
+   * @return {@code true} if it fulfills the conditions; {@code false}
+   * otherwise.
+   */
+  private static boolean checkSigns(StreetsideImage img) {
+<span class="nc bnc" id="L232" title="All 2 branches missed.">    for (int i = 0; i &lt; StreetsideFilterChooseSigns.SIGN_TAGS.length; i++) {</span>
+<span class="nc bnc" id="L233" title="All 2 branches missed.">      if (checkSign(img, StreetsideFilterChooseSigns.getInstance().signCheckboxes[i], StreetsideFilterChooseSigns.SIGN_TAGS[i]))</span>
+<span class="nc" id="L234">        return true;</span>
+    }
+<span class="nc" id="L236">    return false;</span>
+  }
+
+  private static boolean checkSign(StreetsideImage img, JCheckBox signCheckBox, String signTag) {
+<span class="nc" id="L240">    boolean contains = false;</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">    for (ImageDetection detection : img.getDetections()) {</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">      if (Pattern.compile(signTag).matcher(detection.getValue()).find()) {</span>
+<span class="nc" id="L243">        contains = true;</span>
+      }
+<span class="nc" id="L245">    }</span>
+<span class="nc bnc" id="L246" title="All 4 branches missed.">    return contains == signCheckBox.isSelected() &amp;&amp; contains;</span>
+  }
+
+  private static long currentTime() {
+<span class="nc" id="L250">    Calendar cal = Calendar.getInstance();</span>
+<span class="nc" id="L251">    return cal.getTimeInMillis();</span>
+  }
+
+  /**
+   * Destroys the unique instance of the class.
+   */
+  public static synchronized void destroyInstance() {
+<span class="nc" id="L258">    instance = null;</span>
+<span class="nc" id="L259">  }</span>
+
+  private class DownloadCheckBoxAction extends AbstractAction {
+
+    private static final long serialVersionUID = 4672634002899519496L;
+
+<span class="nc" id="L265">    DownloadCheckBoxAction() {</span>
+<span class="nc" id="L266">      putValue(NAME, tr(&quot;Downloaded images&quot;));</span>
+<span class="nc" id="L267">    }</span>
+
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+<span class="nc" id="L271">      onlySigns.setEnabled(downloaded.isSelected());</span>
+<span class="nc" id="L272">    }</span>
+  }
+
+  private static class UpdateAction extends AbstractAction {
+
+    private static final long serialVersionUID = -7417238601979689863L;
+
+<span class="nc" id="L279">    UpdateAction() {</span>
+<span class="nc" id="L280">      putValue(NAME, tr(&quot;Update&quot;));</span>
+<span class="nc" id="L281">      new ImageProvider(&quot;dialogs&quot;, &quot;refresh&quot;).getResource().attachImageIcon(this, true);</span>
+<span class="nc" id="L282">    }</span>
+
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+<span class="nc" id="L286">      StreetsideFilterDialog.getInstance().refresh();</span>
+<span class="nc" id="L287">    }</span>
+  }
+
+  private static class ResetAction extends AbstractAction {
+    private static final long serialVersionUID = 1178261778165525040L;
+
+<span class="nc" id="L293">    ResetAction() {</span>
+<span class="nc" id="L294">      putValue(NAME, tr(&quot;Reset&quot;));</span>
+<span class="nc" id="L295">      new ImageProvider(&quot;preferences&quot;, &quot;reset&quot;).getResource().attachImageIcon(this, true);</span>
+<span class="nc" id="L296">    }</span>
+
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+<span class="nc" id="L300">      StreetsideFilterDialog.getInstance().reset();</span>
+<span class="nc" id="L301">    }</span>
+  }
+
+  private class OnlySignsAction extends AbstractAction {
+
+    private static final long serialVersionUID = -2937440338019185723L;
+
+<span class="nc" id="L308">    OnlySignsAction() {</span>
+<span class="nc" id="L309">      putValue(NAME, tr(&quot;Only images with signs&quot;));</span>
+<span class="nc" id="L310">    }</span>
+
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+<span class="nc" id="L314">      signChooser.setEnabled(onlySigns.isSelected());</span>
+<span class="nc" id="L315">    }</span>
+  }
+
+  /**
+   * Opens a new window where you can specifically filter signs.
+   *
+   * @author nokutu
+   */
+  private static class SignChooserAction extends AbstractAction {
+
+    private static final long serialVersionUID = 8706299665735930148L;
+
+<span class="nc" id="L327">    SignChooserAction() {</span>
+<span class="nc" id="L328">      putValue(NAME, tr(&quot;Choose signs&quot;));</span>
+<span class="nc" id="L329">    }</span>
+
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+<span class="nc" id="L333">      final JOptionPane pane = new JOptionPane(</span>
+<span class="nc" id="L334">        StreetsideFilterChooseSigns.getInstance(),</span>
+        JOptionPane.PLAIN_MESSAGE,
+        JOptionPane.OK_CANCEL_OPTION
+      );
+<span class="nc" id="L338">      JDialog dlg = pane.createDialog(Main.parent, tr(&quot;Choose signs&quot;));</span>
+<span class="nc" id="L339">      dlg.setVisible(true);</span>
+<span class="nc bnc" id="L340" title="All 2 branches missed.">      if ((int) pane.getValue() == JOptionPane.OK_OPTION)</span>
+<span class="nc" id="L341">        StreetsideFilterDialog.getInstance().refresh();</span>
+<span class="nc" id="L342">      dlg.dispose();</span>
+<span class="nc" id="L343">    }</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

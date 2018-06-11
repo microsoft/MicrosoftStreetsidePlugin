@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.openstreetmap.josm.plugins.streetside.utils.StreetsideURLTest$APIv3" tests="7" skipped="3" failures="0" errors="0" timestamp="2018-06-11T22:57:31" hostname="Renes-MBP.lan" time="0.005">
+  <properties/>
+  <testcase name="testParseNextFromHeaderValue2" classname="org.openstreetmap.josm.plugins.streetside.utils.StreetsideURLTest$APIv3" time="0.003"/>
+  <testcase name="testSubmitChangeset" classname="org.openstreetmap.josm.plugins.streetside.utils.StreetsideURLTest$APIv3" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="testSearchDetections" classname="org.openstreetmap.josm.plugins.streetside.utils.StreetsideURLTest$APIv3" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="testParseNextFromHeaderValue" classname="org.openstreetmap.josm.plugins.streetside.utils.StreetsideURLTest$APIv3" time="0.001"/>
+  <testcase name="testParseNextFromHeaderValueMalformed" classname="org.openstreetmap.josm.plugins.streetside.utils.StreetsideURLTest$APIv3" time="0.001"/>
+  <testcase name="testSearchImages" classname="org.openstreetmap.josm.plugins.streetside.utils.StreetsideURLTest$APIv3" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="testParseNextFromHeaderValueNull" classname="org.openstreetmap.josm.plugins.streetside.utils.StreetsideURLTest$APIv3" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[2018-06-11 22:57:31.091 WARNING: Mapillary API v3 returns a malformed URL in the Link header.: java.net.MalformedURLException: no protocol: ###
+]]></system-err>
+</testsuite>

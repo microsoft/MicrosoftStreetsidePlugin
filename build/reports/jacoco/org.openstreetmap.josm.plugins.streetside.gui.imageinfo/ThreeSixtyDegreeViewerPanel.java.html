@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ThreeSixtyDegreeViewerPanel.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.gui.imageinfo</a> &gt; <span class="el_source">ThreeSixtyDegreeViewerPanel.java</span></div><h1>ThreeSixtyDegreeViewerPanel.java</h1><pre class="source lang-java linenums">package org.openstreetmap.josm.plugins.streetside.gui.imageinfo;
+
+import java.awt.image.BufferedImage;
+
+import org.openstreetmap.josm.plugins.streetside.cubemap.CameraTransformer;
+import org.openstreetmap.josm.plugins.streetside.cubemap.GraphicsUtils;
+import org.openstreetmap.josm.plugins.streetside.utils.CubemapBox;
+import org.openstreetmap.josm.tools.I18n;
+import org.openstreetmap.josm.tools.Logging;
+
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Group;
+import javafx.scene.PerspectiveCamera;
+import javafx.scene.PointLight;
+import javafx.scene.Scene;
+import javafx.scene.SceneAntialiasing;
+import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.transform.NonInvertibleTransformException;
+
+@SuppressWarnings(&quot;restriction&quot;)
+public class ThreeSixtyDegreeViewerPanel extends JFXPanel {
+
+	private static final long serialVersionUID = -4940350009018422000L;
+
+	private static Scene scene;
+	private static Group root;
+	private static Group torusGroup;
+	private static CubemapBox cubemapBox;
+	private static PerspectiveCamera camera;
+<span class="nc" id="L36">	private static CameraTransformer cameraTransform = new CameraTransformer();</span>
+
+	private static double mousePosX;
+	private static double mousePosY;
+	private static double mouseOldX;
+	private static double mouseOldY;
+	private static double mouseDeltaX;
+	private static double mouseDeltaY;
+<span class="nc" id="L44">	private static double cameraDistance = 5000;</span>
+
+	// Supply Image Paths or a NullPointer will occur
+	private static Image front;
+	private static Image right;
+	private static Image back;
+	private static Image left;
+	private static Image up;
+	private static Image down;
+
+<span class="nc" id="L54">	public ThreeSixtyDegreeViewerPanel() {</span>
+		// constructor
+<span class="nc" id="L56">	}</span>
+
+	void initialize() {
+
+<span class="nc" id="L60">		root = new Group();</span>
+
+<span class="nc" id="L62">		camera = new PerspectiveCamera(true);</span>
+<span class="nc" id="L63">		cameraTransform.setTranslate(0, 0, 0);</span>
+<span class="nc" id="L64">		cameraTransform.getChildren().addAll(camera);</span>
+<span class="nc" id="L65">		camera.setNearClip(0.1);</span>
+<span class="nc" id="L66">		camera.setFarClip(1000000.0);</span>
+<span class="nc" id="L67">		camera.setFieldOfView(42);</span>
+<span class="nc" id="L68">		camera.setTranslateZ(-cameraDistance);</span>
+		// cameraTransform.ry.setAngle(-45.0);
+		// cameraTransform.rx.setAngle(-10.0);
+		// add a Point Light for better viewing of the grid coordinate system
+<span class="nc" id="L72">		final PointLight light = new PointLight(Color.WHITE);</span>
+
+<span class="nc" id="L74">		cameraTransform.getChildren().add(light);</span>
+<span class="nc" id="L75">		light.setTranslateX(camera.getTranslateX());</span>
+<span class="nc" id="L76">		light.setTranslateY(camera.getTranslateY());</span>
+<span class="nc" id="L77">		light.setTranslateZ(camera.getTranslateZ());</span>
+
+<span class="nc" id="L79">		root.getChildren().add(cameraTransform);</span>
+
+		// Load Cubemap box AFTER camera is initialized
+<span class="nc" id="L82">		final double size = 100000D;</span>
+
+<span class="nc" id="L84">		cubemapBox = new CubemapBox(front, right, back, left, up, down, size, camera);</span>
+
+<span class="nc" id="L86">		torusGroup = new Group();</span>
+<span class="nc" id="L87">		torusGroup.getChildren().add(cameraTransform);</span>
+
+<span class="nc" id="L89">		Platform.runLater(new Runnable() {</span>
+			@Override
+			public void run() {
+				try {
+<span class="nc" id="L93">					setScene(createScene());</span>
+<span class="nc" id="L94">				} catch (NonInvertibleTransformException e) {</span>
+<span class="nc" id="L95">					Logging.error(I18n.tr(&quot;Error initializing StreetsideViewerPanel - JavaFX {0}&quot;, e.getMessage()));</span>
+<span class="nc" id="L96">				}</span>
+<span class="nc" id="L97">			}</span>
+		});
+<span class="nc" id="L99">	}</span>
+
+	private static Scene createScene() throws NonInvertibleTransformException {
+		// TODO: implement, so as to display image from last session. @rrh
+
+<span class="nc" id="L104">		root = new Group();</span>
+
+<span class="nc" id="L106">		camera = new PerspectiveCamera(true);</span>
+<span class="nc" id="L107">		cameraTransform.setTranslate(0, 0, 0);</span>
+<span class="nc" id="L108">		cameraTransform.getChildren().addAll(camera);</span>
+<span class="nc" id="L109">		camera.setNearClip(0.1);</span>
+<span class="nc" id="L110">		camera.setFarClip(1000000.0);</span>
+<span class="nc" id="L111">		camera.setFieldOfView(42);</span>
+<span class="nc" id="L112">		camera.setTranslateZ(-cameraDistance);</span>
+		// TODO: of interest? @rrh
+		// cameraTransform.ry.setAngle(-45.0);
+		// cameraTransform.rx.setAngle(-10.0);
+		// add a Point Light for better viewing of the grid coordinate system
+<span class="nc" id="L117">		final PointLight light = new PointLight(Color.WHITE);</span>
+
+<span class="nc" id="L119">		cameraTransform.getChildren().add(light);</span>
+<span class="nc" id="L120">		light.setTranslateX(camera.getTranslateX());</span>
+<span class="nc" id="L121">		light.setTranslateY(camera.getTranslateY());</span>
+<span class="nc" id="L122">		light.setTranslateZ(camera.getTranslateZ());</span>
+
+<span class="nc" id="L124">		root.getChildren().add(cameraTransform);</span>
+
+		// Load Cubemap box AFTER camera is initialized
+<span class="nc" id="L127">		final double size = 100000D;</span>
+
+<span class="nc" id="L129">		cubemapBox = new CubemapBox(null, null, null, null, null, null, size, camera);</span>
+
+<span class="nc" id="L131">		torusGroup = new Group();</span>
+<span class="nc" id="L132">		torusGroup.getChildren().add(cameraTransform);</span>
+
+<span class="nc" id="L134">		final Scene scene = new Scene(new Group(root), 1024, 668, true, SceneAntialiasing.BALANCED);</span>
+<span class="nc" id="L135">		scene.setFill(Color.TRANSPARENT);</span>
+<span class="nc" id="L136">		scene.setCamera(camera);</span>
+
+		// First person shooter keyboard movement
+<span class="nc" id="L139">		scene.setOnKeyPressed(event -&gt; {</span>
+<span class="nc" id="L140">			double change = 10.0;</span>
+			// Add shift modifier to simulate &quot;Running Speed&quot;
+<span class="nc bnc" id="L142" title="All 2 branches missed.">			if (event.isShiftDown()) {</span>
+<span class="nc" id="L143">				change = 50.0;</span>
+			}
+			// What key did the user press?
+<span class="nc" id="L146">			final KeyCode keycode = event.getCode();</span>
+			// Step 2c: Add Zoom controls
+<span class="nc bnc" id="L148" title="All 2 branches missed.">			if (keycode == KeyCode.W) {</span>
+<span class="nc" id="L149">				camera.setTranslateZ(camera.getTranslateZ() + change);</span>
+			}
+<span class="nc bnc" id="L151" title="All 2 branches missed.">			if (keycode == KeyCode.S) {</span>
+<span class="nc" id="L152">				camera.setTranslateZ(camera.getTranslateZ() - change);</span>
+			}
+			// Step 2d: Add Strafe controls
+<span class="nc bnc" id="L155" title="All 2 branches missed.">			if (keycode == KeyCode.A) {</span>
+<span class="nc" id="L156">				camera.setTranslateX(camera.getTranslateX() - change);</span>
+			}
+<span class="nc bnc" id="L158" title="All 2 branches missed.">			if (keycode == KeyCode.D) {</span>
+<span class="nc" id="L159">				camera.setTranslateX(camera.getTranslateX() + change);</span>
+			}
+<span class="nc" id="L161">		});</span>
+
+<span class="nc" id="L163">		scene.setOnMousePressed((MouseEvent me) -&gt; {</span>
+<span class="nc" id="L164">			mousePosX = me.getSceneX();</span>
+<span class="nc" id="L165">			mousePosY = me.getSceneY();</span>
+<span class="nc" id="L166">			mouseOldX = me.getSceneX();</span>
+<span class="nc" id="L167">			mouseOldY = me.getSceneY();</span>
+<span class="nc" id="L168">		});</span>
+<span class="nc" id="L169">		scene.setOnMouseDragged((MouseEvent me) -&gt; {</span>
+<span class="nc" id="L170">			mouseOldX = mousePosX;</span>
+<span class="nc" id="L171">			mouseOldY = mousePosY;</span>
+<span class="nc" id="L172">			mousePosX = me.getSceneX();</span>
+<span class="nc" id="L173">			mousePosY = me.getSceneY();</span>
+<span class="nc" id="L174">			mouseDeltaX = mousePosX - mouseOldX;</span>
+<span class="nc" id="L175">			mouseDeltaY = mousePosY - mouseOldY;</span>
+
+<span class="nc" id="L177">			double modifier = 10.0;</span>
+<span class="nc" id="L178">			final double modifierFactor = 0.1;</span>
+
+<span class="nc bnc" id="L180" title="All 2 branches missed.">			if (me.isControlDown()) {</span>
+<span class="nc" id="L181">				modifier = 0.1;</span>
+			}
+<span class="nc bnc" id="L183" title="All 2 branches missed.">			if (me.isShiftDown()) {</span>
+<span class="nc" id="L184">				modifier = 50.0;</span>
+			}
+<span class="nc bnc" id="L186" title="All 2 branches missed.">			if (me.isPrimaryButtonDown()) {</span>
+<span class="nc" id="L187">				cameraTransform.ry.setAngle(</span>
+<span class="nc" id="L188">						((cameraTransform.ry.getAngle() + mouseDeltaX * modifierFactor * modifier * 2.0) % 360 + 540)</span>
+								% 360 - 180); // +
+<span class="nc" id="L190">				cameraTransform.rx.setAngle(</span>
+<span class="nc" id="L191">						((cameraTransform.rx.getAngle() - mouseDeltaY * modifierFactor * modifier * 2.0) % 360 + 540)</span>
+								% 360 - 180); // -
+
+<span class="nc bnc" id="L194" title="All 2 branches missed.">			} else if (me.isSecondaryButtonDown()) {</span>
+<span class="nc" id="L195">				final double z = camera.getTranslateZ();</span>
+<span class="nc" id="L196">				final double newZ = z + mouseDeltaX * modifierFactor * modifier;</span>
+<span class="nc" id="L197">				camera.setTranslateZ(newZ);</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">			} else if (me.isMiddleButtonDown()) {</span>
+<span class="nc" id="L199">				cameraTransform.t.setX(cameraTransform.t.getX() + mouseDeltaX * modifierFactor * modifier * 0.3); // -</span>
+<span class="nc" id="L200">				cameraTransform.t.setY(cameraTransform.t.getY() + mouseDeltaY * modifierFactor * modifier * 0.3); // -</span>
+			}
+<span class="nc" id="L202">		});</span>
+
+<span class="nc" id="L204">		root.getChildren().addAll(cubemapBox, torusGroup);</span>
+<span class="nc" id="L205">		root.setAutoSizeChildren(true);</span>
+
+<span class="nc" id="L207">		return scene;</span>
+	}
+
+	private static Scene createDefaultScene() {
+		// TODO: default scene with message? @rrh
+
+		// Load Cubemap box AFTER camera is initialized
+<span class="nc" id="L214">		final double size = 100000D;</span>
+
+<span class="nc" id="L216">		TextArea textArea = new TextArea();</span>
+<span class="nc" id="L217">		textArea.setText(&quot;No Streetside image selected.&quot;);</span>
+
+<span class="nc" id="L219">		VBox vbox = new VBox(textArea);</span>
+
+<span class="nc" id="L221">		Scene scene = new Scene(vbox, 200, 100);</span>
+<span class="nc" id="L222">		return scene;</span>
+	}
+
+	public static Scene createScene(BufferedImage img0, BufferedImage img1, BufferedImage img2, BufferedImage img3,
+			BufferedImage img4, BufferedImage img5) throws NonInvertibleTransformException {
+<span class="nc" id="L227">		front = GraphicsUtils.convertBufferedImage2JavaFXImage(img0);</span>
+<span class="nc" id="L228">		right = GraphicsUtils.convertBufferedImage2JavaFXImage(img1);</span>
+<span class="nc" id="L229">		back = GraphicsUtils.convertBufferedImage2JavaFXImage(img2);</span>
+<span class="nc" id="L230">		left = GraphicsUtils.convertBufferedImage2JavaFXImage(img3);</span>
+<span class="nc" id="L231">		up = GraphicsUtils.convertBufferedImage2JavaFXImage(img4);</span>
+<span class="nc" id="L232">		down = GraphicsUtils.convertBufferedImage2JavaFXImage(img5);</span>
+
+<span class="nc" id="L234">		root = new Group();</span>
+
+<span class="nc" id="L236">		camera = new PerspectiveCamera(true);</span>
+<span class="nc" id="L237">		cameraTransform.setTranslate(0, 0, 0);</span>
+<span class="nc" id="L238">		cameraTransform.getChildren().addAll(camera);</span>
+<span class="nc" id="L239">		camera.setNearClip(0.1);</span>
+<span class="nc" id="L240">		camera.setFarClip(1000000.0);</span>
+<span class="nc" id="L241">		camera.setFieldOfView(42);</span>
+<span class="nc" id="L242">		camera.setTranslateZ(-cameraDistance);</span>
+		// cameraTransform.ry.setAngle(-45.0);
+		// cameraTransform.rx.setAngle(-10.0);
+		// add a Point Light for better viewing of the grid coordinate system
+<span class="nc" id="L246">		final PointLight light = new PointLight(Color.WHITE);</span>
+
+<span class="nc" id="L248">		cameraTransform.getChildren().add(light);</span>
+<span class="nc" id="L249">		light.setTranslateX(camera.getTranslateX());</span>
+<span class="nc" id="L250">		light.setTranslateY(camera.getTranslateY());</span>
+<span class="nc" id="L251">		light.setTranslateZ(camera.getTranslateZ());</span>
+
+<span class="nc" id="L253">		root.getChildren().add(cameraTransform);</span>
+
+		// Load Cubemap box AFTER camera is initialized
+<span class="nc" id="L256">		final double size = 100000D;</span>
+
+<span class="nc" id="L258">		cubemapBox = new CubemapBox(front, right, back, left, up, down, size, camera);</span>
+
+<span class="nc" id="L260">		final Group torusGroup = new Group();</span>
+<span class="nc" id="L261">		torusGroup.getChildren().add(cameraTransform);</span>
+
+<span class="nc" id="L263">		final Scene scene = new Scene(new Group(root), 1024, 668, true, SceneAntialiasing.BALANCED);</span>
+<span class="nc" id="L264">		scene.setFill(Color.TRANSPARENT);</span>
+<span class="nc" id="L265">		scene.setCamera(camera);</span>
+
+		// First person shooter keyboard movement
+<span class="nc" id="L268">		scene.setOnKeyPressed(event -&gt; {</span>
+<span class="nc" id="L269">			double change = 10.0;</span>
+			// Add shift modifier to simulate &quot;Running Speed&quot;
+<span class="nc bnc" id="L271" title="All 2 branches missed.">			if (event.isShiftDown()) {</span>
+<span class="nc" id="L272">				change = 50.0;</span>
+			}
+			// What key did the user press?
+<span class="nc" id="L275">			final KeyCode keycode = event.getCode();</span>
+			// Step 2c: Add Zoom controls
+<span class="nc bnc" id="L277" title="All 2 branches missed.">			if (keycode == KeyCode.W) {</span>
+<span class="nc" id="L278">				camera.setTranslateZ(camera.getTranslateZ() + change);</span>
+			}
+<span class="nc bnc" id="L280" title="All 2 branches missed.">			if (keycode == KeyCode.S) {</span>
+<span class="nc" id="L281">				camera.setTranslateZ(camera.getTranslateZ() - change);</span>
+			}
+			// Step 2d: Add Strafe controls
+<span class="nc bnc" id="L284" title="All 2 branches missed.">			if (keycode == KeyCode.A) {</span>
+<span class="nc" id="L285">				camera.setTranslateX(camera.getTranslateX() - change);</span>
+			}
+<span class="nc bnc" id="L287" title="All 2 branches missed.">			if (keycode == KeyCode.D) {</span>
+<span class="nc" id="L288">				camera.setTranslateX(camera.getTranslateX() + change);</span>
+			}
+
+<span class="nc" id="L291">		});</span>
+
+<span class="nc" id="L293">		scene.setOnMousePressed((MouseEvent me) -&gt; {</span>
+<span class="nc" id="L294">			mousePosX = me.getSceneX();</span>
+<span class="nc" id="L295">			mousePosY = me.getSceneY();</span>
+<span class="nc" id="L296">			mouseOldX = me.getSceneX();</span>
+<span class="nc" id="L297">			mouseOldY = me.getSceneY();</span>
+<span class="nc" id="L298">		});</span>
+<span class="nc" id="L299">		scene.setOnMouseDragged((MouseEvent me) -&gt; {</span>
+<span class="nc" id="L300">			mouseOldX = mousePosX;</span>
+<span class="nc" id="L301">			mouseOldY = mousePosY;</span>
+<span class="nc" id="L302">			mousePosX = me.getSceneX();</span>
+<span class="nc" id="L303">			mousePosY = me.getSceneY();</span>
+<span class="nc" id="L304">			mouseDeltaX = mousePosX - mouseOldX;</span>
+<span class="nc" id="L305">			mouseDeltaY = mousePosY - mouseOldY;</span>
+
+<span class="nc" id="L307">			double modifier = 10.0;</span>
+<span class="nc" id="L308">			final double modifierFactor = 0.1;</span>
+
+<span class="nc bnc" id="L310" title="All 2 branches missed.">			if (me.isControlDown()) {</span>
+<span class="nc" id="L311">				modifier = 0.1;</span>
+			}
+<span class="nc bnc" id="L313" title="All 2 branches missed.">			if (me.isShiftDown()) {</span>
+<span class="nc" id="L314">				modifier = 50.0;</span>
+			}
+<span class="nc bnc" id="L316" title="All 2 branches missed.">			if (me.isPrimaryButtonDown()) {</span>
+<span class="nc" id="L317">				cameraTransform.ry.setAngle(</span>
+<span class="nc" id="L318">						((cameraTransform.ry.getAngle() + mouseDeltaX * modifierFactor * modifier * 2.0) % 360 + 540)</span>
+								% 360 - 180); // +
+<span class="nc" id="L320">				cameraTransform.rx.setAngle(</span>
+<span class="nc" id="L321">						((cameraTransform.rx.getAngle() - mouseDeltaY * modifierFactor * modifier * 2.0) % 360 + 540)</span>
+								% 360 - 180); // -
+
+<span class="nc bnc" id="L324" title="All 2 branches missed.">			} else if (me.isSecondaryButtonDown()) {</span>
+<span class="nc" id="L325">				final double z = camera.getTranslateZ();</span>
+<span class="nc" id="L326">				final double newZ = z + mouseDeltaX * modifierFactor * modifier;</span>
+<span class="nc" id="L327">				camera.setTranslateZ(newZ);</span>
+<span class="nc bnc" id="L328" title="All 2 branches missed.">			} else if (me.isMiddleButtonDown()) {</span>
+<span class="nc" id="L329">				cameraTransform.t.setX(cameraTransform.t.getX() + mouseDeltaX * modifierFactor * modifier * 0.3); // -</span>
+<span class="nc" id="L330">				cameraTransform.t.setY(cameraTransform.t.getY() + mouseDeltaY * modifierFactor * modifier * 0.3); // -</span>
+			}
+<span class="nc" id="L332">		});</span>
+
+<span class="nc" id="L334">		root.getChildren().addAll(cubemapBox, torusGroup);</span>
+<span class="nc" id="L335">		root.setAutoSizeChildren(true);</span>
+
+<span class="nc" id="L337">		return scene;</span>
+	}
+
+	public void setCubemapImages(BufferedImage img, BufferedImage img1, BufferedImage img2, BufferedImage img3,
+			BufferedImage img4, BufferedImage img5) {
+<span class="nc" id="L342">		cubemapBox = null;</span>
+
+<span class="nc" id="L344">		GraphicsUtils.PlatformHelper.run(new Runnable() {</span>
+			@Override
+			public void run() {
+				try {
+					// initialize without imagery.
+<span class="nc" id="L349">					scene = createScene(img, img1, img2, img3, img4, img5);</span>
+<span class="nc" id="L350">					setScene(scene);</span>
+<span class="nc" id="L351">				} catch (NonInvertibleTransformException e) {</span>
+<span class="nc" id="L352">					Logging.error(I18n.tr(&quot;Error initializing StreetsideViewerPanel - JavaFX {0}&quot;, e.getMessage()));</span>
+<span class="nc" id="L353">				}</span>
+<span class="nc" id="L354">			}</span>
+		});
+<span class="nc" id="L356">	}</span>
+
+	public CubemapBox getCubemapBox() {
+<span class="nc bnc" id="L359" title="All 2 branches missed.">		if (cubemapBox == null) {</span>
+			// shouldn't happen
+<span class="nc" id="L361">			initialize();</span>
+		}
+<span class="nc" id="L363">		return cubemapBox;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
