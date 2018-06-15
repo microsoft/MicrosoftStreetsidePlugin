@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="5.8.1" timestamp="2018-06-11T15:54:45.888">
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/StreetsideCubemap.java">
+<pmd version="5.8.1" timestamp="2018-06-14T21:57:01.153">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/StreetsideCubemap.java">
 <violation beginline="16" endline="16" begincolumn="62" endcolumn="74" rule="AssignmentToNonFinalStatic" ruleset="Design" package="org.openstreetmap.josm.plugins.streetside" class="StreetsideCubemap" variable="face2TilesMap" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/design.html#AssignmentToNonFinalStatic" priority="3">
 Possible unsafe assignment to a non-final static field in a constructor.
 </violation>
@@ -17,12 +17,12 @@ Overriding method merely calls super
 Overriding method merely calls super
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/StreetsideData.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/StreetsideData.java">
 <violation beginline="2" endline="396" begincolumn="1" endcolumn="1" rule="GodClass" ruleset="Design" package="org.openstreetmap.josm.plugins.streetside" class="StreetsideData" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/design.html#GodClass" priority="3">
 Possible God class (WMC=51, ATFD=8, TCC=0.04093567251461988)
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/StreetsideImage.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/StreetsideImage.java">
 <violation beginline="28" endline="30" begincolumn="17" endcolumn="3" rule="ShortClassName" ruleset="Naming" package="org.openstreetmap.josm.plugins.streetside" class="StreetsideImage" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/naming.html#ShortClassName" priority="4">
 Avoid short class names like Rn
 </violation>
@@ -72,7 +72,7 @@ Fields should be declared at the top of the class, before any method declaration
 Fields should be declared at the top of the class, before any method declarations, constructors, initializers or inner classes.
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/StreetsideLayer.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/StreetsideLayer.java">
 <violation beginline="2" endline="622" begincolumn="1" endcolumn="1" rule="ExcessiveImports" ruleset="Coupling" package="org.openstreetmap.josm.plugins.streetside" class="StreetsideLayer" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/coupling.html#ExcessiveImports" priority="3">
 A high number of imports can indicate a high degree of coupling within an object.
 </violation>
@@ -86,22 +86,22 @@ Avoid empty catch blocks
 Document empty method body
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/StreetsideSequence.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/StreetsideSequence.java">
 <violation beginline="37" endline="37" begincolumn="41" endcolumn="46" rule="ImmutableField" ruleset="Design" package="org.openstreetmap.josm.plugins.streetside" class="StreetsideSequence" variable="images" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/design.html#ImmutableField" priority="3">
 Private field 'images' could be made final; it is only initialized in the declaration or constructor.
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/actions/StreetsideExportAction.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/actions/StreetsideExportAction.java">
 <violation beginline="49" endline="49" begincolumn="14" endcolumn="39" rule="AvoidDuplicateLiterals" ruleset="String and StringBuffer" package="org.openstreetmap.josm.plugins.streetside.actions" class="StreetsideExportAction" method="StreetsideExportAction" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/strings.html#AvoidDuplicateLiterals" priority="3">
 The String literal &quot;Export Streetside images&quot; appears 4 times in this file; the first occurrence is on line 49
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/actions/StreetsideSubmitCurrentChangesetAction.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/actions/StreetsideSubmitCurrentChangesetAction.java">
 <violation beginline="116" endline="119" begincolumn="14" endcolumn="7" rule="EmptyIfStmt" ruleset="Empty Code" package="org.openstreetmap.josm.plugins.streetside.actions" class="StreetsideSubmitCurrentChangesetAction" method="actionPerformed" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/empty.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/actions/WalkThread.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/actions/WalkThread.java">
 <violation beginline="9" endline="9" begincolumn="1" endcolumn="67" rule="UnusedImports" ruleset="Import Statements" package="org.openstreetmap.josm.plugins.streetside.actions" class="WalkThread" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/imports.html#UnusedImports" priority="4">
 Avoid unused imports such as 'org.openstreetmap.josm.plugins.streetside.StreetsideCubemap'
 </violation>
@@ -130,7 +130,13 @@ Avoid catching generic exceptions such as NullPointerException, RuntimeException
 Avoid unused private methods such as 'preDownloadCubemaps(StreetsideImage,int,CacheUtils.PICTURE)'.
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/cache/Caches.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/cache/Caches.java">
+<violation beginline="68" endline="68" begincolumn="34" endcolumn="42" rule="AvoidCatchingGenericException" ruleset="Strict Exceptions" package="org.openstreetmap.josm.plugins.streetside.cache" class="Caches$ImageCache" method="ImageCache" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/strictexception.html#AvoidCatchingGenericException" priority="3">
+Avoid catching generic exceptions such as NullPointerException, RuntimeException, Exception in try-catch block
+</violation>
+<violation beginline="97" endline="97" begincolumn="34" endcolumn="42" rule="AvoidCatchingGenericException" ruleset="Strict Exceptions" package="org.openstreetmap.josm.plugins.streetside.cache" class="Caches$CubemapCache" method="CubemapCache" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/strictexception.html#AvoidCatchingGenericException" priority="3">
+Avoid catching generic exceptions such as NullPointerException, RuntimeException, Exception in try-catch block
+</violation>
 <violation beginline="108" endline="115" begincolumn="31" endcolumn="17" rule="SingleMethodSingleton" ruleset="Design" package="org.openstreetmap.josm.plugins.streetside.cache" class="Caches$CubemapCache" method="getInstance" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/design.html#SingleMethodSingleton" priority="2">
 Class contains multiple getInstance methods. Please review.
 </violation>
@@ -141,7 +147,7 @@ Class contains multiple getInstance methods. Please review.
 Class contains multiple getInstance methods. Please review.
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/cubemap/CameraTransformer.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/cubemap/CameraTransformer.java">
 <violation beginline="24" endline="26" begincolumn="9" endcolumn="9" rule="NonStaticInitializer" ruleset="Design" package="org.openstreetmap.josm.plugins.streetside.cubemap" class="CameraTransformer" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/design.html#NonStaticInitializer" priority="3">
 Non-static initializers are confusing
 </violation>
@@ -155,7 +161,7 @@ Non-static initializers are confusing
 Switch statements should have a default label
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/cubemap/CubemapBuilder.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/cubemap/CubemapBuilder.java">
 <violation beginline="28" endline="286" begincolumn="8" endcolumn="1" rule="ClassWithOnlyPrivateConstructorsShouldBeFinal" ruleset="Design" package="org.openstreetmap.josm.plugins.streetside.cubemap" class="CubemapBuilder" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/design.html#ClassWithOnlyPrivateConstructorsShouldBeFinal" priority="1">
 A class which only has private constructors should be final
 </violation>
@@ -193,7 +199,7 @@ Unnecessary wrapper object creation
 Singleton is not thread safe
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/cubemap/CubemapUtils.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/cubemap/CubemapUtils.java">
 <violation beginline="12" endline="283" begincolumn="27" endcolumn="1" rule="UseUtilityClass" ruleset="Design" package="org.openstreetmap.josm.plugins.streetside.cubemap" class="CubemapUtils" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/design.html#UseUtilityClass" priority="3">
 All methods are static.  Consider using a utility class instead. Alternatively, you could add a private constructor or make the class abstract to silence this warning.
 </violation>
@@ -231,7 +237,7 @@ Avoid using if...else statements without curly braces
 Avoid using if...else statements without curly braces
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/cubemap/GraphicsUtils.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/cubemap/GraphicsUtils.java">
 <violation beginline="20" endline="179" begincolumn="28" endcolumn="1" rule="UseUtilityClass" ruleset="Design" package="org.openstreetmap.josm.plugins.streetside.cubemap" class="GraphicsUtils" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/design.html#UseUtilityClass" priority="3">
 All methods are static.  Consider using a utility class instead. Alternatively, you could add a private constructor or make the class abstract to silence this warning.
 </violation>
@@ -257,17 +263,17 @@ Unnecessary wrapper object creation
 Avoid reassigning parameters such as 'bufImg'
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/cubemap/TileDownloadingTask.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/cubemap/TileDownloadingTask.java">
 <violation beginline="33" endline="33" begincolumn="17" endcolumn="33" rule="RedundantFieldInitializer" ruleset="Optimization" package="org.openstreetmap.josm.plugins.streetside.cubemap" class="TileDownloadingTask" variable="cancelled" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/optimizations.html#RedundantFieldInitializer" priority="3">
 Avoid using redundant field initializer for 'cancelled'
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/gui/StreetsideChangesetDialog.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/gui/StreetsideChangesetDialog.java">
 <violation beginline="2" endline="145" begincolumn="1" endcolumn="2" rule="ExcessiveImports" ruleset="Coupling" package="org.openstreetmap.josm.plugins.streetside.gui" class="StreetsideChangesetDialog" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/coupling.html#ExcessiveImports" priority="3">
 A high number of imports can indicate a high degree of coupling within an object.
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/gui/StreetsideExportDialog.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/gui/StreetsideExportDialog.java">
 <violation beginline="152" endline="152" begincolumn="34" endcolumn="40" rule="AccessorMethodGeneration" ruleset="Design" package="org.openstreetmap.josm.plugins.streetside.gui" class="StreetsideExportDialog$RewriteButtonAction" method="actionPerformed" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/design.html#AccessorMethodGeneration" priority="3">
 Avoid autogenerated methods to access private fields and methods of inner / outer classes
 </violation>
@@ -290,7 +296,7 @@ Avoid autogenerated methods to access private fields and methods of inner / oute
 Avoid autogenerated methods to access private fields and methods of inner / outer classes
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/gui/StreetsideFilterDialog.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/gui/StreetsideFilterDialog.java">
 <violation beginline="2" endline="345" begincolumn="1" endcolumn="2" rule="ExcessiveImports" ruleset="Coupling" package="org.openstreetmap.josm.plugins.streetside.gui" class="StreetsideFilterDialog" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/coupling.html#ExcessiveImports" priority="3">
 A high number of imports can indicate a high degree of coupling within an object.
 </violation>
@@ -307,12 +313,12 @@ Avoid autogenerated methods to access private fields and methods of inner / oute
 Avoid autogenerated methods to access private fields and methods of inner / outer classes
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/gui/StreetsideHistoryDialog.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/gui/StreetsideHistoryDialog.java">
 <violation beginline="2" endline="290" begincolumn="1" endcolumn="2" rule="ExcessiveImports" ruleset="Coupling" package="org.openstreetmap.josm.plugins.streetside.gui" class="StreetsideHistoryDialog" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/coupling.html#ExcessiveImports" priority="3">
 A high number of imports can indicate a high degree of coupling within an object.
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/gui/StreetsideImageDisplay.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/gui/StreetsideImageDisplay.java">
 <violation beginline="2" endline="553" begincolumn="1" endcolumn="2" rule="GodClass" ruleset="Design" package="org.openstreetmap.josm.plugins.streetside.gui" class="StreetsideImageDisplay" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/design.html#GodClass" priority="3">
 Possible God class (WMC=80, ATFD=266, TCC=0.30994152046783624)
 </violation>
@@ -497,7 +503,7 @@ Avoid autogenerated methods to access private fields and methods of inner / oute
 Avoid autogenerated methods to access private fields and methods of inner / outer classes
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/gui/StreetsideMainDialog.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/gui/StreetsideMainDialog.java">
 <violation beginline="2" endline="651" begincolumn="1" endcolumn="1" rule="ExcessiveImports" ruleset="Coupling" package="org.openstreetmap.josm.plugins.streetside.gui" class="StreetsideMainDialog" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/coupling.html#ExcessiveImports" priority="3">
 A high number of imports can indicate a high degree of coupling within an object.
 </violation>
@@ -511,7 +517,7 @@ A switch statement does not contain a break
 Deeply nested if..then statements are hard to read
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/gui/StreetsidePreferenceSetting.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/gui/StreetsidePreferenceSetting.java">
 <violation beginline="2" endline="279" begincolumn="1" endcolumn="2" rule="ExcessiveImports" ruleset="Coupling" package="org.openstreetmap.josm.plugins.streetside.gui" class="StreetsidePreferenceSetting" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/coupling.html#ExcessiveImports" priority="3">
 A high number of imports can indicate a high degree of coupling within an object.
 </violation>
@@ -519,12 +525,12 @@ A high number of imports can indicate a high degree of coupling within an object
 Avoid instantiation through private constructors from outside of the constructors class.
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/gui/StreetsideViewerDialog.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/gui/StreetsideViewerDialog.java">
 <violation beginline="31" endline="31" begincolumn="39" endcolumn="59" rule="ImmutableField" ruleset="Design" package="org.openstreetmap.josm.plugins.streetside.gui" class="StreetsideViewerDialog" variable="streetsideViewerPanel" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/design.html#ImmutableField" priority="3">
 Private field 'streetsideViewerPanel' could be made final; it is only initialized in the declaration or constructor.
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/gui/imageinfo/ClipboardAction.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/gui/imageinfo/ClipboardAction.java">
 <violation beginline="91" endline="93" begincolumn="13" endcolumn="13" rule="AvoidDeeplyNestedIfStmts" ruleset="Design" package="org.openstreetmap.josm.plugins.streetside.gui.imageinfo" class="ClipboardAction" method="actionPerformed" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/design.html#AvoidDeeplyNestedIfStmts" priority="3">
 Deeply nested if..then statements are hard to read
 </violation>
@@ -532,12 +538,12 @@ Deeply nested if..then statements are hard to read
 Deeply nested if..then statements are hard to read
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/gui/imageinfo/ImageInfoPanel.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/gui/imageinfo/ImageInfoPanel.java">
 <violation beginline="2" endline="239" begincolumn="1" endcolumn="1" rule="ExcessiveImports" ruleset="Coupling" package="org.openstreetmap.josm.plugins.streetside.gui.imageinfo" class="ImageInfoPanel" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/coupling.html#ExcessiveImports" priority="3">
 A high number of imports can indicate a high degree of coupling within an object.
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/gui/imageinfo/StreetsideViewerPanel.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/gui/imageinfo/StreetsideViewerPanel.java">
 <violation beginline="36" endline="36" begincolumn="17" endcolumn="50" rule="SingularField" ruleset="Design" package="org.openstreetmap.josm.plugins.streetside.gui.imageinfo" class="StreetsideViewerPanel" variable="imgReloadAction" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/design.html#SingularField" priority="3">
 Perhaps 'imgReloadAction' could be replaced by a local variable.
 </violation>
@@ -545,7 +551,7 @@ Perhaps 'imgReloadAction' could be replaced by a local variable.
 Avoid autogenerated methods to access private fields and methods of inner / outer classes
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/gui/imageinfo/ThreeSixtyDegreeViewerPanel.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/gui/imageinfo/ThreeSixtyDegreeViewerPanel.java">
 <violation beginline="13" endline="13" begincolumn="1" endcolumn="41" rule="UnusedImports" ruleset="Import Statements" package="org.openstreetmap.josm.plugins.streetside.gui.imageinfo" class="ThreeSixtyDegreeViewerPanel" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/imports.html#UnusedImports" priority="4">
 Avoid unused imports such as 'javafx.beans.value.ChangeListener'
 </violation>
@@ -574,22 +580,22 @@ Avoid unused local variables such as 'size'.
 Consider simply returning the value vs storing it in local variable 'scene'
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/history/commands/CommandImport.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/history/commands/CommandImport.java">
 <violation beginline="50" endline="51" begincolumn="46" endcolumn="3" rule="UncommentedEmptyMethodBody" ruleset="Design" package="org.openstreetmap.josm.plugins.streetside.history.commands" class="CommandImport" method="sum" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/design.html#UncommentedEmptyMethodBody" priority="3">
 Document empty method body
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/history/commands/CommandJoin.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/history/commands/CommandJoin.java">
 <violation beginline="56" endline="57" begincolumn="46" endcolumn="3" rule="UncommentedEmptyMethodBody" ruleset="Design" package="org.openstreetmap.josm.plugins.streetside.history.commands" class="CommandJoin" method="sum" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/design.html#UncommentedEmptyMethodBody" priority="3">
 Document empty method body
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/history/commands/CommandUnjoin.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/history/commands/CommandUnjoin.java">
 <violation beginline="56" endline="57" begincolumn="46" endcolumn="3" rule="UncommentedEmptyMethodBody" ruleset="Design" package="org.openstreetmap.josm.plugins.streetside.history.commands" class="CommandUnjoin" method="sum" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/design.html#UncommentedEmptyMethodBody" priority="3">
 Document empty method body
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/io/download/DetectionsDownloadRunnable.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/io/download/DetectionsDownloadRunnable.java">
 <violation beginline="17" endline="17" begincolumn="32" endcolumn="35" rule="UnusedPrivateField" ruleset="Unused Code" package="org.openstreetmap.josm.plugins.streetside.io.download" class="DetectionsDownloadRunnable" variable="data" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/unusedcode.html#UnusedPrivateField" priority="3">
 Avoid unused private fields such as 'data'.
 </violation>
@@ -597,7 +603,7 @@ Avoid unused private fields such as 'data'.
 Perhaps 'data' could be replaced by a local variable.
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/io/download/ImageDetailsDownloadRunnable.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/io/download/ImageDetailsDownloadRunnable.java">
 <violation beginline="4" endline="4" begincolumn="1" endcolumn="35" rule="UnusedImports" ruleset="Import Statements" package="org.openstreetmap.josm.plugins.streetside.io.download" class="ImageDetailsDownloadRunnable" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/imports.html#UnusedImports" priority="4">
 Avoid unused imports such as 'java.io.BufferedInputStream'
 </violation>
@@ -623,7 +629,7 @@ Avoid unused private fields such as 'data'.
 Perhaps 'data' could be replaced by a local variable.
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/io/download/SequenceDownloadRunnable.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/io/download/SequenceDownloadRunnable.java">
 <violation beginline="50" endline="50" begincolumn="5" endcolumn="95" rule="PrematureDeclaration" ruleset="Optimization" package="org.openstreetmap.josm.plugins.streetside.io.download" class="SequenceDownloadRunnable" method="run" variable="seq" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/optimizations.html#PrematureDeclaration" priority="3">
 Avoid declaring a variable if it is unreferenced before a possible exit point.
 </violation>
@@ -637,7 +643,7 @@ Unnecessary wrapper object creation
 Unnecessary wrapper object creation
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/io/export/StreetsideExportManager.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/io/export/StreetsideExportManager.java">
 <violation beginline="39" endline="39" begincolumn="15" endcolumn="20" rule="ImmutableField" ruleset="Design" package="org.openstreetmap.josm.plugins.streetside.io.export" class="StreetsideExportManager" variable="amount" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/design.html#ImmutableField" priority="3">
 Private field 'amount' could be made final; it is only initialized in the declaration or constructor.
 </violation>
@@ -651,7 +657,7 @@ Avoid catching generic exceptions such as NullPointerException, RuntimeException
 Document empty method body
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/mode/AbstractMode.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/mode/AbstractMode.java">
 <violation beginline="84" endline="84" begincolumn="13" endcolumn="26" rule="AvoidFieldNameMatchingMethodName" ruleset="Naming" package="org.openstreetmap.josm.plugins.streetside.mode" class="AbstractMode$SemiautomaticThread" variable="moved" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/naming.html#AvoidFieldNameMatchingMethodName" priority="3">
 Field moved has the same name as a method
 </violation>
@@ -659,17 +665,17 @@ Field moved has the same name as a method
 Avoid autogenerated methods to access private fields and methods of inner / outer classes
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/mode/SelectMode.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/mode/SelectMode.java">
 <violation beginline="189" endline="190" begincolumn="59" endcolumn="3" rule="UncommentedEmptyMethodBody" ruleset="Design" package="org.openstreetmap.josm.plugins.streetside.mode" class="SelectMode" method="paint" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/design.html#UncommentedEmptyMethodBody" priority="3">
 Document empty method body
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/model/KeyIndexedObject.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/model/KeyIndexedObject.java">
 <violation beginline="48" endline="50" begincolumn="5" endcolumn="5" rule="SimplifyBooleanReturns" ruleset="Design" package="org.openstreetmap.josm.plugins.streetside.model" class="KeyIndexedObject" method="equals" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/design.html#SimplifyBooleanReturns" priority="3">
 Avoid unnecessary if..then..else statements when returning booleans
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/utils/CubemapBox.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/utils/CubemapBox.java">
 <violation beginline="36" endline="36" begincolumn="28" endcolumn="35" rule="UnusedPrivateField" ruleset="Unused Code" package="org.openstreetmap.josm.plugins.streetside.utils" class="CubemapBox" variable="instance" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/unusedcode.html#UnusedPrivateField" priority="3">
 Avoid unused private fields such as 'instance'.
 </violation>
@@ -731,7 +737,7 @@ Avoid autogenerated methods to access private fields and methods of inner / oute
 Returning 'views' may expose an internal array.
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/utils/ImageImportUtil.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/utils/ImageImportUtil.java">
 <violation beginline="96" endline="98" begincolumn="7" endcolumn="5" rule="EmptyCatchBlock" ruleset="Empty Code" package="org.openstreetmap.josm.plugins.streetside.utils" class="ImageImportUtil" method="readImageFrom" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/empty.html#EmptyCatchBlock" priority="3">
 Avoid empty catch blocks
 </violation>
@@ -739,12 +745,12 @@ Avoid empty catch blocks
 Avoid empty catch blocks
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/utils/StreetsideSequenceIdGenerator.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/utils/StreetsideSequenceIdGenerator.java">
 <violation beginline="9" endline="17" begincolumn="44" endcolumn="1" rule="UseUtilityClass" ruleset="Design" package="org.openstreetmap.josm.plugins.streetside.utils" class="StreetsideSequenceIdGenerator" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/design.html#UseUtilityClass" priority="3">
 All methods are static.  Consider using a utility class instead. Alternatively, you could add a private constructor or make the class abstract to silence this warning.
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/utils/StreetsideURL.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/utils/StreetsideURL.java">
 <violation beginline="2" endline="374" begincolumn="1" endcolumn="1" rule="GodClass" ruleset="Design" package="org.openstreetmap.josm.plugins.streetside.utils" class="StreetsideURL" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/design.html#GodClass" priority="3">
 Possible God class (WMC=59, ATFD=41, TCC=0.0)
 </violation>
@@ -773,22 +779,22 @@ No need to call String.valueOf to append to a string.
 StringBuffer (or StringBuilder).append is called 2 consecutive times with literal Strings. Use a single append with a single combined String.
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/utils/StreetsideUtils.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/utils/StreetsideUtils.java">
 <violation beginline="2" endline="285" begincolumn="1" endcolumn="2" rule="GodClass" ruleset="Design" package="org.openstreetmap.josm.plugins.streetside.utils" class="StreetsideUtils" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/design.html#GodClass" priority="3">
 Possible God class (WMC=56, ATFD=29, TCC=0.0)
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/utils/api/JsonDecoder.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/utils/api/JsonDecoder.java">
 <violation beginline="45" endline="47" begincolumn="11" endcolumn="11" rule="AvoidDeeplyNestedIfStmts" ruleset="Design" package="org.openstreetmap.josm.plugins.streetside.utils.api" class="JsonDecoder" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/design.html#AvoidDeeplyNestedIfStmts" priority="3">
 Deeply nested if..then statements are hard to read
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/utils/api/JsonImageDetailsDecoder.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/utils/api/JsonImageDetailsDecoder.java">
 <violation beginline="37" endline="41" begincolumn="9" endcolumn="9" rule="AvoidDeeplyNestedIfStmts" ruleset="Design" package="org.openstreetmap.josm.plugins.streetside.utils.api" class="JsonImageDetailsDecoder" method="decodeImageInfo" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/design.html#AvoidDeeplyNestedIfStmts" priority="3">
 Deeply nested if..then statements are hard to read
 </violation>
 </file>
-<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/utils/api/JsonStreetsideDecoder.java">
+<file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/src/org/openstreetmap/josm/plugins/streetside/utils/api/JsonStreetsideDecoder.java">
 <violation beginline="45" endline="47" begincolumn="11" endcolumn="11" rule="AvoidDeeplyNestedIfStmts" ruleset="Design" package="org.openstreetmap.josm.plugins.streetside.utils.api" class="JsonStreetsideDecoder" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/design.html#AvoidDeeplyNestedIfStmts" priority="3">
 Deeply nested if..then statements are hard to read
 </violation>

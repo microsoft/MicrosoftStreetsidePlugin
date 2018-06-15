@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StreetsideCubemap.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside</a> &gt; <span class="el_source">StreetsideCubemap.java</span></div><h1>StreetsideCubemap.java</h1><pre class="source lang-java linenums">package org.openstreetmap.josm.plugins.streetside;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StreetsideCubemap.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MicrosoftStreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside</a> &gt; <span class="el_source">StreetsideCubemap.java</span></div><h1>StreetsideCubemap.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
+package org.openstreetmap.josm.plugins.streetside;
 
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
@@ -14,11 +13,9 @@ import org.openstreetmap.josm.plugins.streetside.utils.StreetsideProperties;
 
 public class StreetsideCubemap extends StreetsideAbstractImage implements Comparable&lt;StreetsideAbstractImage&gt;{
 
-	//TODO: problem w/'synched' map?
-<span class="nc" id="L18">	private Map&lt;String,Map&lt;String,BufferedImage&gt;&gt; face2TilesMap = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L16">	private static Map&lt;String,Map&lt;String,BufferedImage&gt;&gt; face2TilesMap = new HashMap&lt;String,Map&lt;String,BufferedImage&gt;&gt;();</span>
 
 	/**
-	* TODO: relevant for Streetside? @rrh
 	* If two values for field cd differ by less than EPSILON both values are considered equal.
 	*/
 	private static final float EPSILON = 1e-5f;
@@ -28,79 +25,69 @@ public class StreetsideCubemap extends StreetsideAbstractImage implements Compar
 	   * Main constructor of the class StreetsideCubemap
 	   *
 	   * @param key    The unique identifier of the cubemap.
-	   * TODO: does a cubemap have a single LatLon? @rrh
 	   * @param latLon The latitude and longitude where it is positioned.
 	   * @param cd     The direction of the images in degrees, meaning 0 north.
 	   */
 
-	  // TODO: final in atts/constructor params RRH
 	  public StreetsideCubemap(String quadId, LatLon latLon, double ca) {
-<span class="nc" id="L38">	    super(quadId, latLon, ca);</span>
-<span class="nc" id="L39">	    face2TilesMap = new HashMap();</span>
+<span class="nc" id="L33">	    super(quadId, latLon, ca);</span>
+<span class="nc" id="L34">	    face2TilesMap = new HashMap();</span>
 
-<span class="nc" id="L41">	    EnumSet.allOf(CubemapUtils.CubemapFaces.class).forEach(face -&gt; {</span>
-<span class="nc" id="L42">			face2TilesMap.put(face.getValue(),new HashMap&lt;String,BufferedImage&gt;());</span>
-<span class="nc" id="L43">		});</span>
+<span class="nc" id="L36">	    EnumSet.allOf(CubemapUtils.CubemapFaces.class).forEach(face -&gt; {</span>
+<span class="nc" id="L37">			face2TilesMap.put(face.getValue(),new HashMap&lt;String,BufferedImage&gt;());</span>
+<span class="nc" id="L38">		});</span>
 
-<span class="nc" id="L45">	  }</span>
+<span class="nc" id="L40">	  }</span>
 
 	  public StreetsideCubemap(String quadId, LatLon latLon) {
-<span class="nc" id="L48">	    super(quadId, latLon, 0.0);</span>
-<span class="nc" id="L49">	  }</span>
+<span class="nc" id="L43">	    super(quadId, latLon, 0.0);</span>
+<span class="nc" id="L44">	  }</span>
 
 	  // Default constructor for Jackson/JSON Deserializattion
 	  public StreetsideCubemap(String quadId, LatLon latlon, List&lt;StreetsideImage&gt; tiles, double he) {
-<span class="nc" id="L53">	    super(quadId, latlon, he);</span>
-<span class="nc" id="L54">	  }</span>
+<span class="nc" id="L48">	    super(quadId, latlon, he);</span>
+<span class="nc" id="L49">	  }</span>
 
 	/**
 	 * @return the face2TilesMap
 	 */
 	public Map&lt;String, Map&lt;String,BufferedImage&gt;&gt; getFace2TilesMap() {
-<span class="nc" id="L60">		return face2TilesMap;</span>
+<span class="nc" id="L55">		return face2TilesMap;</span>
 	}
 
-	// TODO: compareTo and moving Mapillary functionality still usable? @rrh
-	  @Override
+    @Override
 	  public int compareTo(StreetsideAbstractImage image) {
-<span class="nc bnc" id="L66" title="All 2 branches missed.">	    if (image instanceof StreetsideImage) {</span>
-<span class="nc" id="L67">	      return id.compareTo(((StreetsideImage) image).getId());</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">	    if (image instanceof StreetsideImage) {</span>
+<span class="nc" id="L61">	      return id.compareTo(((StreetsideImage) image).getId());</span>
 	    }
-<span class="nc" id="L69">	    return hashCode() - image.hashCode();</span>
+<span class="nc" id="L63">	    return hashCode() - image.hashCode();</span>
 	  }
 
-	  // TODO: implement hashcode RRH
 	  @Override
 	  public int hashCode() {
-<span class="nc" id="L75">	    return id.hashCode();</span>
+<span class="nc" id="L68">	    return id.hashCode();</span>
 	  }
 
 	  @Override
 	  public void stopMoving() {
-<span class="nc" id="L80">	    super.stopMoving();</span>
-	    //checkModified();
-<span class="nc" id="L82">	  }</span>
-
-	  /*private void checkModified() {
-		if (StreetsideLayer.hasInstance()) {
-	      if (isModified()) {
-	        StreetsideLayer.getInstance().getCubemapLocationChangeset().add(this);
-	      } else {
-	        StreetsideLayer.getInstance().getCubemapLocationChangeset().remove(this);
-	      }
-	    }
-	  }*/
+<span class="nc" id="L73">	    super.stopMoving();</span>
+<span class="nc" id="L74">	  }</span>
 
 	  @Override
 	  public void turn(double ca) {
-<span class="nc" id="L96">	    super.turn(ca);</span>
-	    //checkModified();
-<span class="nc" id="L98">	  }</span>
+<span class="nc" id="L78">	    super.turn(ca);</span>
+<span class="nc" id="L79">	  }</span>
 
-	// TODO: never used. Useful for resizing? @rrh
 	public int getHeight() {
-		//return StreetsideProperties.CUBEFACE_SIZE.get().intValue() == 16?1019:512;
-<span class="nc bnc" id="L103" title="All 2 branches missed.">		return StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get().booleanValue()?1018:512;</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		return StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get().booleanValue()?1016:510;</span>
 	}
+
+	public void resetFaces2TileMap() {
+<span class="nc" id="L86">		face2TilesMap = new HashMap&lt;&gt;();</span>
+
+<span class="nc" id="L88">		EnumSet.allOf(CubemapUtils.CubemapFaces.class).forEach(face -&gt; {</span>
+<span class="nc" id="L89">			face2TilesMap.put(face.getValue(), new HashMap&lt;String, BufferedImage&gt;());</span>
+<span class="nc" id="L90">		});</span>
+<span class="nc" id="L91">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

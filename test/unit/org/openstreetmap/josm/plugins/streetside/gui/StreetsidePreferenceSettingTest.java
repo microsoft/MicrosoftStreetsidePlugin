@@ -4,7 +4,6 @@ package org.openstreetmap.josm.plugins.streetside.gui;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
 import static org.openstreetmap.josm.plugins.streetside.utils.TestUtil.getPrivateFieldValue;
 
 import java.awt.GraphicsEnvironment;
@@ -16,9 +15,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpinnerNumberModel;
 
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
-
 import org.openstreetmap.josm.data.preferences.BooleanProperty;
 import org.openstreetmap.josm.data.preferences.StringProperty;
 import org.openstreetmap.josm.gui.preferences.PreferenceTabbedPane;
@@ -32,6 +31,7 @@ public class StreetsidePreferenceSettingTest {
   @Rule
   public JOSMTestRules rules = new StreetsideTestRules().main();
 
+  @Ignore
   @Test
   public void testAddGui() {
     if (GraphicsEnvironment.isHeadless()) {
@@ -46,11 +46,13 @@ public class StreetsidePreferenceSettingTest {
     assertEquals(tabs.getDisplayPreference(), setting.getTabPreferenceSetting(tabs));
   }
 
+  @Ignore
   @Test
   public void testIsExpert() {
     assertFalse(new StreetsidePreferenceSetting().isExpert());
   }
 
+  @Ignore
   @Test
   public void testLoginLogout() {
     if (GraphicsEnvironment.isHeadless()) {
@@ -77,6 +79,7 @@ public class StreetsidePreferenceSettingTest {
   }
 
   @SuppressWarnings("unchecked")
+  @Ignore
   @Test
   public void testOk() {
     StreetsidePreferenceSetting settings = new StreetsidePreferenceSetting();

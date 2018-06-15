@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.openstreetmap.josm.plugins.streetside.cache.StreetsideCacheTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-06-11T22:57:30" hostname="Renes-MBP.lan" time="0.192">
+<testsuite name="org.openstreetmap.josm.plugins.streetside.cache.StreetsideCacheTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-06-15T04:57:26" hostname="Renes-MacBook-Pro.local" time="0.423">
   <properties/>
-  <testcase name="test" classname="org.openstreetmap.josm.plugins.streetside.cache.StreetsideCacheTest" time="0.192"/>
-  <system-out><![CDATA[2018-06-11 22:57:30.888 INFO: Successful login with Mapillary, the access token is: null
-2018-06-11 22:57:30.986 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hs00000.jpg?g=6338&n=z invoked.
-2018-06-11 22:57:30.986 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hs0000001.jpg?g=6338&n=z invoked.
+  <testcase name="test" classname="org.openstreetmap.josm.plugins.streetside.cache.StreetsideCacheTest" time="0.423"/>
+  <system-out><![CDATA[2018-06-15 04:57:26.479 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hs00000.jpg?g=6338&n=z invoked.
+2018-06-15 04:57:26.480 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hs0000001.jpg?g=6338&n=z invoked.
 ]]></system-out>
-  <system-err><![CDATA[2018-06-11 22:57:30.985 WARNING: Region [streetside_BLOCK_v2] Resetting cache
+  <system-err><![CDATA[2018-06-15 04:57:26.252 WARNING: No configuration settings found.  Using hardcoded default values for all pools.
 ]]></system-err>
 </testsuite>

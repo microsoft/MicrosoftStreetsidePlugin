@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.openstreetmap.josm.plugins.streetside.utils.PluginStateTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2018-06-11T22:57:32" hostname="Renes-MBP.lan" time="0.0">
+<testsuite name="org.openstreetmap.josm.plugins.streetside.utils.PluginStateTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2018-06-15T04:57:27" hostname="Renes-MacBook-Pro.local" time="0.001">
   <properties/>
-  <testcase name="uploadTest" classname="org.openstreetmap.josm.plugins.streetside.utils.PluginStateTest" time="0.0"/>
+  <testcase name="uploadTest" classname="org.openstreetmap.josm.plugins.streetside.utils.PluginStateTest" time="0.001"/>
   <testcase name="downloadTest" classname="org.openstreetmap.josm.plugins.streetside.utils.PluginStateTest" time="0.0"/>
-  <system-out><![CDATA[2018-06-11 22:57:32.194 INFO: The username is: null
-]]></system-out>
-  <system-err><![CDATA[2018-06-11 22:57:32.194 WARNING: Invalid Streetside token, resetting field: java.io.IOException: Server returned HTTP response code: 401 for URL: https://a.mapillary.com/v3/me?client_id=T1Fzd20xZjdtR0s1VDk5OFNIOXpYdzoxNDYyOGRkYzUyYTFiMzgz
-]]></system-err>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonDecoder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.utils.api</a> &gt; <span class="el_source">JsonDecoder.java</span></div><h1>JsonDecoder.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonDecoder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MicrosoftStreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.utils.api</a> &gt; <span class="el_source">JsonDecoder.java</span></div><h1>JsonDecoder.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
 package org.openstreetmap.josm.plugins.streetside.utils.api;
 
 import java.text.ParseException;
@@ -97,11 +97,11 @@ public final class JsonDecoder {
 <span class="fc bfc" id="L97" title="All 2 branches covered.">    if (timestamp != null) {</span>
       try {
 <span class="fc" id="L99">        return new SimpleDateFormat(&quot;yyyy-MM-dd'T'HH:mm:ss.SSSX&quot;, Locale.UK).parse(timestamp).getTime();</span>
-<span class="fc" id="L100">      } catch (ParseException e) {</span>
-<span class="fc" id="L101">        StackTraceElement calledBy = e.getStackTrace()[Math.min(e.getStackTrace().length - 1, 2)];</span>
-<span class="fc" id="L102">        Logging.log(Logging.LEVEL_WARN,String.format(</span>
+<span class="nc" id="L100">      } catch (ParseException e) {</span>
+<span class="nc" id="L101">        StackTraceElement calledBy = e.getStackTrace()[Math.min(e.getStackTrace().length - 1, 2)];</span>
+<span class="nc" id="L102">        Logging.log(Logging.LEVEL_WARN,String.format(</span>
           &quot;Could not decode time from the timestamp `%s` (called by %s.%s:%d)&quot;,
-<span class="fc" id="L104">          timestamp, calledBy.getClassName(), calledBy.getMethodName(), calledBy.getLineNumber()</span>
+<span class="nc" id="L104">          timestamp, calledBy.getClassName(), calledBy.getMethodName(), calledBy.getLineNumber()</span>
         ), e);
       }
     }

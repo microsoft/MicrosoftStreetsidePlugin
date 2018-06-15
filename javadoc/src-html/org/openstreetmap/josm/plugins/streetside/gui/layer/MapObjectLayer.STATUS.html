@@ -1,0 +1,310 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>// License: GPL. For details, see LICENSE file.<a name="line.1"></a>
+<span class="sourceLineNo">002</span>package org.openstreetmap.josm.plugins.streetside.gui.layer;<a name="line.2"></a>
+<span class="sourceLineNo">003</span><a name="line.3"></a>
+<span class="sourceLineNo">004</span>import java.awt.Color;<a name="line.4"></a>
+<span class="sourceLineNo">005</span>import java.awt.Font;<a name="line.5"></a>
+<span class="sourceLineNo">006</span>import java.awt.FontMetrics;<a name="line.6"></a>
+<span class="sourceLineNo">007</span>import java.awt.Graphics2D;<a name="line.7"></a>
+<span class="sourceLineNo">008</span>import java.awt.Point;<a name="line.8"></a>
+<span class="sourceLineNo">009</span>import java.util.Collection;<a name="line.9"></a>
+<span class="sourceLineNo">010</span>import java.util.HashMap;<a name="line.10"></a>
+<span class="sourceLineNo">011</span>import java.util.HashSet;<a name="line.11"></a>
+<span class="sourceLineNo">012</span>import java.util.Map;<a name="line.12"></a>
+<span class="sourceLineNo">013</span><a name="line.13"></a>
+<span class="sourceLineNo">014</span>import javax.swing.Action;<a name="line.14"></a>
+<span class="sourceLineNo">015</span>import javax.swing.Icon;<a name="line.15"></a>
+<span class="sourceLineNo">016</span>import javax.swing.ImageIcon;<a name="line.16"></a>
+<span class="sourceLineNo">017</span><a name="line.17"></a>
+<span class="sourceLineNo">018</span>import org.openstreetmap.josm.data.Bounds;<a name="line.18"></a>
+<span class="sourceLineNo">019</span>import org.openstreetmap.josm.data.osm.visitor.BoundingXYVisitor;<a name="line.19"></a>
+<span class="sourceLineNo">020</span>import org.openstreetmap.josm.gui.MapView;<a name="line.20"></a>
+<span class="sourceLineNo">021</span>import org.openstreetmap.josm.gui.NavigatableComponent;<a name="line.21"></a>
+<span class="sourceLineNo">022</span>import org.openstreetmap.josm.gui.NavigatableComponent.ZoomChangeListener;<a name="line.22"></a>
+<span class="sourceLineNo">023</span>import org.openstreetmap.josm.gui.layer.Layer;<a name="line.23"></a>
+<span class="sourceLineNo">024</span>import org.openstreetmap.josm.plugins.streetside.StreetsidePlugin;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import org.openstreetmap.josm.plugins.streetside.io.download.MapObjectDownloadRunnable;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import org.openstreetmap.josm.plugins.streetside.model.MapObject;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import org.openstreetmap.josm.plugins.streetside.utils.ImageUtil;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.openstreetmap.josm.plugins.streetside.utils.StreetsideProperties;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import org.openstreetmap.josm.tools.I18n;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import org.openstreetmap.josm.tools.ImageProvider.ImageSizes;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import org.openstreetmap.josm.tools.Logging;<a name="line.31"></a>
+<span class="sourceLineNo">032</span><a name="line.32"></a>
+<span class="sourceLineNo">033</span>public final class MapObjectLayer extends Layer implements ZoomChangeListener {<a name="line.33"></a>
+<span class="sourceLineNo">034</span><a name="line.34"></a>
+<span class="sourceLineNo">035</span>  public enum STATUS {<a name="line.35"></a>
+<span class="sourceLineNo">036</span>    DOWNLOADING(I18n.marktr("Downloading map objects…"), Color.YELLOW),<a name="line.36"></a>
+<span class="sourceLineNo">037</span>    COMPLETE(I18n.marktr("All map objects loaded."), Color.GREEN),<a name="line.37"></a>
+<span class="sourceLineNo">038</span>    INCOMPLETE(I18n.marktr("Too many map objects, zoom in to see all."), Color.ORANGE),<a name="line.38"></a>
+<span class="sourceLineNo">039</span>    FAILED(I18n.marktr("Downloading map objects failed!"), Color.RED);<a name="line.39"></a>
+<span class="sourceLineNo">040</span><a name="line.40"></a>
+<span class="sourceLineNo">041</span>    private final int colorValue;<a name="line.41"></a>
+<span class="sourceLineNo">042</span>    public final String message;<a name="line.42"></a>
+<span class="sourceLineNo">043</span><a name="line.43"></a>
+<span class="sourceLineNo">044</span>    STATUS(final String message, final Color color) {<a name="line.44"></a>
+<span class="sourceLineNo">045</span>      colorValue = color.getRGB();<a name="line.45"></a>
+<span class="sourceLineNo">046</span>      this.message = message;<a name="line.46"></a>
+<span class="sourceLineNo">047</span>    }<a name="line.47"></a>
+<span class="sourceLineNo">048</span><a name="line.48"></a>
+<span class="sourceLineNo">049</span>    /**<a name="line.49"></a>
+<span class="sourceLineNo">050</span>     * Note: The color is stored as int and each time returned as new {@link Color} instance,<a name="line.50"></a>
+<span class="sourceLineNo">051</span>     * because the class {@link Color} is not strictly immutable.<a name="line.51"></a>
+<span class="sourceLineNo">052</span>     * @return the color associated with the current status<a name="line.52"></a>
+<span class="sourceLineNo">053</span>     */<a name="line.53"></a>
+<span class="sourceLineNo">054</span>    public Color getColor() {<a name="line.54"></a>
+<span class="sourceLineNo">055</span>      return new Color(colorValue, true);<a name="line.55"></a>
+<span class="sourceLineNo">056</span>    }<a name="line.56"></a>
+<span class="sourceLineNo">057</span>  }<a name="line.57"></a>
+<span class="sourceLineNo">058</span><a name="line.58"></a>
+<span class="sourceLineNo">059</span>  private static MapObjectLayer instance;<a name="line.59"></a>
+<span class="sourceLineNo">060</span><a name="line.60"></a>
+<span class="sourceLineNo">061</span>  private STATUS status = STATUS.COMPLETE;<a name="line.61"></a>
+<span class="sourceLineNo">062</span>  private MapObjectDownloadRunnable downloadRunnable;<a name="line.62"></a>
+<span class="sourceLineNo">063</span>  private MapObjectDownloadRunnable nextDownloadRunnable;<a name="line.63"></a>
+<span class="sourceLineNo">064</span>  private final Collection&lt;MapObject&gt; objects = new HashSet&lt;&gt;();<a name="line.64"></a>
+<span class="sourceLineNo">065</span><a name="line.65"></a>
+<span class="sourceLineNo">066</span>  private final Map&lt;String, ImageIcon&gt; scaledIcons = new HashMap&lt;&gt;();<a name="line.66"></a>
+<span class="sourceLineNo">067</span><a name="line.67"></a>
+<span class="sourceLineNo">068</span>  private MapObjectLayer() {<a name="line.68"></a>
+<span class="sourceLineNo">069</span>    super(I18n.tr("Display Mapillary street signs"));<a name="line.69"></a>
+<span class="sourceLineNo">070</span>    NavigatableComponent.addZoomChangeListener(this);<a name="line.70"></a>
+<span class="sourceLineNo">071</span>    StreetsideProperties.MAPOBJECT_ICON_SIZE.addListener(val -&gt; {<a name="line.71"></a>
+<span class="sourceLineNo">072</span>      scaledIcons.clear();<a name="line.72"></a>
+<span class="sourceLineNo">073</span>      finishDownload(false);<a name="line.73"></a>
+<span class="sourceLineNo">074</span>    });<a name="line.74"></a>
+<span class="sourceLineNo">075</span>    zoomChanged();<a name="line.75"></a>
+<span class="sourceLineNo">076</span>  }<a name="line.76"></a>
+<span class="sourceLineNo">077</span><a name="line.77"></a>
+<span class="sourceLineNo">078</span>  private static void clearInstance() {<a name="line.78"></a>
+<span class="sourceLineNo">079</span>    synchronized (MapObjectLayer.class) {<a name="line.79"></a>
+<span class="sourceLineNo">080</span>      instance = null;<a name="line.80"></a>
+<span class="sourceLineNo">081</span>    }<a name="line.81"></a>
+<span class="sourceLineNo">082</span>  }<a name="line.82"></a>
+<span class="sourceLineNo">083</span><a name="line.83"></a>
+<span class="sourceLineNo">084</span>  public static MapObjectLayer getInstance() {<a name="line.84"></a>
+<span class="sourceLineNo">085</span>    synchronized (MapObjectLayer.class) {<a name="line.85"></a>
+<span class="sourceLineNo">086</span>      if (instance == null) {<a name="line.86"></a>
+<span class="sourceLineNo">087</span>        instance = new MapObjectLayer();<a name="line.87"></a>
+<span class="sourceLineNo">088</span>      }<a name="line.88"></a>
+<span class="sourceLineNo">089</span>      return instance;<a name="line.89"></a>
+<span class="sourceLineNo">090</span>    }<a name="line.90"></a>
+<span class="sourceLineNo">091</span>  }<a name="line.91"></a>
+<span class="sourceLineNo">092</span><a name="line.92"></a>
+<span class="sourceLineNo">093</span>  public boolean isDownloadRunnableScheduled() {<a name="line.93"></a>
+<span class="sourceLineNo">094</span>    synchronized (this) {<a name="line.94"></a>
+<span class="sourceLineNo">095</span>      return nextDownloadRunnable != null;<a name="line.95"></a>
+<span class="sourceLineNo">096</span>    }<a name="line.96"></a>
+<span class="sourceLineNo">097</span>  }<a name="line.97"></a>
+<span class="sourceLineNo">098</span><a name="line.98"></a>
+<span class="sourceLineNo">099</span>  public void finishDownload(boolean replaceMapObjects) {<a name="line.99"></a>
+<span class="sourceLineNo">100</span>    synchronized (this) {<a name="line.100"></a>
+<span class="sourceLineNo">101</span>      final MapObjectDownloadRunnable currentRunnable = downloadRunnable;<a name="line.101"></a>
+<span class="sourceLineNo">102</span>      if (currentRunnable != null) {<a name="line.102"></a>
+<span class="sourceLineNo">103</span>        synchronized (objects) {<a name="line.103"></a>
+<span class="sourceLineNo">104</span>          if (replaceMapObjects) {<a name="line.104"></a>
+<span class="sourceLineNo">105</span>            objects.clear();<a name="line.105"></a>
+<span class="sourceLineNo">106</span>          }<a name="line.106"></a>
+<span class="sourceLineNo">107</span>          objects.addAll(currentRunnable.getMapObjects());<a name="line.107"></a>
+<span class="sourceLineNo">108</span>        }<a name="line.108"></a>
+<span class="sourceLineNo">109</span>      }<a name="line.109"></a>
+<span class="sourceLineNo">110</span>      downloadRunnable = null;<a name="line.110"></a>
+<span class="sourceLineNo">111</span>      if (nextDownloadRunnable != null) {<a name="line.111"></a>
+<span class="sourceLineNo">112</span>        downloadRunnable = nextDownloadRunnable;<a name="line.112"></a>
+<span class="sourceLineNo">113</span>        nextDownloadRunnable = null;<a name="line.113"></a>
+<span class="sourceLineNo">114</span>        new Thread(downloadRunnable, "downloadMapObjects").start();<a name="line.114"></a>
+<span class="sourceLineNo">115</span>      }<a name="line.115"></a>
+<span class="sourceLineNo">116</span>    }<a name="line.116"></a>
+<span class="sourceLineNo">117</span>    new Thread(() -&gt; {<a name="line.117"></a>
+<span class="sourceLineNo">118</span>      synchronized (objects) {<a name="line.118"></a>
+<span class="sourceLineNo">119</span>        for (MapObject object : objects) {<a name="line.119"></a>
+<span class="sourceLineNo">120</span>          if (!scaledIcons.containsKey(object.getValue())) {<a name="line.120"></a>
+<span class="sourceLineNo">121</span>            scaledIcons.put(<a name="line.121"></a>
+<span class="sourceLineNo">122</span>              object.getValue(),<a name="line.122"></a>
+<span class="sourceLineNo">123</span>              ImageUtil.scaleImageIcon(MapObject.getIcon(object.getValue()), StreetsideProperties.MAPOBJECT_ICON_SIZE.get())<a name="line.123"></a>
+<span class="sourceLineNo">124</span>            );<a name="line.124"></a>
+<span class="sourceLineNo">125</span>          }<a name="line.125"></a>
+<span class="sourceLineNo">126</span>        }<a name="line.126"></a>
+<span class="sourceLineNo">127</span>      }<a name="line.127"></a>
+<span class="sourceLineNo">128</span>      invalidate();<a name="line.128"></a>
+<span class="sourceLineNo">129</span>    }, "downloadMapObjectIcons").start();<a name="line.129"></a>
+<span class="sourceLineNo">130</span>  }<a name="line.130"></a>
+<span class="sourceLineNo">131</span><a name="line.131"></a>
+<span class="sourceLineNo">132</span>  public int getObjectCount() {<a name="line.132"></a>
+<span class="sourceLineNo">133</span>    return objects.size();<a name="line.133"></a>
+<span class="sourceLineNo">134</span>  }<a name="line.134"></a>
+<span class="sourceLineNo">135</span><a name="line.135"></a>
+<span class="sourceLineNo">136</span>  public void setStatus(STATUS status) {<a name="line.136"></a>
+<span class="sourceLineNo">137</span>    this.status = status;<a name="line.137"></a>
+<span class="sourceLineNo">138</span>    invalidate();<a name="line.138"></a>
+<span class="sourceLineNo">139</span>  }<a name="line.139"></a>
+<span class="sourceLineNo">140</span><a name="line.140"></a>
+<span class="sourceLineNo">141</span>  @Override<a name="line.141"></a>
+<span class="sourceLineNo">142</span>  public void paint(Graphics2D g, MapView mv, Bounds bbox) {<a name="line.142"></a>
+<span class="sourceLineNo">143</span>    final long startTime = System.currentTimeMillis();<a name="line.143"></a>
+<span class="sourceLineNo">144</span>    final Collection&lt;MapObject&gt; displayedObjects = new HashSet&lt;&gt;();<a name="line.144"></a>
+<span class="sourceLineNo">145</span>    synchronized (this) {<a name="line.145"></a>
+<span class="sourceLineNo">146</span>      final MapObjectDownloadRunnable currentRunnable = downloadRunnable;<a name="line.146"></a>
+<span class="sourceLineNo">147</span>      if (currentRunnable != null) {<a name="line.147"></a>
+<span class="sourceLineNo">148</span>        displayedObjects.addAll(currentRunnable.getMapObjects());<a name="line.148"></a>
+<span class="sourceLineNo">149</span>      }<a name="line.149"></a>
+<span class="sourceLineNo">150</span>    }<a name="line.150"></a>
+<span class="sourceLineNo">151</span>    displayedObjects.addAll(objects);<a name="line.151"></a>
+<span class="sourceLineNo">152</span><a name="line.152"></a>
+<span class="sourceLineNo">153</span>    for (MapObject object : displayedObjects) {<a name="line.153"></a>
+<span class="sourceLineNo">154</span>      final ImageIcon icon = scaledIcons.get(object.getValue());<a name="line.154"></a>
+<span class="sourceLineNo">155</span>      if (icon != null) {<a name="line.155"></a>
+<span class="sourceLineNo">156</span>        final Point p = mv.getPoint(object.getCoordinate());<a name="line.156"></a>
+<span class="sourceLineNo">157</span>        g.drawImage(<a name="line.157"></a>
+<span class="sourceLineNo">158</span>          icon.getImage(),<a name="line.158"></a>
+<span class="sourceLineNo">159</span>          p.x - icon.getIconWidth() / 2,<a name="line.159"></a>
+<span class="sourceLineNo">160</span>          p.y - icon.getIconHeight() / 2,<a name="line.160"></a>
+<span class="sourceLineNo">161</span>          null<a name="line.161"></a>
+<span class="sourceLineNo">162</span>        );<a name="line.162"></a>
+<span class="sourceLineNo">163</span>      }<a name="line.163"></a>
+<span class="sourceLineNo">164</span>    }<a name="line.164"></a>
+<span class="sourceLineNo">165</span><a name="line.165"></a>
+<span class="sourceLineNo">166</span>    final STATUS currentStatus = status;<a name="line.166"></a>
+<span class="sourceLineNo">167</span>    g.setFont(g.getFont().deriveFont(Font.PLAIN).deriveFont(12f));<a name="line.167"></a>
+<span class="sourceLineNo">168</span>    g.setColor(currentStatus.getColor());<a name="line.168"></a>
+<span class="sourceLineNo">169</span>    final FontMetrics fm = g.getFontMetrics();<a name="line.169"></a>
+<span class="sourceLineNo">170</span>    g.fillRect(0, mv.getHeight() - fm.getAscent() - fm.getDescent(), fm.stringWidth(I18n.tr(currentStatus.message)), fm.getAscent() + fm.getDescent());<a name="line.170"></a>
+<span class="sourceLineNo">171</span>    g.setColor(Color.BLACK);<a name="line.171"></a>
+<span class="sourceLineNo">172</span>    g.drawString(I18n.tr(currentStatus.message), 0, mv.getHeight() - fm.getDescent());<a name="line.172"></a>
+<span class="sourceLineNo">173</span>    Logging.debug("{0} painted in {1} milliseconds.", MapObjectLayer.class.getName(), System.currentTimeMillis() - startTime);<a name="line.173"></a>
+<span class="sourceLineNo">174</span>  }<a name="line.174"></a>
+<span class="sourceLineNo">175</span><a name="line.175"></a>
+<span class="sourceLineNo">176</span>  @Override<a name="line.176"></a>
+<span class="sourceLineNo">177</span>  public Icon getIcon() {<a name="line.177"></a>
+<span class="sourceLineNo">178</span>    return StreetsidePlugin.LOGO.setSize(ImageSizes.LAYER).get();<a name="line.178"></a>
+<span class="sourceLineNo">179</span>  }<a name="line.179"></a>
+<span class="sourceLineNo">180</span><a name="line.180"></a>
+<span class="sourceLineNo">181</span>  @Override<a name="line.181"></a>
+<span class="sourceLineNo">182</span>  public String getToolTipText() {<a name="line.182"></a>
+<span class="sourceLineNo">183</span>    return I18n.tr("Displays objects detected by Streetside from their street view imagery");<a name="line.183"></a>
+<span class="sourceLineNo">184</span>  }<a name="line.184"></a>
+<span class="sourceLineNo">185</span><a name="line.185"></a>
+<span class="sourceLineNo">186</span>  @Override<a name="line.186"></a>
+<span class="sourceLineNo">187</span>  public void mergeFrom(Layer from) {<a name="line.187"></a>
+<span class="sourceLineNo">188</span>    // Not mergeable<a name="line.188"></a>
+<span class="sourceLineNo">189</span>  }<a name="line.189"></a>
+<span class="sourceLineNo">190</span><a name="line.190"></a>
+<span class="sourceLineNo">191</span>  @Override<a name="line.191"></a>
+<span class="sourceLineNo">192</span>  public boolean isMergable(Layer other) {<a name="line.192"></a>
+<span class="sourceLineNo">193</span>    return false;<a name="line.193"></a>
+<span class="sourceLineNo">194</span>  }<a name="line.194"></a>
+<span class="sourceLineNo">195</span><a name="line.195"></a>
+<span class="sourceLineNo">196</span>  @Override<a name="line.196"></a>
+<span class="sourceLineNo">197</span>  public void visitBoundingBox(BoundingXYVisitor v) {<a name="line.197"></a>
+<span class="sourceLineNo">198</span>    // Unused method enforced by the Layer class<a name="line.198"></a>
+<span class="sourceLineNo">199</span>  }<a name="line.199"></a>
+<span class="sourceLineNo">200</span><a name="line.200"></a>
+<span class="sourceLineNo">201</span>  @Override<a name="line.201"></a>
+<span class="sourceLineNo">202</span>  public Object getInfoComponent() {<a name="line.202"></a>
+<span class="sourceLineNo">203</span>    return null;<a name="line.203"></a>
+<span class="sourceLineNo">204</span>  }<a name="line.204"></a>
+<span class="sourceLineNo">205</span><a name="line.205"></a>
+<span class="sourceLineNo">206</span>  @Override<a name="line.206"></a>
+<span class="sourceLineNo">207</span>  public Action[] getMenuEntries() {<a name="line.207"></a>
+<span class="sourceLineNo">208</span>    return new Action[0];<a name="line.208"></a>
+<span class="sourceLineNo">209</span>  }<a name="line.209"></a>
+<span class="sourceLineNo">210</span><a name="line.210"></a>
+<span class="sourceLineNo">211</span>  public void scheduleDownload(final Bounds bounds) {<a name="line.211"></a>
+<span class="sourceLineNo">212</span>    synchronized(this) {<a name="line.212"></a>
+<span class="sourceLineNo">213</span>      if (downloadRunnable == null) {<a name="line.213"></a>
+<span class="sourceLineNo">214</span>        downloadRunnable = new MapObjectDownloadRunnable(this, bounds);<a name="line.214"></a>
+<span class="sourceLineNo">215</span>        new Thread(downloadRunnable).start();<a name="line.215"></a>
+<span class="sourceLineNo">216</span>      } else {<a name="line.216"></a>
+<span class="sourceLineNo">217</span>        nextDownloadRunnable = new MapObjectDownloadRunnable(this, bounds);<a name="line.217"></a>
+<span class="sourceLineNo">218</span>      }<a name="line.218"></a>
+<span class="sourceLineNo">219</span>    }<a name="line.219"></a>
+<span class="sourceLineNo">220</span>  }<a name="line.220"></a>
+<span class="sourceLineNo">221</span><a name="line.221"></a>
+<span class="sourceLineNo">222</span>  /* (non-Javadoc)<a name="line.222"></a>
+<span class="sourceLineNo">223</span>   * @see org.openstreetmap.josm.gui.layer.Layer#destroy()<a name="line.223"></a>
+<span class="sourceLineNo">224</span>   */<a name="line.224"></a>
+<span class="sourceLineNo">225</span>  @Override<a name="line.225"></a>
+<span class="sourceLineNo">226</span>  public synchronized void destroy() {<a name="line.226"></a>
+<span class="sourceLineNo">227</span>    clearInstance();<a name="line.227"></a>
+<span class="sourceLineNo">228</span>    super.destroy();<a name="line.228"></a>
+<span class="sourceLineNo">229</span>  }<a name="line.229"></a>
+<span class="sourceLineNo">230</span><a name="line.230"></a>
+<span class="sourceLineNo">231</span>  @Override<a name="line.231"></a>
+<span class="sourceLineNo">232</span>  public void zoomChanged() {<a name="line.232"></a>
+<span class="sourceLineNo">233</span>    MapView mv = StreetsidePlugin.getMapView();<a name="line.233"></a>
+<span class="sourceLineNo">234</span>    if (mv != null) {<a name="line.234"></a>
+<span class="sourceLineNo">235</span>      scheduleDownload(mv.getState().getViewArea().getLatLonBoundsBox());<a name="line.235"></a>
+<span class="sourceLineNo">236</span>    }<a name="line.236"></a>
+<span class="sourceLineNo">237</span>  }<a name="line.237"></a>
+<span class="sourceLineNo">238</span>}<a name="line.238"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

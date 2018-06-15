@@ -65,7 +65,7 @@ public final class Caches {
 			CacheAccess<String, BufferedImageCacheEntry> c;
 			try {
 				c = JCSCacheManager.getCache("streetside", 10, 10000, Caches.getCacheDirectory().getPath());
-			} catch (IOException e) {
+			} catch (Exception e) {
 				Logging.log(Logging.LEVEL_WARN, "Could not initialize the Streetside image cache.", e);
 				c = null;
 			}
@@ -94,7 +94,7 @@ public final class Caches {
 			CacheAccess<String, BufferedImageCacheEntry> c;
 			try {
 				c = JCSCacheManager.getCache("streetside", 10, 10000, Caches.getCacheDirectory().getPath());
-			} catch (IOException e) {
+			} catch (Exception e) {
 				Logging.log(Logging.LEVEL_WARN, "Could not initialize the Streetside cubemap cache.", e);
 				c = null;
 			}

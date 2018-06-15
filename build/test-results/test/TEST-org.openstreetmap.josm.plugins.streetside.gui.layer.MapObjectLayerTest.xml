@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.openstreetmap.josm.plugins.streetside.gui.layer.MapObjectLayerTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2018-06-11T22:57:32" hostname="Renes-MBP.lan" time="0.778">
+<testsuite name="org.openstreetmap.josm.plugins.streetside.gui.layer.MapObjectLayerTest" tests="6" skipped="5" failures="0" errors="0" timestamp="2018-06-15T04:57:27" hostname="Renes-MacBook-Pro.local" time="0.06">
   <properties/>
-  <testcase name="testScheduleDownload" classname="org.openstreetmap.josm.plugins.streetside.gui.layer.MapObjectLayerTest" time="0.275"/>
-  <testcase name="testTrivialMethods" classname="org.openstreetmap.josm.plugins.streetside.gui.layer.MapObjectLayerTest" time="0.091"/>
-  <testcase name="testGetIcon" classname="org.openstreetmap.josm.plugins.streetside.gui.layer.MapObjectLayerTest" time="0.091"/>
-  <testcase name="testStatusEnum" classname="org.openstreetmap.josm.plugins.streetside.gui.layer.MapObjectLayerTest" time="0.095"/>
-  <testcase name="testInfoComponent" classname="org.openstreetmap.josm.plugins.streetside.gui.layer.MapObjectLayerTest" time="0.096"/>
-  <testcase name="testMergable" classname="org.openstreetmap.josm.plugins.streetside.gui.layer.MapObjectLayerTest" time="0.129"/>
-  <system-out><![CDATA[2018-06-11 22:57:32.936 INFO: Download from file:/Users/renerr18/Documents/Microsoft/dev/josm_current_05182018_1204/josm/plugins/MicrosoftStreetside/build/resources/test/api/v3/responses/searchMapObjects.json (1 map objects in 0.00 s)
-]]></system-out>
-  <system-err><![CDATA[2018-06-11 22:57:32.940 WARNING: Region [streetsideObjectIcons_BLOCK_v2] Resetting cache
-]]></system-err>
+  <testcase name="testScheduleDownload" classname="org.openstreetmap.josm.plugins.streetside.gui.layer.MapObjectLayerTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="testTrivialMethods" classname="org.openstreetmap.josm.plugins.streetside.gui.layer.MapObjectLayerTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="testGetIcon" classname="org.openstreetmap.josm.plugins.streetside.gui.layer.MapObjectLayerTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="testStatusEnum" classname="org.openstreetmap.josm.plugins.streetside.gui.layer.MapObjectLayerTest" time="0.059"/>
+  <testcase name="testInfoComponent" classname="org.openstreetmap.josm.plugins.streetside.gui.layer.MapObjectLayerTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="testMergable" classname="org.openstreetmap.josm.plugins.streetside.gui.layer.MapObjectLayerTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
 </testsuite>

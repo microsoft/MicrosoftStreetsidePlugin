@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.openstreetmap.josm.plugins.streetside.model.ImageDetectionTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-06-11T22:57:34" hostname="Renes-MBP.lan" time="0.001">
+<testsuite name="org.openstreetmap.josm.plugins.streetside.model.ImageDetectionTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-06-15T04:57:27" hostname="Renes-MacBook-Pro.local" time="0.0">
   <properties/>
-  <testcase name="test" classname="org.openstreetmap.josm.plugins.streetside.model.ImageDetectionTest" time="0.001"/>
+  <testcase name="test" classname="org.openstreetmap.josm.plugins.streetside.model.ImageDetectionTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

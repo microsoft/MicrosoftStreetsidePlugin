@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import org.openstreetmap.josm.data.cache.BufferedImageCacheEntry;
 import org.openstreetmap.josm.data.cache.JCSCachedTileLoaderJob;
+import org.openstreetmap.josm.data.imagery.TileJobOptions;
 import org.openstreetmap.josm.plugins.streetside.utils.StreetsideURL.VirtualEarth;
 
 /**
@@ -50,7 +51,20 @@ public class StreetsideCache extends JCSCachedTileLoaderJob<String, BufferedImag
 	 *          FULL_IMAGE).
 	 */
 	public StreetsideCache(final String id, final Type type) {
-		super(Caches.ImageCache.getInstance().getCache(), 50000, 50000, new HashMap<>());
+		//ICacheAccess<String,BufferedImageCacheEntry>,TileJobOptions,ThreadPoolExecutor
+		// TODO: StreetsideCache.java:53: error: no suitable constructor found for JCSCachedTileLoaderJob(CacheAccess<String,BufferedImageCacheEntry>,int,int,HashMap<String,String>)
+//	    [javac] 		super(Caches.ImageCache.getInstance().getCache(), 50000, 50000, new HashMap<String,String>());
+//	    [javac] 		^
+//	    [javac]     constructor JCSCachedTileLoaderJob.JCSCachedTileLoaderJob(ICacheAccess<String,BufferedImageCacheEntry>,TileJobOptions,ThreadPoolExecutor) is not applicable
+//	    [javac]       (actual and formal argument lists differ in length)
+//	    [javac]     constructor JCSCachedTileLoaderJob.JCSCachedTileLoaderJob(ICacheAccess<String,BufferedImageCacheEntry>,TileJobOptions) is not applicable
+//	    [javac]       (actual and formal argument lists differ in length)
+
+		//super(Caches.ImageCache.getInstance().getCache(), 50000, 50000, new HashMap<String,String>());
+		//super(Caches.ImageCache.getInstance().getCache(),TileJobOptions,ThreadpoolExecutor)
+		//TileJobOptions tjo = ;
+		super(Caches.ImageCache.getInstance().getCache(),new TileJobOptions(50000, 50000, new HashMap<String,String>(),50000l));
+
 		if (id == null || type == null) {
 			this.id = null;
 			url = null;

@@ -29,19 +29,19 @@
 </td>
 <td>
 <div class="infoBox" id="failures">
-<div class="counter">1</div>
+<div class="counter">0</div>
 <p>failures</p>
 </div>
 </td>
 <td>
 <div class="infoBox" id="ignored">
-<div class="counter">4</div>
+<div class="counter">5</div>
 <p>ignored</p>
 </div>
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">1.300s</div>
+<div class="counter">1.357s</div>
 <p>duration</p>
 </div>
 </td>
@@ -50,8 +50,8 @@
 </div>
 </td>
 <td>
-<div class="infoBox failures" id="successRate">
-<div class="percent">75%</div>
+<div class="infoBox skipped" id="successRate">
+<div class="percent">100%</div>
 <p>successful</p>
 </div>
 </td>
@@ -61,59 +61,13 @@
 <div id="tabs">
 <ul class="tabLinks">
 <li>
-<a href="#tab0">Failed tests</a>
+<a href="#tab0">Tests</a>
 </li>
 <li>
-<a href="#tab1">Tests</a>
-</li>
-<li>
-<a href="#tab2">Standard output</a>
-</li>
-<li>
-<a href="#tab3">Standard error</a>
+<a href="#tab1">Standard error</a>
 </li>
 </ul>
 <div id="tab0" class="tab">
-<h2>Failed tests</h2>
-<div class="test">
-<a name="multiSelectTest"></a>
-<h3 class="failures">multiSelectTest</h3>
-<span class="code">
-<pre>java.lang.NumberFormatException: For input string: &quot;_&quot;
-	at java.lang.NumberFormatException.forInputString(NumberFormatException.java:65)
-	at java.lang.Integer.parseInt(Integer.java:580)
-	at java.lang.Integer.valueOf(Integer.java:766)
-	at org.openstreetmap.josm.plugins.streetside.cubemap.CubemapUtils.convertQuaternary2Decimal(CubemapUtils.java:121)
-	at org.openstreetmap.josm.plugins.streetside.gui.imageinfo.StreetsideViewerPanel.selectedImageChanged(StreetsideViewerPanel.java:134)
-	at org.openstreetmap.josm.plugins.streetside.StreetsideData.lambda$fireSelectedImageChanged$3(StreetsideData.java:371)
-	at java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:184)
-	at java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:175)
-	at java.util.Spliterators$ArraySpliterator.forEachRemaining(Spliterators.java:948)
-	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:481)
-	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:471)
-	at java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151)
-	at java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174)
-	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
-	at java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:418)
-	at org.openstreetmap.josm.plugins.streetside.StreetsideData.fireSelectedImageChanged(StreetsideData.java:371)
-	at org.openstreetmap.josm.plugins.streetside.StreetsideData.setSelectedImage(StreetsideData.java:335)
-	at org.openstreetmap.josm.plugins.streetside.StreetsideData.setSelectedImage(StreetsideData.java:308)
-	at org.openstreetmap.josm.plugins.streetside.StreetsideDataTest.multiSelectTest(StreetsideDataTest.java:150)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
-	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
-	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
-	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
-	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
-	at org.openstreetmap.josm.testutils.JOSMTestRules$TimeoutThread.run(JOSMTestRules.java:595)
-</pre>
-</span>
-</div>
-</div>
-<div id="tab1" class="tab">
 <h2>Tests</h2>
 <table>
 <thead>
@@ -125,18 +79,18 @@
 </thead>
 <tr>
 <td class="success">addTest</td>
-<td class="success">0.162s</td>
+<td class="success">1.200s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">highlighTest</td>
-<td class="success">0.096s</td>
+<td class="success">0.117s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
-<td class="failures">multiSelectTest</td>
-<td class="failures">0.956s</td>
-<td class="failures">failed</td>
+<td class="skipped">multiSelectTest</td>
+<td class="skipped">-</td>
+<td class="skipped">ignored</td>
 </tr>
 <tr>
 <td class="skipped">nextAndPreviousTest</td>
@@ -160,168 +114,19 @@
 </tr>
 <tr>
 <td class="success">sizeTest</td>
-<td class="success">0.086s</td>
+<td class="success">0.040s</td>
 <td class="success">passed</td>
 </tr>
 </table>
 </div>
-<div id="tab2" class="tab">
-<h2>Standard output</h2>
-<span class="code">
-<pre>2018-06-11 22:57:29.294 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0310.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1012.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0112.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.297 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1203.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0103.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0303.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1131.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0333.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0102.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1202.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1201.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1211.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0100.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1231.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0210.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1003.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0230.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0231.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1001.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0223.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1020.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1130.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1002.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1000.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0203.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0200.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1220.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0201.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1120.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0202.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1133.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0300.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0330.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0133.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0211.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1233.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0232.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1121.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1221.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0301.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.295 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0132.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.297 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1112.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.297 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0113.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.297 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0213.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.297 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0313.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.297 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1223.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.297 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1010.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.297 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1212.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.297 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0321.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.297 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1022.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.297 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1123.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.297 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1100.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.297 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1021.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.297 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0101.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.297 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0123.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.297 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0331.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1013.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0131.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1032.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0110.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1011.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1023.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1101.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1030.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0320.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1122.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0221.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1230.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0322.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0220.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1210.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0233.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1031.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1213.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0323.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0332.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0212.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0120.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0121.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0312.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1102.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1103.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1033.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1200.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0222.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0302.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1232.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0130.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1132.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1111.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0311.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0111.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0122.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1222.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1110.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:29.296 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________1113.jpg?g=6338&amp;n=z invoked.
-2018-06-11 22:57:30.042 INFO: Tile imagery downloading tasks completed in :00
-</pre>
-</span>
-</div>
-<div id="tab3" class="tab">
+<div id="tab1" class="tab">
 <h2>Standard error</h2>
 <span class="code">
-<pre>2018-06-11 22:57:30.037 SEVERE: Error loading tile for image key1__________________
-java.util.concurrent.ExecutionException: java.io.IOException: Error while reading from GET: [400] Bad Request
-Bad Request
-	at java.util.concurrent.FutureTask.report(FutureTask.java:122)
-	at java.util.concurrent.FutureTask.get(FutureTask.java:192)
-	at org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder.downloadCubemapImages(CubemapBuilder.java:123)
-	at org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder.selectedImageChanged(CubemapBuilder.java:56)
-	at org.openstreetmap.josm.plugins.streetside.StreetsideData.lambda$fireSelectedImageChanged$3(StreetsideData.java:371)
-	at java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:184)
-	at java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:175)
-	at java.util.Spliterators$ArraySpliterator.forEachRemaining(Spliterators.java:948)
-	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:481)
-	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:471)
-	at java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151)
-	at java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174)
-	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
-	at java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:418)
-	at org.openstreetmap.josm.plugins.streetside.StreetsideData.fireSelectedImageChanged(StreetsideData.java:371)
-	at org.openstreetmap.josm.plugins.streetside.StreetsideData.setSelectedImage(StreetsideData.java:335)
-	at org.openstreetmap.josm.plugins.streetside.StreetsideData.setSelectedImage(StreetsideData.java:308)
-	at org.openstreetmap.josm.plugins.streetside.StreetsideDataTest.multiSelectTest(StreetsideDataTest.java:150)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
-	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
-	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
-	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
-	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
-	at org.openstreetmap.josm.testutils.JOSMTestRules$TimeoutThread.run(JOSMTestRules.java:595)
-Caused by: java.io.IOException: Error while reading from GET: [400] Bad Request
-Bad Request
-	at us.monoid.web.AbstractResource.fill(AbstractResource.java:51)
-	at us.monoid.web.Resty.fillResourceFromURL(Resty.java:432)
-	at us.monoid.web.Resty.doGET(Resty.java:388)
-	at us.monoid.web.Resty.bytes(Resty.java:355)
-	at us.monoid.web.Resty.bytes(Resty.java:343)
-	at org.openstreetmap.josm.plugins.streetside.cubemap.TileDownloadingTask.call(TileDownloadingTask.java:102)
-	at org.openstreetmap.josm.plugins.streetside.cubemap.TileDownloadingTask.call(TileDownloadingTask.java:21)
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.io.IOException: Server returned HTTP response code: 400 for URL: https://t.ssl.ak.tiles.virtualearth.net/tiles/hskey1__________________0100.jpg?g=6338&amp;n=z
-	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1894)
-	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1492)
-	at sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(HttpsURLConnectionImpl.java:263)
-	at us.monoid.web.AbstractResource.fill(AbstractResource.java:30)
-	... 10 more
-2018-06-11 22:57:30.043 SEVERE: 1 downloading tasks failed.
+<pre>Exception in thread &quot;Thread-5&quot; java.lang.NullPointerException
+	at org.openstreetmap.josm.data.preferences.AbstractToStringProperty.put(AbstractToStringProperty.java:108)
+	at org.openstreetmap.josm.data.preferences.StringProperty.put(StringProperty.java:27)
+	at org.openstreetmap.josm.plugins.streetside.oauth.StreetsideUser.reset(StreetsideUser.java:85)
+	at org.openstreetmap.josm.plugins.streetside.oauth.OAuthPortListener.run(OAuthPortListener.java:67)
 </pre>
 </span>
 </div>
@@ -333,7 +138,7 @@ Caused by: java.io.IOException: Server returned HTTP response code: 400 for URL:
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 4.7</a> at Jun 11, 2018 3:57:37 PM</p>
+<a href="http://www.gradle.org">Gradle 4.7</a> at Jun 14, 2018 9:57:31 PM</p>
 </div>
 </div>
 </body>

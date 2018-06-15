@@ -98,7 +98,7 @@ public class CubemapBuilder implements ITileDownloadingTaskListener, StreetsideD
 				List<Future<String>> results = pool.invokeAll(tasks);
 				for (Future<String> ff : results) {
 
-					Logging.info(I18n.tr("Completed tile downloading task {0} in {1}", ff.get(),
+					Logging.debug(I18n.tr("Completed tile downloading task {0} in {1}", ff.get(),
 							CubemapUtils.msToString(startTime - System.currentTimeMillis())));
 				}
 

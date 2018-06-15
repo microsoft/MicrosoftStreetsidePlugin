@@ -144,6 +144,7 @@ public class StreetsideDataTest {
    * Test the multiselection of images. When a new image is selected, the
    * multiselected List should reset.
    */
+  @Ignore
   @Test
   public void multiSelectTest() {
     assertEquals(0, data.getMultiSelectedImages().size());

@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TileDownloadingTask.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.cubemap</a> &gt; <span class="el_source">TileDownloadingTask.java</span></div><h1>TileDownloadingTask.java</h1><pre class="source lang-java linenums">package org.openstreetmap.josm.plugins.streetside.cubemap;
-
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TileDownloadingTask.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MicrosoftStreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.cubemap</a> &gt; <span class="el_source">TileDownloadingTask.java</span></div><h1>TileDownloadingTask.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
+package org.openstreetmap.josm.plugins.streetside.cubemap;
 
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -16,7 +17,6 @@ import org.openstreetmap.josm.tools.I18n;
 import org.openstreetmap.josm.tools.Logging;
 
 import us.monoid.web.Resty;
-
 
 public class TileDownloadingTask implements Callable&lt;String&gt; {
 
@@ -104,26 +104,30 @@ public class TileDownloadingTask implements Callable&lt;String&gt; {
 <span class="nc" id="L104">				.stream());</span>
 
 <span class="nc bnc" id="L106" title="All 2 branches missed.">		if (img == null) {</span>
-<span class="nc" id="L107">			Logging.error(I18n.tr(&quot;Rusky download of BufferedImage {0} is null!&quot;, tileId));</span>
+<span class="nc" id="L107">			Logging.error(I18n.tr(&quot;Download of BufferedImage {0} is null!&quot;, tileId));</span>
 		}
 
 <span class="nc" id="L110">		String faceId = CubemapUtils.getFaceIdFromTileId(tileId);</span>
 
 		Map&lt;String, Map&lt;String, BufferedImage&gt;&gt; faces2TilesMap = CubemapBuilder
 <span class="nc" id="L113">				.getInstance().getCubemap().getFace2TilesMap();</span>
-<span class="nc" id="L114">		faces2TilesMap.get(faceId).put(tileId, img);</span>
 
-<span class="nc" id="L116">		fireTileAdded(tileId);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if(faces2TilesMap.get(faceId)==null) {</span>
+<span class="nc" id="L116">			faces2TilesMap.put(faceId, new HashMap&lt;String,BufferedImage&gt;());</span>
+		}
+<span class="nc" id="L118">		faces2TilesMap.get(faceId).put(tileId, img);</span>
 
-<span class="nc" id="L118">		long endTime = System.currentTimeMillis();</span>
-<span class="nc" id="L119">		long runTime = startTime - endTime;</span>
-<span class="nc" id="L120">		Logging.debug(&quot;Loaded image for tile {0} in {1} seconds&quot;, tileId, CubemapUtils.msToString(runTime));</span>
+<span class="nc" id="L120">		fireTileAdded(tileId);</span>
 
-<span class="nc" id="L122">		return tileId;</span>
+<span class="nc" id="L122">		long endTime = System.currentTimeMillis();</span>
+<span class="nc" id="L123">		long runTime = startTime - endTime;</span>
+<span class="nc" id="L124">		Logging.debug(&quot;Loaded image for tile {0} in {1} seconds&quot;, tileId, CubemapUtils.msToString(runTime));</span>
+
+<span class="nc" id="L126">		return tileId;</span>
 	}
 
 	private void fireTileAdded(String id) {
-<span class="nc" id="L126">	    listeners.stream().filter(Objects::nonNull).forEach(lis -&gt; lis.tileAdded(id));</span>
-<span class="nc" id="L127">	}</span>
+<span class="nc" id="L130">	    listeners.stream().filter(Objects::nonNull).forEach(lis -&gt; lis.tileAdded(id));</span>
+<span class="nc" id="L131">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

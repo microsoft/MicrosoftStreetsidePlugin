@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonStreetsideSequencesDecoder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.utils.api</a> &gt; <span class="el_source">JsonStreetsideSequencesDecoder.java</span></div><h1>JsonStreetsideSequencesDecoder.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonStreetsideSequencesDecoder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MicrosoftStreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.utils.api</a> &gt; <span class="el_source">JsonStreetsideSequencesDecoder.java</span></div><h1>JsonStreetsideSequencesDecoder.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
 package org.openstreetmap.josm.plugins.streetside.utils.api;
 
 import java.lang.reflect.Array;
@@ -117,116 +117,7 @@ public final class JsonStreetsideSequencesDecoder {
     }
 
 <span class="nc" id="L119">    return result;</span>
-
-
-    /*if(json instanceof JsonArray) {
-      for(int i=0; i&lt;((JsonArray)json).size(); i++) {
-        Streetside
-      }
-
-
-    }*/
-
-    /*final JsonObject id = json.getJsonObject(&quot;id&quot;);
-    final JsonObject la = json.getJsonObject(&quot;la&quot;);
-    final JsonObject lo = json.getJsonObject(&quot;la&quot;);
-    */
-
-    //if (id != null &amp;&amp; la != null &amp;&amp; lo != null) {
-
-      //final JsonObject properties = json.getJsonObject(&quot;properties&quot;);
-      //final Long capturedAt = properties == null ? null : JsonDecoder.decodeTimestamp(properties.getString(&quot;captured_at&quot;, null));
-      //if (properties != null &amp;&amp; properties.getString(&quot;key&quot;, null) != null &amp;&amp; properties.getString(&quot;user_key&quot;, null) != null &amp;&amp; capturedAt != null) {
-      //result = new StreetsideSequence(((JsonNumber) id).longValue(), ((JsonNumber) la).doubleValue(), ((JsonNumber) lo).doubleValue());
-
-      /*final Double[] cas = decodeCoordinateProperty(
-        properties,
-        &quot;cas&quot;,
-        val -&gt;  val instanceof JsonNumber ? ((JsonNumber) val).doubleValue() : null,
-        Double.class
-      );
-      final String[] imageKeys = decodeCoordinateProperty(
-        properties,
-        &quot;image_keys&quot;,
-        val -&gt; val instanceof JsonString ? ((JsonString) val).getString() : null,
-        String.class
-      );*/
-      /*final LatLon[] geometry = decodeStreetsideLatLons(la, lo);
-
-      // TODO: calculate sequence length for Streetside properly RRH
-      final int sequenceLength = geometry.length;
-
-      // TODO: geometry length w/o 'cas' / 'imageKeys'?!? RRH
-      //final int sequenceLength = Math.min(Math.min(cas.length, imageKeys.length), geometry.length);
-      for (int i = 0; i &lt; sequenceLength; i++) {
-        if (cas[i] != null &amp;&amp; imageKeys[i] != null &amp;&amp; geometry[i] != null) {
-          final StreetsideImage img = new StreetsideImage(imageKeys[i], geometry[i], cas[i]);
-          result.add(img);
-        }
-        if (geometry[i] != null) {
-          final StreetsideImage img = new StreetsideImage(&quot;dummyImageKey&quot;, geometry[i], 0.0);
-          result.add(img);
-        }
-      }*/
-      /*if (result.getImages().isEmpty()) {
-        result = null;
-      }*/
-    //}
-    //return result;
   }
-
-  /*public static StreetsideSequence[] decodeStreetsideSequences(final JsonObject json) {
-    if (json == null) {// || !&quot;Feature&quot;.equals(json.getString(&quot;type&quot;, null))) {
-      return null;
-    }
-    if(json instanceof JsonArray) {
-      //String[] sequences = decodeJsonArray((JsonArray) json, val -&gt; val instanceof JsonString ? ((JsonString) val).getString() : null, String.class);
-      final StreetsideSequence[] result = new StreetsideSequence[((JsonArray) json).size()];
-
-      for(int i=0; i&lt;result.length; i++) {
-        result[i] = decodeStreetsideSequence(((JsonArray)json).get(i));
-      }
-
-      return result;
-
-    }*/
-    //final JsonObject properties = json.getJsonObject(&quot;properties&quot;);
-    //final Long capturedAt = properties == null ? null : JsonDecoder.decodeTimestamp(properties.getString(&quot;captured_at&quot;, null));
-    //if (properties != null &amp;&amp; properties.getString(&quot;key&quot;, null) != null &amp;&amp; properties.getString(&quot;user_key&quot;, null) != null &amp;&amp; capturedAt != null) {
-
-    // TODO: handle long and double types in JSON RRH
-    //if (properties != null &amp;&amp; properties.getString(&quot;id&quot;, null) != null &amp;&amp; properties.getString(&quot;la&quot;, null) != null &amp;&amp; properties.getString(&quot;lo&quot;, null) != null) {
-          //result = new StreetsideSequence(properties.getJsonNumber(&quot;id&quot;).longValue(), properties.getJsonNumber(&quot;la&quot;).doubleValue(), properties.getJsonNumber(&quot;lo&quot;).doubleValue());
-
-      /*final Double[] cas = decodeCoordinateProperty(
-        properties,
-        &quot;cas&quot;,
-        val -&gt;  val instanceof JsonNumber ? ((JsonNumber) val).doubleValue() : null,
-        Double.class
-      );
-      final String[] imageKeys = decodeCoordinateProperty(
-        properties,
-        &quot;image_keys&quot;,
-        val -&gt; val instanceof JsonString ? ((JsonString) val).getString() : null,
-        String.class
-      );*/
-
-      // TODO: Decode LatLons RRH
-      //final LatLon[] geometry = decodeStreetsideLatLons(json.getJsonObject(&quot;la&quot;), json.getJsonObject(&quot;lo&quot;));
-      /*final int sequenceLength = Math.min(Math.min(cas.length, imageKeys.length), geometry.length);
-      for (int i = 0; i &lt; sequenceLength; i++) {
-        if (cas[i] != null &amp;&amp; imageKeys[i] != null &amp;&amp; geometry[i] != null) {
-          final StreetsideImage img = new StreetsideImage(imageKeys[i], geometry[i], cas[i]);
-          result.add(img);
-        }
-      }*/
-      /*if (result.getImages().isEmpty()) {
-        result = null;
-      }*/
-    //}
-    // TODO: Error handling RRH
-    /*return null;
-  }*/
 
   /**
    * Converts a {@link JsonArray} to a java array.
@@ -240,15 +131,15 @@ public final class JsonStreetsideSequencesDecoder {
   @SuppressWarnings(&quot;unchecked&quot;)
   private static &lt;T&gt; T[] decodeJsonArray(final JsonArray array, final Function&lt;JsonValue, T&gt; decodeValueFunction, final Class&lt;T&gt; clazz) {
     final T[] result;
-<span class="nc bnc" id="L243" title="All 2 branches missed.">    if (array == null) {</span>
-<span class="nc" id="L244">      result =  (T[]) Array.newInstance(clazz, 0);</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">    if (array == null) {</span>
+<span class="nc" id="L135">      result =  (T[]) Array.newInstance(clazz, 0);</span>
     } else {
-<span class="nc" id="L246">      result = (T[]) Array.newInstance(clazz, array.size());</span>
-<span class="nc bnc" id="L247" title="All 2 branches missed.">      for (int i = 0; i &lt; result.length; i++) {</span>
-<span class="nc" id="L248">        result[i] = decodeValueFunction.apply(array.get(i));</span>
+<span class="nc" id="L137">      result = (T[]) Array.newInstance(clazz, array.size());</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">      for (int i = 0; i &lt; result.length; i++) {</span>
+<span class="nc" id="L139">        result[i] = decodeValueFunction.apply(array.get(i));</span>
       }
     }
-<span class="nc" id="L251">    return result;</span>
+<span class="nc" id="L142">    return result;</span>
   }
 
   /**
@@ -270,29 +161,29 @@ public final class JsonStreetsideSequencesDecoder {
   private static &lt;T&gt; T[] decodeCoordinateProperty(
     final JsonObject json, final String key, final Function&lt;JsonValue, T&gt; decodeValueFunction, final Class&lt;T&gt; clazz
   ) {
-<span class="nc bnc" id="L273" title="All 2 branches missed.">    final JsonValue coordinateProperties = json == null ? null : json.get(&quot;coordinateProperties&quot;);</span>
-<span class="nc bnc" id="L274" title="All 2 branches missed.">    if (coordinateProperties instanceof JsonObject) {</span>
-<span class="nc" id="L275">      JsonValue valueArray = ((JsonObject) coordinateProperties).get(key);</span>
-<span class="nc bnc" id="L276" title="All 2 branches missed.">      if (valueArray instanceof JsonArray) {</span>
-<span class="nc" id="L277">        return decodeJsonArray((JsonArray) valueArray, decodeValueFunction, clazz);</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">    final JsonValue coordinateProperties = json == null ? null : json.get(&quot;coordinateProperties&quot;);</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">    if (coordinateProperties instanceof JsonObject) {</span>
+<span class="nc" id="L166">      JsonValue valueArray = ((JsonObject) coordinateProperties).get(key);</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">      if (valueArray instanceof JsonArray) {</span>
+<span class="nc" id="L168">        return decodeJsonArray((JsonArray) valueArray, decodeValueFunction, clazz);</span>
       }
     }
-<span class="nc" id="L280">    return (T[]) Array.newInstance(clazz, 0);</span>
+<span class="nc" id="L171">    return (T[]) Array.newInstance(clazz, 0);</span>
   }
 
   private static LatLon[] decodeLatLons(final JsonObject json) {
-<span class="nc bnc" id="L284" title="All 2 branches missed.">    final JsonValue coords = json == null ? null : json.get(&quot;coordinates&quot;);</span>
-<span class="nc bnc" id="L285" title="All 4 branches missed.">    if (coords instanceof JsonArray &amp;&amp; &quot;LineString&quot;.equals(json.getString(&quot;type&quot;, null))) {</span>
-<span class="nc" id="L286">      final LatLon[] result = new LatLon[((JsonArray) coords).size()];</span>
-<span class="nc bnc" id="L287" title="All 2 branches missed.">      for (int i = 0; i &lt; ((JsonArray) coords).size(); i++) {</span>
-<span class="nc" id="L288">        final JsonValue coord = ((JsonArray) coords).get(i);</span>
-<span class="nc bnc" id="L289" title="All 2 branches missed.">        if (coord instanceof JsonArray) {</span>
-<span class="nc" id="L290">          result[i] = JsonDecoder.decodeLatLon((JsonArray) coord);</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">    final JsonValue coords = json == null ? null : json.get(&quot;coordinates&quot;);</span>
+<span class="nc bnc" id="L176" title="All 4 branches missed.">    if (coords instanceof JsonArray &amp;&amp; &quot;LineString&quot;.equals(json.getString(&quot;type&quot;, null))) {</span>
+<span class="nc" id="L177">      final LatLon[] result = new LatLon[((JsonArray) coords).size()];</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">      for (int i = 0; i &lt; ((JsonArray) coords).size(); i++) {</span>
+<span class="nc" id="L179">        final JsonValue coord = ((JsonArray) coords).get(i);</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">        if (coord instanceof JsonArray) {</span>
+<span class="nc" id="L181">          result[i] = JsonDecoder.decodeLatLon((JsonArray) coord);</span>
         }
       }
-<span class="nc" id="L293">      return result;</span>
+<span class="nc" id="L184">      return result;</span>
     }
-<span class="nc" id="L295">    return new LatLon[0];</span>
+<span class="nc" id="L186">    return new LatLon[0];</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

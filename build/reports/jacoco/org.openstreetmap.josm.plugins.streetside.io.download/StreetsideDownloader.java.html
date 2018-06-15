@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StreetsideDownloader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.io.download</a> &gt; <span class="el_source">StreetsideDownloader.java</span></div><h1>StreetsideDownloader.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StreetsideDownloader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MicrosoftStreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.io.download</a> &gt; <span class="el_source">StreetsideDownloader.java</span></div><h1>StreetsideDownloader.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
 package org.openstreetmap.josm.plugins.streetside.io.download;
 
 import java.util.concurrent.ArrayBlockingQueue;
@@ -53,22 +53,22 @@ public final class StreetsideDownloader {
      * @return the (internationalized) label describing this download mode
      */
     public String getLabel() {
-<span class="fc" id="L56">      return label;</span>
+<span class="nc" id="L56">      return label;</span>
     }
 
     public static DOWNLOAD_MODE fromPrefId(String prefId) {
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">      for (DOWNLOAD_MODE mode : DOWNLOAD_MODE.values()) {</span>
-<span class="fc bfc" id="L61" title="All 2 branches covered.">        if (mode.getPrefId().equals(prefId)) {</span>
-<span class="fc" id="L62">          return mode;</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">      for (DOWNLOAD_MODE mode : DOWNLOAD_MODE.values()) {</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">        if (mode.getPrefId().equals(prefId)) {</span>
+<span class="nc" id="L62">          return mode;</span>
         }
       }
 <span class="nc" id="L65">      return DEFAULT;</span>
     }
 
     public static DOWNLOAD_MODE fromLabel(String label) {
-<span class="pc bpc" id="L69" title="1 of 2 branches missed.">      for (DOWNLOAD_MODE mode : DOWNLOAD_MODE.values()) {</span>
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">        if (mode.getLabel().equals(label)) {</span>
-<span class="fc" id="L71">          return mode;</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">      for (DOWNLOAD_MODE mode : DOWNLOAD_MODE.values()) {</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        if (mode.getLabel().equals(label)) {</span>
+<span class="nc" id="L71">          return mode;</span>
         }
       }
 <span class="nc" id="L74">      return DEFAULT;</span>
@@ -76,10 +76,10 @@ public final class StreetsideDownloader {
   }
 
   /** Max area to be downloaded */
-<span class="fc" id="L79">  private static final double MAX_AREA = StreetsideProperties.MAX_DOWNLOAD_AREA.get();</span>
+<span class="nc" id="L79">  private static final double MAX_AREA = StreetsideProperties.MAX_DOWNLOAD_AREA.get();</span>
 
   /** Executor that will run the petitions. */
-<span class="fc" id="L82">  private static ThreadPoolExecutor executor = new ThreadPoolExecutor(</span>
+<span class="nc" id="L82">  private static ThreadPoolExecutor executor = new ThreadPoolExecutor(</span>
     3, 5, 100, TimeUnit.SECONDS, new ArrayBlockingQueue&lt;&gt;(100), new ThreadPoolExecutor.DiscardPolicy());
 
   /**
@@ -121,7 +121,7 @@ public final class StreetsideDownloader {
    * @return the currently enabled {@link DOWNLOAD_MODE}
    */
   public static DOWNLOAD_MODE getMode() {
-<span class="fc" id="L124">    return DOWNLOAD_MODE.fromPrefId(StreetsideProperties.DOWNLOAD_MODE.get());</span>
+<span class="nc" id="L124">    return DOWNLOAD_MODE.fromPrefId(StreetsideProperties.DOWNLOAD_MODE.get());</span>
   }
 
   private static void run(Runnable t) {
@@ -181,8 +181,8 @@ public final class StreetsideDownloader {
    * Downloads all images of the area covered by the OSM data.
    */
   public static void downloadOSMArea() {
-<span class="pc bpc" id="L184" title="1 of 2 branches missed.">    if (MainApplication.getLayerManager().getEditLayer() == null) {</span>
-<span class="fc" id="L185">      return;</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">    if (MainApplication.getLayerManager().getEditLayer() == null) {</span>
+<span class="nc" id="L185">      return;</span>
     }
 <span class="nc bnc" id="L187" title="All 2 branches missed.">    if (isAreaTooBig(MainApplication.getLayerManager().getEditLayer().data.getDataSourceBounds().parallelStream().map(Bounds::getArea).reduce(0.0, Double::sum))) {</span>
 <span class="nc" id="L188">      return;</span>
@@ -220,14 +220,14 @@ public final class StreetsideDownloader {
    * Stops all running threads.
    */
   public static void stopAll() {
-<span class="fc" id="L223">    executor.shutdownNow();</span>
+<span class="nc" id="L223">    executor.shutdownNow();</span>
     try {
-<span class="fc" id="L225">      executor.awaitTermination(30, TimeUnit.SECONDS);</span>
+<span class="nc" id="L225">      executor.awaitTermination(30, TimeUnit.SECONDS);</span>
 <span class="nc" id="L226">    } catch (InterruptedException e) {</span>
 <span class="nc" id="L227">      Logging.error(e);</span>
-<span class="fc" id="L228">    }</span>
-<span class="fc" id="L229">    executor = new ThreadPoolExecutor(3, 5, 100, TimeUnit.SECONDS,</span>
+<span class="nc" id="L228">    }</span>
+<span class="nc" id="L229">    executor = new ThreadPoolExecutor(3, 5, 100, TimeUnit.SECONDS,</span>
       new ArrayBlockingQueue&lt;&gt;(100), new ThreadPoolExecutor.DiscardPolicy());
-<span class="fc" id="L231">  }</span>
+<span class="nc" id="L231">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

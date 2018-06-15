@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StreetsideUser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.oauth</a> &gt; <span class="el_source">StreetsideUser.java</span></div><h1>StreetsideUser.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StreetsideUser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MicrosoftStreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.oauth</a> &gt; <span class="el_source">StreetsideUser.java</span></div><h1>StreetsideUser.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
 package org.openstreetmap.josm.plugins.streetside.oauth;
 
 
@@ -32,20 +32,20 @@ private static String imagesHash;
 * @return The username of the logged in user.
 */
 public static synchronized String getUsername() {
-<span class="fc bfc" id="L35" title="All 2 branches covered."> if (!isTokenValid) {</span>
-<span class="fc" id="L36">   return null;</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed."> if (!isTokenValid) {</span>
+<span class="nc" id="L36">   return null;</span>
  }
-<span class="pc bpc" id="L38" title="1 of 2 branches missed."> if (username == null) {</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed."> if (username == null) {</span>
    try {
      username = OAuthUtils
 <span class="nc" id="L41">         .getWithHeader(StreetsideURL.APIv3.userURL())</span>
 <span class="nc" id="L42">         .getString(&quot;username&quot;);</span>
-<span class="fc" id="L43">   } catch (IOException e) {</span>
-<span class="fc" id="L44">     Logging.log(Logging.LEVEL_WARN, &quot;Invalid Streetside token, resetting field&quot;, e);</span>
-<span class="fc" id="L45">     reset();</span>
+<span class="nc" id="L43">   } catch (IOException e) {</span>
+<span class="nc" id="L44">     Logging.log(Logging.LEVEL_WARN, &quot;Invalid Streetside token, resetting field&quot;, e);</span>
+<span class="nc" id="L45">     reset();</span>
 <span class="nc" id="L46">   }</span>
  }
-<span class="fc" id="L48"> return username;</span>
+<span class="nc" id="L48"> return username;</span>
 }
 
 /**
@@ -82,11 +82,11 @@ public static synchronized void reset() {
 <span class="fc" id="L82"> imagesPolicy = null;</span>
 <span class="fc" id="L83"> imagesHash = null;</span>
 <span class="fc" id="L84"> isTokenValid = false;</span>
-<span class="fc" id="L85"> StreetsideProperties.ACCESS_TOKEN.put(StreetsideProperties.ACCESS_TOKEN.getDefaultValue());</span>
-<span class="fc" id="L86">}</span>
+<span class="nc" id="L85"> StreetsideProperties.ACCESS_TOKEN.put(StreetsideProperties.ACCESS_TOKEN.getDefaultValue());</span>
+<span class="nc" id="L86">}</span>
 
 public static synchronized void setTokenValid(boolean value) {
-<span class="fc" id="L89"> isTokenValid = value;</span>
-<span class="fc" id="L90">}</span>
+<span class="nc" id="L89"> isTokenValid = value;</span>
+<span class="nc" id="L90">}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

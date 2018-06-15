@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StreetsideCache.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.cache</a> &gt; <span class="el_source">StreetsideCache.java</span></div><h1>StreetsideCache.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StreetsideCache.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MicrosoftStreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.cache</a> &gt; <span class="el_source">StreetsideCache.java</span></div><h1>StreetsideCache.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
 package org.openstreetmap.josm.plugins.streetside.cache;
 
 import java.net.URL;
@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import org.openstreetmap.josm.data.cache.BufferedImageCacheEntry;
 import org.openstreetmap.josm.data.cache.JCSCachedTileLoaderJob;
+import org.openstreetmap.josm.data.imagery.TileJobOptions;
 import org.openstreetmap.josm.plugins.streetside.utils.StreetsideURL.VirtualEarth;
 
 /**
@@ -24,14 +25,14 @@ public class StreetsideCache extends JCSCachedTileLoaderJob&lt;String, BufferedI
 	 *
 	 * @author nokutu
 	 */
-<span class="nc" id="L27">	public enum Type {</span>
+<span class="pc" id="L28">	public enum Type {</span>
 		/** Full quality image */
-<span class="nc" id="L29">		FULL_IMAGE,</span>
+<span class="fc" id="L30">		FULL_IMAGE,</span>
 		/** Low quality image */
-<span class="nc" id="L31">		THUMBNAIL,</span>
+<span class="fc" id="L32">		THUMBNAIL,</span>
 		/** cubemap faces */
 		// TODO: one class per cache/load required? really?!
-<span class="nc" id="L34">		CUBEMAP/*,</span>
+<span class="fc" id="L35">		CUBEMAP/*,</span>
 		CUBEMAP_FRONT,
 		CUBEMAP_RIGHT,
 		CUBEMAP_BACK,
@@ -50,40 +51,53 @@ public class StreetsideCache extends JCSCachedTileLoaderJob&lt;String, BufferedI
 	 *          FULL_IMAGE).
 	 */
 	public StreetsideCache(final String id, final Type type) {
-<span class="nc" id="L53">		super(Caches.ImageCache.getInstance().getCache(), 50000, 50000, new HashMap&lt;&gt;());</span>
-<span class="nc bnc" id="L54" title="All 4 branches missed.">		if (id == null || type == null) {</span>
-<span class="nc" id="L55">			this.id = null;</span>
-<span class="nc" id="L56">			url = null;</span>
+		//ICacheAccess&lt;String,BufferedImageCacheEntry&gt;,TileJobOptions,ThreadPoolExecutor
+		// TODO: StreetsideCache.java:53: error: no suitable constructor found for JCSCachedTileLoaderJob(CacheAccess&lt;String,BufferedImageCacheEntry&gt;,int,int,HashMap&lt;String,String&gt;)
+//	    [javac] 		super(Caches.ImageCache.getInstance().getCache(), 50000, 50000, new HashMap&lt;String,String&gt;());
+//	    [javac] 		^
+//	    [javac]     constructor JCSCachedTileLoaderJob.JCSCachedTileLoaderJob(ICacheAccess&lt;String,BufferedImageCacheEntry&gt;,TileJobOptions,ThreadPoolExecutor) is not applicable
+//	    [javac]       (actual and formal argument lists differ in length)
+//	    [javac]     constructor JCSCachedTileLoaderJob.JCSCachedTileLoaderJob(ICacheAccess&lt;String,BufferedImageCacheEntry&gt;,TileJobOptions) is not applicable
+//	    [javac]       (actual and formal argument lists differ in length)
+
+		//super(Caches.ImageCache.getInstance().getCache(), 50000, 50000, new HashMap&lt;String,String&gt;());
+		//super(Caches.ImageCache.getInstance().getCache(),TileJobOptions,ThreadpoolExecutor)
+		//TileJobOptions tjo = ;
+<span class="fc" id="L66">		super(Caches.ImageCache.getInstance().getCache(),new TileJobOptions(50000, 50000, new HashMap&lt;String,String&gt;(),50000l));</span>
+
+<span class="pc bpc" id="L68" title="1 of 4 branches missed.">		if (id == null || type == null) {</span>
+<span class="fc" id="L69">			this.id = null;</span>
+<span class="fc" id="L70">			url = null;</span>
 		} else {
 			//this.id = id + (type == Type.FULL_IMAGE ? &quot;.FULL_IMAGE&quot; : &quot;.THUMBNAIL&quot;);
 			// Add an &quot;01&quot; to the Streetside imageId in order to get a frontal thumbnail image for the display
-<span class="nc" id="L60">			this.id = id;</span>
-<span class="nc bnc" id="L61" title="All 2 branches missed.">			url = VirtualEarth.streetsideTile(id, type == Type.THUMBNAIL);</span>
+<span class="fc" id="L74">			this.id = id;</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">			url = VirtualEarth.streetsideTile(id, type == Type.THUMBNAIL);</span>
 		}
-<span class="nc" id="L63">	}</span>
+<span class="fc" id="L77">	}</span>
 
 	@Override
 	public String getCacheKey() {
-<span class="nc" id="L67">		return id;</span>
+<span class="fc" id="L81">		return id;</span>
 	}
 
 	@Override
 	public URL getUrl() {
-<span class="nc" id="L72">		return url;</span>
+<span class="fc" id="L86">		return url;</span>
 	}
 
 	@Override
 	protected BufferedImageCacheEntry createCacheEntry(byte[] content) {
-<span class="nc" id="L77">		return new BufferedImageCacheEntry(content);</span>
+<span class="nc" id="L91">		return new BufferedImageCacheEntry(content);</span>
 	}
 
 	@Override
 	protected boolean isObjectLoadable() {
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (cacheData == null) {</span>
-<span class="nc" id="L83">			return false;</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (cacheData == null) {</span>
+<span class="fc" id="L97">			return false;</span>
 		}
-<span class="nc" id="L85">		final byte[] content = cacheData.getContent();</span>
-<span class="nc bnc" id="L86" title="All 4 branches missed.">		return content != null &amp;&amp; content.length &gt; 0;</span>
+<span class="nc" id="L99">		final byte[] content = cacheData.getContent();</span>
+<span class="nc bnc" id="L100" title="All 4 branches missed.">		return content != null &amp;&amp; content.length &gt; 0;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StreetsidePreferenceSetting.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.gui</a> &gt; <span class="el_source">StreetsidePreferenceSetting.java</span></div><h1>StreetsidePreferenceSetting.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StreetsidePreferenceSetting.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MicrosoftStreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.gui</a> &gt; <span class="el_source">StreetsidePreferenceSetting.java</span></div><h1>StreetsidePreferenceSetting.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
 package org.openstreetmap.josm.plugins.streetside.gui;
 
 import java.awt.BorderLayout;
@@ -49,180 +49,180 @@ import org.openstreetmap.josm.tools.Logging;
  * @author nokutu
  *
  */
-<span class="fc" id="L52">public class StreetsidePreferenceSetting implements SubPreferenceSetting, StreetsideLoginListener {</span>
-<span class="fc" id="L53">  private final JComboBox&lt;String&gt; downloadModeComboBox = new JComboBox&lt;&gt;(new String[]{</span>
-<span class="fc" id="L54">      DOWNLOAD_MODE.VISIBLE_AREA.getLabel(),</span>
-<span class="fc" id="L55">      DOWNLOAD_MODE.OSM_AREA.getLabel(),</span>
-<span class="fc" id="L56">      DOWNLOAD_MODE.MANUAL_ONLY.getLabel()</span>
+<span class="nc" id="L52">public class StreetsidePreferenceSetting implements SubPreferenceSetting, StreetsideLoginListener {</span>
+<span class="nc" id="L53">  private final JComboBox&lt;String&gt; downloadModeComboBox = new JComboBox&lt;&gt;(new String[]{</span>
+<span class="nc" id="L54">      DOWNLOAD_MODE.VISIBLE_AREA.getLabel(),</span>
+<span class="nc" id="L55">      DOWNLOAD_MODE.OSM_AREA.getLabel(),</span>
+<span class="nc" id="L56">      DOWNLOAD_MODE.MANUAL_ONLY.getLabel()</span>
   });
 
-<span class="fc" id="L59">  private final JCheckBox displayHour =</span>
+<span class="nc" id="L59">  private final JCheckBox displayHour =</span>
     // TODO tr( RRH
     // i18n: Checkbox label in JOSM settings
-<span class="fc" id="L62">    new JCheckBox(I18n.tr(&quot;Display hour when the picture was taken&quot;), StreetsideProperties.DISPLAY_HOUR.get());</span>
-<span class="fc" id="L63">  private final JCheckBox format24 =</span>
+<span class="nc" id="L62">    new JCheckBox(I18n.tr(&quot;Display hour when the picture was taken&quot;), StreetsideProperties.DISPLAY_HOUR.get());</span>
+<span class="nc" id="L63">  private final JCheckBox format24 =</span>
     // TODO tr( RRH
     // i18n: Checkbox label in JOSM settings
-<span class="fc" id="L66">    new JCheckBox(I18n.tr(&quot;Use 24 hour format&quot;), StreetsideProperties.TIME_FORMAT_24.get());</span>
-<span class="fc" id="L67">  private final JCheckBox moveTo =</span>
+<span class="nc" id="L66">    new JCheckBox(I18n.tr(&quot;Use 24 hour format&quot;), StreetsideProperties.TIME_FORMAT_24.get());</span>
+<span class="nc" id="L67">  private final JCheckBox moveTo =</span>
     // TODO tr( RRH
     // i18n: Checkbox label in JOSM settings
-<span class="fc" id="L70">    new JCheckBox(I18n.tr(&quot;Move to picture''s location with next/previous buttons&quot;), StreetsideProperties.MOVE_TO_IMG.get());</span>
-<span class="fc" id="L71">  private final JCheckBox hoverEnabled =</span>
+<span class="nc" id="L70">    new JCheckBox(I18n.tr(&quot;Move to picture''s location with next/previous buttons&quot;), StreetsideProperties.MOVE_TO_IMG.get());</span>
+<span class="nc" id="L71">  private final JCheckBox hoverEnabled =</span>
     // TODO tr( RRH
     // i18n: Checkbox label in JOSM settings
-<span class="fc" id="L74">    new JCheckBox(I18n.tr(&quot;Preview images when hovering its icon&quot;), StreetsideProperties.HOVER_ENABLED.get());</span>
-<span class="fc" id="L75">  private final JCheckBox cutOffSeq =</span>
+<span class="nc" id="L74">    new JCheckBox(I18n.tr(&quot;Preview images when hovering its icon&quot;), StreetsideProperties.HOVER_ENABLED.get());</span>
+<span class="nc" id="L75">  private final JCheckBox cutOffSeq =</span>
     // TODO tr( RRH
     // i18n: Checkbox label in JOSM settings
-<span class="fc" id="L78">    new JCheckBox(I18n.tr(&quot;Cut off sequences at download bounds&quot;), StreetsideProperties.CUT_OFF_SEQUENCES_AT_BOUNDS.get());</span>
-<span class="fc" id="L79">  private final JCheckBox imageLinkToBlurEditor =</span>
+<span class="nc" id="L78">    new JCheckBox(I18n.tr(&quot;Cut off sequences at download bounds&quot;), StreetsideProperties.CUT_OFF_SEQUENCES_AT_BOUNDS.get());</span>
+<span class="nc" id="L79">  private final JCheckBox imageLinkToBlurEditor =</span>
     new JCheckBox(
       // TODO tr( RRH
       // i18n: Checkbox label in JOSM settings
-<span class="fc" id="L83">      I18n.tr(&quot;When opening Streetside image in web browser, show the blur editor instead of the image viewer&quot;),</span>
-<span class="fc" id="L84">      StreetsideProperties.IMAGE_LINK_TO_BLUR_EDITOR.get()</span>
+<span class="nc" id="L83">      I18n.tr(&quot;When opening Streetside image in web browser, show the blur editor instead of the image viewer&quot;),</span>
+<span class="nc" id="L84">      StreetsideProperties.IMAGE_LINK_TO_BLUR_EDITOR.get()</span>
     );
-<span class="fc" id="L86">  private final JCheckBox developer =</span>
+<span class="nc" id="L86">  private final JCheckBox developer =</span>
     // TODO tr( RRH
     // i18n: Checkbox label in JOSM settings
-<span class="fc" id="L89">    new JCheckBox(I18n.tr(&quot;Enable experimental beta-features (might be unstable)&quot;), StreetsideProperties.DEVELOPER.get());</span>
-<span class="fc" id="L90">  private final SpinnerNumberModel preFetchSize = new SpinnerNumberModel(</span>
-<span class="fc" id="L91">    StreetsideProperties.PRE_FETCH_IMAGE_COUNT.get().intValue(),</span>
+<span class="nc" id="L89">    new JCheckBox(I18n.tr(&quot;Enable experimental beta-features (might be unstable)&quot;), StreetsideProperties.DEVELOPER.get());</span>
+<span class="nc" id="L90">  private final SpinnerNumberModel preFetchSize = new SpinnerNumberModel(</span>
+<span class="nc" id="L91">    StreetsideProperties.PRE_FETCH_IMAGE_COUNT.get().intValue(),</span>
     0,
     Integer.MAX_VALUE,
     1
   );
-<span class="fc" id="L96">  private final JButton loginButton = new StreetsideButton(new LoginAction(this));</span>
-<span class="fc" id="L97">  private final JButton logoutButton = new StreetsideButton(new LogoutAction());</span>
-<span class="fc" id="L98">  private final JLabel loginLabel = new JLabel();</span>
-<span class="fc" id="L99">  private final JPanel loginPanel = new JPanel();</span>
+<span class="nc" id="L96">  private final JButton loginButton = new StreetsideButton(new LoginAction(this));</span>
+<span class="nc" id="L97">  private final JButton logoutButton = new StreetsideButton(new LogoutAction());</span>
+<span class="nc" id="L98">  private final JLabel loginLabel = new JLabel();</span>
+<span class="nc" id="L99">  private final JPanel loginPanel = new JPanel();</span>
 
   @Override
   public TabPreferenceSetting getTabPreferenceSetting(PreferenceTabbedPane gui) {
-<span class="fc" id="L103">    return gui.getDisplayPreference();</span>
+<span class="nc" id="L103">    return gui.getDisplayPreference();</span>
   }
 
   @Override
   public void addGui(PreferenceTabbedPane gui) {
-<span class="fc" id="L108">    JPanel container = new JPanel(new BorderLayout());</span>
+<span class="nc" id="L108">    JPanel container = new JPanel(new BorderLayout());</span>
 
-<span class="fc" id="L110">    loginPanel.setLayout(new BoxLayout(loginPanel, BoxLayout.LINE_AXIS));</span>
-<span class="fc" id="L111">    loginPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));</span>
-<span class="fc" id="L112">    loginPanel.setBackground(StreetsideColorScheme.TOOLBAR_DARK_GREY);</span>
-<span class="fc" id="L113">    JLabel brandImage = new JLabel();</span>
+<span class="nc" id="L110">    loginPanel.setLayout(new BoxLayout(loginPanel, BoxLayout.LINE_AXIS));</span>
+<span class="nc" id="L111">    loginPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));</span>
+<span class="nc" id="L112">    loginPanel.setBackground(StreetsideColorScheme.TOOLBAR_DARK_GREY);</span>
+<span class="nc" id="L113">    JLabel brandImage = new JLabel();</span>
     // TODO: change icons RRH
-<span class="pc" id="L115">    try (InputStream is = StreetsidePreferenceSetting.class.getResourceAsStream(&quot;/images/mapillary-logo-white.png&quot;)) {</span>
-<span class="pc bpc" id="L116" title="1 of 2 branches missed.">      if (is != null) {</span>
-<span class="fc" id="L117">        brandImage.setIcon(new ImageIcon(ImageIO.read(is)));</span>
+<span class="nc" id="L115">    try (InputStream is = StreetsidePreferenceSetting.class.getResourceAsStream(&quot;/images/mapillary-logo-white.png&quot;)) {</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">      if (is != null) {</span>
+<span class="nc" id="L117">        brandImage.setIcon(new ImageIcon(ImageIO.read(is)));</span>
       } else {
 <span class="nc" id="L119">        Logging.warn(&quot;Could not load Streetside brand image!&quot;);</span>
       }
-<span class="pc bpc" id="L121" title="6 of 8 branches missed.">    } catch (IOException e) {</span>
+<span class="nc bnc" id="L121" title="All 8 branches missed.">    } catch (IOException e) {</span>
 <span class="nc" id="L122">      Logging.warn(&quot;While reading Streetside brand image, an IO-exception occured!&quot;);</span>
-<span class="fc" id="L123">    }</span>
-<span class="fc" id="L124">    loginPanel.add(brandImage, 0);</span>
-<span class="fc" id="L125">    loginPanel.add(Box.createHorizontalGlue(), 1);</span>
-<span class="fc" id="L126">    loginLabel.setForeground(Color.WHITE);</span>
-<span class="fc" id="L127">    loginLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));</span>
-<span class="fc" id="L128">    loginPanel.add(loginLabel, 2);</span>
-<span class="fc" id="L129">    loginPanel.add(loginButton, 3);</span>
-<span class="fc" id="L130">    onLogout();</span>
-<span class="fc" id="L131">    container.add(loginPanel, BorderLayout.NORTH);</span>
+<span class="nc" id="L123">    }</span>
+<span class="nc" id="L124">    loginPanel.add(brandImage, 0);</span>
+<span class="nc" id="L125">    loginPanel.add(Box.createHorizontalGlue(), 1);</span>
+<span class="nc" id="L126">    loginLabel.setForeground(Color.WHITE);</span>
+<span class="nc" id="L127">    loginLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));</span>
+<span class="nc" id="L128">    loginPanel.add(loginLabel, 2);</span>
+<span class="nc" id="L129">    loginPanel.add(loginButton, 3);</span>
+<span class="nc" id="L130">    onLogout();</span>
+<span class="nc" id="L131">    container.add(loginPanel, BorderLayout.NORTH);</span>
 
-<span class="fc" id="L133">    JPanel mainPanel = new JPanel();</span>
-<span class="fc" id="L134">    mainPanel.setLayout(new GridBagLayout());</span>
-<span class="fc" id="L135">    mainPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));</span>
+<span class="nc" id="L133">    JPanel mainPanel = new JPanel();</span>
+<span class="nc" id="L134">    mainPanel.setLayout(new GridBagLayout());</span>
+<span class="nc" id="L135">    mainPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));</span>
 
-<span class="fc" id="L137">    downloadModeComboBox.setSelectedItem(DOWNLOAD_MODE.fromPrefId(StreetsideProperties.DOWNLOAD_MODE.get()).getLabel());</span>
+<span class="nc" id="L137">    downloadModeComboBox.setSelectedItem(DOWNLOAD_MODE.fromPrefId(StreetsideProperties.DOWNLOAD_MODE.get()).getLabel());</span>
 
-<span class="fc" id="L139">    JPanel downloadModePanel = new JPanel();</span>
+<span class="nc" id="L139">    JPanel downloadModePanel = new JPanel();</span>
     // TODO tr( RRH
-<span class="fc" id="L141">    downloadModePanel.add(new JLabel(I18n.tr(&quot;Download mode&quot;)));</span>
-<span class="fc" id="L142">    downloadModePanel.add(downloadModeComboBox);</span>
-<span class="fc" id="L143">    mainPanel.add(downloadModePanel, GBC.eol());</span>
+<span class="nc" id="L141">    downloadModePanel.add(new JLabel(I18n.tr(&quot;Download mode&quot;)));</span>
+<span class="nc" id="L142">    downloadModePanel.add(downloadModeComboBox);</span>
+<span class="nc" id="L143">    mainPanel.add(downloadModePanel, GBC.eol());</span>
 
-<span class="fc" id="L145">    mainPanel.add(displayHour, GBC.eol());</span>
-<span class="fc" id="L146">    mainPanel.add(format24, GBC.eol());</span>
-<span class="fc" id="L147">    mainPanel.add(moveTo, GBC.eol());</span>
-<span class="fc" id="L148">    mainPanel.add(hoverEnabled, GBC.eol());</span>
-<span class="fc" id="L149">    mainPanel.add(cutOffSeq, GBC.eol());</span>
-<span class="fc" id="L150">    mainPanel.add(imageLinkToBlurEditor, GBC.eol());</span>
+<span class="nc" id="L145">    mainPanel.add(displayHour, GBC.eol());</span>
+<span class="nc" id="L146">    mainPanel.add(format24, GBC.eol());</span>
+<span class="nc" id="L147">    mainPanel.add(moveTo, GBC.eol());</span>
+<span class="nc" id="L148">    mainPanel.add(hoverEnabled, GBC.eol());</span>
+<span class="nc" id="L149">    mainPanel.add(cutOffSeq, GBC.eol());</span>
+<span class="nc" id="L150">    mainPanel.add(imageLinkToBlurEditor, GBC.eol());</span>
 
-<span class="fc" id="L152">    final JPanel preFetchPanel = new JPanel();</span>
+<span class="nc" id="L152">    final JPanel preFetchPanel = new JPanel();</span>
     // TODO: tr( RRH
     // i18n: Spinner label in JOSM settings
-<span class="fc" id="L155">    preFetchPanel.add(new JLabel(I18n.tr(&quot;Number of images to be pre-fetched (forwards and backwards)&quot;)));</span>
-<span class="fc" id="L156">    final JSpinner spinner = new JSpinner(preFetchSize);</span>
-<span class="fc" id="L157">    final JSpinner.DefaultEditor editor = new JSpinner.NumberEditor(spinner);</span>
-<span class="fc" id="L158">    editor.getTextField().setColumns(3);</span>
-<span class="fc" id="L159">    spinner.setEditor(editor);</span>
-<span class="fc" id="L160">    preFetchPanel.add(spinner);</span>
-<span class="fc" id="L161">    mainPanel.add(preFetchPanel, GBC.eol());</span>
+<span class="nc" id="L155">    preFetchPanel.add(new JLabel(I18n.tr(&quot;Number of images to be pre-fetched (forwards and backwards)&quot;)));</span>
+<span class="nc" id="L156">    final JSpinner spinner = new JSpinner(preFetchSize);</span>
+<span class="nc" id="L157">    final JSpinner.DefaultEditor editor = new JSpinner.NumberEditor(spinner);</span>
+<span class="nc" id="L158">    editor.getTextField().setColumns(3);</span>
+<span class="nc" id="L159">    spinner.setEditor(editor);</span>
+<span class="nc" id="L160">    preFetchPanel.add(spinner);</span>
+<span class="nc" id="L161">    mainPanel.add(preFetchPanel, GBC.eol());</span>
 
-<span class="pc bpc" id="L163" title="2 of 4 branches missed.">    if (ExpertToggleAction.isExpert() || developer.isSelected()) {</span>
+<span class="nc bnc" id="L163" title="All 4 branches missed.">    if (ExpertToggleAction.isExpert() || developer.isSelected()) {</span>
 <span class="nc" id="L164">      mainPanel.add(developer, GBC.eol());</span>
     }
-<span class="fc" id="L166">    StreetsideColorScheme.styleAsDefaultPanel(</span>
+<span class="nc" id="L166">    StreetsideColorScheme.styleAsDefaultPanel(</span>
       mainPanel, downloadModePanel, displayHour, format24, moveTo, hoverEnabled, cutOffSeq, imageLinkToBlurEditor, developer, preFetchPanel
     );
-<span class="fc" id="L169">    mainPanel.add(Box.createVerticalGlue(), GBC.eol().fill(GridBagConstraints.BOTH));</span>
+<span class="nc" id="L169">    mainPanel.add(Box.createVerticalGlue(), GBC.eol().fill(GridBagConstraints.BOTH));</span>
 
-<span class="fc" id="L171">    container.add(mainPanel, BorderLayout.CENTER);</span>
+<span class="nc" id="L171">    container.add(mainPanel, BorderLayout.CENTER);</span>
 
-<span class="fc" id="L173">    synchronized (gui.getDisplayPreference().getTabPane()) {</span>
-<span class="fc" id="L174">      gui.getDisplayPreference().addSubTab(this, &quot;Streetside&quot;, new JScrollPane(container));</span>
-<span class="fc" id="L175">      gui.getDisplayPreference().getTabPane().setIconAt(gui.getDisplayPreference().getTabPane().getTabCount()-1, StreetsidePlugin.LOGO.setSize(12, 12).get());</span>
-<span class="pc" id="L176">    }</span>
+<span class="nc" id="L173">    synchronized (gui.getDisplayPreference().getTabPane()) {</span>
+<span class="nc" id="L174">      gui.getDisplayPreference().addSubTab(this, &quot;Streetside&quot;, new JScrollPane(container));</span>
+<span class="nc" id="L175">      gui.getDisplayPreference().getTabPane().setIconAt(gui.getDisplayPreference().getTabPane().getTabCount()-1, StreetsidePlugin.LOGO.setSize(12, 12).get());</span>
+<span class="nc" id="L176">    }</span>
 
-<span class="fc" id="L178">    new Thread(() -&gt; {</span>
-<span class="fc" id="L179">      String username = StreetsideUser.getUsername();</span>
-<span class="pc bpc" id="L180" title="1 of 2 branches missed.">      if (username != null) {</span>
+<span class="nc" id="L178">    new Thread(() -&gt; {</span>
+<span class="nc" id="L179">      String username = StreetsideUser.getUsername();</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">      if (username != null) {</span>
 <span class="nc" id="L181">        SwingUtilities.invokeLater(() -&gt; onLogin(StreetsideUser.getUsername()));</span>
       }
-<span class="fc" id="L183">    }).start();</span>
-<span class="fc" id="L184">  }</span>
+<span class="nc" id="L183">    }).start();</span>
+<span class="nc" id="L184">  }</span>
 
   @Override
   public void onLogin(final String username) {
-<span class="fc" id="L188">    loginPanel.remove(loginButton);</span>
-<span class="fc" id="L189">    loginPanel.add(logoutButton, 3);</span>
+<span class="nc" id="L188">    loginPanel.remove(loginButton);</span>
+<span class="nc" id="L189">    loginPanel.add(logoutButton, 3);</span>
     // TODO tr( RRH
-<span class="fc" id="L191">    loginLabel.setText(I18n.tr(&quot;You are logged in as ''{0}''.&quot;, username));</span>
-<span class="fc" id="L192">    loginPanel.revalidate();</span>
-<span class="fc" id="L193">    loginPanel.repaint();</span>
-<span class="fc" id="L194">  }</span>
+<span class="nc" id="L191">    loginLabel.setText(I18n.tr(&quot;You are logged in as ''{0}''.&quot;, username));</span>
+<span class="nc" id="L192">    loginPanel.revalidate();</span>
+<span class="nc" id="L193">    loginPanel.repaint();</span>
+<span class="nc" id="L194">  }</span>
 
   @Override
   public void onLogout() {
-<span class="fc" id="L198">    loginPanel.remove(logoutButton);</span>
-<span class="fc" id="L199">    loginPanel.add(loginButton, 3);</span>
+<span class="nc" id="L198">    loginPanel.remove(logoutButton);</span>
+<span class="nc" id="L199">    loginPanel.add(loginButton, 3);</span>
     // TODO: tr( RRH
-<span class="fc" id="L201">    loginLabel.setText(I18n.tr(&quot;You are currently not logged in.&quot;));</span>
-<span class="fc" id="L202">    loginPanel.revalidate();</span>
-<span class="fc" id="L203">    loginPanel.repaint();</span>
-<span class="fc" id="L204">  }</span>
+<span class="nc" id="L201">    loginLabel.setText(I18n.tr(&quot;You are currently not logged in.&quot;));</span>
+<span class="nc" id="L202">    loginPanel.revalidate();</span>
+<span class="nc" id="L203">    loginPanel.repaint();</span>
+<span class="nc" id="L204">  }</span>
 
   @SuppressWarnings(&quot;PMD.ShortMethodName&quot;)
   @Override
   public boolean ok() {
-<span class="fc" id="L209">    StreetsideProperties.DOWNLOAD_MODE.put(DOWNLOAD_MODE.fromLabel(downloadModeComboBox.getSelectedItem().toString()).getPrefId());</span>
-<span class="fc" id="L210">    StreetsideProperties.DISPLAY_HOUR.put(displayHour.isSelected());</span>
-<span class="fc" id="L211">    StreetsideProperties.TIME_FORMAT_24.put(format24.isSelected());</span>
-<span class="fc" id="L212">    StreetsideProperties.MOVE_TO_IMG.put(moveTo.isSelected());</span>
-<span class="fc" id="L213">    StreetsideProperties.HOVER_ENABLED.put(hoverEnabled.isSelected());</span>
-<span class="fc" id="L214">    StreetsideProperties.CUT_OFF_SEQUENCES_AT_BOUNDS.put(cutOffSeq.isSelected());</span>
-<span class="fc" id="L215">    StreetsideProperties.IMAGE_LINK_TO_BLUR_EDITOR.put(imageLinkToBlurEditor.isSelected());</span>
-<span class="fc" id="L216">    StreetsideProperties.DEVELOPER.put(developer.isSelected());</span>
-<span class="fc" id="L217">    StreetsideProperties.PRE_FETCH_IMAGE_COUNT.put(preFetchSize.getNumber().intValue());</span>
+<span class="nc" id="L209">    StreetsideProperties.DOWNLOAD_MODE.put(DOWNLOAD_MODE.fromLabel(downloadModeComboBox.getSelectedItem().toString()).getPrefId());</span>
+<span class="nc" id="L210">    StreetsideProperties.DISPLAY_HOUR.put(displayHour.isSelected());</span>
+<span class="nc" id="L211">    StreetsideProperties.TIME_FORMAT_24.put(format24.isSelected());</span>
+<span class="nc" id="L212">    StreetsideProperties.MOVE_TO_IMG.put(moveTo.isSelected());</span>
+<span class="nc" id="L213">    StreetsideProperties.HOVER_ENABLED.put(hoverEnabled.isSelected());</span>
+<span class="nc" id="L214">    StreetsideProperties.CUT_OFF_SEQUENCES_AT_BOUNDS.put(cutOffSeq.isSelected());</span>
+<span class="nc" id="L215">    StreetsideProperties.IMAGE_LINK_TO_BLUR_EDITOR.put(imageLinkToBlurEditor.isSelected());</span>
+<span class="nc" id="L216">    StreetsideProperties.DEVELOPER.put(developer.isSelected());</span>
+<span class="nc" id="L217">    StreetsideProperties.PRE_FETCH_IMAGE_COUNT.put(preFetchSize.getNumber().intValue());</span>
 
     //Restart is never required
-<span class="fc" id="L220">    return false;</span>
+<span class="nc" id="L220">    return false;</span>
   }
 
   @Override
   public boolean isExpert() {
-<span class="fc" id="L225">    return false;</span>
+<span class="nc" id="L225">    return false;</span>
   }
 
   /**

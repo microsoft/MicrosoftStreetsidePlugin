@@ -4,9 +4,9 @@ package org.openstreetmap.josm.plugins.streetside.actions;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
-
 import org.openstreetmap.josm.gui.MainApplication;
 import org.openstreetmap.josm.plugins.streetside.utils.TestUtil.StreetsideTestRules;
 import org.openstreetmap.josm.testutils.JOSMTestRules;
@@ -21,6 +21,7 @@ public class MapObjectLayerActionTest {
     MainApplication.getLayerManager().getLayers().parallelStream().forEach(l -> MainApplication.getLayerManager().removeLayer(l));
   }
 
+  @Ignore
   @Test
   public void testAction() {
     assertEquals(0, MainApplication.getLayerManager().getLayers().size());

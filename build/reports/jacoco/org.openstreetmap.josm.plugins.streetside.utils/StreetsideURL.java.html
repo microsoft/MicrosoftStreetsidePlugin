@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StreetsideURL.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.utils</a> &gt; <span class="el_source">StreetsideURL.java</span></div><h1>StreetsideURL.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StreetsideURL.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MicrosoftStreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.utils</a> &gt; <span class="el_source">StreetsideURL.java</span></div><h1>StreetsideURL.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
 package org.openstreetmap.josm.plugins.streetside.utils;
 
 import java.io.UnsupportedEncodingException;
@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.logging.Logger;
 
 import org.openstreetmap.josm.data.Bounds;
 import org.openstreetmap.josm.plugins.streetside.cubemap.CubemapUtils;
@@ -25,10 +24,6 @@ public final class StreetsideURL {
 	private static final String STREETSIDE_BASE_URL = &quot;https://dev.virtualearth.net/mapcontrol/HumanScaleServices/GetBubbles.ashx&quot;;
 	private static final String BASE_API_V2_URL = &quot;https://a.mapillary.com/v2/&quot;;
 	private static final String CLIENT_ID = &quot;T1Fzd20xZjdtR0s1VDk5OFNIOXpYdzoxNDYyOGRkYzUyYTFiMzgz&quot;;
-	//TODO: Bing Maps Key hardcoded? @rrh
-	// My key
-	//private static final String BING_MAPS_KEY = &quot;Alr5jQirrGmBnL2dctZXdb69CGvBSw1n_DY2U0rWK5Tl9sFPe95eUR2BP7Kc6jbX&quot;;
-	// official key provided by Jubal
 	private static final String BING_MAPS_KEY = &quot;AuftgJsO0Xs8Ts4M1xZUQJQXJNsvmh3IV8DkNieCiy3tCwCUMq76-WpkrBtNAuEm&quot;;
 	private static final String TEST_BUBBLE_ID = &quot;80848005&quot;;
 
@@ -42,43 +37,39 @@ public final class StreetsideURL {
 	public static final class APIv3 {
 		private static final String BASE_URL = &quot;https://a.mapillary.com/v3/&quot;;
 
-<span class="nc" id="L45">		private APIv3() {</span>
+<span class="fc" id="L40">		private APIv3() {</span>
 			// Private constructor to avoid instantiation
-<span class="nc" id="L47">		}</span>
+<span class="fc" id="L42">		}</span>
 
 		public static URL getUser(String key) {
-<span class="nc" id="L50">			return StreetsideURL.string2URL(APIv3.BASE_URL, &quot;users/&quot;, key, StreetsideURL.queryString(null));</span>
+<span class="nc" id="L45">			return StreetsideURL.string2URL(APIv3.BASE_URL, &quot;users/&quot;, key, StreetsideURL.queryString(null));</span>
 		}
 
 		/**
 		 * @return the URL where you can create, get and approve changesets
 		 */
 		public static URL submitChangeset() {
-<span class="nc" id="L57">			return StreetsideURL.string2URL(APIv3.BASE_URL, &quot;changesets&quot;, APIv3.queryString(null));</span>
+<span class="nc" id="L52">			return StreetsideURL.string2URL(APIv3.BASE_URL, &quot;changesets&quot;, APIv3.queryString(null));</span>
 		}
 
 		public static URL searchDetections(Bounds bounds) {
-<span class="nc" id="L61">			return StreetsideURL.string2URL(APIv3.BASE_URL, &quot;detections&quot;, APIv3.queryString(bounds));</span>
+<span class="nc" id="L56">			return StreetsideURL.string2URL(APIv3.BASE_URL, &quot;detections&quot;, APIv3.queryString(bounds));</span>
 		}
 
 		public static URL searchImages(Bounds bounds) {
-<span class="nc" id="L65">			return StreetsideURL.string2URL(APIv3.BASE_URL, &quot;images&quot;, APIv3.queryStreetsideString(bounds));</span>
+<span class="nc" id="L60">			return StreetsideURL.string2URL(APIv3.BASE_URL, &quot;images&quot;, APIv3.queryStreetsideString(bounds));</span>
 		}
 
 		public static URL searchStreetsideImages(Bounds bounds) {
-<span class="nc" id="L69">			return StreetsideURL.string2URL(StreetsideURL.STREETSIDE_BASE_URL, APIv3.queryStreetsideString(bounds));</span>
+<span class="nc" id="L64">			return StreetsideURL.string2URL(StreetsideURL.STREETSIDE_BASE_URL, APIv3.queryStreetsideString(bounds));</span>
 		}
 
 		public static URL searchMapObjects(final Bounds bounds) {
-<span class="nc" id="L73">			return StreetsideURL.string2URL(APIv3.BASE_URL, &quot;objects&quot;, APIv3.queryString(bounds));</span>
+<span class="nc" id="L68">			return StreetsideURL.string2URL(APIv3.BASE_URL, &quot;objects&quot;, APIv3.queryString(bounds));</span>
 		}
 
-		/*public static URL searchSequences(final Bounds bounds) {
-      return string2URL(BASE_URL, &quot;sequences&quot;, queryStreetsideString(bounds));
-    }*/
-
 		public static URL searchStreetsideSequences(final Bounds bounds) {
-<span class="nc" id="L81">			return StreetsideURL.string2URL(StreetsideURL.STREETSIDE_BASE_URL, APIv3.queryStreetsideString(bounds));</span>
+<span class="nc" id="L72">			return StreetsideURL.string2URL(StreetsideURL.STREETSIDE_BASE_URL, APIv3.queryStreetsideString(bounds));</span>
 		}
 
 		/**
@@ -89,55 +80,55 @@ public final class StreetsideURL {
 		 * @return the {@link URL} for the next result page, or &lt;code&gt;null&lt;/code&gt; if no such URL could be found
 		 */
 		public static URL parseNextFromLinkHeaderValue(String value) {
-<span class="nc bnc" id="L92" title="All 2 branches missed.">			if (value != null) {</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">			if (value != null) {</span>
 				// Iterate over the different entries of the Link header
-<span class="nc bnc" id="L94" title="All 2 branches missed.">				for (final String link : value.split(&quot;,&quot;, Integer.MAX_VALUE)) {</span>
-<span class="nc" id="L95">					boolean isNext = false;</span>
-<span class="nc" id="L96">					URL url = null;</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">				for (final String link : value.split(&quot;,&quot;, Integer.MAX_VALUE)) {</span>
+<span class="fc" id="L86">					boolean isNext = false;</span>
+<span class="fc" id="L87">					URL url = null;</span>
 					// Iterate over the parts of each entry (typically it's one `rel=&quot;‹linkType›&quot;` and one like `&lt;https://URL&gt;`)
-<span class="nc bnc" id="L98" title="All 2 branches missed.">					for (String linkPart : link.split(&quot;;&quot;, Integer.MAX_VALUE)) {</span>
-<span class="nc" id="L99">						linkPart = linkPart.trim();</span>
-<span class="nc" id="L100">						isNext |= linkPart.matches(&quot;rel\\s*=\\s*\&quot;next\&quot;&quot;);</span>
-<span class="nc bnc" id="L101" title="All 6 branches missed.">						if (linkPart.length() &gt;= 1 &amp;&amp; linkPart.charAt(0) == '&lt;' &amp;&amp; linkPart.endsWith(&quot;&gt;&quot;)) {</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">					for (String linkPart : link.split(&quot;;&quot;, Integer.MAX_VALUE)) {</span>
+<span class="fc" id="L90">						linkPart = linkPart.trim();</span>
+<span class="fc" id="L91">						isNext |= linkPart.matches(&quot;rel\\s*=\\s*\&quot;next\&quot;&quot;);</span>
+<span class="fc bfc" id="L92" title="All 6 branches covered.">						if (linkPart.length() &gt;= 1 &amp;&amp; linkPart.charAt(0) == '&lt;' &amp;&amp; linkPart.endsWith(&quot;&gt;&quot;)) {</span>
 							try {
-<span class="nc" id="L103">								url = new URL(linkPart.substring(1, linkPart.length() - 1));</span>
-<span class="nc" id="L104">							} catch (final MalformedURLException e) {</span>
-<span class="nc" id="L105">								Logging.log(Logging.LEVEL_WARN, &quot;Mapillary API v3 returns a malformed URL in the Link header.&quot;, e);</span>
-<span class="nc" id="L106">							}</span>
+<span class="fc" id="L94">								url = new URL(linkPart.substring(1, linkPart.length() - 1));</span>
+<span class="fc" id="L95">							} catch (final MalformedURLException e) {</span>
+<span class="fc" id="L96">								Logging.log(Logging.LEVEL_WARN, &quot;Mapillary API v3 returns a malformed URL in the Link header.&quot;, e);</span>
+<span class="fc" id="L97">							}</span>
 						}
 					}
 					// If both a URL and the rel=next attribute are present, return the URL. Otherwise null is returned
-<span class="nc bnc" id="L110" title="All 4 branches missed.">					if (url != null &amp;&amp; isNext) {</span>
-<span class="nc" id="L111">						return url;</span>
+<span class="fc bfc" id="L101" title="All 4 branches covered.">					if (url != null &amp;&amp; isNext) {</span>
+<span class="fc" id="L102">						return url;</span>
 					}
 				}
 			}
-<span class="nc" id="L115">			return null;</span>
+<span class="fc" id="L106">			return null;</span>
 		}
 
 		public static String queryString(final Bounds bounds) {
-<span class="nc bnc" id="L119" title="All 2 branches missed.">			if (bounds != null) {</span>
-<span class="nc" id="L120">				final Map&lt;String, String&gt; parts = new HashMap&lt;&gt;();</span>
-<span class="nc" id="L121">				parts.put(&quot;bbox&quot;, bounds.toBBox().toStringCSV(&quot;,&quot;));</span>
-<span class="nc" id="L122">				return StreetsideURL.queryString(parts);</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">			if (bounds != null) {</span>
+<span class="nc" id="L111">				final Map&lt;String, String&gt; parts = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L112">				parts.put(&quot;bbox&quot;, bounds.toBBox().toStringCSV(&quot;,&quot;));</span>
+<span class="nc" id="L113">				return StreetsideURL.queryString(parts);</span>
 			}
-<span class="nc" id="L124">			return StreetsideURL.queryString(null);</span>
+<span class="nc" id="L115">			return StreetsideURL.queryString(null);</span>
 		}
 
 		public static String queryStreetsideString(final Bounds bounds) {
-<span class="nc bnc" id="L128" title="All 2 branches missed.">			if (bounds != null) {</span>
-<span class="nc" id="L129">				final Map&lt;String, String&gt; parts = new HashMap&lt;&gt;();</span>
-<span class="nc" id="L130">				parts.put(&quot;bbox&quot;, bounds.toBBox().toStringCSV(&quot;,&quot;));</span>
-<span class="nc" id="L131">				return StreetsideURL.queryStreetsideBoundsString(parts);</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">			if (bounds != null) {</span>
+<span class="nc" id="L120">				final Map&lt;String, String&gt; parts = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L121">				parts.put(&quot;bbox&quot;, bounds.toBBox().toStringCSV(&quot;,&quot;));</span>
+<span class="nc" id="L122">				return StreetsideURL.queryStreetsideBoundsString(parts);</span>
 			}
-<span class="nc" id="L133">			return StreetsideURL.queryStreetsideBoundsString(null);</span>
+<span class="nc" id="L124">			return StreetsideURL.queryStreetsideBoundsString(null);</span>
 		}
 
 		/**
 		 * @return the URL where you'll find information about the user account as JSON
 		 */
 		public static URL userURL() {
-<span class="nc" id="L140">			return StreetsideURL.string2URL(APIv3.BASE_URL, &quot;me&quot;, StreetsideURL.queryString(null));</span>
+<span class="nc" id="L131">			return StreetsideURL.string2URL(APIv3.BASE_URL, &quot;me&quot;, StreetsideURL.queryString(null));</span>
 		}
 	}
 
@@ -145,28 +136,26 @@ public final class StreetsideURL {
 		private static final String BASE_URL_PREFIX = &quot;https://t.ssl.ak.tiles.virtualearth.net/tiles/hs&quot;;
 		private static final String BASE_URL_SUFFIX = &quot;.jpg?g=6338&amp;n=z&quot;;
 
-<span class="nc" id="L148">		private VirtualEarth() {</span>
+<span class="fc" id="L139">		private VirtualEarth() {</span>
 			// Private constructor to avoid instantiation
-<span class="nc" id="L150">		}</span>
+<span class="fc" id="L141">		}</span>
 
 		public static URL streetsideTile(String id, boolean thumbnail) {
-			// TODO: handle images sizes like Mapillary? @rrh
-			//return string2URL(BASE_URL, key, &quot;/thumb-&quot;, large ? &quot;2048&quot; : &quot;320&quot;, &quot;.jpg&quot;);
-<span class="nc bnc" id="L155" title="All 2 branches missed.">			if(thumbnail) {</span>
-<span class="nc" id="L156">				id = id + &quot;01&quot;;</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">			if(thumbnail) {</span>
+<span class="fc" id="L145">				id = id + &quot;01&quot;;</span>
 			}
-<span class="nc" id="L158">			URL url = StreetsideURL.string2URL(VirtualEarth.BASE_URL_PREFIX + id + VirtualEarth.BASE_URL_SUFFIX);</span>
-<span class="nc" id="L159">			Logging.info(&quot;Resty tile task URL {0} invoked.&quot;, url.toString());</span>
-<span class="nc" id="L160">			return url;</span>
+<span class="fc" id="L147">			URL url = StreetsideURL.string2URL(VirtualEarth.BASE_URL_PREFIX + id + VirtualEarth.BASE_URL_SUFFIX);</span>
+<span class="fc" id="L148">			Logging.info(&quot;Tile task URL {0} invoked.&quot;, url.toString());</span>
+<span class="fc" id="L149">			return url;</span>
 		}
 	}
 
 	public static final class MainWebsite {
 		private static final String BASE_URL = &quot;https://www.mapillary.com/&quot;;
 
-<span class="nc" id="L167">		private MainWebsite() {</span>
+<span class="fc" id="L156">		private MainWebsite() {</span>
 			// Private constructor to avoid instantiation
-<span class="nc" id="L169">		}</span>
+<span class="fc" id="L158">		}</span>
 
 		/**
 		 * Gives you the URL for the online viewer of a specific Streetside image.
@@ -174,28 +163,11 @@ public final class StreetsideURL {
 		 * @return the URL of the online viewer for the image with the given image key
 		 * @throws IllegalArgumentException if the image key is &lt;code&gt;null&lt;/code&gt;
 		 */
-		// TODO: implement for Streetside
 		public static URL browseImage(String id) {
-<span class="nc bnc" id="L179" title="All 2 branches missed.">			if (id == null) {</span>
-<span class="nc" id="L180">				throw new IllegalArgumentException(&quot;The image key must not be null!&quot;);</span>
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">			if (id == null) {</span>
+<span class="fc" id="L168">				throw new IllegalArgumentException(&quot;The image key must not be null!&quot;);</span>
 			}
-			//return StreetsideURL.string2URL(MainWebsite.BASE_URL, &quot;map/im/&quot;, key);
-<span class="nc" id="L183">			return StreetsideURL.string2URL(VirtualEarth.BASE_URL_PREFIX + id + VirtualEarth.BASE_URL_SUFFIX);</span>
-		}
-
-		// TODO: implement for Streetside @rrh
-		/**
-		 * Gives you the URL for the online viewer of a specific Streetside cubemap.
-		 * @param key the key of the image to which you want to link
-		 * @return the URL of the online viewer for the image with the given image key
-		 * @throws IllegalArgumentException if the image key is &lt;code&gt;null&lt;/code&gt;
-		 */
-		// TODO: remove - not supported @rrh
-		public static URL browseCubemap(String key) {
-<span class="nc bnc" id="L195" title="All 2 branches missed.">			if (key == null) {</span>
-<span class="nc" id="L196">				throw new IllegalArgumentException(&quot;The cubemap id must not be null!&quot;);</span>
-			}
-<span class="nc" id="L198">			return StreetsideURL.string2URL(MainWebsite.BASE_URL, &quot;map/cm/&quot;, key);</span>
+<span class="nc" id="L170">			return StreetsideURL.string2URL(VirtualEarth.BASE_URL_PREFIX + id + VirtualEarth.BASE_URL_SUFFIX);</span>
 		}
 
 		/**
@@ -204,19 +176,38 @@ public final class StreetsideURL {
 		 * @return the URL of the blur editor
 		 * @throws IllegalArgumentException if the image key is &lt;code&gt;null&lt;/code&gt;
 		 */
-		// TODO: Implement for Streetside @rrh
 		public static URL blurEditImage(final String key) {
-<span class="nc bnc" id="L209" title="All 2 branches missed.">			if (key == null) {</span>
-<span class="nc" id="L210">				throw new IllegalArgumentException(&quot;The image key must not be null!&quot;);</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">			if (key == null) {</span>
+<span class="nc" id="L181">				throw new IllegalArgumentException(&quot;The image key must not be null!&quot;);</span>
 			}
 			String urlEncodedKey;
 			try {
-<span class="nc" id="L214">				urlEncodedKey = URLEncoder.encode(key, StandardCharsets.UTF_8.name());</span>
-<span class="nc" id="L215">			} catch (final UnsupportedEncodingException e) {</span>
-<span class="nc" id="L216">				Logging.log(Logging.LEVEL_ERROR, &quot;Unsupported encoding when URL encoding&quot;, e);</span>
-<span class="nc" id="L217">				urlEncodedKey = key;</span>
-<span class="nc" id="L218">			}</span>
-<span class="nc" id="L219">			return StreetsideURL.string2URL(MainWebsite.BASE_URL, &quot;app/blur?focus=photo&amp;pKey=&quot;, urlEncodedKey);</span>
+<span class="nc" id="L185">				urlEncodedKey = URLEncoder.encode(key, StandardCharsets.UTF_8.name());</span>
+<span class="nc" id="L186">			} catch (final UnsupportedEncodingException e) {</span>
+<span class="nc" id="L187">				Logging.log(Logging.LEVEL_ERROR, &quot;Unsupported encoding when URL encoding&quot;, e);</span>
+<span class="nc" id="L188">				urlEncodedKey = key;</span>
+<span class="nc" id="L189">			}</span>
+<span class="nc" id="L190">			return StreetsideURL.string2URL(MainWebsite.BASE_URL, &quot;app/blur?focus=photo&amp;pKey=&quot;, urlEncodedKey);</span>
+		}
+
+		/**
+		 * Gives you the URL for the blur editor of the image with the given key.
+		 * @param key the key of the image for which you want to open the blur editor
+		 * @return the URL of the blur editor
+		 * @throws IllegalArgumentException if the image key is &lt;code&gt;null&lt;/code&gt;
+		 */
+		public static URL streetsidePrivacyLink(final String id) {
+<span class="nc bnc" id="L200" title="All 2 branches missed.">			if (id == null) {</span>
+<span class="nc" id="L201">				throw new IllegalArgumentException(&quot;The image id must not be null!&quot;);</span>
+			}
+			String urlEncodedId;
+			try {
+<span class="nc" id="L205">				urlEncodedId = URLEncoder.encode(id, StandardCharsets.UTF_8.name());</span>
+<span class="nc" id="L206">			} catch (final UnsupportedEncodingException e) {</span>
+<span class="nc" id="L207">				Logging.log(Logging.LEVEL_ERROR, &quot;Unsupported encoding when URL encoding&quot;, e);</span>
+<span class="nc" id="L208">				urlEncodedId = id;</span>
+<span class="nc" id="L209">			}</span>
+<span class="nc" id="L210">			return StreetsideURL.string2URL(StreetsideURL.STREETSIDE_PRIVACY_URL, urlEncodedId);</span>
 		}
 
 		/**
@@ -226,78 +217,76 @@ public final class StreetsideURL {
 		 * @return the URL that the user should visit to start the OAuth authentication
 		 */
 		public static URL connect(String redirectURI) {
-<span class="nc" id="L229">			final HashMap&lt;String, String&gt; parts = new HashMap&lt;&gt;();</span>
-<span class="nc bnc" id="L230" title="All 4 branches missed.">			if (redirectURI != null &amp;&amp; redirectURI.length() &gt;= 1) {</span>
-<span class="nc" id="L231">				parts.put(&quot;redirect_uri&quot;, redirectURI);</span>
+<span class="nc" id="L220">			final HashMap&lt;String, String&gt; parts = new HashMap&lt;&gt;();</span>
+<span class="nc bnc" id="L221" title="All 4 branches missed.">			if (redirectURI != null &amp;&amp; redirectURI.length() &gt;= 1) {</span>
+<span class="nc" id="L222">				parts.put(&quot;redirect_uri&quot;, redirectURI);</span>
 			}
-<span class="nc" id="L233">			parts.put(&quot;response_type&quot;, &quot;token&quot;);</span>
-<span class="nc" id="L234">			parts.put(&quot;scope&quot;, &quot;user:read public:upload public:write&quot;);</span>
-<span class="nc" id="L235">			return StreetsideURL.string2URL(MainWebsite.BASE_URL, &quot;connect&quot;, StreetsideURL.queryString(parts));</span>
+<span class="nc" id="L224">			parts.put(&quot;response_type&quot;, &quot;token&quot;);</span>
+<span class="nc" id="L225">			parts.put(&quot;scope&quot;, &quot;user:read public:upload public:write&quot;);</span>
+<span class="nc" id="L226">			return StreetsideURL.string2URL(MainWebsite.BASE_URL, &quot;connect&quot;, StreetsideURL.queryString(parts));</span>
 		}
 
 		public static URL mapObjectIcon(String key) {
-<span class="nc" id="L239">			return StreetsideURL.string2URL(MainWebsite.BASE_URL, &quot;developer/api-documentation/images/traffic_sign/&quot; + key + &quot;.png&quot;);</span>
+<span class="nc" id="L230">			return StreetsideURL.string2URL(MainWebsite.BASE_URL, &quot;developer/api-documentation/images/traffic_sign/&quot; + key + &quot;.png&quot;);</span>
 		}
 	}
 
-<span class="nc" id="L243">	private StreetsideURL() {</span>
+<span class="fc" id="L234">	private StreetsideURL() {</span>
 		// Private constructor to avoid instantiation
-<span class="nc" id="L245">	}</span>
+<span class="fc" id="L236">	}</span>
 
 	public static URL[] string2URLs(String baseUrlPrefix, String cubemapImageId, String baseUrlSuffix) {
-<span class="nc" id="L248">		List&lt;URL&gt; res = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L239">		List&lt;URL&gt; res = new ArrayList&lt;&gt;();</span>
 
-		// switch (StreetsideProperties.CUBEFACE_SIZE.get()) {
-<span class="nc bnc" id="L251" title="All 5 branches missed.">		switch (StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get() ? 16 : 4) {</span>
+<span class="nc bnc" id="L241" title="All 5 branches missed.">		switch (StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get() ? 16 : 4) {</span>
 
 		case 16:
 
-<span class="nc" id="L255">			EnumSet.allOf(CubemapUtils.CubemapFaces.class).forEach(face -&gt; {</span>
-<span class="nc bnc" id="L256" title="All 2 branches missed.">				for (int i = 0; i &lt; 4; i++) {</span>
-<span class="nc bnc" id="L257" title="All 2 branches missed.">					for (int j = 0; j &lt; 4; j++) {</span>
+<span class="nc" id="L245">			EnumSet.allOf(CubemapUtils.CubemapFaces.class).forEach(face -&gt; {</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">				for (int i = 0; i &lt; 4; i++) {</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">					for (int j = 0; j &lt; 4; j++) {</span>
 						try {
-<span class="nc" id="L259">							final String urlStr = baseUrlPrefix + cubemapImageId</span>
+<span class="nc" id="L249">							final String urlStr = baseUrlPrefix + cubemapImageId</span>
 									+ CubemapUtils.rowCol2StreetsideCellAddressMap
-<span class="nc" id="L261">											.get(String.valueOf(i) + String.valueOf(j))</span>
+<span class="nc" id="L251">											.get(String.valueOf(i) + String.valueOf(j))</span>
 									+ baseUrlSuffix;
-<span class="nc" id="L263">							res.add(new URL(urlStr));</span>
-<span class="nc" id="L264">						} catch (final MalformedURLException e) {</span>
-<span class="nc" id="L265">							Logging.error(I18n.tr(&quot;Error creating URL String for cubemap {0}&quot;, cubemapImageId));</span>
-<span class="nc" id="L266">							e.printStackTrace();</span>
-<span class="nc" id="L267">						}</span>
+<span class="nc" id="L253">							res.add(new URL(urlStr));</span>
+<span class="nc" id="L254">						} catch (final MalformedURLException e) {</span>
+<span class="nc" id="L255">							Logging.error(I18n.tr(&quot;Error creating URL String for cubemap {0}&quot;, cubemapImageId));</span>
+<span class="nc" id="L256">							e.printStackTrace();</span>
+<span class="nc" id="L257">						}</span>
 
 					}
 				}
-<span class="nc" id="L271">			});</span>
+<span class="nc" id="L261">			});</span>
 
 		case 4:
-<span class="nc" id="L274">			EnumSet.allOf(CubemapUtils.CubemapFaces.class).forEach(face -&gt; {</span>
-<span class="nc bnc" id="L275" title="All 2 branches missed.">				for (int i = 0; i &lt; 4; i++) {</span>
+<span class="nc" id="L264">			EnumSet.allOf(CubemapUtils.CubemapFaces.class).forEach(face -&gt; {</span>
+<span class="nc bnc" id="L265" title="All 2 branches missed.">				for (int i = 0; i &lt; 4; i++) {</span>
 
 					try {
-<span class="nc" id="L278">						final String urlStr = baseUrlPrefix + cubemapImageId</span>
-<span class="nc" id="L279">								+ CubemapUtils.rowCol2StreetsideCellAddressMap.get(String.valueOf(i)) + baseUrlSuffix;</span>
-<span class="nc" id="L280">						res.add(new URL(urlStr));</span>
-<span class="nc" id="L281">					} catch (final MalformedURLException e) {</span>
-<span class="nc" id="L282">						Logging.error(I18n.tr(&quot;Error creating URL String for cubemap {0}&quot;, cubemapImageId));</span>
-<span class="nc" id="L283">						e.printStackTrace();</span>
-<span class="nc" id="L284">					}</span>
+<span class="nc" id="L268">						final String urlStr = baseUrlPrefix + cubemapImageId</span>
+<span class="nc" id="L269">								+ CubemapUtils.rowCol2StreetsideCellAddressMap.get(String.valueOf(i)) + baseUrlSuffix;</span>
+<span class="nc" id="L270">						res.add(new URL(urlStr));</span>
+<span class="nc" id="L271">					} catch (final MalformedURLException e) {</span>
+<span class="nc" id="L272">						Logging.error(I18n.tr(&quot;Error creating URL String for cubemap {0}&quot;, cubemapImageId));</span>
+<span class="nc" id="L273">						e.printStackTrace();</span>
+<span class="nc" id="L274">					}</span>
 
 				}
-<span class="nc" id="L287">			});</span>
-<span class="nc" id="L288">			break; // break is optional</span>
+<span class="nc" id="L277">			});</span>
+<span class="nc" id="L278">			break; // break is optional</span>
 		default:
 			// Statements
 		}
-<span class="nc" id="L292">		return res.stream().toArray(URL[]::new);</span>
+<span class="nc" id="L282">		return res.stream().toArray(URL[]::new);</span>
 	}
 
-	// TODO: Mapillary 'upload secrets'? @rrh
 	/**
 	 * @return the URL where you'll find the upload secrets as JSON
 	 */
 	public static URL uploadSecretsURL() {
-<span class="nc" id="L300">		return StreetsideURL.string2URL(StreetsideURL.BASE_API_V2_URL, &quot;me/uploads/secrets&quot;, StreetsideURL.queryString(null));</span>
+<span class="nc" id="L289">		return StreetsideURL.string2URL(StreetsideURL.BASE_API_V2_URL, &quot;me/uploads/secrets&quot;, StreetsideURL.queryString(null));</span>
 	}
 
 	/**
@@ -306,60 +295,57 @@ public final class StreetsideURL {
 	 * @return the constructed query string (including a leading ?)
 	 */
 	static String queryString(Map&lt;String, String&gt; parts) {
-<span class="nc" id="L309">		final StringBuilder ret = new StringBuilder(&quot;?client_id=&quot;).append(StreetsideURL.CLIENT_ID);</span>
-<span class="nc bnc" id="L310" title="All 2 branches missed.">		if (parts != null) {</span>
-<span class="nc bnc" id="L311" title="All 2 branches missed.">			for (final Entry&lt;String, String&gt; entry : parts.entrySet()) {</span>
+<span class="nc" id="L298">		final StringBuilder ret = new StringBuilder(&quot;?client_id=&quot;).append(StreetsideURL.CLIENT_ID);</span>
+<span class="nc bnc" id="L299" title="All 2 branches missed.">		if (parts != null) {</span>
+<span class="nc bnc" id="L300" title="All 2 branches missed.">			for (final Entry&lt;String, String&gt; entry : parts.entrySet()) {</span>
 				try {
-<span class="nc" id="L313">					ret.append('&amp;')</span>
-<span class="nc" id="L314">					.append(URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8.name()))</span>
-<span class="nc" id="L315">					.append('=')</span>
-<span class="nc" id="L316">					.append(URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8.name()));</span>
-<span class="nc" id="L317">				} catch (final UnsupportedEncodingException e) {</span>
-<span class="nc" id="L318">					Logging.error(e); // This should not happen, as the encoding is hard-coded</span>
-<span class="nc" id="L319">				}</span>
-<span class="nc" id="L320">			}</span>
+<span class="nc" id="L302">					ret.append('&amp;')</span>
+<span class="nc" id="L303">					.append(URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8.name()))</span>
+<span class="nc" id="L304">					.append('=')</span>
+<span class="nc" id="L305">					.append(URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8.name()));</span>
+<span class="nc" id="L306">				} catch (final UnsupportedEncodingException e) {</span>
+<span class="nc" id="L307">					Logging.error(e); // This should not happen, as the encoding is hard-coded</span>
+<span class="nc" id="L308">				}</span>
+<span class="nc" id="L309">			}</span>
 		}
-<span class="nc" id="L322">		return ret.toString();</span>
+<span class="nc" id="L311">		return ret.toString();</span>
 	}
 
 	static String queryStreetsideBoundsString(Map&lt;String, String&gt; parts) {
-<span class="nc" id="L326">		final StringBuilder ret = new StringBuilder(&quot;?n=&quot;);</span>
-<span class="nc bnc" id="L327" title="All 2 branches missed.">		if (parts != null) {</span>
-<span class="nc" id="L328">			final List&lt;String&gt; bbox = new ArrayList&lt;&gt;(Arrays.asList(parts.get(&quot;bbox&quot;).split(&quot;,&quot;)));</span>
+<span class="nc" id="L315">		final StringBuilder ret = new StringBuilder(&quot;?n=&quot;);</span>
+<span class="nc bnc" id="L316" title="All 2 branches missed.">		if (parts != null) {</span>
+<span class="nc" id="L317">			final List&lt;String&gt; bbox = new ArrayList&lt;&gt;(Arrays.asList(parts.get(&quot;bbox&quot;).split(&quot;,&quot;)));</span>
 			try {
-<span class="nc" id="L330">				ret.append(URLEncoder.encode(bbox.get(StreetsideURL.OSM_BBOX_NORTH), StandardCharsets.UTF_8.name()))</span>
-<span class="nc" id="L331">				.append(&quot;&amp;s=&quot;)</span>
-<span class="nc" id="L332">				.append(URLEncoder.encode(bbox.get(StreetsideURL.OSM_BBOX_SOUTH), StandardCharsets.UTF_8.name()))</span>
-<span class="nc" id="L333">				.append(&quot;&amp;e=&quot;)</span>
-<span class="nc" id="L334">				.append(URLEncoder.encode(bbox.get(StreetsideURL.OSM_BBOXEAST), StandardCharsets.UTF_8.name()))</span>
-<span class="nc" id="L335">				.append(&quot;&amp;w=&quot;)</span>
-<span class="nc" id="L336">				.append(URLEncoder.encode(bbox.get(StreetsideURL.OSM_BBOX_WEST), StandardCharsets.UTF_8.name()))</span>
-				// TODO: Count setable? How does Mapillary do it? @rrh
-<span class="nc" id="L338">				.append(&quot;&amp;c=1000&quot;)</span>
-				// TODO: Use JSONP? @rrh
-				//.append(&quot;&amp;jsCallback=ScriptUtility.CrossDomainExecutor.jsonpCallback&amp;jsonp=96453&quot;)
-<span class="nc" id="L341">				.append(&quot;&amp;appkey=&quot;)</span>
-<span class="nc" id="L342">				.append(StreetsideURL.BING_MAPS_KEY);</span>
-<span class="nc" id="L343">			} catch (final UnsupportedEncodingException e) {</span>
-<span class="nc" id="L344">				Logging.error(e); // This should not happen, as the encoding is hard-coded</span>
-<span class="nc" id="L345">			}</span>
+<span class="nc" id="L319">				ret.append(URLEncoder.encode(bbox.get(StreetsideURL.OSM_BBOX_NORTH), StandardCharsets.UTF_8.name()))</span>
+<span class="nc" id="L320">				.append(&quot;&amp;s=&quot;)</span>
+<span class="nc" id="L321">				.append(URLEncoder.encode(bbox.get(StreetsideURL.OSM_BBOX_SOUTH), StandardCharsets.UTF_8.name()))</span>
+<span class="nc" id="L322">				.append(&quot;&amp;e=&quot;)</span>
+<span class="nc" id="L323">				.append(URLEncoder.encode(bbox.get(StreetsideURL.OSM_BBOXEAST), StandardCharsets.UTF_8.name()))</span>
+<span class="nc" id="L324">				.append(&quot;&amp;w=&quot;)</span>
+<span class="nc" id="L325">				.append(URLEncoder.encode(bbox.get(StreetsideURL.OSM_BBOX_WEST), StandardCharsets.UTF_8.name()))</span>
+<span class="nc" id="L326">				.append(&quot;&amp;c=1000&quot;)</span>
+<span class="nc" id="L327">				.append(&quot;&amp;appkey=&quot;)</span>
+<span class="nc" id="L328">				.append(StreetsideURL.BING_MAPS_KEY);</span>
+<span class="nc" id="L329">			} catch (final UnsupportedEncodingException e) {</span>
+<span class="nc" id="L330">				Logging.error(e); // This should not happen, as the encoding is hard-coded</span>
+<span class="nc" id="L331">			}</span>
 		}
-<span class="nc" id="L347">		return ret.toString();</span>
+<span class="nc" id="L333">		return ret.toString();</span>
 	}
 
 	/**
 	 *
 	 */
 	static String queryByIdString(Map&lt;String, String&gt; parts) {
-<span class="nc" id="L354">		final StringBuilder ret = new StringBuilder(&quot;?id=&quot;);</span>
+<span class="nc" id="L340">		final StringBuilder ret = new StringBuilder(&quot;?id=&quot;);</span>
 		try {
-<span class="nc" id="L356">			ret.append(URLEncoder.encode(StreetsideURL.TEST_BUBBLE_ID, StandardCharsets.UTF_8.name()));</span>
-<span class="nc" id="L357">			ret.append('&amp;').append(URLEncoder.encode(&quot;appkey=&quot;, StandardCharsets.UTF_8.name())).append('=')</span>
-<span class="nc" id="L358">			.append(URLEncoder.encode(StreetsideURL.BING_MAPS_KEY, StandardCharsets.UTF_8.name()));</span>
-<span class="nc" id="L359">		} catch (final UnsupportedEncodingException e) {</span>
-<span class="nc" id="L360">			Logging.error(e); // This should not happen, as the encoding is hard-coded</span>
-<span class="nc" id="L361">		}</span>
-<span class="nc" id="L362">		return ret.toString();</span>
+<span class="nc" id="L342">			ret.append(URLEncoder.encode(StreetsideURL.TEST_BUBBLE_ID, StandardCharsets.UTF_8.name()));</span>
+<span class="nc" id="L343">			ret.append('&amp;').append(URLEncoder.encode(&quot;appkey=&quot;, StandardCharsets.UTF_8.name())).append('=')</span>
+<span class="nc" id="L344">			.append(URLEncoder.encode(StreetsideURL.BING_MAPS_KEY, StandardCharsets.UTF_8.name()));</span>
+<span class="nc" id="L345">		} catch (final UnsupportedEncodingException e) {</span>
+<span class="nc" id="L346">			Logging.error(e); // This should not happen, as the encoding is hard-coded</span>
+<span class="nc" id="L347">		}</span>
+<span class="nc" id="L348">		return ret.toString();</span>
 	}
 
 	/**
@@ -370,19 +356,19 @@ public final class StreetsideURL {
 	 * @return the URL that is constructed from the given string
 	 */
 	static URL string2URL(String... strings) {
-<span class="nc" id="L373">		final StringBuilder builder = new StringBuilder();</span>
-<span class="nc bnc" id="L374" title="All 4 branches missed.">		for (int i = 0; strings != null &amp;&amp; i &lt; strings.length; i++) {</span>
-<span class="nc" id="L375">			builder.append(strings[i]);</span>
+<span class="fc" id="L359">		final StringBuilder builder = new StringBuilder();</span>
+<span class="fc bfc" id="L360" title="All 4 branches covered.">		for (int i = 0; strings != null &amp;&amp; i &lt; strings.length; i++) {</span>
+<span class="fc" id="L361">			builder.append(strings[i]);</span>
 		}
 		try {
-<span class="nc" id="L378">			return new URL(builder.toString());</span>
-<span class="nc" id="L379">		} catch (final MalformedURLException e) {</span>
-<span class="nc" id="L380">			Logging.log(Logging.LEVEL_ERROR, String.format(</span>
+<span class="fc" id="L364">			return new URL(builder.toString());</span>
+<span class="fc" id="L365">		} catch (final MalformedURLException e) {</span>
+<span class="fc" id="L366">			Logging.log(Logging.LEVEL_ERROR, String.format(</span>
 					&quot;The class '%s' produces malformed URLs like '%s'!&quot;,
-<span class="nc" id="L382">					StreetsideURL.class.getName(),</span>
+<span class="fc" id="L368">					StreetsideURL.class.getName(),</span>
 					builder
 					), e);
-<span class="nc" id="L385">			return null;</span>
+<span class="fc" id="L371">			return null;</span>
 		}
 	}
 }

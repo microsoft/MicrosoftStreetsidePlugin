@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StreetsideWalkAction.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.actions</a> &gt; <span class="el_source">StreetsideWalkAction.java</span></div><h1>StreetsideWalkAction.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StreetsideWalkAction.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MicrosoftStreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.actions</a> &gt; <span class="el_source">StreetsideWalkAction.java</span></div><h1>StreetsideWalkAction.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
 package org.openstreetmap.josm.plugins.streetside.actions;
 
 import static org.openstreetmap.josm.tools.I18n.tr;
@@ -33,16 +33,16 @@ public class StreetsideWalkAction extends JosmAction implements StreetsideDataLi
   private static final long serialVersionUID = 3454223919402245818L;
 
   private WalkThread thread;
-<span class="nc" id="L36">  private final List&lt;WalkListener&gt; listeners = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L36">  private final List&lt;WalkListener&gt; listeners = new ArrayList&lt;&gt;();</span>
 
   /**
    *
    */
   public StreetsideWalkAction() {
-<span class="nc" id="L42">    super(tr(&quot;Walk mode&quot;), new ImageProvider(StreetsidePlugin.LOGO).setSize(ImageSizes.DEFAULT),</span>
-<span class="nc" id="L43">        tr(&quot;Walk mode&quot;), null,</span>
+<span class="fc" id="L42">    super(tr(&quot;Walk mode&quot;), new ImageProvider(StreetsidePlugin.LOGO).setSize(ImageSizes.DEFAULT),</span>
+<span class="fc" id="L43">        tr(&quot;Walk mode&quot;), null,</span>
         false, &quot;streetsideWalk&quot;, true);
-<span class="nc" id="L45">  }</span>
+<span class="fc" id="L45">  }</span>
 
   @Override
   public void actionPerformed(ActionEvent arg0) {
@@ -66,7 +66,7 @@ public class StreetsideWalkAction extends JosmAction implements StreetsideDataLi
   @Override
   public void imagesAdded() {
     // Nothing
-<span class="nc" id="L69">  }</span>
+<span class="fc" id="L69">  }</span>
 
   /**
    * Adds a listener.
@@ -99,7 +99,7 @@ public class StreetsideWalkAction extends JosmAction implements StreetsideDataLi
 
   @Override
   protected boolean listenToSelectionChange() {
-<span class="nc" id="L102">    return false;</span>
+<span class="fc" id="L102">    return false;</span>
   }
 
   @Override
@@ -116,9 +116,9 @@ public class StreetsideWalkAction extends JosmAction implements StreetsideDataLi
    */
   @Override
   protected void updateEnabledState() {
-<span class="nc" id="L119">    super.updateEnabledState();</span>
-<span class="nc bnc" id="L120" title="All 4 branches missed.">    setEnabled(StreetsideLayer.hasInstance() &amp;&amp; StreetsideLayer.getInstance().getData().getSelectedImage() != null);</span>
-<span class="nc" id="L121">  }</span>
+<span class="fc" id="L119">    super.updateEnabledState();</span>
+<span class="pc bpc" id="L120" title="3 of 4 branches missed.">    setEnabled(StreetsideLayer.hasInstance() &amp;&amp; StreetsideLayer.getInstance().getData().getSelectedImage() != null);</span>
+<span class="fc" id="L121">  }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

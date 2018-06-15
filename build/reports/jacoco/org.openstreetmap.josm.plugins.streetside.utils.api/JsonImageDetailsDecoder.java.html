@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonImageDetailsDecoder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.utils.api</a> &gt; <span class="el_source">JsonImageDetailsDecoder.java</span></div><h1>JsonImageDetailsDecoder.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonImageDetailsDecoder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MicrosoftStreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.utils.api</a> &gt; <span class="el_source">JsonImageDetailsDecoder.java</span></div><h1>JsonImageDetailsDecoder.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
 package org.openstreetmap.josm.plugins.streetside.utils.api;
 
 
@@ -15,32 +15,32 @@ import org.openstreetmap.josm.plugins.streetside.utils.StreetsideURL.APIv3;
  * Takes a {@link JsonObject} and {@link #decodeImageInfos(JsonObject, StreetsideData)} tries to add the timestamps.
  */
 public final class JsonImageDetailsDecoder {
-<span class="nc" id="L18">  private JsonImageDetailsDecoder() {</span>
+<span class="fc" id="L18">  private JsonImageDetailsDecoder() {</span>
     // Private constructor to avoid instantiation
-<span class="nc" id="L20">  }</span>
+<span class="fc" id="L20">  }</span>
 
   public static void decodeImageInfos(final JsonObject json, final StreetsideData data) {
-<span class="nc bnc" id="L23" title="All 2 branches missed.">    if (data != null) {</span>
-<span class="nc" id="L24">      JsonDecoder.decodeFeatureCollection(json, j -&gt; {</span>
+<span class="fc bfc" id="L23" title="All 2 branches covered.">    if (data != null) {</span>
+<span class="fc" id="L24">      JsonDecoder.decodeFeatureCollection(json, j -&gt; {</span>
 <span class="nc" id="L25">        decodeImageInfo(j, data);</span>
 <span class="nc" id="L26">        return null;</span>
       });
     }
-<span class="nc" id="L29">  }</span>
+<span class="fc" id="L29">  }</span>
 
   private static void decodeImageInfo(final JsonObject json, final StreetsideData data) {
-<span class="nc bnc" id="L32" title="All 4 branches missed.">    if (json != null &amp;&amp; data != null) {</span>
-<span class="nc" id="L33">      JsonValue properties = json.get(&quot;properties&quot;);</span>
-<span class="nc bnc" id="L34" title="All 2 branches missed.">      if (properties instanceof JsonObject) {</span>
-<span class="nc" id="L35">        String id = ((JsonObject) properties).getString(&quot;id&quot;, null);</span>
-<span class="nc" id="L36">        Long he = JsonDecoder.decodeTimestamp(((JsonObject)properties).getString(&quot;he&quot;, null));</span>
-<span class="nc bnc" id="L37" title="All 4 branches missed.">        if (id != null &amp;&amp; he != null) {</span>
+<span class="fc bfc" id="L32" title="All 4 branches covered.">    if (json != null &amp;&amp; data != null) {</span>
+<span class="fc" id="L33">      JsonValue properties = json.get(&quot;properties&quot;);</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">      if (properties instanceof JsonObject) {</span>
+<span class="fc" id="L35">        String id = ((JsonObject) properties).getString(&quot;id&quot;, null);</span>
+<span class="fc" id="L36">        Long he = JsonDecoder.decodeTimestamp(((JsonObject)properties).getString(&quot;he&quot;, null));</span>
+<span class="pc bpc" id="L37" title="3 of 4 branches missed.">        if (id != null &amp;&amp; he != null) {</span>
 <span class="nc" id="L38">          data.getImages().stream().filter(</span>
 <span class="nc bnc" id="L39" title="All 4 branches missed.">            img -&gt; img instanceof StreetsideImage &amp;&amp; id.equals(((StreetsideImage) img).getId())</span>
 <span class="nc" id="L40">          ).forEach(img -&gt; img.setHe(he));</span>
         }
       }
     }
-<span class="nc" id="L44">  }</span>
+<span class="fc" id="L44">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

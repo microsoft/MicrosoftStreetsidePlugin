@@ -3,21 +3,74 @@
 **
 ** Maintaining versions
 ** ====================-->
-<project name="Microsoft-Streetside" default="dist" basedir=".">
+<project name="MicrosoftStreetside" default="dist" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+	
+	
 
-  <!--edit the properties of this plugin in the file `gradle.properties`-->
-  <property file="${basedir}/gradle.properties"/>
-  <property name="josm" location="../../../../core/dist/josm-custom.jar"/>
-  <property name="plugin.dist.dir" value="../../dist"/>
+	<!-- Configure these properties (replace "..." accordingly).
+	         See https://josm.openstreetmap.de/wiki/DevelopersGuide/DevelopingPlugins
+	     -->
+	<!-- enter the SVN commit message -->
+	<property name="commit.message" value="Commit message" />
+	<!-- enter the *lowest* JOSM version this plugin is currently compatible with -->
+	<property name="plugin.main.version" value="13922" />
 
-  <!--** include targets that all plugins have in common **-->
-  <import file="../../plugins/build.xml"/>
-  
-  <fileset id="plugin.requires.jars" dir="${plugin.dist.dir}">
-    <include name="apache-commons.jar"/>
-    <include name="apache-http.jar"/>
-  	<include name="jackson-core-2.4.4.jar"/>
-  	<include name="jackson-databind-2.4.4.jar"/>
-  	<include name="jackson-annotations-2.4.4.jar"/>
-  </fileset>
+
+	<property name="plugin.author" value="Rene Rhodes" />
+	<property name="plugin.class" value="org.openstreetmap.josm.plugins.streetside.StreetsidePlugin" />
+	<property name="plugin.description" value="Enables the select and viewing of Microsoft Streetside 360 degree imagery in the JOSM Editor." />
+	<property name="plugin.icon" value="images/streetside-logo-white.png" />
+	<property name="plugin.link" value="https://github.com/JOSM/MicrosoftStreetside"/>
+	<property name="plugin.requires" value="apache-commons;apache-http;"/>
+
+	<property name="plugin.canloadatruntime" value="true"/>
+
+	<!-- edit the properties of this plugin in the file `gradle.properties` -->
+	<property file="${basedir}/gradle.properties"/>
+
+	<property name="josm" location="../../core/dist/josm-custom.jar"/>
+	<property name="plugin.dist.dir" value="../../dist"/>
+
+	<!--** include targets that all plugins have in common **-->
+	<import file="../build-common.xml"/>
+
+	<path id="ivy.lib.path" path="ant/ivy-2.4.0.jar" />
+	<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path" />
+
+	<!-- ** include targets that all plugins have in common ** -->
+	<import file="../build-common.xml" />
+
+	<fileset id="plugin.requires.jars" dir="${plugin.dist.dir}">
+		<include name="apache-commons.jar"/>
+		<include name="apache-http.jar"/>
+		<!-- <include name="jackson-core-2.2.4.jar"/>
+  	    <include name="jackson-databind-2.2.4.jar"/>
+  	    <include name="jackson-annotations-2.2.4.jar"/>
+		<include name="resty-0.3.2.jar"/> -->
+	</fileset>
+
+	<target name="pre-compile" depends="fetch_dependencies">
+		<!-- include fetch_dependencies task -->
+	</target>
+
+	<target name="clean_ivy">
+		<delete failonerror="false">
+			<fileset dir="${plugin.lib.dir}">
+				<include name="**/*.jar"/>
+				<exclude name="**/*-custom.jar" />
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="fetch_dependencies" depends="clean_ivy">
+		<echo>fetching dependencies with ivy</echo>
+		<ivy:retrieve pattern="${plugin.lib.dir}/[artifact]-[type].[ext]" conf="default" />
+	</target>
+
+	<target name="install-plugin" depends="clean, dist, install">
+		<echo>Installed areaselector plugin</echo>
+	</target>
+
+	<target name="test-run" depends="install-plugin, runjosm">
+	</target>
 </project>

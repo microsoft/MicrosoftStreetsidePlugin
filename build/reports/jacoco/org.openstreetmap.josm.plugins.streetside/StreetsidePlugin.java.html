@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StreetsidePlugin.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside</a> &gt; <span class="el_source">StreetsidePlugin.java</span></div><h1>StreetsidePlugin.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StreetsidePlugin.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MicrosoftStreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside</a> &gt; <span class="el_source">StreetsidePlugin.java</span></div><h1>StreetsidePlugin.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
 package org.openstreetmap.josm.plugins.streetside;
 
 import org.openstreetmap.josm.Main;
@@ -35,17 +35,17 @@ import org.openstreetmap.josm.plugins.streetside.gui.StreetsideViewerDialog;
  */
 public class StreetsidePlugin extends Plugin {
 
-<span class="nc" id="L38">  public static final ImageProvider LOGO = new ImageProvider(&quot;streetside-logo&quot;);</span>
+<span class="fc" id="L38">  public static final ImageProvider LOGO = new ImageProvider(&quot;streetside-logo&quot;);</span>
 
   /** Zoom action */
-<span class="nc" id="L41">  private static final StreetsideZoomAction ZOOM_ACTION = new StreetsideZoomAction();</span>
+<span class="fc" id="L41">  private static final StreetsideZoomAction ZOOM_ACTION = new StreetsideZoomAction();</span>
   /** Walk action */
-<span class="nc" id="L43">  private static final StreetsideWalkAction WALK_ACTION = new StreetsideWalkAction();</span>
+<span class="fc" id="L43">  private static final StreetsideWalkAction WALK_ACTION = new StreetsideWalkAction();</span>
   /** Upload action */
   //private static final StreetsideUploadAction UPLOAD_ACTION = new StreetsideUploadAction();
 
   static {
-<span class="nc bnc" id="L48" title="All 2 branches missed.">    if (Main.main != null) {</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">    if (Main.main != null) {</span>
 <span class="nc" id="L49">      MainMenu.add(MainApplication.getMenu().fileMenu, new StreetsideExportAction(), false, 14);</span>
 <span class="nc" id="L50">      MainMenu.add(MainApplication.getMenu().imagerySubMenu, new StreetsideDownloadAction(), false);</span>
       //MainMenu.add(MainApplication.getMenu().fileMenu, new StreetsideImportAction(), false, 14);
@@ -56,7 +56,7 @@ public class StreetsidePlugin extends Plugin {
       //MainMenu.add(MainApplication.getMenu().fileMenu, UPLOAD_ACTION, false, 14);
 <span class="nc" id="L57">      MainMenu.add(MainApplication.getMenu().imagerySubMenu, new MapObjectLayerAction(), false);</span>
     }
-<span class="nc" id="L59">  }</span>
+<span class="fc" id="L59">  }</span>
 
   /**
    * Main constructor.
@@ -74,7 +74,7 @@ public class StreetsidePlugin extends Plugin {
 <span class="nc" id="L74">  }</span>
 
   static StreetsideDataListener[] getStreetsideDataListeners() {
-<span class="nc" id="L77">	return new StreetsideDataListener[]{/*UPLOAD_ACTION,*/ WALK_ACTION, ZOOM_ACTION, CubemapBuilder.getInstance()};</span>
+<span class="fc" id="L77">	return new StreetsideDataListener[]{/*UPLOAD_ACTION,*/ WALK_ACTION, ZOOM_ACTION, CubemapBuilder.getInstance()};</span>
   }
 
 

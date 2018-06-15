@@ -1,2 +1,19 @@
 Manifest-Version: 1.0
+Plugin-Description: Allows the user to work with pictures hosted at Mi
+ crosoft Streetside
+Author: renerr18
+Plugin-Version: 2a143e7-dirty
+Plugin-Icon: images/streetside-logo.svg
+Plugin-Mainversion: 13922
+Plugin-Link: https://wiki.openstreetmap.org/wiki/JOSM/Plugins/Microsof
+ tStreetside
+Gradle-Version: 4.7
+Plugin-Early: false
+Plugin-Requires: apache-commons;apache-http
+Groovy-Version: 2.4.12
+Plugin-Class: org.openstreetmap.josm.plugins.streetside.StreetsidePlug
+ in
+Created-By: 1.8.0_171 (Oracle Corporation)
+Plugin-Date: 2018-06-14T21:57:00-0700
+Plugin-Canloadatruntime: true
 

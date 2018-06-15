@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StreetsideUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.utils</a> &gt; <span class="el_source">StreetsideUtils.java</span></div><h1>StreetsideUtils.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StreetsideUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MicrosoftStreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.utils</a> &gt; <span class="el_source">StreetsideUtils.java</span></div><h1>StreetsideUtils.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
 package org.openstreetmap.josm.plugins.streetside.utils;
 
 import java.awt.Desktop;
@@ -261,26 +261,26 @@ public final class StreetsideUtils {
    * Updates the help text at the bottom of the window.
    */
   public static void updateHelpText() {
-<span class="pc bpc" id="L264" title="2 of 4 branches missed.">    if (MainApplication.getMap() == null || MainApplication.getMap().statusLine == null) {</span>
+<span class="nc bnc" id="L264" title="All 4 branches missed.">    if (MainApplication.getMap() == null || MainApplication.getMap().statusLine == null) {</span>
 <span class="nc" id="L265">      return;</span>
     }
-<span class="fc" id="L267">    StringBuilder ret = new StringBuilder();</span>
-<span class="pc bpc" id="L268" title="1 of 2 branches missed.">    if (PluginState.isDownloading()) {</span>
+<span class="nc" id="L267">    StringBuilder ret = new StringBuilder();</span>
+<span class="nc bnc" id="L268" title="All 2 branches missed.">    if (PluginState.isDownloading()) {</span>
 <span class="nc" id="L269">      ret.append(I18n.tr(&quot;Downloading Streetside images&quot;));</span>
-<span class="pc bpc" id="L270" title="2 of 4 branches missed.">    } else if (StreetsideLayer.hasInstance() &amp;&amp; !StreetsideLayer.getInstance().getData().getImages().isEmpty()) {</span>
+<span class="nc bnc" id="L270" title="All 4 branches missed.">    } else if (StreetsideLayer.hasInstance() &amp;&amp; !StreetsideLayer.getInstance().getData().getImages().isEmpty()) {</span>
 <span class="nc" id="L271">      ret.append(I18n.tr(&quot;Total Streetside images: {0}&quot;, StreetsideLayer.getInstance().getToolTipText()));</span>
-<span class="pc bpc" id="L272" title="1 of 2 branches missed.">    } else if (PluginState.isSubmittingChangeset()) {</span>
+<span class="nc bnc" id="L272" title="All 2 branches missed.">    } else if (PluginState.isSubmittingChangeset()) {</span>
 <span class="nc" id="L273">        ret.append(I18n.tr(&quot;Submitting Streetside Changeset&quot;));</span>
     } else {
-<span class="fc" id="L275">      ret.append(I18n.tr(&quot;No images found&quot;));</span>
+<span class="nc" id="L275">      ret.append(I18n.tr(&quot;No images found&quot;));</span>
     }
-<span class="pc bpc" id="L277" title="2 of 4 branches missed.">    if (StreetsideLayer.hasInstance() &amp;&amp; StreetsideLayer.getInstance().mode != null) {</span>
-<span class="fc" id="L278">      ret.append(&quot; — &quot;).append(I18n.tr(StreetsideLayer.getInstance().mode.toString()));</span>
+<span class="nc bnc" id="L277" title="All 4 branches missed.">    if (StreetsideLayer.hasInstance() &amp;&amp; StreetsideLayer.getInstance().mode != null) {</span>
+<span class="nc" id="L278">      ret.append(&quot; — &quot;).append(I18n.tr(StreetsideLayer.getInstance().mode.toString()));</span>
     }
-<span class="pc bpc" id="L280" title="1 of 2 branches missed.">    if (PluginState.isUploading()) {</span>
+<span class="nc bnc" id="L280" title="All 2 branches missed.">    if (PluginState.isUploading()) {</span>
 <span class="nc" id="L281">      ret.append(&quot; — &quot;).append(PluginState.getUploadString());</span>
     }
-<span class="fc" id="L283">    MainApplication.getMap().statusLine.setHelpText(ret.toString());</span>
-<span class="fc" id="L284">  }</span>
+<span class="nc" id="L283">    MainApplication.getMap().statusLine.setHelpText(ret.toString());</span>
+<span class="nc" id="L284">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

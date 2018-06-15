@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StreetsideLayer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside</a> &gt; <span class="el_source">StreetsideLayer.java</span></div><h1>StreetsideLayer.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StreetsideLayer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MicrosoftStreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside</a> &gt; <span class="el_source">StreetsideLayer.java</span></div><h1>StreetsideLayer.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
 package org.openstreetmap.josm.plugins.streetside;
 
 import java.awt.AlphaComposite;
@@ -74,11 +74,11 @@ ActiveLayerChangeListener, StreetsideDataListener {
 	/** Length of the edge of the small sign, which indicates that traffic signs have been found in an image. */
 	private static final int TRAFFIC_SIGN_SIZE = 6;
 	/** A third of the height of the sign, for easier calculations */
-<span class="nc" id="L77">	private static final double TRAFFIC_SIGN_HEIGHT_3RD = Math.sqrt(</span>
-<span class="nc" id="L78">			Math.pow(StreetsideLayer.TRAFFIC_SIGN_SIZE, 2) - Math.pow(StreetsideLayer.TRAFFIC_SIGN_SIZE / 2d, 2)</span>
+<span class="fc" id="L77">	private static final double TRAFFIC_SIGN_HEIGHT_3RD = Math.sqrt(</span>
+<span class="fc" id="L78">			Math.pow(StreetsideLayer.TRAFFIC_SIGN_SIZE, 2) - Math.pow(StreetsideLayer.TRAFFIC_SIGN_SIZE / 2d, 2)</span>
 			) / 3;
 
-<span class="nc" id="L81">	private static final DataSetListenerAdapter DATASET_LISTENER =</span>
+<span class="fc" id="L81">	private static final DataSetListenerAdapter DATASET_LISTENER =</span>
 			new DataSetListenerAdapter(e -&gt; {
 <span class="nc bnc" id="L83" title="All 4 branches missed.">				if (e instanceof DataChangedEvent &amp;&amp; StreetsideDownloader.getMode() == DOWNLOAD_MODE.OSM_AREA) {</span>
 					// When more data is downloaded, a delayed update is thrown, in order to
@@ -146,10 +146,10 @@ ActiveLayerChangeListener, StreetsideDataListener {
 <span class="nc" id="L146">	}</span>
 
 	public static void invalidateInstance() {
-<span class="nc bnc" id="L149" title="All 2 branches missed.">		if (StreetsideLayer.hasInstance()) {</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">		if (StreetsideLayer.hasInstance()) {</span>
 <span class="nc" id="L150">			StreetsideLayer.getInstance().invalidate();</span>
 		}
-<span class="nc" id="L152">	}</span>
+<span class="fc" id="L152">	}</span>
 
 	/**
 	 * Changes the mode the the given one.
@@ -199,7 +199,7 @@ ActiveLayerChangeListener, StreetsideDataListener {
 	 * @return if the unique instance of this layer is currently instantiated and added to the {@link LayerManager}
 	 */
 	public static boolean hasInstance() {
-<span class="nc bnc" id="L202" title="All 4 branches missed.">		return StreetsideLayer.instance != null &amp;&amp; MainApplication.getLayerManager().containsLayer(StreetsideLayer.instance);</span>
+<span class="pc bpc" id="L202" title="3 of 4 branches missed.">		return StreetsideLayer.instance != null &amp;&amp; MainApplication.getLayerManager().containsLayer(StreetsideLayer.instance);</span>
 	}
 
 	/**

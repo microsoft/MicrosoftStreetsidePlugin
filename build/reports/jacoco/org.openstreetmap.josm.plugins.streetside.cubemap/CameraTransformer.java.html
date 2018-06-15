@@ -1,15 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CameraTransformer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">msstreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.cubemap</a> &gt; <span class="el_source">CameraTransformer.java</span></div><h1>CameraTransformer.java</h1><pre class="source lang-java linenums">/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CameraTransformer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MicrosoftStreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.cubemap</a> &gt; <span class="el_source">CameraTransformer.java</span></div><h1>CameraTransformer.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
+package org.openstreetmap.josm.plugins.streetside.cubemap;
+
+/**
+ * @author Dub
  */
 
-package org.openstreetmap.josm.plugins.streetside.cubemap;
-//
-// Xform.java is a class that extends the Group class. It is used in the
-// MoleculeSampleApp application that is built using the Getting Started with JavaFX
-// 3D Graphics tutorial. The method allows you to add your own transforms and rotation.
-//
 import javafx.scene.Group;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
@@ -18,135 +13,173 @@ import javafx.scene.transform.Translate;
 @SuppressWarnings(&quot;restriction&quot;)
 public class CameraTransformer extends Group {
 
-<span class="nc" id="L21">    public enum RotateOrder {</span>
-<span class="nc" id="L22">        XYZ, XZY, YXZ, YZX, ZXY, ZYX</span>
-    }
+<span class="nc" id="L16">	public enum RotateOrder {</span>
+<span class="nc" id="L17">		XYZ, XZY, YXZ, YZX, ZXY, ZYX</span>
+	}
 
-<span class="nc" id="L25">    public Translate t  = new Translate();</span>
-<span class="nc" id="L26">    public Translate p  = new Translate();</span>
-<span class="nc" id="L27">    public Translate ip = new Translate();</span>
-<span class="nc" id="L28">    public Rotate rx = new Rotate();</span>
-<span class="nc" id="L29">    { rx.setAxis(Rotate.X_AXIS); }</span>
-<span class="nc" id="L30">    public Rotate ry = new Rotate();</span>
-<span class="nc" id="L31">    { ry.setAxis(Rotate.Y_AXIS); }</span>
-<span class="nc" id="L32">    public Rotate rz = new Rotate();</span>
-<span class="nc" id="L33">    { rz.setAxis(Rotate.Z_AXIS); }</span>
-<span class="nc" id="L34">    public Scale s = new Scale();</span>
+<span class="nc" id="L20">	public Translate t = new Translate();</span>
+<span class="nc" id="L21">	public Translate p = new Translate();</span>
+<span class="nc" id="L22">	public Translate ip = new Translate();</span>
+<span class="nc" id="L23">	public Rotate rx = new Rotate();</span>
+	{
+<span class="nc" id="L25">		rx.setAxis(Rotate.X_AXIS);</span>
+	}
+<span class="nc" id="L27">	public Rotate ry = new Rotate();</span>
+	{
+<span class="nc" id="L29">		ry.setAxis(Rotate.Y_AXIS);</span>
+	}
+<span class="nc" id="L31">	public Rotate rz = new Rotate();</span>
+	{
+<span class="nc" id="L33">		rz.setAxis(Rotate.Z_AXIS);</span>
+	}
+<span class="nc" id="L35">	public Scale s = new Scale();</span>
 
-    public CameraTransformer() {
-<span class="nc" id="L37">        super();</span>
-<span class="nc" id="L38">        getTransforms().addAll(t, rz, ry, rx, s);</span>
-<span class="nc" id="L39">    }</span>
+	public CameraTransformer() {
+<span class="nc" id="L38">		super();</span>
+<span class="nc" id="L39">		getTransforms().addAll(t, rz, ry, rx, s);</span>
+<span class="nc" id="L40">	}</span>
 
-    public CameraTransformer(CameraTransformer.RotateOrder rotateOrder) {
-<span class="nc" id="L42">        super();</span>
-        // choose the order of rotations based on the rotateOrder
-<span class="nc bnc" id="L44" title="All 7 branches missed.">        switch (rotateOrder) {</span>
-        case XYZ:
-<span class="nc" id="L46">            getTransforms().addAll(t, p, rz, ry, rx, s, ip);</span>
-<span class="nc" id="L47">            break;</span>
-        case XZY:
-<span class="nc" id="L49">            getTransforms().addAll(t, p, ry, rz, rx, s, ip);</span>
-<span class="nc" id="L50">            break;</span>
-        case YXZ:
-<span class="nc" id="L52">            getTransforms().addAll(t, p, rz, rx, ry, s, ip);</span>
-<span class="nc" id="L53">            break;</span>
-        case YZX:
-<span class="nc" id="L55">            getTransforms().addAll(t, p, rx, rz, ry, s, ip);  // For Camera</span>
-<span class="nc" id="L56">            break;</span>
-        case ZXY:
-<span class="nc" id="L58">            getTransforms().addAll(t, p, ry, rx, rz, s, ip);</span>
-<span class="nc" id="L59">            break;</span>
-        case ZYX:
-<span class="nc" id="L61">            getTransforms().addAll(t, p, rx, ry, rz, s, ip);</span>
-            break;
-        }
-<span class="nc" id="L64">    }</span>
+	public CameraTransformer(CameraTransformer.RotateOrder rotateOrder) {
+<span class="nc" id="L43">		super();</span>
+<span class="nc bnc" id="L44" title="All 7 branches missed.">		switch (rotateOrder) {</span>
+		case XYZ:
+<span class="nc" id="L46">			getTransforms().addAll(t, p, rz, ry, rx, s, ip);</span>
+<span class="nc" id="L47">			break;</span>
+		case XZY:
+<span class="nc" id="L49">			getTransforms().addAll(t, p, ry, rz, rx, s, ip);</span>
+<span class="nc" id="L50">			break;</span>
+		case YXZ:
+<span class="nc" id="L52">			getTransforms().addAll(t, p, rz, rx, ry, s, ip);</span>
+<span class="nc" id="L53">			break;</span>
+		case YZX:
+<span class="nc" id="L55">			getTransforms().addAll(t, p, rx, rz, ry, s, ip); // For Camera</span>
+<span class="nc" id="L56">			break;</span>
+		case ZXY:
+<span class="nc" id="L58">			getTransforms().addAll(t, p, ry, rx, rz, s, ip);</span>
+<span class="nc" id="L59">			break;</span>
+		case ZYX:
+<span class="nc" id="L61">			getTransforms().addAll(t, p, rx, ry, rz, s, ip);</span>
+			break;
+		}
+<span class="nc" id="L64">	}</span>
 
-    public void setTranslate(double x, double y, double z) {
-<span class="nc" id="L67">        t.setX(x);</span>
-<span class="nc" id="L68">        t.setY(y);</span>
-<span class="nc" id="L69">        t.setZ(z);</span>
-<span class="nc" id="L70">    }</span>
+	public void setTranslate(double x, double y, double z) {
+<span class="nc" id="L67">		t.setX(x);</span>
+<span class="nc" id="L68">		t.setY(y);</span>
+<span class="nc" id="L69">		t.setZ(z);</span>
+<span class="nc" id="L70">	}</span>
 
-    public void setTranslate(double x, double y) {
-<span class="nc" id="L73">        t.setX(x);</span>
-<span class="nc" id="L74">        t.setY(y);</span>
-<span class="nc" id="L75">    }</span>
+	public void setTranslate(double x, double y) {
+<span class="nc" id="L73">		t.setX(x);</span>
+<span class="nc" id="L74">		t.setY(y);</span>
+<span class="nc" id="L75">	}</span>
 
-<span class="nc" id="L77">    public void setTx(double x) { t.setX(x); }</span>
-<span class="nc" id="L78">    public void setTy(double y) { t.setY(y); }</span>
-<span class="nc" id="L79">    public void setTz(double z) { t.setZ(z); }</span>
+	public void setTx(double x) {
+<span class="nc" id="L78">		t.setX(x);</span>
+<span class="nc" id="L79">	}</span>
 
-    public void setRotate(double x, double y, double z) {
-<span class="nc" id="L82">        rx.setAngle(x);</span>
-<span class="nc" id="L83">        ry.setAngle(y);</span>
-<span class="nc" id="L84">        rz.setAngle(z);</span>
-<span class="nc" id="L85">    }</span>
+	public void setTy(double y) {
+<span class="nc" id="L82">		t.setY(y);</span>
+<span class="nc" id="L83">	}</span>
 
-<span class="nc" id="L87">    public void setRotateX(double x) { rx.setAngle(x); }</span>
-<span class="nc" id="L88">    public void setRotateY(double y) { ry.setAngle(y); }</span>
-<span class="nc" id="L89">    public void setRotateZ(double z) { rz.setAngle(z); }</span>
-<span class="nc" id="L90">    public void setRx(double x) { rx.setAngle(x); }</span>
-<span class="nc" id="L91">    public void setRy(double y) { ry.setAngle(y); }</span>
-<span class="nc" id="L92">    public void setRz(double z) { rz.setAngle(z); }</span>
+	public void setTz(double z) {
+<span class="nc" id="L86">		t.setZ(z);</span>
+<span class="nc" id="L87">	}</span>
 
-    public void setScale(double scaleFactor) {
-<span class="nc" id="L95">        s.setX(scaleFactor);</span>
-<span class="nc" id="L96">        s.setY(scaleFactor);</span>
-<span class="nc" id="L97">        s.setZ(scaleFactor);</span>
-<span class="nc" id="L98">    }</span>
+	public void setRotate(double x, double y, double z) {
+<span class="nc" id="L90">		rx.setAngle(x);</span>
+<span class="nc" id="L91">		ry.setAngle(y);</span>
+<span class="nc" id="L92">		rz.setAngle(z);</span>
+<span class="nc" id="L93">	}</span>
 
-    public void setScale(double x, double y, double z) {
-<span class="nc" id="L101">        s.setX(x);</span>
-<span class="nc" id="L102">        s.setY(y);</span>
-<span class="nc" id="L103">        s.setZ(z);</span>
-<span class="nc" id="L104">    }</span>
+	public void setRotateX(double x) {
+<span class="nc" id="L96">		rx.setAngle(x);</span>
+<span class="nc" id="L97">	}</span>
 
-<span class="nc" id="L106">    public void setSx(double x) { s.setX(x); }</span>
-<span class="nc" id="L107">    public void setSy(double y) { s.setY(y); }</span>
-<span class="nc" id="L108">    public void setSz(double z) { s.setZ(z); }</span>
+	public void setRotateY(double y) {
+<span class="nc" id="L100">		ry.setAngle(y);</span>
+<span class="nc" id="L101">	}</span>
 
-    public void setPivot(double x, double y, double z) {
-<span class="nc" id="L111">        p.setX(x);</span>
-<span class="nc" id="L112">        p.setY(y);</span>
-<span class="nc" id="L113">        p.setZ(z);</span>
-<span class="nc" id="L114">        ip.setX(-x);</span>
-<span class="nc" id="L115">        ip.setY(-y);</span>
-<span class="nc" id="L116">        ip.setZ(-z);</span>
-<span class="nc" id="L117">    }</span>
+	public void setRotateZ(double z) {
+<span class="nc" id="L104">		rz.setAngle(z);</span>
+<span class="nc" id="L105">	}</span>
 
-    public void reset() {
-<span class="nc" id="L120">        t.setX(0.0);</span>
-<span class="nc" id="L121">        t.setY(0.0);</span>
-<span class="nc" id="L122">        t.setZ(0.0);</span>
-<span class="nc" id="L123">        rx.setAngle(0.0);</span>
-<span class="nc" id="L124">        ry.setAngle(0.0);</span>
-<span class="nc" id="L125">        rz.setAngle(0.0);</span>
-<span class="nc" id="L126">        s.setX(1.0);</span>
-<span class="nc" id="L127">        s.setY(1.0);</span>
-<span class="nc" id="L128">        s.setZ(1.0);</span>
-<span class="nc" id="L129">        p.setX(0.0);</span>
-<span class="nc" id="L130">        p.setY(0.0);</span>
-<span class="nc" id="L131">        p.setZ(0.0);</span>
-<span class="nc" id="L132">        ip.setX(0.0);</span>
-<span class="nc" id="L133">        ip.setY(0.0);</span>
-<span class="nc" id="L134">        ip.setZ(0.0);</span>
-<span class="nc" id="L135">    }</span>
+	public void setRx(double x) {
+<span class="nc" id="L108">		rx.setAngle(x);</span>
+<span class="nc" id="L109">	}</span>
 
-    public void resetTSP() {
-<span class="nc" id="L138">        t.setX(0.0);</span>
-<span class="nc" id="L139">        t.setY(0.0);</span>
-<span class="nc" id="L140">        t.setZ(0.0);</span>
-<span class="nc" id="L141">        s.setX(1.0);</span>
-<span class="nc" id="L142">        s.setY(1.0);</span>
-<span class="nc" id="L143">        s.setZ(1.0);</span>
-<span class="nc" id="L144">        p.setX(0.0);</span>
-<span class="nc" id="L145">        p.setY(0.0);</span>
-<span class="nc" id="L146">        p.setZ(0.0);</span>
-<span class="nc" id="L147">        ip.setX(0.0);</span>
-<span class="nc" id="L148">        ip.setY(0.0);</span>
-<span class="nc" id="L149">        ip.setZ(0.0);</span>
-<span class="nc" id="L150">    }</span>
+	public void setRy(double y) {
+<span class="nc" id="L112">		ry.setAngle(y);</span>
+<span class="nc" id="L113">	}</span>
+
+	public void setRz(double z) {
+<span class="nc" id="L116">		rz.setAngle(z);</span>
+<span class="nc" id="L117">	}</span>
+
+	public void setScale(double scaleFactor) {
+<span class="nc" id="L120">		s.setX(scaleFactor);</span>
+<span class="nc" id="L121">		s.setY(scaleFactor);</span>
+<span class="nc" id="L122">		s.setZ(scaleFactor);</span>
+<span class="nc" id="L123">	}</span>
+
+	public void setScale(double x, double y, double z) {
+<span class="nc" id="L126">		s.setX(x);</span>
+<span class="nc" id="L127">		s.setY(y);</span>
+<span class="nc" id="L128">		s.setZ(z);</span>
+<span class="nc" id="L129">	}</span>
+
+	public void setSx(double x) {
+<span class="nc" id="L132">		s.setX(x);</span>
+<span class="nc" id="L133">	}</span>
+
+	public void setSy(double y) {
+<span class="nc" id="L136">		s.setY(y);</span>
+<span class="nc" id="L137">	}</span>
+
+	public void setSz(double z) {
+<span class="nc" id="L140">		s.setZ(z);</span>
+<span class="nc" id="L141">	}</span>
+
+	public void setPivot(double x, double y, double z) {
+<span class="nc" id="L144">		p.setX(x);</span>
+<span class="nc" id="L145">		p.setY(y);</span>
+<span class="nc" id="L146">		p.setZ(z);</span>
+<span class="nc" id="L147">		ip.setX(-x);</span>
+<span class="nc" id="L148">		ip.setY(-y);</span>
+<span class="nc" id="L149">		ip.setZ(-z);</span>
+<span class="nc" id="L150">	}</span>
+
+	public void reset() {
+<span class="nc" id="L153">		t.setX(0.0);</span>
+<span class="nc" id="L154">		t.setY(0.0);</span>
+<span class="nc" id="L155">		t.setZ(0.0);</span>
+<span class="nc" id="L156">		rx.setAngle(0.0);</span>
+<span class="nc" id="L157">		ry.setAngle(0.0);</span>
+<span class="nc" id="L158">		rz.setAngle(0.0);</span>
+<span class="nc" id="L159">		s.setX(1.0);</span>
+<span class="nc" id="L160">		s.setY(1.0);</span>
+<span class="nc" id="L161">		s.setZ(1.0);</span>
+<span class="nc" id="L162">		p.setX(0.0);</span>
+<span class="nc" id="L163">		p.setY(0.0);</span>
+<span class="nc" id="L164">		p.setZ(0.0);</span>
+<span class="nc" id="L165">		ip.setX(0.0);</span>
+<span class="nc" id="L166">		ip.setY(0.0);</span>
+<span class="nc" id="L167">		ip.setZ(0.0);</span>
+<span class="nc" id="L168">	}</span>
+
+	public void resetTSP() {
+<span class="nc" id="L171">		t.setX(0.0);</span>
+<span class="nc" id="L172">		t.setY(0.0);</span>
+<span class="nc" id="L173">		t.setZ(0.0);</span>
+<span class="nc" id="L174">		s.setX(1.0);</span>
+<span class="nc" id="L175">		s.setY(1.0);</span>
+<span class="nc" id="L176">		s.setZ(1.0);</span>
+<span class="nc" id="L177">		p.setX(0.0);</span>
+<span class="nc" id="L178">		p.setY(0.0);</span>
+<span class="nc" id="L179">		p.setZ(0.0);</span>
+<span class="nc" id="L180">		ip.setX(0.0);</span>
+<span class="nc" id="L181">		ip.setY(0.0);</span>
+<span class="nc" id="L182">		ip.setZ(0.0);</span>
+<span class="nc" id="L183">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
