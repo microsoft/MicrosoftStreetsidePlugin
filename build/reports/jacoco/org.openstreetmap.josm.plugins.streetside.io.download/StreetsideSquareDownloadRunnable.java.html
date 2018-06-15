@@ -3,7 +3,6 @@ package org.openstreetmap.josm.plugins.streetside.io.download;
 
 import org.openstreetmap.josm.data.Bounds;
 import org.openstreetmap.josm.plugins.streetside.StreetsideLayer;
-import org.openstreetmap.josm.plugins.streetside.gui.StreetsideFilterDialog;
 import org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog;
 import org.openstreetmap.josm.plugins.streetside.utils.PluginState;
 import org.openstreetmap.josm.plugins.streetside.utils.StreetsideUtils;
@@ -19,45 +18,45 @@ public class StreetsideSquareDownloadRunnable implements Runnable {
    * @param bounds the bounds of the area that should be downloaded
    *
    */
-<span class="nc" id="L22">  public StreetsideSquareDownloadRunnable(Bounds bounds) {</span>
-<span class="nc" id="L23">    this.bounds = bounds;</span>
-<span class="nc" id="L24">  }</span>
+<span class="nc" id="L21">  public StreetsideSquareDownloadRunnable(Bounds bounds) {</span>
+<span class="nc" id="L22">    this.bounds = bounds;</span>
+<span class="nc" id="L23">  }</span>
 
   @Override
   public void run() {
-<span class="nc" id="L28">    PluginState.startDownload();</span>
-<span class="nc" id="L29">    StreetsideUtils.updateHelpText();</span>
+<span class="nc" id="L27">    PluginState.startDownload();</span>
+<span class="nc" id="L28">    StreetsideUtils.updateHelpText();</span>
 
     // Download basic sequence data synchronously
-<span class="nc" id="L32">    new SequenceDownloadRunnable(StreetsideLayer.getInstance().getData(), bounds).run();</span>
+<span class="nc" id="L31">    new SequenceDownloadRunnable(StreetsideLayer.getInstance().getData(), bounds).run();</span>
 
-<span class="nc bnc" id="L34" title="All 2 branches missed.">    if (Thread.interrupted()) {</span>
-<span class="nc" id="L35">      return;</span>
+<span class="nc bnc" id="L33" title="All 2 branches missed.">    if (Thread.interrupted()) {</span>
+<span class="nc" id="L34">      return;</span>
     }
 
     // TODO: Revamp image details for Streetside RRH
     // Asynchronously load the rest of the image details
-<span class="nc" id="L40">    Thread imgDetailsThread = new Thread(new ImageDetailsDownloadRunnable(StreetsideLayer.getInstance().getData(), bounds));</span>
-<span class="nc" id="L41">    imgDetailsThread.start();</span>
+<span class="nc" id="L39">    Thread imgDetailsThread = new Thread(new ImageDetailsDownloadRunnable(StreetsideLayer.getInstance().getData(), bounds));</span>
+<span class="nc" id="L40">    imgDetailsThread.start();</span>
 
     // TODO: Do we support detections? RRH
-<span class="nc" id="L44">    Thread detectionsThread = new Thread(new DetectionsDownloadRunnable(StreetsideLayer.getInstance().getData(), bounds));</span>
-<span class="nc" id="L45">    detectionsThread.start();</span>
+    /*Thread detectionsThread = new Thread(new DetectionsDownloadRunnable(StreetsideLayer.getInstance().getData(), bounds));
+    detectionsThread.start();*/
 
     try {
-<span class="nc" id="L48">      imgDetailsThread.join();</span>
+<span class="nc" id="L47">      imgDetailsThread.join();</span>
       //detectionsThread.join();
-<span class="nc" id="L50">    } catch (InterruptedException e) {</span>
-<span class="nc" id="L51">      Logging.log(Logging.LEVEL_WARN, &quot;Streetside download interrupted (probably because of closing the layer).&quot;, e);</span>
-<span class="nc" id="L52">      Thread.currentThread().interrupt();</span>
+<span class="nc" id="L49">    } catch (InterruptedException e) {</span>
+<span class="nc" id="L50">      Logging.log(Logging.LEVEL_WARN, &quot;Streetside download interrupted (probably because of closing the layer).&quot;, e);</span>
+<span class="nc" id="L51">      Thread.currentThread().interrupt();</span>
     } finally {
-<span class="nc" id="L54">      PluginState.finishDownload();</span>
-<span class="nc" id="L55">    }</span>
+<span class="nc" id="L53">      PluginState.finishDownload();</span>
+<span class="nc" id="L54">    }</span>
 
-<span class="nc" id="L57">    StreetsideUtils.updateHelpText();</span>
-<span class="nc" id="L58">    StreetsideLayer.invalidateInstance();</span>
-<span class="nc" id="L59">    StreetsideFilterDialog.getInstance().refresh();</span>
-<span class="nc" id="L60">    StreetsideMainDialog.getInstance().updateImage();</span>
-<span class="nc" id="L61">  }</span>
+<span class="nc" id="L56">    StreetsideUtils.updateHelpText();</span>
+<span class="nc" id="L57">    StreetsideLayer.invalidateInstance();</span>
+    //StreetsideFilterDialog.getInstance().refresh();
+<span class="nc" id="L59">    StreetsideMainDialog.getInstance().updateImage();</span>
+<span class="nc" id="L60">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

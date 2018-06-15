@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.openstreetmap.josm.plugins.streetside.StreetsideSequenceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-06-15T04:57:27" hostname="Renes-MacBook-Pro.local" time="0.0">
+<testsuite name="org.openstreetmap.josm.plugins.streetside.StreetsideSequenceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-06-15T23:03:00" hostname="D-10-19-129-119.dhcp4.washington.edu" time="0.0">
   <properties/>
   <testcase name="nextAndPreviousTest" classname="org.openstreetmap.josm.plugins.streetside.StreetsideSequenceTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>

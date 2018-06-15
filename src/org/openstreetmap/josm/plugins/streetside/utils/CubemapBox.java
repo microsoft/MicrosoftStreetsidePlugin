@@ -29,13 +29,10 @@ import javafx.scene.transform.Transform;
  * @author Dub
  * @author renerr18
  */
-// TODO: try making CubemapBox a singleton with lazy initialization; otherwise create factory @rrh
 @SuppressWarnings("restriction")
 public  class CubemapBox extends Group{
 
-	private CubemapBox instance;
-
-    public enum CubemapBoxImageType{
+	public enum CubemapBoxImageType{
         MULTIPLE, SINGLE
     }
 
@@ -70,7 +67,7 @@ public  class CubemapBox extends Group{
 	private Image
 		frontImg, rightImg, backImg, leftImg, upImg, downImg, singleImg;
 
-	private WritableImage convertedImage;
+	//private WritableImage convertedImage;
 
     private final PerspectiveCamera camera;
     private AnimationTimer timer;

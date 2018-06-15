@@ -3,10 +3,10 @@ MicrosoftStreetside-dev.jar;file:/Users/renerr18/Documents/Microsoft/dev/josm_cu
 	Gradle-Version: 4.7
 	Groovy-Version: 2.4.12
 	Plugin-Class: org.openstreetmap.josm.plugins.streetside.StreetsidePlugin
-	Plugin-Date: 2018-06-14T21:57:00-0700
+	Plugin-Date: 2018-06-15T16:03:14-0700
 	Plugin-Description: Allows the user to work with pictures hosted at Microsoft Streetside
 	Plugin-Mainversion: 13922
-	Plugin-Version: 2a143e7-dirty#2018-06-14T21:57:00-0700
+	Plugin-Version: f6b56f5-dirty#2018-06-15T16:03:14-0700
 	Plugin-Early: false
 	Plugin-Canloadatruntime: true
 	Author: renerr18

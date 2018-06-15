@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.openstreetmap.josm.plugins.streetside.model.MapObjectTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2018-06-15T04:57:27" hostname="Renes-MacBook-Pro.local" time="0.877">
+<testsuite name="org.openstreetmap.josm.plugins.streetside.model.MapObjectTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2018-06-15T23:03:00" hostname="D-10-19-129-119.dhcp4.washington.edu" time="1.149">
   <properties/>
-  <testcase name="testIllArgEx1" classname="org.openstreetmap.josm.plugins.streetside.model.MapObjectTest" time="0.069"/>
-  <testcase name="testIllArgEx2" classname="org.openstreetmap.josm.plugins.streetside.model.MapObjectTest" time="0.04"/>
-  <testcase name="testIllArgEx3" classname="org.openstreetmap.josm.plugins.streetside.model.MapObjectTest" time="0.03"/>
-  <testcase name="testIllArgEx4" classname="org.openstreetmap.josm.plugins.streetside.model.MapObjectTest" time="0.031"/>
-  <testcase name="testIcon" classname="org.openstreetmap.josm.plugins.streetside.model.MapObjectTest" time="0.063"/>
-  <testcase name="testInvalidIconDownloadURL" classname="org.openstreetmap.josm.plugins.streetside.model.MapObjectTest" time="0.593"/>
-  <testcase name="testEquals" classname="org.openstreetmap.josm.plugins.streetside.model.MapObjectTest" time="0.048"/>
+  <testcase name="testIllArgEx1" classname="org.openstreetmap.josm.plugins.streetside.model.MapObjectTest" time="0.063"/>
+  <testcase name="testIllArgEx2" classname="org.openstreetmap.josm.plugins.streetside.model.MapObjectTest" time="0.038"/>
+  <testcase name="testIllArgEx3" classname="org.openstreetmap.josm.plugins.streetside.model.MapObjectTest" time="0.034"/>
+  <testcase name="testIllArgEx4" classname="org.openstreetmap.josm.plugins.streetside.model.MapObjectTest" time="0.035"/>
+  <testcase name="testIcon" classname="org.openstreetmap.josm.plugins.streetside.model.MapObjectTest" time="0.089"/>
+  <testcase name="testInvalidIconDownloadURL" classname="org.openstreetmap.josm.plugins.streetside.model.MapObjectTest" time="0.684"/>
+  <testcase name="testEquals" classname="org.openstreetmap.josm.plugins.streetside.model.MapObjectTest" time="0.205"/>
   <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[2018-06-15 04:57:28.360 WARNING: Failed to download icon /invalidPathToIcon: javax.imageio.IIOException: Can't get input stream from URL!. Cause: java.net.ConnectException: Connection refused (Connection refused)
+  <system-err><![CDATA[2018-06-15 23:03:00.813 WARNING: Region [streetsideObjectIcons_BLOCK_v2] Resetting cache
+2018-06-15 23:03:01.373 WARNING: Failed to download icon /invalidPathToIcon: javax.imageio.IIOException: Can't get input stream from URL!. Cause: java.net.UnknownHostException: invalidURL
 ]]></system-err>
 </testsuite>

@@ -1,21 +1,14 @@
 // License: GPL. For details, see LICENSE file.
 package org.openstreetmap.josm.plugins.streetside.io.download;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.function.Function;
 
-import javax.json.Json;
-import javax.json.JsonException;
-import javax.json.JsonReader;
-
 import org.openstreetmap.josm.data.Bounds;
 import org.openstreetmap.josm.plugins.streetside.StreetsideData;
-import org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog;
 import org.openstreetmap.josm.plugins.streetside.utils.StreetsideURL.APIv3;
-import org.openstreetmap.josm.plugins.streetside.utils.api.JsonImageDetailsDecoder;
 
 
 public class ImageDetailsDownloadRunnable extends BoundsDownloadRunnable {

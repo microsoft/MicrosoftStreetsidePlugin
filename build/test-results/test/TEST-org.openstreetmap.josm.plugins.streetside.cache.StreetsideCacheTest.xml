@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.openstreetmap.josm.plugins.streetside.cache.StreetsideCacheTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-06-15T04:57:26" hostname="Renes-MacBook-Pro.local" time="0.423">
+<testsuite name="org.openstreetmap.josm.plugins.streetside.cache.StreetsideCacheTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-06-15T23:02:59" hostname="D-10-19-129-119.dhcp4.washington.edu" time="0.352">
   <properties/>
-  <testcase name="test" classname="org.openstreetmap.josm.plugins.streetside.cache.StreetsideCacheTest" time="0.423"/>
-  <system-out><![CDATA[2018-06-15 04:57:26.479 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hs00000.jpg?g=6338&n=z invoked.
-2018-06-15 04:57:26.480 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hs0000001.jpg?g=6338&n=z invoked.
+  <testcase name="test" classname="org.openstreetmap.josm.plugins.streetside.cache.StreetsideCacheTest" time="0.352"/>
+  <system-out><![CDATA[2018-06-15 23:02:59.831 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hs00000.jpg?g=6338&n=z invoked.
+2018-06-15 23:02:59.832 INFO: Tile task URL https://t.ssl.ak.tiles.virtualearth.net/tiles/hs0000001.jpg?g=6338&n=z invoked.
 ]]></system-out>
-  <system-err><![CDATA[2018-06-15 04:57:26.252 WARNING: No configuration settings found.  Using hardcoded default values for all pools.
+  <system-err><![CDATA[2018-06-15 23:02:59.687 WARNING: No configuration settings found.  Using hardcoded default values for all pools.
 ]]></system-err>
 </testsuite>

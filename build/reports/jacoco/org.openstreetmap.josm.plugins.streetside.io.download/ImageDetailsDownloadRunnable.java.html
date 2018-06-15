@@ -1,33 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ImageDetailsDownloadRunnable.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MicrosoftStreetside</a> &gt; <a href="index.source.html" class="el_package">org.openstreetmap.josm.plugins.streetside.io.download</a> &gt; <span class="el_source">ImageDetailsDownloadRunnable.java</span></div><h1>ImageDetailsDownloadRunnable.java</h1><pre class="source lang-java linenums">// License: GPL. For details, see LICENSE file.
 package org.openstreetmap.josm.plugins.streetside.io.download;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.function.Function;
 
-import javax.json.Json;
-import javax.json.JsonException;
-import javax.json.JsonReader;
-
 import org.openstreetmap.josm.data.Bounds;
 import org.openstreetmap.josm.plugins.streetside.StreetsideData;
-import org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog;
 import org.openstreetmap.josm.plugins.streetside.utils.StreetsideURL.APIv3;
-import org.openstreetmap.josm.plugins.streetside.utils.api.JsonImageDetailsDecoder;
 
 
 public class ImageDetailsDownloadRunnable extends BoundsDownloadRunnable {
   //private static final Function&lt;Bounds, URL&gt; URL_GEN = APIv3::searchImages;
-<span class="nc" id="L23">  private static final Function&lt;Bounds, URL&gt; URL_GEN = APIv3::searchStreetsideImages;</span>
+<span class="nc" id="L16">  private static final Function&lt;Bounds, URL&gt; URL_GEN = APIv3::searchStreetsideImages;</span>
 
   private final StreetsideData data;
 
   public ImageDetailsDownloadRunnable(final StreetsideData data, final Bounds bounds) {
-<span class="nc" id="L28">    super(bounds);</span>
-<span class="nc" id="L29">    this.data = data;</span>
-<span class="nc" id="L30">  }</span>
+<span class="nc" id="L21">    super(bounds);</span>
+<span class="nc" id="L22">    this.data = data;</span>
+<span class="nc" id="L23">  }</span>
 
   // TODO: image infos for 360 degree viewer? @rrh
   @Override
@@ -40,11 +33,11 @@ public class ImageDetailsDownloadRunnable extends BoundsDownloadRunnable {
     } catch (JsonException | NumberFormatException e) {
       throw new IOException(e);
     }*/
-<span class="nc" id="L43">  }</span>
+<span class="nc" id="L36">  }</span>
 
   @Override
   protected Function&lt;Bounds, URL&gt; getUrlGenerator() {
-<span class="nc" id="L47">    return URL_GEN;</span>
+<span class="nc" id="L40">    return URL_GEN;</span>
   }
 
 }

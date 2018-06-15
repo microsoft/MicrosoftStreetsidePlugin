@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.openstreetmap.josm.plugins.streetside.StreetsideLayerTest" tests="6" skipped="6" failures="0" errors="0" timestamp="2018-06-15T04:57:24" hostname="Renes-MacBook-Pro.local" time="0.001">
+<testsuite name="org.openstreetmap.josm.plugins.streetside.StreetsideLayerTest" tests="6" skipped="6" failures="0" errors="0" timestamp="2018-06-15T23:02:57" hostname="D-10-19-129-119.dhcp4.washington.edu" time="0.002">
   <properties/>
-  <testcase name="testIsMergable" classname="org.openstreetmap.josm.plugins.streetside.StreetsideLayerTest" time="0.0">
+  <testcase name="testIsMergable" classname="org.openstreetmap.josm.plugins.streetside.StreetsideLayerTest" time="0.001">
     <skipped/>
   </testcase>
   <testcase name="testMergeFrom" classname="org.openstreetmap.josm.plugins.streetside.StreetsideLayerTest" time="0.0">

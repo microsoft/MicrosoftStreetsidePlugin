@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="5.8.1" timestamp="2018-06-14T21:57:05.715">
+<pmd version="5.8.1" timestamp="2018-06-15T16:02:26.354">
 <file name="/Users/renerr18/Documents/Microsoft/dev/josm_current_06112018_1446/josm/plugins/MicrosoftStreetside/test/unit/org/openstreetmap/josm/plugins/streetside/gui/StreetsidePreferenceSettingTest.java">
 <violation beginline="67" endline="67" begincolumn="77" endcolumn="89" rule="AvoidDuplicateLiterals" ruleset="String and StringBuffer" package="org.openstreetmap.josm.plugins.streetside.gui" class="StreetsidePreferenceSettingTest" method="testLoginLogout" externalInfoUrl="https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/strings.html#AvoidDuplicateLiterals" priority="3">
 The String literal &quot;loginButton&quot; appears 4 times in this file; the first occurrence is on line 67

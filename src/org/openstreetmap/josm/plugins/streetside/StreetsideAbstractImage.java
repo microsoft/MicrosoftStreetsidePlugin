@@ -53,11 +53,15 @@ public abstract class StreetsideAbstractImage implements Comparable<StreetsideAb
 
 	/**
 	 * Creates a new object in the given position and with the given direction.
+	 * {@link LatLon}
+	 *
+	 * @param id - the Streetside image id
 	 *
 	 * @param latLon
-	 *            The latitude and longitude where the picture was taken.
-	 * @param cd
-	 *            The direction of the picture (0 means north).
+	 *            The latitude and longitude of the image.
+	 * @param he
+	 *            The direction of the picture (0 means north im Mapillary
+	 *            camera direction is not yet supported in the Streetside plugin).
 	 */
 	protected StreetsideAbstractImage(final String id, final LatLon latLon, final double he) {
 		this.id = id;
@@ -72,6 +76,8 @@ public abstract class StreetsideAbstractImage implements Comparable<StreetsideAb
 
 	/**
 	 * Creates a new object with the given id.
+	 *
+	 * @param id - the image id (All images require ids in Streetside)
 	 */
 	protected StreetsideAbstractImage(final String id) {
 		this.id = id;
@@ -270,7 +276,7 @@ public abstract class StreetsideAbstractImage implements Comparable<StreetsideAb
 	/**
 	 * Sets the Epoch time when the picture was captured.
 	 *
-	 * @param capturedAt
+	 * @param cd
 	 *            Epoch time when the image was captured.
 	 */
 	public synchronized void setCd(final long cd) {
@@ -324,7 +330,7 @@ public abstract class StreetsideAbstractImage implements Comparable<StreetsideAb
 	/**
 	 * Turns the image direction.
 	 *
-	 * @param cd
+	 * @param ca
 	 *            The angle the image is moving.
 	 */
 	public void turn(final double ca) {

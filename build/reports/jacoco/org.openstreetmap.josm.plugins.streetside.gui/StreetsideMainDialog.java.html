@@ -564,11 +564,11 @@ public final class StreetsideMainDialog extends ToggleDialog implements
 <span class="nc bnc" id="L564" title="All 2 branches missed.">						streetsideImageDisplay.getImage() == null</span>
 <span class="nc bnc" id="L565" title="All 2 branches missed.">						|| img.getHeight() &gt; streetsideImageDisplay.getImage().getHeight()</span>
 						) {
-<span class="nc" id="L567">					final StreetsideAbstractImage mai = getImage();</span>
+					//final StreetsideAbstractImage mai = getImage();
 <span class="nc" id="L568">					streetsideImageDisplay.setImage(</span>
 							img,
-<span class="nc bnc" id="L570" title="All 2 branches missed.">							mai instanceof StreetsideImage ? ((StreetsideImage) getImage()).getDetections() : null</span>
-							);
+							//mai instanceof StreetsideImage ? ((StreetsideImage) getImage()).getDetections() : null
+							null);
 				}
 <span class="nc" id="L573">			} catch (final IOException e) {</span>
 <span class="nc" id="L574">				Logging.error(e);</span>

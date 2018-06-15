@@ -6,15 +6,12 @@ import java.awt.image.BufferedImage;
 import javax.swing.SwingUtilities;
 
 import org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImage;
-import org.openstreetmap.josm.plugins.streetside.StreetsideCubemap;
 import org.openstreetmap.josm.plugins.streetside.StreetsideData;
 import org.openstreetmap.josm.plugins.streetside.StreetsideDataListener;
 import org.openstreetmap.josm.plugins.streetside.StreetsideImage;
 import org.openstreetmap.josm.plugins.streetside.StreetsideLayer;
 import org.openstreetmap.josm.plugins.streetside.cache.CacheUtils;
-import org.openstreetmap.josm.plugins.streetside.cubemap.CubemapUtils;
 import org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog;
-import org.openstreetmap.josm.plugins.streetside.utils.StreetsideProperties;
 
 
 /**

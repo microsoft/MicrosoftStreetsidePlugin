@@ -69,7 +69,7 @@ public final class StreetsideViewerPanel extends JPanel
 		repaint();
 	    JPanel checkPanel = new JPanel();
 
-	    imgReloadAction = new ImageReloadAction(I18n.tr("Reload", null));
+	    imgReloadAction = new ImageReloadAction(I18n.tr("Reload"));
 
 	    StreetsideButton imgReloadButton = new StreetsideButton(imgReloadAction);
 		highResImageryCheck = new JCheckBox(I18n.tr("High resolution"));

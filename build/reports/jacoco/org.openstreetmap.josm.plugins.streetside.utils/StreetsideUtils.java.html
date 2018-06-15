@@ -90,7 +90,7 @@ public final class StreetsideUtils {
    * @throws ParseException if the date cannot be parsed with the given format
    */
   public static long getEpoch(String date, String format) throws ParseException {
-<span class="fc" id="L93">    return new SimpleDateFormat(format, Locale.UK).parse(date).getTime();</span>
+<span class="nc" id="L93">    return new SimpleDateFormat(format, Locale.UK).parse(date).getTime();</span>
   }
 
   /**
@@ -126,7 +126,7 @@ public final class StreetsideUtils {
 <span class="nc" id="L126">        throw new IllegalArgumentException(&quot;Null value in array.&quot;);</span>
     }
 
-<span class="pc bpc" id="L129" title="8 of 15 branches missed.">    switch (ref) {</span>
+<span class="pc bpc" id="L129" title="10 of 15 branches missed.">    switch (ref) {</span>
       case GpsTagConstants.GPS_TAG_GPS_LATITUDE_REF_VALUE_NORTH:
       case GpsTagConstants.GPS_TAG_GPS_LATITUDE_REF_VALUE_SOUTH:
       case GpsTagConstants.GPS_TAG_GPS_LONGITUDE_REF_VALUE_EAST:

@@ -564,11 +564,11 @@ public final class StreetsideMainDialog extends ToggleDialog implements
 						streetsideImageDisplay.getImage() == null
 						|| img.getHeight() > streetsideImageDisplay.getImage().getHeight()
 						) {
-					final StreetsideAbstractImage mai = getImage();
+					//final StreetsideAbstractImage mai = getImage();
 					streetsideImageDisplay.setImage(
 							img,
-							mai instanceof StreetsideImage ? ((StreetsideImage) getImage()).getDetections() : null
-							);
+							//mai instanceof StreetsideImage ? ((StreetsideImage) getImage()).getDetections() : null
+							null);
 				}
 			} catch (final IOException e) {
 				Logging.error(e);

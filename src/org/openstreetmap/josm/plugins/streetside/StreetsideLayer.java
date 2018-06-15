@@ -12,7 +12,6 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.TexturePaint;
 import java.awt.geom.Line2D;
-import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 import java.util.Comparator;
 import java.util.IntSummaryStatistics;
@@ -38,7 +37,6 @@ import org.openstreetmap.josm.gui.layer.LayerManager;
 import org.openstreetmap.josm.gui.layer.MainLayerManager.ActiveLayerChangeEvent;
 import org.openstreetmap.josm.gui.layer.MainLayerManager.ActiveLayerChangeListener;
 import org.openstreetmap.josm.plugins.streetside.cache.CacheUtils;
-import org.openstreetmap.josm.plugins.streetside.gui.StreetsideFilterDialog;
 import org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog;
 import org.openstreetmap.josm.plugins.streetside.history.StreetsideRecord;
 import org.openstreetmap.josm.plugins.streetside.io.download.StreetsideDownloader;
@@ -52,9 +50,6 @@ import org.openstreetmap.josm.plugins.streetside.utils.StreetsideProperties;
 import org.openstreetmap.josm.plugins.streetside.utils.StreetsideUtils;
 import org.openstreetmap.josm.tools.I18n;
 import org.openstreetmap.josm.tools.ImageProvider.ImageSizes;
-import org.openstreetmap.josm.tools.Logging;
-
-import org.openstreetmap.josm.plugins.streetside.gui.StreetsideChangesetDialog;
 
 /**
  * This class represents the layer shown in JOSM. There can only exist one
@@ -134,7 +129,7 @@ ActiveLayerChangeListener, StreetsideDataListener {
 
 			// There is no delete image action for Streetside (Mapillary functionality here removed).
 
-			getLocationChangeset().addChangesetListener(StreetsideChangesetDialog.getInstance());
+			//getLocationChangeset().addChangesetListener(StreetsideChangesetDialog.getInstance());
 		}
 		createHatchTexture();
 		invalidate();
@@ -268,7 +263,7 @@ ActiveLayerChangeListener, StreetsideDataListener {
 		super.setVisible(visible);
 		getData().getImages().parallelStream().forEach(img -> img.setVisible(visible));
 		if (MainApplication.getMap() != null) {
-			StreetsideFilterDialog.getInstance().refresh();
+			//StreetsideFilterDialog.getInstance().refresh();
 		}
 	}
 
@@ -327,11 +322,11 @@ ActiveLayerChangeListener, StreetsideDataListener {
 			}
 			g.draw(MapViewGeometryUtil.getSequencePath(mv, seq));
 		}
-		for (final StreetsideAbstractImage imageAbs : data.getImages()) {
+		/*for (final StreetsideAbstractImage imageAbs : data.getImages()) {
 			if (imageAbs.isVisible() && mv != null && mv.contains(mv.getPoint(imageAbs.getMovingLatLon()))) {
 				drawImageMarker(g, imageAbs);
 			}
-		}
+		}*/
 		if (mode instanceof JoinMode) {
 			mode.paint(g, mv, box);
 		}
@@ -342,7 +337,7 @@ ActiveLayerChangeListener, StreetsideDataListener {
 	 * @param g the Graphics context
 	 * @param img the image to be drawn onto the Graphics context
 	 */
-	private void drawImageMarker(final Graphics2D g, final StreetsideAbstractImage img) {
+	/*private void drawImageMarker(final Graphics2D g, final StreetsideAbstractImage img) {
 		if (img == null || img.getLatLon() == null) {
 			Logging.warn("An image is not painted, because it is null or has no LatLon!");
 			return;
@@ -403,7 +398,7 @@ ActiveLayerChangeListener, StreetsideDataListener {
 			g.setColor(Color.RED);
 			g.draw(trafficSign);
 		}
-	}
+	}*/
 
 	@Override
 	public Icon getIcon() {

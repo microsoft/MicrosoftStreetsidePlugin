@@ -10,8 +10,6 @@ import org.openstreetmap.josm.tools.I18n;
 import org.openstreetmap.josm.tools.Logging;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
@@ -32,7 +30,6 @@ public class ThreeSixtyDegreeViewerPanel extends JFXPanel {
 
 	private static final long serialVersionUID = -4940350009018422000L;
 
-	private static Scene scene;
 	private static Group root;
 	private static Group subGroup;
 	private static CubemapBox cubemapBox;

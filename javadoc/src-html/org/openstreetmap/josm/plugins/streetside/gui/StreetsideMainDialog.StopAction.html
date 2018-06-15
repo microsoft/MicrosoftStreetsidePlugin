@@ -572,11 +572,11 @@
 <span class="sourceLineNo">564</span>                                                streetsideImageDisplay.getImage() == null<a name="line.564"></a>
 <span class="sourceLineNo">565</span>                                                || img.getHeight() &gt; streetsideImageDisplay.getImage().getHeight()<a name="line.565"></a>
 <span class="sourceLineNo">566</span>                                                ) {<a name="line.566"></a>
-<span class="sourceLineNo">567</span>                                        final StreetsideAbstractImage mai = getImage();<a name="line.567"></a>
+<span class="sourceLineNo">567</span>                                        //final StreetsideAbstractImage mai = getImage();<a name="line.567"></a>
 <span class="sourceLineNo">568</span>                                        streetsideImageDisplay.setImage(<a name="line.568"></a>
 <span class="sourceLineNo">569</span>                                                        img,<a name="line.569"></a>
-<span class="sourceLineNo">570</span>                                                        mai instanceof StreetsideImage ? ((StreetsideImage) getImage()).getDetections() : null<a name="line.570"></a>
-<span class="sourceLineNo">571</span>                                                        );<a name="line.571"></a>
+<span class="sourceLineNo">570</span>                                                        //mai instanceof StreetsideImage ? ((StreetsideImage) getImage()).getDetections() : null<a name="line.570"></a>
+<span class="sourceLineNo">571</span>                                                        null);<a name="line.571"></a>
 <span class="sourceLineNo">572</span>                                }<a name="line.572"></a>
 <span class="sourceLineNo">573</span>                        } catch (final IOException e) {<a name="line.573"></a>
 <span class="sourceLineNo">574</span>                                Logging.error(e);<a name="line.574"></a>

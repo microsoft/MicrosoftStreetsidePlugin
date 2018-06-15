@@ -112,7 +112,7 @@ public class StreetsidePreferenceSetting implements SubPreferenceSetting, Street
     loginPanel.setBackground(StreetsideColorScheme.TOOLBAR_DARK_GREY);
     JLabel brandImage = new JLabel();
     // TODO: change icons RRH
-    try (InputStream is = StreetsidePreferenceSetting.class.getResourceAsStream("/images/mapillary-logo-white.png")) {
+    try (InputStream is = StreetsidePreferenceSetting.class.getResourceAsStream("/images/streetside-logo-white.png")) {
       if (is != null) {
         brandImage.setIcon(new ImageIcon(ImageIO.read(is)));
       } else {

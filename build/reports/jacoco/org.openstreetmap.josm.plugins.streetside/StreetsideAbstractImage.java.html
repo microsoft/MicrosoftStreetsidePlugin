@@ -53,37 +53,43 @@ public abstract class StreetsideAbstractImage implements Comparable&lt;Streetsid
 
 	/**
 	 * Creates a new object in the given position and with the given direction.
+	 * {@link LatLon}
+	 *
+	 * @param id - the Streetside image id
 	 *
 	 * @param latLon
-	 *            The latitude and longitude where the picture was taken.
-	 * @param cd
-	 *            The direction of the picture (0 means north).
+	 *            The latitude and longitude of the image.
+	 * @param he
+	 *            The direction of the picture (0 means north im Mapillary
+	 *            camera direction is not yet supported in the Streetside plugin).
 	 */
-<span class="fc" id="L62">	protected StreetsideAbstractImage(final String id, final LatLon latLon, final double he) {</span>
-<span class="fc" id="L63">		this.id = id;</span>
-<span class="fc" id="L64">		this.latLon = latLon;</span>
-<span class="fc" id="L65">		tempLatLon = this.latLon;</span>
-<span class="fc" id="L66">		movingLatLon = this.latLon;</span>
-<span class="fc" id="L67">		this.he = he;</span>
-<span class="fc" id="L68">		tempHe = he;</span>
-<span class="fc" id="L69">		movingHe = he;</span>
-<span class="fc" id="L70">		visible = true;</span>
-<span class="fc" id="L71">	}</span>
+<span class="fc" id="L66">	protected StreetsideAbstractImage(final String id, final LatLon latLon, final double he) {</span>
+<span class="fc" id="L67">		this.id = id;</span>
+<span class="fc" id="L68">		this.latLon = latLon;</span>
+<span class="fc" id="L69">		tempLatLon = this.latLon;</span>
+<span class="fc" id="L70">		movingLatLon = this.latLon;</span>
+<span class="fc" id="L71">		this.he = he;</span>
+<span class="fc" id="L72">		tempHe = he;</span>
+<span class="fc" id="L73">		movingHe = he;</span>
+<span class="fc" id="L74">		visible = true;</span>
+<span class="fc" id="L75">	}</span>
 
 	/**
 	 * Creates a new object with the given id.
+	 *
+	 * @param id - the image id (All images require ids in Streetside)
 	 */
-<span class="nc" id="L76">	protected StreetsideAbstractImage(final String id) {</span>
-<span class="nc" id="L77">		this.id = id;</span>
+<span class="nc" id="L82">	protected StreetsideAbstractImage(final String id) {</span>
+<span class="nc" id="L83">		this.id = id;</span>
 
-<span class="nc" id="L79">		visible = true;</span>
-<span class="nc" id="L80">	}</span>
+<span class="nc" id="L85">		visible = true;</span>
+<span class="nc" id="L86">	}</span>
 
 	/**
 	 * @return the id
 	 */
 	public String getId() {
-<span class="nc" id="L86">		return id;</span>
+<span class="nc" id="L92">		return id;</span>
 	}
 
 	/**
@@ -91,8 +97,8 @@ public abstract class StreetsideAbstractImage implements Comparable&lt;Streetsid
 	 *            the id to set
 	 */
 	public void setId(String id) {
-<span class="nc" id="L94">		this.id = id;</span>
-<span class="nc" id="L95">	}</span>
+<span class="nc" id="L100">		this.id = id;</span>
+<span class="nc" id="L101">	}</span>
 
 	/**
 	 * Returns the original direction towards the image has been taken.
@@ -100,7 +106,7 @@ public abstract class StreetsideAbstractImage implements Comparable&lt;Streetsid
 	 * @return The direction of the image (0 means north and goes clockwise).
 	 */
 	public double getHe() {
-<span class="nc" id="L103">		return he;</span>
+<span class="nc" id="L109">		return he;</span>
 	}
 
 	/**
@@ -109,7 +115,7 @@ public abstract class StreetsideAbstractImage implements Comparable&lt;Streetsid
 	 * @return The long containing the Epoch time when the image was captured.
 	 */
 	public long getCd() {
-<span class="nc" id="L112">		return cd;</span>
+<span class="nc" id="L118">		return cd;</span>
 	}
 
 	/**
@@ -118,16 +124,16 @@ public abstract class StreetsideAbstractImage implements Comparable&lt;Streetsid
 	 * @return A String object containing the date when the picture was taken.
 	 */
 	public String getDate() {
-<span class="nc" id="L121">		final StringBuilder format = new StringBuilder(26);</span>
-<span class="nc" id="L122">		format.append(&quot;m/d/YYYY&quot;);</span>
-<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (StreetsideProperties.DISPLAY_HOUR.get()) {</span>
-<span class="nc bnc" id="L124" title="All 2 branches missed.">			if (StreetsideProperties.TIME_FORMAT_24.get()) {</span>
-<span class="nc" id="L125">				format.append(&quot; - HH:mm:ss&quot;);</span>
+<span class="nc" id="L127">		final StringBuilder format = new StringBuilder(26);</span>
+<span class="nc" id="L128">		format.append(&quot;m/d/YYYY&quot;);</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">		if (StreetsideProperties.DISPLAY_HOUR.get()) {</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">			if (StreetsideProperties.TIME_FORMAT_24.get()) {</span>
+<span class="nc" id="L131">				format.append(&quot; - HH:mm:ss&quot;);</span>
 			} else {
-<span class="nc" id="L127">				format.append(&quot; - h:mm:ss a&quot;);</span>
+<span class="nc" id="L133">				format.append(&quot; - h:mm:ss a&quot;);</span>
 			}
 		}
-<span class="nc" id="L130">		return getDate(format.toString());</span>
+<span class="nc" id="L136">		return getDate(format.toString());</span>
 	}
 
 	/**
@@ -141,10 +147,10 @@ public abstract class StreetsideAbstractImage implements Comparable&lt;Streetsid
 	 *             if parameter format is &lt;code&gt;null&lt;/code&gt;
 	 */
 	public String getDate(String format) {
-<span class="nc" id="L144">		final Date date = new Date(getCd());</span>
-<span class="nc" id="L145">		final SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.US);</span>
-<span class="nc" id="L146">		formatter.setTimeZone(Calendar.getInstance().getTimeZone());</span>
-<span class="nc" id="L147">		return formatter.format(date);</span>
+<span class="nc" id="L150">		final Date date = new Date(getCd());</span>
+<span class="nc" id="L151">		final SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.US);</span>
+<span class="nc" id="L152">		formatter.setTimeZone(Calendar.getInstance().getTimeZone());</span>
+<span class="nc" id="L153">		return formatter.format(date);</span>
 	}
 
 	/**
@@ -153,7 +159,7 @@ public abstract class StreetsideAbstractImage implements Comparable&lt;Streetsid
 	 * @return The LatLon object with the position of the object.
 	 */
 	public LatLon getLatLon() {
-<span class="nc" id="L156">		return latLon;</span>
+<span class="nc" id="L162">		return latLon;</span>
 	}
 
 	/**
@@ -162,7 +168,7 @@ public abstract class StreetsideAbstractImage implements Comparable&lt;Streetsid
 	 * @return The direction of the image (0 means north and goes clockwise).
 	 */
 	public double getMovingHe() {
-<span class="fc" id="L165">		return movingHe;</span>
+<span class="fc" id="L171">		return movingHe;</span>
 	}
 
 	/**
@@ -172,7 +178,7 @@ public abstract class StreetsideAbstractImage implements Comparable&lt;Streetsid
 	 * @return The LatLon object with the position of the object.
 	 */
 	public LatLon getMovingLatLon() {
-<span class="fc" id="L175">		return movingLatLon;</span>
+<span class="fc" id="L181">		return movingLatLon;</span>
 	}
 
 	/**
@@ -182,13 +188,13 @@ public abstract class StreetsideAbstractImage implements Comparable&lt;Streetsid
 	 */
 
 	public StreetsideSequence getSequence() {
-<span class="fc" id="L185">		synchronized (this) {</span>
-<span class="fc bfc" id="L186" title="All 2 branches covered.">			if (sequence == null) {</span>
-<span class="fc" id="L187">				sequence = new StreetsideSequence();</span>
-<span class="fc" id="L188">				sequence.add(this);</span>
+<span class="fc" id="L191">		synchronized (this) {</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">			if (sequence == null) {</span>
+<span class="fc" id="L193">				sequence = new StreetsideSequence();</span>
+<span class="fc" id="L194">				sequence.add(this);</span>
 			}
-<span class="fc" id="L190">			return sequence;</span>
-<span class="nc" id="L191">		}</span>
+<span class="fc" id="L196">			return sequence;</span>
+<span class="nc" id="L197">		}</span>
 	}
 
 	/**
@@ -197,7 +203,7 @@ public abstract class StreetsideAbstractImage implements Comparable&lt;Streetsid
 	 * @return The last fixed direction of the object. 0 means north.
 	 */
 	public double getTempHe() {
-<span class="nc" id="L200">		return tempHe;</span>
+<span class="nc" id="L206">		return tempHe;</span>
 	}
 
 	/**
@@ -206,7 +212,7 @@ public abstract class StreetsideAbstractImage implements Comparable&lt;Streetsid
 	 * @return A LatLon object containing.
 	 */
 	public LatLon getTempLatLon() {
-<span class="nc" id="L209">		return tempLatLon;</span>
+<span class="nc" id="L215">		return tempLatLon;</span>
 	}
 
 	/**
@@ -215,7 +221,7 @@ public abstract class StreetsideAbstractImage implements Comparable&lt;Streetsid
 	 * @return true if the object has been modified; false otherwise.
 	 */
 	public boolean isModified() {
-<span class="fc bfc" id="L218" title="All 4 branches covered.">		return !getMovingLatLon().equals(latLon) || Math.abs(getMovingHe() - cd) &gt; EPSILON;</span>
+<span class="fc bfc" id="L224" title="All 4 branches covered.">		return !getMovingLatLon().equals(latLon) || Math.abs(getMovingHe() - cd) &gt; EPSILON;</span>
 	}
 
 	/**
@@ -224,7 +230,7 @@ public abstract class StreetsideAbstractImage implements Comparable&lt;Streetsid
 	 * @return True if the image is visible; false otherwise.
 	 */
 	public boolean isVisible() {
-<span class="nc" id="L227">		return visible;</span>
+<span class="nc" id="L233">		return visible;</span>
 	}
 
 	/**
@@ -236,8 +242,8 @@ public abstract class StreetsideAbstractImage implements Comparable&lt;Streetsid
 	 *            The movement of the image in latitude units.
 	 */
 	public void move(final double x, final double y) {
-<span class="fc" id="L239">		movingLatLon = new LatLon(tempLatLon.getY() + y, tempLatLon.getX() + x);</span>
-<span class="fc" id="L240">	}</span>
+<span class="fc" id="L245">		movingLatLon = new LatLon(tempLatLon.getY() + y, tempLatLon.getX() + x);</span>
+<span class="fc" id="L246">	}</span>
 
 	/**
 	 * If the StreetsideImage belongs to a StreetsideSequence, returns the next
@@ -246,9 +252,9 @@ public abstract class StreetsideAbstractImage implements Comparable&lt;Streetsid
 	 * @return The following StreetsideImage, or null if there is none.
 	 */
 	public StreetsideAbstractImage next() {
-<span class="fc" id="L249">		synchronized (this) {</span>
-<span class="fc" id="L250">			return getSequence().next(this);</span>
-<span class="nc" id="L251">		}</span>
+<span class="fc" id="L255">		synchronized (this) {</span>
+<span class="fc" id="L256">			return getSequence().next(this);</span>
+<span class="nc" id="L257">		}</span>
 	}
 
 	/**
@@ -258,30 +264,30 @@ public abstract class StreetsideAbstractImage implements Comparable&lt;Streetsid
 	 * @return The previous StreetsideImage, or null if there is none.
 	 */
 	public StreetsideAbstractImage previous() {
-<span class="fc" id="L261">		synchronized (this) {</span>
-<span class="fc" id="L262">			return getSequence().previous(this);</span>
-<span class="nc" id="L263">		}</span>
+<span class="fc" id="L267">		synchronized (this) {</span>
+<span class="fc" id="L268">			return getSequence().previous(this);</span>
+<span class="nc" id="L269">		}</span>
 	}
 
 	public void setHe(final double he) {
-<span class="nc" id="L267">		this.he = he;</span>
-<span class="nc" id="L268">	}</span>
+<span class="nc" id="L273">		this.he = he;</span>
+<span class="nc" id="L274">	}</span>
 
 	/**
 	 * Sets the Epoch time when the picture was captured.
 	 *
-	 * @param capturedAt
+	 * @param cd
 	 *            Epoch time when the image was captured.
 	 */
 	public synchronized void setCd(final long cd) {
-<span class="nc" id="L277">		this.cd = cd;</span>
-<span class="nc" id="L278">	}</span>
+<span class="nc" id="L283">		this.cd = cd;</span>
+<span class="nc" id="L284">	}</span>
 
 	public void setLatLon(final LatLon latLon) {
-<span class="nc bnc" id="L281" title="All 2 branches missed.">		if (latLon != null) {</span>
-<span class="nc" id="L282">			this.latLon = latLon;</span>
+<span class="nc bnc" id="L287" title="All 2 branches missed.">		if (latLon != null) {</span>
+<span class="nc" id="L288">			this.latLon = latLon;</span>
 		}
-<span class="nc" id="L284">	}</span>
+<span class="nc" id="L290">	}</span>
 
 	/**
 	 * Sets the StreetsideSequence object which contains the StreetsideImage.
@@ -294,13 +300,13 @@ public abstract class StreetsideAbstractImage implements Comparable&lt;Streetsid
 	 *             {@link StreetsideSequence#add(StreetsideAbstractImage)} first.
 	 */
 	public void setSequence(final StreetsideSequence sequence) {
-<span class="fc" id="L297">		synchronized (this) {</span>
-<span class="pc bpc" id="L298" title="2 of 4 branches missed.">			if (sequence != null &amp;&amp; !sequence.getImages().contains(this)) {</span>
-<span class="nc" id="L299">				throw new IllegalArgumentException();</span>
+<span class="fc" id="L303">		synchronized (this) {</span>
+<span class="pc bpc" id="L304" title="2 of 4 branches missed.">			if (sequence != null &amp;&amp; !sequence.getImages().contains(this)) {</span>
+<span class="nc" id="L305">				throw new IllegalArgumentException();</span>
 			}
-<span class="fc" id="L301">			this.sequence = sequence;</span>
-<span class="pc" id="L302">		}</span>
-<span class="fc" id="L303">	}</span>
+<span class="fc" id="L307">			this.sequence = sequence;</span>
+<span class="pc" id="L308">		}</span>
+<span class="fc" id="L309">	}</span>
 
 	/**
 	 * Set's whether the image should be visible on the map or not.
@@ -309,26 +315,26 @@ public abstract class StreetsideAbstractImage implements Comparable&lt;Streetsid
 	 *            true if the image is set to be visible; false otherwise.
 	 */
 	public void setVisible(final boolean visible) {
-<span class="nc" id="L312">		this.visible = visible;</span>
-<span class="nc" id="L313">	}</span>
+<span class="nc" id="L318">		this.visible = visible;</span>
+<span class="nc" id="L319">	}</span>
 
 	/**
 	 * Called when the mouse button is released, meaning that the picture has
 	 * stopped being dragged, so the temporal values are saved.
 	 */
 	public void stopMoving() {
-<span class="fc" id="L320">		tempLatLon = movingLatLon;</span>
-<span class="fc" id="L321">		tempHe = movingHe;</span>
-<span class="fc" id="L322">	}</span>
+<span class="fc" id="L326">		tempLatLon = movingLatLon;</span>
+<span class="fc" id="L327">		tempHe = movingHe;</span>
+<span class="fc" id="L328">	}</span>
 
 	/**
 	 * Turns the image direction.
 	 *
-	 * @param cd
+	 * @param ca
 	 *            The angle the image is moving.
 	 */
 	public void turn(final double ca) {
-<span class="fc" id="L331">		movingHe = tempHe + ca;</span>
-<span class="fc" id="L332">	}</span>
+<span class="fc" id="L337">		movingHe = tempHe + ca;</span>
+<span class="fc" id="L338">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

@@ -29,19 +29,16 @@ import javafx.scene.transform.Transform;
  * @author Dub
  * @author renerr18
  */
-// TODO: try making CubemapBox a singleton with lazy initialization; otherwise create factory @rrh
 @SuppressWarnings(&quot;restriction&quot;)
 public  class CubemapBox extends Group{
 
-	private CubemapBox instance;
-
-<span class="nc" id="L38">    public enum CubemapBoxImageType{</span>
-<span class="nc" id="L39">        MULTIPLE, SINGLE</span>
+<span class="nc" id="L35">	public enum CubemapBoxImageType{</span>
+<span class="nc" id="L36">        MULTIPLE, SINGLE</span>
     }
 
-<span class="nc" id="L42">    private final Affine affine = new Affine();</span>
+<span class="nc" id="L39">    private final Affine affine = new Affine();</span>
 
-<span class="nc" id="L44">    private final ImageView</span>
+<span class="nc" id="L41">    private final ImageView</span>
     front = new ImageView(),
 	right = new ImageView(),
 	back  = new ImageView(),
@@ -50,15 +47,15 @@ public  class CubemapBox extends Group{
     down  = new ImageView();
 
     {
-<span class="nc" id="L53">    	front.setId(CubemapUtils.CubemapFaces.FRONT.getValue());</span>
-<span class="nc" id="L54">    	right.setId(CubemapUtils.CubemapFaces.RIGHT.getValue());</span>
-<span class="nc" id="L55">    	back.setId(CubemapUtils.CubemapFaces.BACK.getValue());</span>
-<span class="nc" id="L56">    	left.setId(CubemapUtils.CubemapFaces.LEFT.getValue());</span>
-<span class="nc" id="L57">    	up.setId(CubemapUtils.CubemapFaces.UP.getValue());</span>
-<span class="nc" id="L58">        down .setId(CubemapUtils.CubemapFaces.DOWN.getValue());</span>
+<span class="nc" id="L50">    	front.setId(CubemapUtils.CubemapFaces.FRONT.getValue());</span>
+<span class="nc" id="L51">    	right.setId(CubemapUtils.CubemapFaces.RIGHT.getValue());</span>
+<span class="nc" id="L52">    	back.setId(CubemapUtils.CubemapFaces.BACK.getValue());</span>
+<span class="nc" id="L53">    	left.setId(CubemapUtils.CubemapFaces.LEFT.getValue());</span>
+<span class="nc" id="L54">    	up.setId(CubemapUtils.CubemapFaces.UP.getValue());</span>
+<span class="nc" id="L55">        down .setId(CubemapUtils.CubemapFaces.DOWN.getValue());</span>
 
     }
-<span class="nc" id="L61">    private final ImageView[] views = new ImageView[]{</span>
+<span class="nc" id="L58">    private final ImageView[] views = new ImageView[]{</span>
     	front,
     	right,
     	back,
@@ -70,129 +67,129 @@ public  class CubemapBox extends Group{
 	private Image
 		frontImg, rightImg, backImg, leftImg, upImg, downImg, singleImg;
 
-	private WritableImage convertedImage;
+	//private WritableImage convertedImage;
 
     private final PerspectiveCamera camera;
     private AnimationTimer timer;
     private final CubemapBoxImageType imageType;
 
     public CubemapBox(Image singleImg, double size, PerspectiveCamera camera) {
-<span class="nc" id="L80">        super();</span>
-<span class="nc" id="L81">        imageType = CubemapBoxImageType.SINGLE;</span>
+<span class="nc" id="L77">        super();</span>
+<span class="nc" id="L78">        imageType = CubemapBoxImageType.SINGLE;</span>
 
-<span class="nc" id="L83">        this.singleImg = singleImg;</span>
-<span class="nc" id="L84">        this.size.set(size);</span>
-<span class="nc" id="L85">        this.camera = camera;</span>
+<span class="nc" id="L80">        this.singleImg = singleImg;</span>
+<span class="nc" id="L81">        this.size.set(size);</span>
+<span class="nc" id="L82">        this.camera = camera;</span>
 
-<span class="nc" id="L87">        getTransforms().add(affine);</span>
+<span class="nc" id="L84">        getTransforms().add(affine);</span>
 
-<span class="nc" id="L89">        loadImageViews();</span>
+<span class="nc" id="L86">        loadImageViews();</span>
 
-<span class="nc" id="L91">        getChildren().addAll(views);</span>
-<span class="nc" id="L92">    }</span>
+<span class="nc" id="L88">        getChildren().addAll(views);</span>
+<span class="nc" id="L89">    }</span>
 
     // private constructor to prevent instantiation
     public CubemapBox(double size, PerspectiveCamera camera) {
-<span class="nc" id="L96">        super();</span>
-<span class="nc" id="L97">        imageType = CubemapBoxImageType.SINGLE;</span>
+<span class="nc" id="L93">        super();</span>
+<span class="nc" id="L94">        imageType = CubemapBoxImageType.SINGLE;</span>
 
-<span class="nc" id="L99">        this.size.set(size);</span>
-<span class="nc" id="L100">        this.camera = camera;</span>
+<span class="nc" id="L96">        this.size.set(size);</span>
+<span class="nc" id="L97">        this.camera = camera;</span>
 
-<span class="nc" id="L102">        getTransforms().add(affine);</span>
+<span class="nc" id="L99">        getTransforms().add(affine);</span>
 
-<span class="nc" id="L104">        loadImageViews();</span>
+<span class="nc" id="L101">        loadImageViews();</span>
 
-<span class="nc" id="L106">        getChildren().addAll(views);</span>
-<span class="nc" id="L107">    }</span>
+<span class="nc" id="L103">        getChildren().addAll(views);</span>
+<span class="nc" id="L104">    }</span>
 
     public CubemapBox(Image frontImg, Image rightImg, Image backImg, Image leftImg, Image upImg, Image downImg, double size, PerspectiveCamera camera) {
-<span class="nc" id="L110">        super();</span>
-<span class="nc" id="L111">        imageType = CubemapBoxImageType.MULTIPLE;</span>
+<span class="nc" id="L107">        super();</span>
+<span class="nc" id="L108">        imageType = CubemapBoxImageType.MULTIPLE;</span>
 
-<span class="nc" id="L113">        this.frontImg = frontImg;</span>
-<span class="nc" id="L114">        this.rightImg = rightImg;</span>
-<span class="nc" id="L115">        this.backImg = backImg;</span>
-<span class="nc" id="L116">        this.leftImg = leftImg;</span>
-<span class="nc" id="L117">        this.upImg = upImg;</span>
-<span class="nc" id="L118">        this.downImg = downImg;</span>
-<span class="nc" id="L119">        this.size.set(size);</span>
-<span class="nc" id="L120">        this.camera = camera;</span>
+<span class="nc" id="L110">        this.frontImg = frontImg;</span>
+<span class="nc" id="L111">        this.rightImg = rightImg;</span>
+<span class="nc" id="L112">        this.backImg = backImg;</span>
+<span class="nc" id="L113">        this.leftImg = leftImg;</span>
+<span class="nc" id="L114">        this.upImg = upImg;</span>
+<span class="nc" id="L115">        this.downImg = downImg;</span>
+<span class="nc" id="L116">        this.size.set(size);</span>
+<span class="nc" id="L117">        this.camera = camera;</span>
 
-<span class="nc" id="L122">        loadImageViews();</span>
+<span class="nc" id="L119">        loadImageViews();</span>
 
-<span class="nc" id="L124">        getTransforms().add(affine);</span>
+<span class="nc" id="L121">        getTransforms().add(affine);</span>
 
-<span class="nc" id="L126">        getChildren().addAll(views);</span>
+<span class="nc" id="L123">        getChildren().addAll(views);</span>
 
-<span class="nc" id="L128">        startTimer();</span>
-<span class="nc" id="L129">    }</span>
+<span class="nc" id="L125">        startTimer();</span>
+<span class="nc" id="L126">    }</span>
 
     public void loadImageViews(){
 
-<span class="nc bnc" id="L133" title="All 2 branches missed.">        for(ImageView iv : views){</span>
-<span class="nc" id="L134">            iv.setSmooth(true);</span>
-<span class="nc" id="L135">            iv.setPreserveRatio(true);</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">        for(ImageView iv : views){</span>
+<span class="nc" id="L131">            iv.setSmooth(true);</span>
+<span class="nc" id="L132">            iv.setPreserveRatio(true);</span>
         }
 
-<span class="nc" id="L138">        validateImageType();</span>
-<span class="nc" id="L139">    }</span>
+<span class="nc" id="L135">        validateImageType();</span>
+<span class="nc" id="L136">    }</span>
 
     private void layoutViews() {
 
-<span class="nc bnc" id="L143" title="All 2 branches missed.">    	for(ImageView v : views){</span>
-<span class="nc" id="L144">            v.setFitWidth(getSize());</span>
-<span class="nc" id="L145">            v.setFitHeight(getSize());</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">    	for(ImageView v : views){</span>
+<span class="nc" id="L141">            v.setFitWidth(getSize());</span>
+<span class="nc" id="L142">            v.setFitHeight(getSize());</span>
         }
 
-<span class="nc" id="L148">        back.setTranslateX(-0.5 * getSize());</span>
-<span class="nc" id="L149">        back.setTranslateY(-0.5 * getSize());</span>
-<span class="nc" id="L150">        back.setTranslateZ(-0.5 * getSize());</span>
+<span class="nc" id="L145">        back.setTranslateX(-0.5 * getSize());</span>
+<span class="nc" id="L146">        back.setTranslateY(-0.5 * getSize());</span>
+<span class="nc" id="L147">        back.setTranslateZ(-0.5 * getSize());</span>
 
-<span class="nc" id="L152">        front.setTranslateX(-0.5 * getSize());</span>
-<span class="nc" id="L153">        front.setTranslateY(-0.5 * getSize());</span>
-<span class="nc" id="L154">        front.setTranslateZ(0.5 * getSize());</span>
-<span class="nc" id="L155">        front.setRotationAxis(Rotate.Z_AXIS);</span>
-<span class="nc" id="L156">        front.setRotate(-180);</span>
-<span class="nc" id="L157">        front.getTransforms().add(new Rotate(180,front.getFitHeight() / 2, 0,0, Rotate.X_AXIS));</span>
-<span class="nc" id="L158">        front.setTranslateY(front.getTranslateY() - getSize());</span>
+<span class="nc" id="L149">        front.setTranslateX(-0.5 * getSize());</span>
+<span class="nc" id="L150">        front.setTranslateY(-0.5 * getSize());</span>
+<span class="nc" id="L151">        front.setTranslateZ(0.5 * getSize());</span>
+<span class="nc" id="L152">        front.setRotationAxis(Rotate.Z_AXIS);</span>
+<span class="nc" id="L153">        front.setRotate(-180);</span>
+<span class="nc" id="L154">        front.getTransforms().add(new Rotate(180,front.getFitHeight() / 2, 0,0, Rotate.X_AXIS));</span>
+<span class="nc" id="L155">        front.setTranslateY(front.getTranslateY() - getSize());</span>
 
-<span class="nc" id="L160">        up.setTranslateX(-0.5 * getSize());</span>
-<span class="nc" id="L161">        up.setTranslateY(-1 * getSize());</span>
-<span class="nc" id="L162">        up.setRotationAxis(Rotate.X_AXIS);</span>
-<span class="nc" id="L163">        up.setRotate(-90);</span>
+<span class="nc" id="L157">        up.setTranslateX(-0.5 * getSize());</span>
+<span class="nc" id="L158">        up.setTranslateY(-1 * getSize());</span>
+<span class="nc" id="L159">        up.setRotationAxis(Rotate.X_AXIS);</span>
+<span class="nc" id="L160">        up.setRotate(-90);</span>
 
-<span class="nc" id="L165">        down.setTranslateX(-0.5 * getSize());</span>
-<span class="nc" id="L166">        down.setTranslateY(0);</span>
-<span class="nc" id="L167">        down.setRotationAxis(Rotate.X_AXIS);</span>
-<span class="nc" id="L168">        down.setRotate(90);</span>
+<span class="nc" id="L162">        down.setTranslateX(-0.5 * getSize());</span>
+<span class="nc" id="L163">        down.setTranslateY(0);</span>
+<span class="nc" id="L164">        down.setRotationAxis(Rotate.X_AXIS);</span>
+<span class="nc" id="L165">        down.setRotate(90);</span>
 
-<span class="nc" id="L170">        left.setTranslateX(-1 * getSize());</span>
-<span class="nc" id="L171">        left.setTranslateY(-0.5 * getSize());</span>
-<span class="nc" id="L172">        left.setRotationAxis(Rotate.Y_AXIS);</span>
-<span class="nc" id="L173">        left.setRotate(90);</span>
+<span class="nc" id="L167">        left.setTranslateX(-1 * getSize());</span>
+<span class="nc" id="L168">        left.setTranslateY(-0.5 * getSize());</span>
+<span class="nc" id="L169">        left.setRotationAxis(Rotate.Y_AXIS);</span>
+<span class="nc" id="L170">        left.setRotate(90);</span>
 
-<span class="nc" id="L175">        right.setTranslateX(0);</span>
-<span class="nc" id="L176">        right.setTranslateY(-0.5 * getSize());</span>
-<span class="nc" id="L177">        right.setRotationAxis(Rotate.Y_AXIS);</span>
-<span class="nc" id="L178">        right.setRotate(-90);</span>
+<span class="nc" id="L172">        right.setTranslateX(0);</span>
+<span class="nc" id="L173">        right.setTranslateY(-0.5 * getSize());</span>
+<span class="nc" id="L174">        right.setRotationAxis(Rotate.Y_AXIS);</span>
+<span class="nc" id="L175">        right.setRotate(-90);</span>
 
-<span class="nc" id="L180">    }</span>
+<span class="nc" id="L177">    }</span>
     /**
      *  for single image creates viewports and sets all views(image) to singleImg
      *  for multiple... sets images per view.
      */
     private void validateImageType(){
-<span class="nc bnc" id="L186" title="All 3 branches missed.">        switch(imageType){</span>
+<span class="nc bnc" id="L183" title="All 3 branches missed.">        switch(imageType){</span>
             case SINGLE:
-<span class="nc" id="L188">                loadSingleImageViewports();</span>
-<span class="nc" id="L189">                break;</span>
+<span class="nc" id="L185">                loadSingleImageViewports();</span>
+<span class="nc" id="L186">                break;</span>
             case MULTIPLE:
                 // TODO: implement single and double properly @rrh
-<span class="nc" id="L192">            	setMultipleImages();</span>
+<span class="nc" id="L189">            	setMultipleImages();</span>
                 break;
         }
-<span class="nc" id="L195">    }</span>
+<span class="nc" id="L192">    }</span>
     // TODO: change layout - Streetside cubemaps are structured as follows: @rrh
     /**
      * 01-front, 02-right, 03-back, 10-left, 11-up, 12-down
@@ -204,126 +201,126 @@ public  class CubemapBox extends Group{
      */
 
     private void loadSingleImageViewports(){
-<span class="nc" id="L207">        layoutViews();</span>
-<span class="nc" id="L208">        double width = singleImg.getWidth(),</span>
-<span class="nc" id="L209">               height = singleImg.getHeight();</span>
+<span class="nc" id="L204">        layoutViews();</span>
+<span class="nc" id="L205">        double width = singleImg.getWidth(),</span>
+<span class="nc" id="L206">               height = singleImg.getHeight();</span>
 
         //simple check to see if cells will be square
-<span class="nc bnc" id="L212" title="All 2 branches missed.">        if(width / 4 != height / 3){</span>
-<span class="nc" id="L213">            throw new UnsupportedOperationException(&quot;Image does not comply with size constraints&quot;);</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">        if(width / 4 != height / 3){</span>
+<span class="nc" id="L210">            throw new UnsupportedOperationException(&quot;Image does not comply with size constraints&quot;);</span>
         }
-<span class="nc" id="L215">        double cellSize = singleImg.getWidth() - singleImg.getHeight();</span>
+<span class="nc" id="L212">        double cellSize = singleImg.getWidth() - singleImg.getHeight();</span>
 
-<span class="nc" id="L217">        recalculateSize(cellSize);</span>
+<span class="nc" id="L214">        recalculateSize(cellSize);</span>
 
         double
-<span class="nc" id="L220">                topx = cellSize, topy = 0,</span>
+<span class="nc" id="L217">                topx = cellSize, topy = 0,</span>
 
-<span class="nc" id="L222">                botx = cellSize, boty = cellSize * 2,</span>
+<span class="nc" id="L219">                botx = cellSize, boty = cellSize * 2,</span>
 
-<span class="nc" id="L224">                leftx = 0, lefty = cellSize,</span>
+<span class="nc" id="L221">                leftx = 0, lefty = cellSize,</span>
 
-<span class="nc" id="L226">                rightx = cellSize * 2, righty = cellSize,</span>
+<span class="nc" id="L223">                rightx = cellSize * 2, righty = cellSize,</span>
 
-<span class="nc" id="L228">                fwdx = cellSize, fwdy = cellSize,</span>
+<span class="nc" id="L225">                fwdx = cellSize, fwdy = cellSize,</span>
 
-<span class="nc" id="L230">                backx = cellSize * 3, backy = cellSize;</span>
+<span class="nc" id="L227">                backx = cellSize * 3, backy = cellSize;</span>
 
         //add top padding x+, y+, width-, height
-<span class="nc" id="L233">        up.setViewport(new Rectangle2D(topx , topy , cellSize, cellSize ));</span>
+<span class="nc" id="L230">        up.setViewport(new Rectangle2D(topx , topy , cellSize, cellSize ));</span>
 
         //add left padding x, y+, width, height-
-<span class="nc" id="L236">        left.setViewport(new Rectangle2D(leftx , lefty , cellSize - 1, cellSize - 1));</span>
+<span class="nc" id="L233">        left.setViewport(new Rectangle2D(leftx , lefty , cellSize - 1, cellSize - 1));</span>
 
         //add front padding x+, y+, width-, height
-<span class="nc" id="L239">        front.setViewport(new Rectangle2D(fwdx , fwdy, cellSize , cellSize));</span>
+<span class="nc" id="L236">        front.setViewport(new Rectangle2D(fwdx , fwdy, cellSize , cellSize));</span>
 
         //add right padding x, y+, width, height-
-<span class="nc" id="L242">        right.setViewport(new Rectangle2D(rightx, righty , cellSize , cellSize ));</span>
+<span class="nc" id="L239">        right.setViewport(new Rectangle2D(rightx, righty , cellSize , cellSize ));</span>
 
         //add back padding x, y+, width, height-
-<span class="nc" id="L245">        back.setViewport(new Rectangle2D(backx + 1, backy - 1, cellSize - 1, cellSize - 1));</span>
+<span class="nc" id="L242">        back.setViewport(new Rectangle2D(backx + 1, backy - 1, cellSize - 1, cellSize - 1));</span>
 
         //add bottom padding x+, y, width-, height-
-<span class="nc" id="L248">        down.setViewport(new Rectangle2D(botx, boty, cellSize , cellSize));</span>
+<span class="nc" id="L245">        down.setViewport(new Rectangle2D(botx, boty, cellSize , cellSize));</span>
 
-<span class="nc bnc" id="L250" title="All 2 branches missed.">        for(ImageView v : views){</span>
-<span class="nc" id="L251">            v.setImage(singleImg);</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">        for(ImageView v : views){</span>
+<span class="nc" id="L248">            v.setImage(singleImg);</span>
         }
-<span class="nc" id="L253">    }</span>
+<span class="nc" id="L250">    }</span>
 
 
 
     private void recalculateSize(double cell){
-<span class="nc" id="L258">        double factor = Math.floor(getSize() / cell);</span>
-<span class="nc" id="L259">        setSize(cell * factor);</span>
-<span class="nc" id="L260">    }</span>
+<span class="nc" id="L255">        double factor = Math.floor(getSize() / cell);</span>
+<span class="nc" id="L256">        setSize(cell * factor);</span>
+<span class="nc" id="L257">    }</span>
 
 	public synchronized void setImage(BufferedImage img, int position) {
-<span class="nc" id="L263">		views[position].setImage(GraphicsUtils.convertBufferedImage2JavaFXImage(img));</span>
+<span class="nc" id="L260">		views[position].setImage(GraphicsUtils.convertBufferedImage2JavaFXImage(img));</span>
 
-<span class="nc" id="L265">	}</span>
+<span class="nc" id="L262">	}</span>
 
 
     private void setMultipleImages() {
-<span class="nc" id="L269">		GraphicsUtils.PlatformHelper.run(() -&gt; {</span>
-<span class="nc" id="L270">			layoutViews();</span>
-<span class="nc" id="L271">			front.setImage(frontImg);</span>
-<span class="nc" id="L272">			right.setImage(rightImg);</span>
-<span class="nc" id="L273">			back.setImage(backImg);</span>
-<span class="nc" id="L274">			left.setImage(leftImg);</span>
-<span class="nc" id="L275">			up.setImage(upImg);</span>
-<span class="nc" id="L276">			down.setImage(downImg);</span>
+<span class="nc" id="L266">		GraphicsUtils.PlatformHelper.run(() -&gt; {</span>
+<span class="nc" id="L267">			layoutViews();</span>
+<span class="nc" id="L268">			front.setImage(frontImg);</span>
+<span class="nc" id="L269">			right.setImage(rightImg);</span>
+<span class="nc" id="L270">			back.setImage(backImg);</span>
+<span class="nc" id="L271">			left.setImage(leftImg);</span>
+<span class="nc" id="L272">			up.setImage(upImg);</span>
+<span class="nc" id="L273">			down.setImage(downImg);</span>
 
-<span class="nc" id="L278">		});</span>
-<span class="nc" id="L279">	}</span>
+<span class="nc" id="L275">		});</span>
+<span class="nc" id="L276">	}</span>
 
     public void startTimer(){
-<span class="nc" id="L282">        timer = new AnimationTimer() {</span>
+<span class="nc" id="L279">        timer = new AnimationTimer() {</span>
             @Override
             public void handle(long now) {
-<span class="nc bnc" id="L285" title="All 2 branches missed.">                Transform ct = (camera != null) ? camera.getLocalToSceneTransform() : null;</span>
-<span class="nc bnc" id="L286" title="All 2 branches missed.">                if(ct != null){</span>
-<span class="nc" id="L287">                    affine.setTx(ct.getTx());</span>
-<span class="nc" id="L288">                    affine.setTy(ct.getTy());</span>
-<span class="nc" id="L289">                    affine.setTz(ct.getTz());</span>
+<span class="nc bnc" id="L282" title="All 2 branches missed.">                Transform ct = (camera != null) ? camera.getLocalToSceneTransform() : null;</span>
+<span class="nc bnc" id="L283" title="All 2 branches missed.">                if(ct != null){</span>
+<span class="nc" id="L284">                    affine.setTx(ct.getTx());</span>
+<span class="nc" id="L285">                    affine.setTy(ct.getTy());</span>
+<span class="nc" id="L286">                    affine.setTz(ct.getTz());</span>
                 }
-<span class="nc" id="L291">            }</span>
+<span class="nc" id="L288">            }</span>
         };
-<span class="nc" id="L293">        timer.start();</span>
-<span class="nc" id="L294">    }</span>
+<span class="nc" id="L290">        timer.start();</span>
+<span class="nc" id="L291">    }</span>
 
     /*
         Properties
     */
-<span class="nc" id="L299">    private final DoubleProperty size = new SimpleDoubleProperty(){</span>
+<span class="nc" id="L296">    private final DoubleProperty size = new SimpleDoubleProperty(){</span>
         @Override
         protected void invalidated() {
-<span class="nc bnc" id="L302" title="All 2 branches missed.">            switch(imageType){</span>
+<span class="nc bnc" id="L299" title="All 2 branches missed.">            switch(imageType){</span>
             case SINGLE:
-<span class="nc" id="L304">                layoutViews();</span>
-<span class="nc" id="L305">                break;</span>
+<span class="nc" id="L301">                layoutViews();</span>
+<span class="nc" id="L302">                break;</span>
             case MULTIPLE:
                 break;
             }
 
-<span class="nc" id="L310">        }</span>
+<span class="nc" id="L307">        }</span>
     };
 
     public final double getSize() {
-<span class="nc" id="L314">        return size.get();</span>
+<span class="nc" id="L311">        return size.get();</span>
     }
 
     public final void setSize(double value) {
-<span class="nc" id="L318">        size.set(value);</span>
-<span class="nc" id="L319">    }</span>
+<span class="nc" id="L315">        size.set(value);</span>
+<span class="nc" id="L316">    }</span>
 
     public DoubleProperty sizeProperty() {
-<span class="nc" id="L322">        return size;</span>
+<span class="nc" id="L319">        return size;</span>
     }
 
 	public ImageView[] getViews() {
-<span class="nc" id="L326">		return views;</span>
+<span class="nc" id="L323">		return views;</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

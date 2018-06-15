@@ -38,8 +38,8 @@ public class StreetsideImportedImage extends StreetsideAbstractImage {
    * @param file  The file containing the picture.
    */
   public StreetsideImportedImage(final String id, final LatLon latLon, final double ca, final File file) {
-<span class="fc" id="L41">    this(id, latLon, ca, file, Calendar.getInstance().getTimeInMillis());</span>
-<span class="fc" id="L42">  }</span>
+<span class="nc" id="L41">    this(id, latLon, ca, file, Calendar.getInstance().getTimeInMillis());</span>
+<span class="nc" id="L42">  }</span>
 
   /**
    * Main constructor of the class.
@@ -50,8 +50,8 @@ public class StreetsideImportedImage extends StreetsideAbstractImage {
    * @param datetimeOriginal  The date the picture was taken.
    */
   public StreetsideImportedImage(final String id, final LatLon latLon, final double ca, final File file, final String datetimeOriginal) {
-<span class="fc" id="L53">    this(id, latLon, ca, file, parseTimestampElseCurrentTime(datetimeOriginal));</span>
-<span class="fc" id="L54">  }</span>
+<span class="nc" id="L53">    this(id, latLon, ca, file, parseTimestampElseCurrentTime(datetimeOriginal));</span>
+<span class="nc" id="L54">  }</span>
 
   /**
    * Constructs a new image from an image entry of a {@link GeoImageLayer}.
@@ -80,7 +80,7 @@ public class StreetsideImportedImage extends StreetsideAbstractImage {
 
   private static long parseTimestampElseCurrentTime(final String timestamp) {
     try {
-<span class="fc" id="L83">      return StreetsideUtils.getEpoch(timestamp, &quot;yyyy:MM:dd HH:mm:ss&quot;);</span>
+<span class="nc" id="L83">      return StreetsideUtils.getEpoch(timestamp, &quot;yyyy:MM:dd HH:mm:ss&quot;);</span>
 <span class="nc" id="L84">    } catch (ParseException e) {</span>
       try {
 <span class="nc" id="L86">        return StreetsideUtils.getEpoch(timestamp, &quot;yyyy/MM/dd HH:mm:ss&quot;);</span>
@@ -91,10 +91,10 @@ public class StreetsideImportedImage extends StreetsideAbstractImage {
   }
 
   public StreetsideImportedImage(final String id, final LatLon latLon, final double he, final File file, final long ca) {
-<span class="fc" id="L94">    super(id, latLon, he);</span>
-<span class="fc" id="L95">    this.file = file;</span>
-<span class="fc" id="L96">    this.cd = ca;</span>
-<span class="fc" id="L97">  }</span>
+<span class="nc" id="L94">    super(id, latLon, he);</span>
+<span class="nc" id="L95">    this.file = file;</span>
+<span class="nc" id="L96">    this.cd = ca;</span>
+<span class="nc" id="L97">  }</span>
 
   /**
    * Returns the pictures of the file.
@@ -105,9 +105,9 @@ public class StreetsideImportedImage extends StreetsideAbstractImage {
    *           If the file parameter of the object isn't an image.
    */
   public BufferedImage getImage() throws IOException {
-<span class="fc bfc" id="L108" title="All 2 branches covered.">    if (file != null)</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">    if (file != null)</span>
 <span class="nc" id="L109">      return ImageIO.read(file);</span>
-<span class="fc" id="L110">    return null;</span>
+<span class="nc" id="L110">    return null;</span>
   }
 
   /**
@@ -116,7 +116,7 @@ public class StreetsideImportedImage extends StreetsideAbstractImage {
    * @return The {@link File} object where the picture is located.
    */
   public File getFile() {
-<span class="fc" id="L119">    return file;</span>
+<span class="nc" id="L119">    return file;</span>
   }
 
   @Override

@@ -56,9 +56,9 @@ public class MapObject extends KeyIndexedObject {
 <span class="fc" id="L56">      return ICON_UNKNOWN_TYPE;</span>
 <span class="fc bfc" id="L57" title="All 2 branches covered.">    } else if (cachedIcon == null) {</span>
       try {
-<span class="nc" id="L59">        final ImageIcon downloadedIcon = new ImageIcon(ImageIO.read(iconUrlGen.apply(objectTypeID)));</span>
-<span class="nc" id="L60">        MapObjectIconCache.getInstance().put(objectTypeID, downloadedIcon);</span>
-<span class="nc" id="L61">        return downloadedIcon;</span>
+<span class="fc" id="L59">        final ImageIcon downloadedIcon = new ImageIcon(ImageIO.read(iconUrlGen.apply(objectTypeID)));</span>
+<span class="fc" id="L60">        MapObjectIconCache.getInstance().put(objectTypeID, downloadedIcon);</span>
+<span class="fc" id="L61">        return downloadedIcon;</span>
 <span class="fc" id="L62">      } catch (IOException e) {</span>
 <span class="fc" id="L63">        Logging.log(Logging.LEVEL_WARN, &quot;Failed to download icon &quot; + objectTypeID, e);</span>
 <span class="fc" id="L64">        return ICON_UNKNOWN_TYPE;</span>

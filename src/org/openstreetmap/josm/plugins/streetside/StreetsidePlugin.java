@@ -1,6 +1,8 @@
 // License: GPL. For details, see LICENSE file.
 package org.openstreetmap.josm.plugins.streetside;
 
+import java.io.IOException;
+
 import org.openstreetmap.josm.Main;
 import org.openstreetmap.josm.gui.MainApplication;
 import org.openstreetmap.josm.gui.MainMenu;
@@ -15,19 +17,15 @@ import org.openstreetmap.josm.plugins.streetside.actions.StreetsideExportAction;
 import org.openstreetmap.josm.plugins.streetside.actions.StreetsideJoinAction;
 import org.openstreetmap.josm.plugins.streetside.actions.StreetsideWalkAction;
 import org.openstreetmap.josm.plugins.streetside.actions.StreetsideZoomAction;
-import org.openstreetmap.josm.plugins.streetside.gui.StreetsideChangesetDialog;
-import org.openstreetmap.josm.plugins.streetside.gui.StreetsideFilterDialog;
-import org.openstreetmap.josm.plugins.streetside.gui.StreetsideHistoryDialog;
+import org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder;
 import org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog;
 import org.openstreetmap.josm.plugins.streetside.gui.StreetsidePreferenceSetting;
+import org.openstreetmap.josm.plugins.streetside.gui.StreetsideViewerDialog;
 import org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ImageInfoHelpPopup;
 import org.openstreetmap.josm.plugins.streetside.gui.imageinfo.ImageInfoPanel;
 import org.openstreetmap.josm.plugins.streetside.oauth.StreetsideUser;
 import org.openstreetmap.josm.plugins.streetside.utils.StreetsideProperties;
 import org.openstreetmap.josm.tools.ImageProvider;
-
-import org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder;
-import org.openstreetmap.josm.plugins.streetside.gui.StreetsideViewerDialog;
 
 /**
  * This is the main class of the Streetside plugin.
@@ -93,15 +91,15 @@ public class StreetsidePlugin extends Plugin {
     	  MainApplication.getMap().addToggleDialog(ImageInfoPanel.getInstance(), false)
       ));
       MainApplication.getMap().addToggleDialog(StreetsideViewerDialog.getInstance(), false);
-      MainApplication.getMap().addToggleDialog(StreetsideHistoryDialog.getInstance(), false);
-      MainApplication.getMap().addToggleDialog(StreetsideChangesetDialog.getInstance(), false);
-      MainApplication.getMap().addToggleDialog(StreetsideFilterDialog.getInstance(), false);
+      //MainApplication.getMap().addToggleDialog(StreetsideHistoryDialog.getInstance(), false);
+      //MainApplication.getMap().addToggleDialog(StreetsideChangesetDialog.getInstance(), false);
+      //MainApplication.getMap().addToggleDialog(StreetsideFilterDialog.getInstance(), false);
     }
     if (oldFrame != null && newFrame == null) { // map frame destroyed
       StreetsideMainDialog.destroyInstance();
-      StreetsideHistoryDialog.destroyInstance();
-      StreetsideChangesetDialog.destroyInstance();
-      StreetsideFilterDialog.destroyInstance();
+      //StreetsideHistoryDialog.destroyInstance();
+      //StreetsideChangesetDialog.destroyInstance();
+      //StreetsideFilterDialog.destroyInstance();
       ImageInfoPanel.destroyInstance();
       CubemapBuilder.destroyInstance();
 

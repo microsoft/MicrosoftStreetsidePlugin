@@ -11,7 +11,6 @@ import java.awt.image.BufferedImage;
 import java.util.Collection;
 
 import javax.swing.ImageIcon;
-import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
@@ -40,8 +39,8 @@ public final class ImageInfoPanel extends ToggleDialog implements StreetsideData
   private static ImageInfoPanel instance;
   private static final ImageIcon EMPTY_USER_AVATAR = new ImageIcon(new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB));
 
-  private final JLabel numDetectionsLabel;
-  private final JCheckBox showDetectionsCheck;
+  //private final JLabel numDetectionsLabel;
+  //private final JCheckBox showDetectionsCheck;
   private final JLabel usernameLabel;
   private final JTextPane imgKeyValue;
   private final WebLinkAction imgLinkAction;
@@ -61,17 +60,17 @@ public final class ImageInfoPanel extends ToggleDialog implements StreetsideData
     );
     DataSet.addSelectionListener(this);
 
-    numDetectionsLabel = new JLabel();
-    numDetectionsLabel.setFont(numDetectionsLabel.getFont().deriveFont(Font.PLAIN));
+    //numDetectionsLabel = new JLabel();
+    //numDetectionsLabel.setFont(numDetectionsLabel.getFont().deriveFont(Font.PLAIN));
 
-    showDetectionsCheck = new JCheckBox(I18n.tr("Show detections on top of image"));
-    showDetectionsCheck.setSelected(StreetsideProperties.SHOW_DETECTED_SIGNS.get());
-    showDetectionsCheck.addActionListener(
+    //showDetectionsCheck = new JCheckBox(I18n.tr("Show detections on top of image"));
+    //showDetectionsCheck.setSelected(StreetsideProperties.SHOW_DETECTED_SIGNS.get());
+    /*showDetectionsCheck.addActionListener(
       action -> StreetsideProperties.SHOW_DETECTED_SIGNS.put(showDetectionsCheck.isSelected())
     );
     StreetsideProperties.SHOW_DETECTED_SIGNS.addListener(
       valueChange -> showDetectionsCheck.setSelected(StreetsideProperties.SHOW_DETECTED_SIGNS.get())
-    );
+    );*/
 
     usernameLabel = new JLabel();
     usernameLabel.setFont(usernameLabel.getFont().deriveFont(Font.PLAIN));
@@ -120,10 +119,10 @@ public final class ImageInfoPanel extends ToggleDialog implements StreetsideData
     gbc.gridx++;
     gbc.gridy = 0;
     gbc.anchor = GridBagConstraints.LINE_START;
-    root.add(numDetectionsLabel, gbc);
-    gbc.gridy++;
-    root.add(showDetectionsCheck, gbc);
-    gbc.gridy++;
+    //root.add(numDetectionsLabel, gbc);
+    //gbc.gridy++;
+    //root.add(showDetectionsCheck, gbc);
+    //gbc.gridy++;
     root.add(usernameLabel, gbc);
     gbc.gridy++;
     root.add(imgButtons, gbc);
@@ -182,7 +181,7 @@ public final class ImageInfoPanel extends ToggleDialog implements StreetsideData
       newImage instanceof StreetsideImage ? ((StreetsideImage) newImage).getId() : "‹none›"
     ));
 
-    numDetectionsLabel.setText(I18n.tr("{0} detections", newImage instanceof StreetsideImage ? ((StreetsideImage) newImage).getDetections().size() : 0));
+    //numDetectionsLabel.setText(I18n.tr("{0} detections", newImage instanceof StreetsideImage ? ((StreetsideImage) newImage).getDetections().size() : 0));
     imgKeyValue.setEnabled(newImage instanceof StreetsideImage);
     final String newImageKey = newImage instanceof StreetsideImage ? ((StreetsideImage) newImage).getId(): null;
     if (newImageKey != null) {

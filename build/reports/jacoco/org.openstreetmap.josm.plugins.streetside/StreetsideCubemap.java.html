@@ -4,90 +4,139 @@ package org.openstreetmap.josm.plugins.streetside;
 import java.awt.image.BufferedImage;
 import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.openstreetmap.josm.data.coor.LatLon;
 import org.openstreetmap.josm.plugins.streetside.cubemap.CubemapUtils;
 import org.openstreetmap.josm.plugins.streetside.utils.StreetsideProperties;
 
+import org.openstreetmap.josm.plugins.streetside.cubemap.CubemapUtils.CubemapFaces;
+
+/**
+ * @author renerr18
+ *
+ *
+ */
 public class StreetsideCubemap extends StreetsideAbstractImage implements Comparable&lt;StreetsideAbstractImage&gt;{
 
-<span class="nc" id="L16">	private static Map&lt;String,Map&lt;String,BufferedImage&gt;&gt; face2TilesMap = new HashMap&lt;String,Map&lt;String,BufferedImage&gt;&gt;();</span>
+<span class="nc" id="L22">	private static Map&lt;String,Map&lt;String,BufferedImage&gt;&gt; face2TilesMap = new HashMap&lt;String,Map&lt;String,BufferedImage&gt;&gt;();</span>
 
 	/**
 	* If two values for field cd differ by less than EPSILON both values are considered equal.
 	*/
+	@SuppressWarnings(&quot;unused&quot;)
 	private static final float EPSILON = 1e-5f;
 
-
 	/**
-	   * Main constructor of the class StreetsideCubemap
-	   *
-	   * @param key    The unique identifier of the cubemap.
-	   * @param latLon The latitude and longitude where it is positioned.
-	   * @param cd     The direction of the images in degrees, meaning 0 north.
-	   */
-
-	  public StreetsideCubemap(String quadId, LatLon latLon, double ca) {
-<span class="nc" id="L33">	    super(quadId, latLon, ca);</span>
-<span class="nc" id="L34">	    face2TilesMap = new HashMap();</span>
-
-<span class="nc" id="L36">	    EnumSet.allOf(CubemapUtils.CubemapFaces.class).forEach(face -&gt; {</span>
-<span class="nc" id="L37">			face2TilesMap.put(face.getValue(),new HashMap&lt;String,BufferedImage&gt;());</span>
-<span class="nc" id="L38">		});</span>
-
-<span class="nc" id="L40">	  }</span>
-
-	  public StreetsideCubemap(String quadId, LatLon latLon) {
-<span class="nc" id="L43">	    super(quadId, latLon, 0.0);</span>
-<span class="nc" id="L44">	  }</span>
-
-	  // Default constructor for Jackson/JSON Deserializattion
-	  public StreetsideCubemap(String quadId, LatLon latlon, List&lt;StreetsideImage&gt; tiles, double he) {
-<span class="nc" id="L48">	    super(quadId, latlon, he);</span>
-<span class="nc" id="L49">	  }</span>
-
-	/**
-	 * @return the face2TilesMap
+	 * Main constructor of the class StreetsideCubemap
+	 *
+	 * @param quadId
+	 *            The Streetside id of the base frontal image of the cubemap
+	 *            in quternary
+	 * @param latLon
+	 *            The latitude and longitude where it is positioned.
+	 * @param he
+	 *            The direction of the images in degrees, meaning 0 north (camera
+	 *            direction is not yet supported in the Streetside plugin).
 	 */
+    @SuppressWarnings({ &quot;unchecked&quot;, &quot;rawtypes&quot; })
+	public StreetsideCubemap(String quadId, LatLon latLon, double he) {
+<span class="nc" id="L44">		super(quadId, latLon, he);</span>
+<span class="nc" id="L45">		face2TilesMap = new HashMap();</span>
+
+<span class="nc" id="L47">		EnumSet.allOf(CubemapUtils.CubemapFaces.class).forEach(face -&gt; {</span>
+<span class="nc" id="L48">			face2TilesMap.put(face.getValue(), new HashMap&lt;String, BufferedImage&gt;());</span>
+<span class="nc" id="L49">		});</span>
+
+<span class="nc" id="L51">	}</span>
+
+	/**
+	* Returns a Map object containing a keyset of cubemap face numbers
+	*
+	* {@link CubemapFaces}
+	*
+	* for each cubeface number corresponding map if cubemap tile ids and buffered
+	* cubemap tile imagery is stored until assembly by the CubemapBuilder
+	* @see org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder
+ 	*
+ 	* @return the face2TilesMap
+ 	*/
 	public Map&lt;String, Map&lt;String,BufferedImage&gt;&gt; getFace2TilesMap() {
-<span class="nc" id="L55">		return face2TilesMap;</span>
+<span class="nc" id="L65">		return face2TilesMap;</span>
 	}
 
+	/**
+	 * Comparison method for the StreetsideCubemap object.
+	 *
+	 * @param image
+	 *            - a StreetsideAbstract image object
+	 *
+	 *            StreetsideCubemaps are considered equal if they are associated
+	 *            with the same image id - only one cubemap may be displayed at a
+	 *            time. If the image selection changes, the cubemap changes.
+	 *
+	 * @return result of the hashcode comparison.
+	 * @see org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImage
+	 */
+	@Override
+	public int compareTo(StreetsideAbstractImage image) {
+<span class="nc bnc" id="L83" title="All 2 branches missed.">		if (image instanceof StreetsideImage) {</span>
+<span class="nc" id="L84">			return id.compareTo(((StreetsideImage) image).getId());</span>
+		}
+<span class="nc" id="L86">		return hashCode() - image.hashCode();</span>
+	}
+
+	/**
+	 * HashCode StreetsideCubemap object.
+	 *
+	 * @return int hashCode
+	 * @see org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImage
+	 */
     @Override
-	  public int compareTo(StreetsideAbstractImage image) {
-<span class="nc bnc" id="L60" title="All 2 branches missed.">	    if (image instanceof StreetsideImage) {</span>
-<span class="nc" id="L61">	      return id.compareTo(((StreetsideImage) image).getId());</span>
-	    }
-<span class="nc" id="L63">	    return hashCode() - image.hashCode();</span>
-	  }
-
-	  @Override
-	  public int hashCode() {
-<span class="nc" id="L68">	    return id.hashCode();</span>
-	  }
-
-	  @Override
-	  public void stopMoving() {
-<span class="nc" id="L73">	    super.stopMoving();</span>
-<span class="nc" id="L74">	  }</span>
-
-	  @Override
-	  public void turn(double ca) {
-<span class="nc" id="L78">	    super.turn(ca);</span>
-<span class="nc" id="L79">	  }</span>
-
-	public int getHeight() {
-<span class="nc bnc" id="L82" title="All 2 branches missed.">		return StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get().booleanValue()?1016:510;</span>
+	public int hashCode() {
+<span class="nc" id="L97">		return id.hashCode();</span>
 	}
 
-	public void resetFaces2TileMap() {
-<span class="nc" id="L86">		face2TilesMap = new HashMap&lt;&gt;();</span>
+	/**
+	 * stops ImageDisplay WalkAction (not currently supported by Streetside)
+	 *
+	 * @see org.openstreetmap.josm.plugins.streetside.actions.StreetsideWalkAction
+	 */
+	@Override
+	public void stopMoving() {
+<span class="nc" id="L107">		super.stopMoving();</span>
+<span class="nc" id="L108">	}</span>
 
-<span class="nc" id="L88">		EnumSet.allOf(CubemapUtils.CubemapFaces.class).forEach(face -&gt; {</span>
-<span class="nc" id="L89">			face2TilesMap.put(face.getValue(), new HashMap&lt;String, BufferedImage&gt;());</span>
-<span class="nc" id="L90">		});</span>
-<span class="nc" id="L91">	}</span>
+	/**
+	 * turns ImageDisplay WalkAction (not currently supported by Streetside)
+	 *
+	 * @param he - the direction the camera is facing (heading)
+	 *
+	 * @see org.openstreetmap.josm.plugins.streetside.actions.StreetsideWalkAction
+	 */
+	@Override
+	public void turn(double he) {
+<span class="nc" id="L119">		super.turn(he);</span>
+<span class="nc" id="L120">	}</span>
+
+	/**
+	 * @return the height of an assembled cubemap face for 16-tiled or 4-tiled imagery
+	 *
+	 * @see org.openstreetmap.josm.plugins.streetside.actions.StreetsideWalkAction
+	 */
+	public int getHeight() {
+<span class="nc bnc" id="L128" title="All 2 branches missed.">		return StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get().booleanValue()?1016:510;</span>
+	}
+
+	/**
+	 * resets the faces2TilesMap, emptying it for a new set of cubemap imagery
+	 */
+	public void resetFaces2TileMap() {
+<span class="nc" id="L135">		face2TilesMap = new HashMap&lt;&gt;();</span>
+
+<span class="nc" id="L137">		EnumSet.allOf(CubemapUtils.CubemapFaces.class).forEach(face -&gt; {</span>
+<span class="nc" id="L138">			face2TilesMap.put(face.getValue(), new HashMap&lt;String, BufferedImage&gt;());</span>
+<span class="nc" id="L139">		});</span>
+<span class="nc" id="L140">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

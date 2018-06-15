@@ -84,8 +84,8 @@ public class StreetsideData {
    * needed for concurrency.
    *
    * @param image  The image to be added.
-   * @param update Whether the map must be updated or not.
-   * @throws NullPointerException if parameter <code>image</code> is <code>null</code>
+   * @param update Whether the map must be updated or not
+   *        (updates are currently unsupported by Streetside).
    */
   public void add(StreetsideAbstractImage image, boolean update) {
     	images.add(image);

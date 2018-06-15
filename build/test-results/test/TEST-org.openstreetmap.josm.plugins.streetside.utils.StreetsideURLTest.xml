@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.openstreetmap.josm.plugins.streetside.utils.StreetsideURLTest" tests="7" skipped="4" failures="0" errors="0" timestamp="2018-06-15T04:57:27" hostname="Renes-MacBook-Pro.local" time="0.004">
+<testsuite name="org.openstreetmap.josm.plugins.streetside.utils.StreetsideURLTest" tests="7" skipped="4" failures="0" errors="0" timestamp="2018-06-15T23:03:00" hostname="D-10-19-129-119.dhcp4.washington.edu" time="0.005">
   <properties/>
   <testcase name="testConnectURL" classname="org.openstreetmap.josm.plugins.streetside.utils.StreetsideURLTest" time="0.0">
     <skipped/>
@@ -14,10 +14,10 @@
   <testcase name="testUploadSecretsURL" classname="org.openstreetmap.josm.plugins.streetside.utils.StreetsideURLTest" time="0.0">
     <skipped/>
   </testcase>
-  <testcase name="testIllegalBrowseImageURL" classname="org.openstreetmap.josm.plugins.streetside.utils.StreetsideURLTest" time="0.0"/>
-  <testcase name="testUtilityClass" classname="org.openstreetmap.josm.plugins.streetside.utils.StreetsideURLTest" time="0.001"/>
+  <testcase name="testIllegalBrowseImageURL" classname="org.openstreetmap.josm.plugins.streetside.utils.StreetsideURLTest" time="0.001"/>
+  <testcase name="testUtilityClass" classname="org.openstreetmap.josm.plugins.streetside.utils.StreetsideURLTest" time="0.002"/>
   <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[2018-06-15 04:57:27.375 SEVERE: The class 'org.openstreetmap.josm.plugins.streetside.utils.StreetsideURL' produces malformed URLs like 'malformed URL'!: java.net.MalformedURLException: no protocol: malformed URL
-2018-06-15 04:57:27.375 SEVERE: The class 'org.openstreetmap.josm.plugins.streetside.utils.StreetsideURL' produces malformed URLs like ''!: java.net.MalformedURLException: no protocol:
+  <system-err><![CDATA[2018-06-15 23:03:00.492 SEVERE: The class 'org.openstreetmap.josm.plugins.streetside.utils.StreetsideURL' produces malformed URLs like 'malformed URL'!: java.net.MalformedURLException: no protocol: malformed URL
+2018-06-15 23:03:00.493 SEVERE: The class 'org.openstreetmap.josm.plugins.streetside.utils.StreetsideURL' produces malformed URLs like ''!: java.net.MalformedURLException: no protocol:
 ]]></system-err>
 </testsuite>

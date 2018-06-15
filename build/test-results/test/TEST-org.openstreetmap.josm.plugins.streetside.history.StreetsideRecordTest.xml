@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.openstreetmap.josm.plugins.streetside.history.StreetsideRecordTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2018-06-15T04:57:28" hostname="Renes-MacBook-Pro.local" time="1.863">
+<testsuite name="org.openstreetmap.josm.plugins.streetside.history.StreetsideRecordTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2018-06-15T23:03:01" hostname="D-10-19-129-119.dhcp4.washington.edu" time="7.338">
   <properties/>
-  <testcase name="commandJoinClass" classname="org.openstreetmap.josm.plugins.streetside.history.StreetsideRecordTest" time="0.959"/>
-  <testcase name="commandJoinNull1" classname="org.openstreetmap.josm.plugins.streetside.history.StreetsideRecordTest" time="0.185"/>
-  <testcase name="commandJoinNull2" classname="org.openstreetmap.josm.plugins.streetside.history.StreetsideRecordTest" time="0.172"/>
-  <testcase name="commandUnjoinClass" classname="org.openstreetmap.josm.plugins.streetside.history.StreetsideRecordTest" time="0.117"/>
-  <testcase name="commandTest" classname="org.openstreetmap.josm.plugins.streetside.history.StreetsideRecordTest" time="0.119"/>
-  <testcase name="commandMoveTest" classname="org.openstreetmap.josm.plugins.streetside.history.StreetsideRecordTest" time="0.173"/>
-  <testcase name="commandTurnTest" classname="org.openstreetmap.josm.plugins.streetside.history.StreetsideRecordTest" time="0.136"/>
+  <testcase name="commandJoinClass" classname="org.openstreetmap.josm.plugins.streetside.history.StreetsideRecordTest" time="4.5"/>
+  <testcase name="commandJoinNull1" classname="org.openstreetmap.josm.plugins.streetside.history.StreetsideRecordTest" time="0.75"/>
+  <testcase name="commandJoinNull2" classname="org.openstreetmap.josm.plugins.streetside.history.StreetsideRecordTest" time="0.415"/>
+  <testcase name="commandUnjoinClass" classname="org.openstreetmap.josm.plugins.streetside.history.StreetsideRecordTest" time="0.466"/>
+  <testcase name="commandTest" classname="org.openstreetmap.josm.plugins.streetside.history.StreetsideRecordTest" time="0.457"/>
+  <testcase name="commandMoveTest" classname="org.openstreetmap.josm.plugins.streetside.history.StreetsideRecordTest" time="0.398"/>
+  <testcase name="commandTurnTest" classname="org.openstreetmap.josm.plugins.streetside.history.StreetsideRecordTest" time="0.348"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

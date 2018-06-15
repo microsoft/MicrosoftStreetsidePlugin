@@ -3,7 +3,6 @@ package org.openstreetmap.josm.plugins.streetside.io.download;
 
 import org.openstreetmap.josm.data.Bounds;
 import org.openstreetmap.josm.plugins.streetside.StreetsideLayer;
-import org.openstreetmap.josm.plugins.streetside.gui.StreetsideFilterDialog;
 import org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog;
 import org.openstreetmap.josm.plugins.streetside.utils.PluginState;
 import org.openstreetmap.josm.plugins.streetside.utils.StreetsideUtils;
@@ -41,8 +40,8 @@ public class StreetsideSquareDownloadRunnable implements Runnable {
     imgDetailsThread.start();
 
     // TODO: Do we support detections? RRH
-    Thread detectionsThread = new Thread(new DetectionsDownloadRunnable(StreetsideLayer.getInstance().getData(), bounds));
-    detectionsThread.start();
+    /*Thread detectionsThread = new Thread(new DetectionsDownloadRunnable(StreetsideLayer.getInstance().getData(), bounds));
+    detectionsThread.start();*/
 
     try {
       imgDetailsThread.join();
@@ -56,7 +55,7 @@ public class StreetsideSquareDownloadRunnable implements Runnable {
 
     StreetsideUtils.updateHelpText();
     StreetsideLayer.invalidateInstance();
-    StreetsideFilterDialog.getInstance().refresh();
+    //StreetsideFilterDialog.getInstance().refresh();
     StreetsideMainDialog.getInstance().updateImage();
   }
 }

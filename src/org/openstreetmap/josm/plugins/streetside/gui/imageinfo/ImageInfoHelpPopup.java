@@ -34,7 +34,7 @@ public class ImageInfoHelpPopup extends JPopupMenu {
     setLayout(new BorderLayout());
 
     JPanel topBar = new JPanel();
-    topBar.add(new JLabel(ImageProvider.get("mapillary-logo-white")));
+    topBar.add(new JLabel(ImageProvider.get("streetside-logo-white")));
     topBar.setBackground(StreetsideColorScheme.TOOLBAR_DARK_GREY);
     add(topBar, BorderLayout.NORTH);
 

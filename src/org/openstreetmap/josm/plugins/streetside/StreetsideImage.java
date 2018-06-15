@@ -1,36 +1,35 @@
 // License: GPL. For details, see LICENSE file.
 package org.openstreetmap.josm.plugins.streetside;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import org.openstreetmap.josm.data.coor.LatLon;
 import org.openstreetmap.josm.plugins.streetside.cubemap.CubemapUtils;
-import org.openstreetmap.josm.plugins.streetside.model.ImageDetection;
-import org.openstreetmap.josm.tools.Logging;
-
 import org.openstreetmap.josm.plugins.streetside.model.UserProfile;
 
 /**
  * A StreetsideImage object represents each of the images stored in Streetside.
  *
  * @author nokutu
+ * @author renerr18
+ *
  * @see StreetsideSequence
  * @see StreetsideData
  */
 public class StreetsideImage extends StreetsideAbstractImage {
   /**
-   *
+   * Rn is a Bing Streetside image attribute - currently not
+   * used, mapped or supported in the Streetside plugin -
+   * left out initially because it's an unrequired complex object.
    */
-  // TODO: complex inner object in JSON Bubble Metadata (unknown purpose) RRH
   public static class Rn {
-
+	  // placeholder for nexted Rn attribute
   }
 
+  // latitude of the Streetside image
   private double la;
 
+  //longitude of the Streetside image
   private double lo;
 
   // The bubble altitude, in meters above the WGS84 ellipsoid
@@ -42,10 +41,10 @@ public class StreetsideImage extends StreetsideAbstractImage {
   // Pitch
   private double pi;
 
-  // Heading (as in. 'Which way are you heading?' - equivalent to Mapillary cd attribute (in theory)
+  // Heading (equivalent to Mapillary cd attribute - not currently supported.
   private double he;
 
-  // Blurring instructions (which areas of the image should be obscured for privacy)
+  // Blurring instructions - not currently used by the plugin
   private String bl;
 
   // Undocumented Attributes
@@ -59,9 +58,9 @@ public class StreetsideImage extends StreetsideAbstractImage {
 
   /**
    * Set of traffic signs in the image.
-   */
+   *//*
   private final List<ImageDetection> detections = Collections.synchronizedList(new ArrayList<>());
-
+*/
   /**
    * Main constructor of the class StreetsideImage
    *
@@ -101,17 +100,17 @@ public String getId() {
     return String.valueOf(id);
   }
 
-  public List<ImageDetection> getDetections() {
+  /*public List<ImageDetection> getDetections() {
     return detections;
-  }
+  }*/
 
-  public void setAllDetections(Collection<ImageDetection> newDetections) {
+  /*public void setAllDetections(Collection<ImageDetection> newDetections) {
     Logging.debug("Add {0} detections to image {1}", newDetections.size(), getId());
     synchronized (detections) {
       detections.clear();
       detections.addAll(newDetections);
     }
-  }
+  }*/
 
   public UserProfile getUser() {
 	    return getSequence().getUser();

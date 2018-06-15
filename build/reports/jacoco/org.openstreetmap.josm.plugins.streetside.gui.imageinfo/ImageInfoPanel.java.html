@@ -11,7 +11,6 @@ import java.awt.image.BufferedImage;
 import java.util.Collection;
 
 import javax.swing.ImageIcon;
-import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
@@ -36,12 +35,12 @@ import org.openstreetmap.josm.tools.I18n;
 
 public final class ImageInfoPanel extends ToggleDialog implements StreetsideDataListener, SelectionChangedListener {
   private static final long serialVersionUID = 4141847503072417190L;
-<span class="nc" id="L39">  private static final Log L = LogFactory.getLog(ImageInfoPanel.class);</span>
+<span class="nc" id="L38">  private static final Log L = LogFactory.getLog(ImageInfoPanel.class);</span>
   private static ImageInfoPanel instance;
-<span class="nc" id="L41">  private static final ImageIcon EMPTY_USER_AVATAR = new ImageIcon(new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB));</span>
+<span class="nc" id="L40">  private static final ImageIcon EMPTY_USER_AVATAR = new ImageIcon(new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB));</span>
 
-  private final JLabel numDetectionsLabel;
-  private final JCheckBox showDetectionsCheck;
+  //private final JLabel numDetectionsLabel;
+  //private final JCheckBox showDetectionsCheck;
   private final JLabel usernameLabel;
   private final JTextPane imgKeyValue;
   private final WebLinkAction imgLinkAction;
@@ -52,116 +51,116 @@ public final class ImageInfoPanel extends ToggleDialog implements StreetsideData
   private ValueChangeListener&lt;Boolean&gt; imageLinkChangeListener;
 
   private ImageInfoPanel() {
-<span class="nc" id="L55">    super(</span>
-<span class="nc" id="L56">      I18n.tr(&quot;Streetside Image info&quot;),</span>
+<span class="nc" id="L54">    super(</span>
+<span class="nc" id="L55">      I18n.tr(&quot;Streetside Image info&quot;),</span>
       &quot;streetside-info&quot;,
-<span class="nc" id="L58">      I18n.tr(&quot;Displays detail information on the currently selected Streetside image&quot;),</span>
+<span class="nc" id="L57">      I18n.tr(&quot;Displays detail information on the currently selected Streetside image&quot;),</span>
       null,
       150
     );
-<span class="nc" id="L62">    DataSet.addSelectionListener(this);</span>
+<span class="nc" id="L61">    DataSet.addSelectionListener(this);</span>
 
-<span class="nc" id="L64">    numDetectionsLabel = new JLabel();</span>
-<span class="nc" id="L65">    numDetectionsLabel.setFont(numDetectionsLabel.getFont().deriveFont(Font.PLAIN));</span>
+    //numDetectionsLabel = new JLabel();
+    //numDetectionsLabel.setFont(numDetectionsLabel.getFont().deriveFont(Font.PLAIN));
 
-<span class="nc" id="L67">    showDetectionsCheck = new JCheckBox(I18n.tr(&quot;Show detections on top of image&quot;));</span>
-<span class="nc" id="L68">    showDetectionsCheck.setSelected(StreetsideProperties.SHOW_DETECTED_SIGNS.get());</span>
-<span class="nc" id="L69">    showDetectionsCheck.addActionListener(</span>
-<span class="nc" id="L70">      action -&gt; StreetsideProperties.SHOW_DETECTED_SIGNS.put(showDetectionsCheck.isSelected())</span>
+    //showDetectionsCheck = new JCheckBox(I18n.tr(&quot;Show detections on top of image&quot;));
+    //showDetectionsCheck.setSelected(StreetsideProperties.SHOW_DETECTED_SIGNS.get());
+    /*showDetectionsCheck.addActionListener(
+      action -&gt; StreetsideProperties.SHOW_DETECTED_SIGNS.put(showDetectionsCheck.isSelected())
     );
-<span class="nc" id="L72">    StreetsideProperties.SHOW_DETECTED_SIGNS.addListener(</span>
-<span class="nc" id="L73">      valueChange -&gt; showDetectionsCheck.setSelected(StreetsideProperties.SHOW_DETECTED_SIGNS.get())</span>
-    );
+    StreetsideProperties.SHOW_DETECTED_SIGNS.addListener(
+      valueChange -&gt; showDetectionsCheck.setSelected(StreetsideProperties.SHOW_DETECTED_SIGNS.get())
+    );*/
 
-<span class="nc" id="L76">    usernameLabel = new JLabel();</span>
-<span class="nc" id="L77">    usernameLabel.setFont(usernameLabel.getFont().deriveFont(Font.PLAIN));</span>
+<span class="nc" id="L75">    usernameLabel = new JLabel();</span>
+<span class="nc" id="L76">    usernameLabel.setFont(usernameLabel.getFont().deriveFont(Font.PLAIN));</span>
 
-<span class="nc" id="L79">    imgKeyValue = new SelectableLabel();</span>
+<span class="nc" id="L78">    imgKeyValue = new SelectableLabel();</span>
 
-<span class="nc" id="L81">    imgLinkAction = new WebLinkAction(I18n.tr(&quot;View in browser&quot;), null);</span>
+<span class="nc" id="L80">    imgLinkAction = new WebLinkAction(I18n.tr(&quot;View in browser&quot;), null);</span>
 
-<span class="nc" id="L83">    copyImgKeyAction = new ClipboardAction(I18n.tr(&quot;Copy key&quot;), null);</span>
-<span class="nc" id="L84">    StreetsideButton copyButton = new StreetsideButton(copyImgKeyAction, true);</span>
-<span class="nc" id="L85">    copyImgKeyAction.setPopupParent(copyButton);</span>
+<span class="nc" id="L82">    copyImgKeyAction = new ClipboardAction(I18n.tr(&quot;Copy key&quot;), null);</span>
+<span class="nc" id="L83">    StreetsideButton copyButton = new StreetsideButton(copyImgKeyAction, true);</span>
+<span class="nc" id="L84">    copyImgKeyAction.setPopupParent(copyButton);</span>
 
-<span class="nc" id="L87">    addStreetsideTagAction = new AddTagToPrimitiveAction(I18n.tr(&quot;Add Streetside tag&quot;));</span>
+<span class="nc" id="L86">    addStreetsideTagAction = new AddTagToPrimitiveAction(I18n.tr(&quot;Add Streetside tag&quot;));</span>
 
-<span class="nc" id="L89">    JPanel imgKey = new JPanel();</span>
-<span class="nc" id="L90">    imgKey.add(imgKeyValue);</span>
-<span class="nc" id="L91">    imgKey.add(copyButton);</span>
-<span class="nc" id="L92">    JPanel imgButtons = new JPanel();</span>
-<span class="nc" id="L93">    imgButtons.add(new StreetsideButton(imgLinkAction, true));</span>
-<span class="nc" id="L94">    imgButtons.add(new StreetsideButton(addStreetsideTagAction, true));</span>
-<span class="nc" id="L95">    seqKeyValue = new SelectableLabel();</span>
+<span class="nc" id="L88">    JPanel imgKey = new JPanel();</span>
+<span class="nc" id="L89">    imgKey.add(imgKeyValue);</span>
+<span class="nc" id="L90">    imgKey.add(copyButton);</span>
+<span class="nc" id="L91">    JPanel imgButtons = new JPanel();</span>
+<span class="nc" id="L92">    imgButtons.add(new StreetsideButton(imgLinkAction, true));</span>
+<span class="nc" id="L93">    imgButtons.add(new StreetsideButton(addStreetsideTagAction, true));</span>
+<span class="nc" id="L94">    seqKeyValue = new SelectableLabel();</span>
 
-<span class="nc" id="L97">    JPanel root = new JPanel(new GridBagLayout());</span>
-<span class="nc" id="L98">    GridBagConstraints gbc = new GridBagConstraints();</span>
-<span class="nc" id="L99">    gbc.insets = new Insets(0, 5, 0, 5);</span>
+<span class="nc" id="L96">    JPanel root = new JPanel(new GridBagLayout());</span>
+<span class="nc" id="L97">    GridBagConstraints gbc = new GridBagConstraints();</span>
+<span class="nc" id="L98">    gbc.insets = new Insets(0, 5, 0, 5);</span>
 
     // Left column
-<span class="nc" id="L102">    gbc.gridx = 0;</span>
-<span class="nc" id="L103">    gbc.gridy = 0;</span>
-<span class="nc" id="L104">    gbc.anchor = GridBagConstraints.LINE_END;</span>
-<span class="nc" id="L105">    gbc.gridwidth = 1;</span>
-<span class="nc" id="L106">    gbc.gridheight = 2;</span>
-<span class="nc" id="L107">    root.add(new JLabel(I18n.tr(&quot;Image detections&quot;)), gbc);</span>
-<span class="nc" id="L108">    gbc.gridy += 2;</span>
-<span class="nc" id="L109">    gbc.gridheight = 1;</span>
-<span class="nc" id="L110">    root.add(new JLabel(I18n.tr(&quot;User&quot;)), gbc);</span>
-<span class="nc" id="L111">    gbc.gridy++;</span>
-<span class="nc" id="L112">    root.add(new JLabel(I18n.tr(&quot;Image actions&quot;)), gbc);</span>
-<span class="nc" id="L113">    gbc.gridy++;</span>
-<span class="nc" id="L114">    root.add(new JLabel(I18n.tr(&quot;Image key&quot;)), gbc);</span>
-<span class="nc" id="L115">    gbc.gridy++;</span>
-<span class="nc" id="L116">    root.add(new JLabel(I18n.tr(&quot;Sequence key&quot;)), gbc);</span>
+<span class="nc" id="L101">    gbc.gridx = 0;</span>
+<span class="nc" id="L102">    gbc.gridy = 0;</span>
+<span class="nc" id="L103">    gbc.anchor = GridBagConstraints.LINE_END;</span>
+<span class="nc" id="L104">    gbc.gridwidth = 1;</span>
+<span class="nc" id="L105">    gbc.gridheight = 2;</span>
+<span class="nc" id="L106">    root.add(new JLabel(I18n.tr(&quot;Image detections&quot;)), gbc);</span>
+<span class="nc" id="L107">    gbc.gridy += 2;</span>
+<span class="nc" id="L108">    gbc.gridheight = 1;</span>
+<span class="nc" id="L109">    root.add(new JLabel(I18n.tr(&quot;User&quot;)), gbc);</span>
+<span class="nc" id="L110">    gbc.gridy++;</span>
+<span class="nc" id="L111">    root.add(new JLabel(I18n.tr(&quot;Image actions&quot;)), gbc);</span>
+<span class="nc" id="L112">    gbc.gridy++;</span>
+<span class="nc" id="L113">    root.add(new JLabel(I18n.tr(&quot;Image key&quot;)), gbc);</span>
+<span class="nc" id="L114">    gbc.gridy++;</span>
+<span class="nc" id="L115">    root.add(new JLabel(I18n.tr(&quot;Sequence key&quot;)), gbc);</span>
 
     // Right column
-<span class="nc" id="L119">    gbc.weightx = 1;</span>
-<span class="nc" id="L120">    gbc.gridx++;</span>
-<span class="nc" id="L121">    gbc.gridy = 0;</span>
-<span class="nc" id="L122">    gbc.anchor = GridBagConstraints.LINE_START;</span>
-<span class="nc" id="L123">    root.add(numDetectionsLabel, gbc);</span>
-<span class="nc" id="L124">    gbc.gridy++;</span>
-<span class="nc" id="L125">    root.add(showDetectionsCheck, gbc);</span>
-<span class="nc" id="L126">    gbc.gridy++;</span>
-<span class="nc" id="L127">    root.add(usernameLabel, gbc);</span>
-<span class="nc" id="L128">    gbc.gridy++;</span>
-<span class="nc" id="L129">    root.add(imgButtons, gbc);</span>
-<span class="nc" id="L130">    gbc.gridy++;</span>
-<span class="nc" id="L131">    root.add(imgKey, gbc);</span>
-<span class="nc" id="L132">    gbc.gridy++;</span>
-<span class="nc" id="L133">    root.add(seqKeyValue, gbc);</span>
+<span class="nc" id="L118">    gbc.weightx = 1;</span>
+<span class="nc" id="L119">    gbc.gridx++;</span>
+<span class="nc" id="L120">    gbc.gridy = 0;</span>
+<span class="nc" id="L121">    gbc.anchor = GridBagConstraints.LINE_START;</span>
+    //root.add(numDetectionsLabel, gbc);
+    //gbc.gridy++;
+    //root.add(showDetectionsCheck, gbc);
+    //gbc.gridy++;
+<span class="nc" id="L126">    root.add(usernameLabel, gbc);</span>
+<span class="nc" id="L127">    gbc.gridy++;</span>
+<span class="nc" id="L128">    root.add(imgButtons, gbc);</span>
+<span class="nc" id="L129">    gbc.gridy++;</span>
+<span class="nc" id="L130">    root.add(imgKey, gbc);</span>
+<span class="nc" id="L131">    gbc.gridy++;</span>
+<span class="nc" id="L132">    root.add(seqKeyValue, gbc);</span>
 
-<span class="nc" id="L135">    createLayout(root, true, null);</span>
-<span class="nc" id="L136">    selectedImageChanged(null, null);</span>
-<span class="nc" id="L137">  }</span>
+<span class="nc" id="L134">    createLayout(root, true, null);</span>
+<span class="nc" id="L135">    selectedImageChanged(null, null);</span>
+<span class="nc" id="L136">  }</span>
 
   public static ImageInfoPanel getInstance() {
-<span class="nc" id="L140">    synchronized (ImageInfoPanel.class) {</span>
-<span class="nc bnc" id="L141" title="All 2 branches missed.">      if (instance == null) {</span>
-<span class="nc" id="L142">        instance = new ImageInfoPanel();</span>
+<span class="nc" id="L139">    synchronized (ImageInfoPanel.class) {</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">      if (instance == null) {</span>
+<span class="nc" id="L141">        instance = new ImageInfoPanel();</span>
       }
-<span class="nc" id="L144">      return instance;</span>
-<span class="nc" id="L145">    }</span>
+<span class="nc" id="L143">      return instance;</span>
+<span class="nc" id="L144">    }</span>
   }
 
   /**
    * Destroys the unique instance of the class.
    */
   public static synchronized void destroyInstance() {
-<span class="nc" id="L152">    instance = null;</span>
-<span class="nc" id="L153">  }</span>
+<span class="nc" id="L151">    instance = null;</span>
+<span class="nc" id="L152">  }</span>
 
   /* (non-Javadoc)
    * @see org.openstreetmap.josm.gui.dialogs.ToggleDialog#stateChanged()
    */
   @Override
   protected void stateChanged() {
-<span class="nc" id="L160">    super.stateChanged();</span>
-<span class="nc bnc" id="L161" title="All 2 branches missed.">    if (isDialogShowing()) { // If the user opens the dialog once, no longer show the help message</span>
-<span class="nc" id="L162">      StreetsideProperties.IMAGEINFO_HELP_COUNTDOWN.put(0);</span>
+<span class="nc" id="L159">    super.stateChanged();</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">    if (isDialogShowing()) { // If the user opens the dialog once, no longer show the help message</span>
+<span class="nc" id="L161">      StreetsideProperties.IMAGEINFO_HELP_COUNTDOWN.put(0);</span>
     }
-<span class="nc" id="L164">  }</span>
+<span class="nc" id="L163">  }</span>
 
   /* (non-Javadoc)
    * @see org.openstreetmap.josm.plugins.streetside.StreetsideDataListener#imagesAdded()
@@ -169,72 +168,72 @@ public final class ImageInfoPanel extends ToggleDialog implements StreetsideData
   @Override
   public void imagesAdded() {
     // Method is not needed, but enforcesd by the interface StreetsideDataListener
-<span class="nc" id="L172">  }</span>
+<span class="nc" id="L171">  }</span>
 
   /* (non-Javadoc)
    * @see org.openstreetmap.josm.plugins.streetside.StreetsideDataListener#selectedImageChanged(org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImage, org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImage)
    */
   @Override
   public synchronized void selectedImageChanged(final StreetsideAbstractImage oldImage, final StreetsideAbstractImage newImage) {
-<span class="nc" id="L179">    L.debug(String.format(</span>
+<span class="nc" id="L178">    L.debug(String.format(</span>
       &quot;Selected Streetside image changed from %s to %s.&quot;,
-<span class="nc bnc" id="L181" title="All 2 branches missed.">      oldImage instanceof StreetsideImage ? ((StreetsideImage) oldImage).getId() : &quot;‹none›&quot;,</span>
-<span class="nc bnc" id="L182" title="All 2 branches missed.">      newImage instanceof StreetsideImage ? ((StreetsideImage) newImage).getId() : &quot;‹none›&quot;</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">      oldImage instanceof StreetsideImage ? ((StreetsideImage) oldImage).getId() : &quot;‹none›&quot;,</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">      newImage instanceof StreetsideImage ? ((StreetsideImage) newImage).getId() : &quot;‹none›&quot;</span>
     ));
 
-<span class="nc bnc" id="L185" title="All 2 branches missed.">    numDetectionsLabel.setText(I18n.tr(&quot;{0} detections&quot;, newImage instanceof StreetsideImage ? ((StreetsideImage) newImage).getDetections().size() : 0));</span>
-<span class="nc" id="L186">    imgKeyValue.setEnabled(newImage instanceof StreetsideImage);</span>
-<span class="nc bnc" id="L187" title="All 2 branches missed.">    final String newImageKey = newImage instanceof StreetsideImage ? ((StreetsideImage) newImage).getId(): null;</span>
-<span class="nc bnc" id="L188" title="All 2 branches missed.">    if (newImageKey != null) {</span>
-<span class="nc" id="L189">      imageLinkChangeListener = b -&gt; imgLinkAction.setURL(</span>
-<span class="nc bnc" id="L190" title="All 2 branches missed.">        StreetsideProperties.IMAGE_LINK_TO_BLUR_EDITOR.get()</span>
-<span class="nc" id="L191">        ? StreetsideURL.MainWebsite.blurEditImage(newImageKey)</span>
-<span class="nc" id="L192">        : StreetsideURL.MainWebsite.browseImage(newImageKey)</span>
+    //numDetectionsLabel.setText(I18n.tr(&quot;{0} detections&quot;, newImage instanceof StreetsideImage ? ((StreetsideImage) newImage).getDetections().size() : 0));
+<span class="nc" id="L185">    imgKeyValue.setEnabled(newImage instanceof StreetsideImage);</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">    final String newImageKey = newImage instanceof StreetsideImage ? ((StreetsideImage) newImage).getId(): null;</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">    if (newImageKey != null) {</span>
+<span class="nc" id="L188">      imageLinkChangeListener = b -&gt; imgLinkAction.setURL(</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">        StreetsideProperties.IMAGE_LINK_TO_BLUR_EDITOR.get()</span>
+<span class="nc" id="L190">        ? StreetsideURL.MainWebsite.blurEditImage(newImageKey)</span>
+<span class="nc" id="L191">        : StreetsideURL.MainWebsite.browseImage(newImageKey)</span>
       );
-<span class="nc" id="L194">      imageLinkChangeListener.valueChanged(null);</span>
-<span class="nc" id="L195">      StreetsideProperties.IMAGE_LINK_TO_BLUR_EDITOR.addListener(imageLinkChangeListener);</span>
+<span class="nc" id="L193">      imageLinkChangeListener.valueChanged(null);</span>
+<span class="nc" id="L194">      StreetsideProperties.IMAGE_LINK_TO_BLUR_EDITOR.addListener(imageLinkChangeListener);</span>
 
-<span class="nc" id="L197">      imgKeyValue.setText(newImageKey);</span>
-<span class="nc" id="L198">      copyImgKeyAction.setContents(new StringSelection(newImageKey));</span>
-<span class="nc" id="L199">      addStreetsideTagAction.setTag(new Tag(&quot;streetside&quot;, newImageKey));</span>
+<span class="nc" id="L196">      imgKeyValue.setText(newImageKey);</span>
+<span class="nc" id="L197">      copyImgKeyAction.setContents(new StringSelection(newImageKey));</span>
+<span class="nc" id="L198">      addStreetsideTagAction.setTag(new Tag(&quot;streetside&quot;, newImageKey));</span>
     } else {
-<span class="nc bnc" id="L201" title="All 2 branches missed.">      if (imageLinkChangeListener != null) {</span>
-<span class="nc" id="L202">        StreetsideProperties.IMAGE_LINK_TO_BLUR_EDITOR.removeListener(imageLinkChangeListener);</span>
-<span class="nc" id="L203">        imageLinkChangeListener = null;</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">      if (imageLinkChangeListener != null) {</span>
+<span class="nc" id="L201">        StreetsideProperties.IMAGE_LINK_TO_BLUR_EDITOR.removeListener(imageLinkChangeListener);</span>
+<span class="nc" id="L202">        imageLinkChangeListener = null;</span>
       }
-<span class="nc" id="L205">      imgLinkAction.setURL(null);</span>
+<span class="nc" id="L204">      imgLinkAction.setURL(null);</span>
 
-<span class="nc" id="L207">      imgKeyValue.setText('‹' + I18n.tr(&quot;image has no key&quot;) + '›');</span>
-<span class="nc" id="L208">      copyImgKeyAction.setContents(null);</span>
-<span class="nc" id="L209">      addStreetsideTagAction.setTag(null);</span>
+<span class="nc" id="L206">      imgKeyValue.setText('‹' + I18n.tr(&quot;image has no key&quot;) + '›');</span>
+<span class="nc" id="L207">      copyImgKeyAction.setContents(null);</span>
+<span class="nc" id="L208">      addStreetsideTagAction.setTag(null);</span>
     }
 
-<span class="nc bnc" id="L212" title="All 2 branches missed.">    final UserProfile user = newImage instanceof StreetsideImage ? ((StreetsideImage) newImage).getUser() : null;</span>
-<span class="nc bnc" id="L213" title="All 2 branches missed.">    usernameLabel.setEnabled(user != null);</span>
-<span class="nc bnc" id="L214" title="All 2 branches missed.">    if (user != null) {</span>
-<span class="nc" id="L215">      usernameLabel.setText(user.getUsername());</span>
-<span class="nc" id="L216">      usernameLabel.setIcon(new ImageIcon(user.getAvatar().getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH)));</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">    final UserProfile user = newImage instanceof StreetsideImage ? ((StreetsideImage) newImage).getUser() : null;</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">    usernameLabel.setEnabled(user != null);</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">    if (user != null) {</span>
+<span class="nc" id="L214">      usernameLabel.setText(user.getUsername());</span>
+<span class="nc" id="L215">      usernameLabel.setIcon(new ImageIcon(user.getAvatar().getImage().getScaledInstance(32, 32, Image.SCALE_SMOOTH)));</span>
     } else {
-<span class="nc" id="L218">      usernameLabel.setText(&quot;‹&quot; + I18n.tr(&quot;unknown user&quot;) + &quot;›&quot;);</span>
-<span class="nc" id="L219">      usernameLabel.setIcon(EMPTY_USER_AVATAR);</span>
+<span class="nc" id="L217">      usernameLabel.setText(&quot;‹&quot; + I18n.tr(&quot;unknown user&quot;) + &quot;›&quot;);</span>
+<span class="nc" id="L218">      usernameLabel.setIcon(EMPTY_USER_AVATAR);</span>
     }
 
-<span class="nc bnc" id="L222" title="All 6 branches missed.">    final boolean partOfSequence = newImage != null &amp;&amp; newImage.getSequence() != null &amp;&amp; newImage.getSequence().getId() != null;</span>
-<span class="nc" id="L223">    seqKeyValue.setEnabled(partOfSequence);</span>
-<span class="nc bnc" id="L224" title="All 2 branches missed.">    if (partOfSequence) {</span>
-<span class="nc" id="L225">      seqKeyValue.setText(newImage.getSequence().getId());</span>
+<span class="nc bnc" id="L221" title="All 6 branches missed.">    final boolean partOfSequence = newImage != null &amp;&amp; newImage.getSequence() != null &amp;&amp; newImage.getSequence().getId() != null;</span>
+<span class="nc" id="L222">    seqKeyValue.setEnabled(partOfSequence);</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">    if (partOfSequence) {</span>
+<span class="nc" id="L224">      seqKeyValue.setText(newImage.getSequence().getId());</span>
     } else {
-<span class="nc" id="L227">      seqKeyValue.setText('‹' + I18n.tr(&quot;sequence has no id&quot;) + '›');</span>
+<span class="nc" id="L226">      seqKeyValue.setText('‹' + I18n.tr(&quot;sequence has no id&quot;) + '›');</span>
     }
-<span class="nc" id="L229">  }</span>
+<span class="nc" id="L228">  }</span>
 
   /* (non-Javadoc)
    * @see org.openstreetmap.josm.data.SelectionChangedListener#selectionChanged(java.util.Collection)
    */
   @Override
   public synchronized void selectionChanged(final Collection&lt;? extends OsmPrimitive&gt; sel) {
-<span class="nc bnc" id="L236" title="All 2 branches missed.">    L.debug(String.format(&quot;Selection changed. %d primitives are selected.&quot;, sel == null ? 0 : sel.size()));</span>
-<span class="nc bnc" id="L237" title="All 4 branches missed.">    addStreetsideTagAction.setTarget(sel != null &amp;&amp; sel.size() == 1 ? sel.iterator().next() : null);</span>
-<span class="nc" id="L238">  }</span>
+<span class="nc bnc" id="L235" title="All 2 branches missed.">    L.debug(String.format(&quot;Selection changed. %d primitives are selected.&quot;, sel == null ? 0 : sel.size()));</span>
+<span class="nc bnc" id="L236" title="All 4 branches missed.">    addStreetsideTagAction.setTarget(sel != null &amp;&amp; sel.size() == 1 ? sel.iterator().next() : null);</span>
+<span class="nc" id="L237">  }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

@@ -15,8 +15,7 @@
 	<!-- enter the *lowest* JOSM version this plugin is currently compatible with -->
 	<property name="plugin.main.version" value="13922" />
 
-
-	<property name="plugin.author" value="Rene Rhodes" />
+    <property name="plugin.author" value="renerr18" />
 	<property name="plugin.class" value="org.openstreetmap.josm.plugins.streetside.StreetsidePlugin" />
 	<property name="plugin.description" value="Enables the select and viewing of Microsoft Streetside 360 degree imagery in the JOSM Editor." />
 	<property name="plugin.icon" value="images/streetside-logo-white.png" />
