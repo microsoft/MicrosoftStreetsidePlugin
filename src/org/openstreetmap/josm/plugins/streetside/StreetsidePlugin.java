@@ -9,7 +9,6 @@ import org.openstreetmap.josm.gui.MapView;
 import org.openstreetmap.josm.gui.preferences.PreferenceSetting;
 import org.openstreetmap.josm.plugins.Plugin;
 import org.openstreetmap.josm.plugins.PluginInformation;
-import org.openstreetmap.josm.plugins.streetside.actions.MapObjectLayerAction;
 import org.openstreetmap.josm.plugins.streetside.actions.StreetsideDownloadAction;
 import org.openstreetmap.josm.plugins.streetside.actions.StreetsideDownloadViewAction;
 import org.openstreetmap.josm.plugins.streetside.actions.StreetsideExportAction;
@@ -48,13 +47,11 @@ public class StreetsidePlugin extends Plugin {
     if (Main.main != null) {
       MainMenu.add(MainApplication.getMenu().fileMenu, new StreetsideExportAction(), false, 14);
       MainMenu.add(MainApplication.getMenu().imagerySubMenu, new StreetsideDownloadAction(), false);
-      //MainMenu.add(MainApplication.getMenu().fileMenu, new StreetsideImportAction(), false, 14);
       MainMenu.add(MainApplication.getMenu().viewMenu, ZOOM_ACTION, false, 15);
       MainMenu.add(MainApplication.getMenu().fileMenu, new StreetsideDownloadViewAction(), false, 14);
       MainMenu.add(MainApplication.getMenu().dataMenu, new StreetsideJoinAction(), false);
       MainMenu.add(MainApplication.getMenu().moreToolsMenu, WALK_ACTION, false);
-      //MainMenu.add(MainApplication.getMenu().fileMenu, UPLOAD_ACTION, false, 14);
-      MainMenu.add(MainApplication.getMenu().imagerySubMenu, new MapObjectLayerAction(), false);
+      //MainMenu.add(MainApplication.getMenu().imagerySubMenu, new MapObjectLayerAction(), false);
     }
   }
 

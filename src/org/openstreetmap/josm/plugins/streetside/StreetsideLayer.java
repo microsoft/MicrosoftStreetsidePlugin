@@ -131,13 +131,8 @@ ActiveLayerChangeListener, StreetsideDataListener {
 		}
 		if (StreetsidePlugin.getMapView() != null) {
 			StreetsideMainDialog.getInstance().getStreetsideImageDisplay().repaint();
-			/*StreetsideMainDialog.getInstance()
-			.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
-			.put(KeyStroke.getKeyStroke("DELETE"), "StreetsideDel");
-			StreetsideMainDialog.getInstance().getActionMap()
-			.put("StreetsideDel", new DeleteImageAction());*/
 
-			// There is no delete image action for Streetside
+			// There is no delete image action for Streetside (Mapillary functionality here removed).
 
 			getLocationChangeset().addChangesetListener(StreetsideChangesetDialog.getInstance());
 		}
