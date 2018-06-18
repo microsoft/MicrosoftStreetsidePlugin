@@ -1,9 +1,9 @@
 Microsoft Streetside JOSM Plugin
 ======
 
-The Microsoft JOSM Streetside Plugin enables the viewing of Microsoft Streetside 360 degree imagery in the JOSM editor. It is based on the implementation of the Mapillary plugin [Mapillary](https://wiki.openstreetmap.org/wiki/JOSM/Plugins/Mapillary.
+The Microsoft JOSM Streetside Plugin enables the viewing of Microsoft Streetside 360 degree imagery in the JOSM editor. It is based on the implementation of the Mapillary plugin (https://wiki.openstreetmap.org/wiki/JOSM/Plugins/Mapillary).
 
-)Once JOSM is started and the MicrosoftStreetside plugin is selected in the JOSM Preferences, available Streetside imagery can be display within the boundary of the downloaded JOSM area, by selecting Imagery -> Streetside, from the main menu. Once blue bubbles appear on the map signifying Streetside imagery, clicking on a bubble results in the 360 degree imagery being displayed in the 360 degree viewer, which can be undocked and enlarged to allow for better viewing.
+Once JOSM is started and the MicrosoftStreetside plugin is selected in the JOSM Preferences, available Streetside imagery can be display within the boundary of the downloaded JOSM area, by selecting Imagery -> Streetside, from the main menu. Once blue bubbles appear on the map signifying Streetside imagery, clicking on a bubble results in the 360 degree imagery being displayed in the 360 degree viewer, which can be undocked and enlarged to allow for better viewing.
 
 ## Documentation
 
