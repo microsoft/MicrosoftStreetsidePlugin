@@ -38,6 +38,6 @@ This software is licensed under [GPL v3](https://www.gnu.org/licenses/gpl-3.0.en
 ### Third party resources
 
 The MicrosoftStreetside plugin used JavaFX to implement the Streetside 360 degree viewer [JavaFX](https://en.wikipedia.org/wiki/JavaFX), which, while bundled in the Oracle Java SE 1.8, is not an official part of the 
-Java SE 1.8 specification, and may not function properly with alternative JDKs (e.g. OpenJDK is not currently supported).
+Java SE 1.8 specification, and may not function properly with alternative JDKs (e.g. OpenJDK is not currently supported). JavaFX is licensed under the same terms as Java SE (http://www.oracle.com/technetwork/java/javase/terms/license/index.html).
 
-
+The plugin also makes use of the compact Resty libary for communicating with RESTful web services from Java (https://beders.github.io/Resty/Resty/Overview.html). Resty is licensed under the MIT license (https://github.com/go-resty/resty/blob/master/LICENSE).
