@@ -4,10 +4,6 @@ package org.openstreetmap.josm.plugins.streetside.cubemap;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import org.openstreetmap.josm.plugins.streetside.utils.StreetsideProperties;
 import org.openstreetmap.josm.tools.Logging;
@@ -54,22 +50,6 @@ public class GraphicsUtils {
 		int rows = StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get()?4:2; //we assume the no. of rows and cols are known and each chunk has equal width and height
         int cols = StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get()?4:2;
 
-        // TODO: images still not backwards after cropping
-        /*for(int i=0; i<tiles.length;i++) {
-        	File outputfileBefore = new File("/Users/renerr18/Desktop/TileImagesTest/tile16" + Long.valueOf(System.currentTimeMillis()).toString() + "CroppingAfter.jpeg");
-    		//File outputfileAfter= new File("/Users/renerr18/Desktop/TileImagesTest/tile16" + Long.valueOf(System.currentTimeMillis()).toString() + "ImageAfter" + Integer.valueOf(i).toString() + ".jpeg");
-    	    try {
-    			ImageIO.write(tiles[i], "jpeg", outputfileBefore);
-    			//ImageIO.write(res[i], "jpeg", outputfileAfter);
-    		} catch (IOException e) {
-    			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    		}
-        }*/
-
-
-
-
         int chunkWidth, chunkHeight;
 
         chunkWidth = tiles[0].getWidth();
@@ -81,22 +61,22 @@ public class GraphicsUtils {
         int num = 0;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                img.createGraphics().drawImage(tiles[num], chunkWidth * j, chunkHeight * i, null);
-                // TODO: build images without making them backwards, so no flipping is required
-                // (Change previous line?)
-                // images are reversed, flip them
-                // TODO: flip image - drawImage produces backwards images
-                /*AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
-                tx.translate(StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get()?1018:512, 0);
-                AffineTransformOp op = new AffineTransformOp(tx,
-                        AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-                res = op.filter(img, null);*/
+                // TODO: this makes the image a mirror image. why!?!
+            	img.createGraphics().drawImage(tiles[num], chunkWidth * j, chunkHeight * i, null);
 
-                // BufferedImage for mirror image
+            	// TODO: remove file test!
+            	/*try {
+        			ImageIO.write(img, "jpeg", new File("/Users/renerr18/Desktop/TileImagesTest/tile16b" + Long.valueOf(System.currentTimeMillis()).toString() + "createGraphicsAfter.jpeg"));
+        			//ImageIO.write(res[i], "jpeg", outputfileAfter);
+        		} catch (IOException e) {
+        			// TODO Auto-generated catch block
+        			e.printStackTrace();
+        		}*/
 
                 int width = StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get()?1014:510;
                 int height = StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get()?1014:510;
 
+                // BufferedImage for mirror image
                 res = new BufferedImage(StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get()?1014:510, StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get()?1014:510,
                                                 BufferedImage.TYPE_INT_ARGB);
 
@@ -122,16 +102,6 @@ public class GraphicsUtils {
 
         Logging.info("Image concatenated.....");
 
-        File outputfileBefore = new File("/Users/renerr18/Desktop/TileImagesTest/tile16" + Long.valueOf(System.currentTimeMillis()).toString() + "StitchingAfter.jpeg");
-		//File outputfileAfter= new File("/Users/renerr18/Desktop/TileImagesTest/tile16" + Long.valueOf(System.currentTimeMillis()).toString() + "ImageAfter" + Integer.valueOf(i).toString() + ".jpeg");
-	    try {
-			ImageIO.write(res, "jpeg", outputfileBefore);
-			//ImageIO.write(res[i], "jpeg", outputfileAfter);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
         return res;
 	}
 
@@ -149,29 +119,10 @@ public class GraphicsUtils {
 		BufferedImage[] res = new BufferedImage[tiles.length];
 
 			for(int i=0; i<tiles.length;i++) {
-				// TODO: compare and, if necessary, fix cropping!
 				if(StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get()) {
 					res[i] = tiles[i].getSubimage(pixelBuffer, pixelBuffer, 256-pixelBuffer, 256-pixelBuffer);
-					/*File outputfileBefore = new File("/Users/renerr18/Desktop/TileImagesTest/tile16" + Long.valueOf(System.currentTimeMillis()).toString() + "ImageBefore" + Integer.valueOf(i).toString() + ".jpeg");
-					File outputfileAfter= new File("/Users/renerr18/Desktop/TileImagesTest/tile16" + Long.valueOf(System.currentTimeMillis()).toString() + "ImageAfter" + Integer.valueOf(i).toString() + ".jpeg");
-				    try {
-						ImageIO.write(tiles[i], "jpeg", outputfileBefore);
-						ImageIO.write(res[i], "jpeg", outputfileAfter);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}*/
 				} else {
 					res[i] = tiles[i].getSubimage(pixelBuffer, pixelBuffer, 256-pixelBuffer, 256-pixelBuffer);
-					/*File outputfileBefore = new File("/Users/renerr18/Desktop/TileImagesTest/tile4" + Long.valueOf(System.currentTimeMillis()).toString() + "ImageBefore" + Integer.valueOf(i).toString() + ".jpeg");
-					File outputfileAfter= new File("/Users/renerr18/Desktop/TileImagesTest/tile4" + Long.valueOf(System.currentTimeMillis()).toString() + "ImageAfter" + Integer.valueOf(i).toString() + ".jpeg");
-					try {
-						ImageIO.write(tiles[i], "jpeg", outputfileBefore);
-						ImageIO.write(res[i], "jpeg", outputfileAfter);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}*/
 				}
 			}
 		return res;

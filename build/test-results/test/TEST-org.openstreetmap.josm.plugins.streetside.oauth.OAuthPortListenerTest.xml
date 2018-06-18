@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.openstreetmap.josm.plugins.streetside.oauth.OAuthPortListenerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-06-15T23:02:57" hostname="D-10-19-129-119.dhcp4.washington.edu" time="0.537">
-  <properties/>
-  <testcase name="responseTest" classname="org.openstreetmap.josm.plugins.streetside.oauth.OAuthPortListenerTest" time="0.537"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

@@ -4,8 +4,6 @@
 ** Maintaining versions
 ** ====================-->
 <project name="MicrosoftStreetside" default="dist" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
-	
-	
 
 	<!-- Configure these properties (replace "..." accordingly).
 	         See https://josm.openstreetmap.de/wiki/DevelopersGuide/DevelopingPlugins
@@ -13,11 +11,12 @@
 	<!-- enter the SVN commit message -->
 	<property name="commit.message" value="Commit message" />
 	<!-- enter the *lowest* JOSM version this plugin is currently compatible with -->
-	<property name="plugin.main.version" value="13922" />
+	<property name="plugin.main.version" value="13878" />
+	<property name="plugin.compile.version" value="13878" />
 
     <property name="plugin.author" value="renerr18" />
 	<property name="plugin.class" value="org.openstreetmap.josm.plugins.streetside.StreetsidePlugin" />
-	<property name="plugin.description" value="Enables the select and viewing of Microsoft Streetside 360 degree imagery in the JOSM Editor." />
+	<property name="plugin.description" value="View high resolution Microsoft Streetside 360 degree imagery in JOSM." />
 	<property name="plugin.icon" value="images/streetside-logo-white.png" />
 	<property name="plugin.link" value="https://github.com/JOSM/MicrosoftStreetside"/>
 	<property name="plugin.requires" value="apache-commons;apache-http;"/>
@@ -42,10 +41,6 @@
 	<fileset id="plugin.requires.jars" dir="${plugin.dist.dir}">
 		<include name="apache-commons.jar"/>
 		<include name="apache-http.jar"/>
-		<!-- <include name="jackson-core-2.2.4.jar"/>
-  	    <include name="jackson-databind-2.2.4.jar"/>
-  	    <include name="jackson-annotations-2.2.4.jar"/>
-		<include name="resty-0.3.2.jar"/> -->
 	</fileset>
 
 	<target name="pre-compile" depends="fetch_dependencies">

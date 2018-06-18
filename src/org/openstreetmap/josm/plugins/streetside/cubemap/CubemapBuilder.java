@@ -47,13 +47,16 @@ public class CubemapBuilder implements ITileDownloadingTaskListener, StreetsideD
 	public void selectedImageChanged(StreetsideAbstractImage oldImage, StreetsideAbstractImage newImage) {
 		startTime = System.currentTimeMillis();
 
-		cubemap = null;
-		cubemap = new StreetsideCubemap(newImage.getId(), newImage.getLatLon(), newImage.getHe());
-		cubemap.setCd(newImage.getCd());
+		if (newImage != null) {
 
-		// download cubemap images in different threads and then subsequently
-		// set the cubeface images in JavaFX
-		downloadCubemapImages(cubemap.getId());
+			cubemap = null;
+			cubemap = new StreetsideCubemap(newImage.getId(), newImage.getLatLon(), newImage.getHe());
+			cubemap.setCd(newImage.getCd());
+
+			// download cubemap images in different threads and then subsequently
+			// set the cubeface images in JavaFX
+			downloadCubemapImages(cubemap.getId());
+		}
 	}
 
 	public void reload(String imageId) {

@@ -1,9 +1,12 @@
 Microsoft Streetside JOSM Plugin
 ======
 
-The Microsoft JOSM Streetside Plugin enables the viewing of Microsoft Streetside 360 degree imagery in the JOSM editor. It is based on the implementation of the Mapillary plugin [Mapillary](https://wiki.openstreetmap.org/wiki/JOSM/Plugins/Mapillary.
+The Microsoft JOSM Streetside Plugin enables the viewing of Microsoft Streetside 360 degree imagery in the JOSM editor. It is based on the implementation of the Mapillary plugin [Mapillary](https://wiki.openstreetmap.org/wiki/JOSM/Plugins/Mapillary).
 
-)Once JOSM is started and the MicrosoftStreetside plugin is selected in the JOSM Preferences, available Streetside imagery can be display within the boundary of the downloaded JOSM area, by selecting Imagery -> Streetside, from the main menu. Once blue bubbles appear on the map signifying Streetside imagery, clicking on a bubble results in the 360 degree imagery being displayed in the 360 degree viewer, which can be undocked and enlarged to allow for better viewing.
+Once JOSM is started and the MicrosoftStreetside plugin is selected in the JOSM Preferences, available Streetside imagery can be displayed within the boundary of the downloaded JOSM area, by selecting Imagery -> Streetside, from the main menu. 
+
+When the blue vector bubbles appear on the map signifying Streetside imagery, clicking on a bubble results in the imagery being displayed in the 360 degree viewer.
+The panel which can be undocked and enlarged to allow for better viewing.
 
 ## Documentation
 
@@ -39,5 +42,3 @@ This software is licensed under [GPL v3](https://www.gnu.org/licenses/gpl-3.0.en
 
 The MicrosoftStreetside plugin used JavaFX to implement the Streetside 360 degree viewer [JavaFX](https://en.wikipedia.org/wiki/JavaFX), which, while bundled in the Oracle Java SE 1.8, is not an official part of the 
 Java SE 1.8 specification, and may not function properly with alternative JDKs (e.g. OpenJDK is not currently supported).
-
-
