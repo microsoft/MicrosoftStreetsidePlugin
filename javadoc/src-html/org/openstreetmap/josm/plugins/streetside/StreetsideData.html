@@ -66,8 +66,8 @@
 <span class="sourceLineNo">058</span>   * Creates a new object and adds the initial set of listeners.<a name="line.58"></a>
 <span class="sourceLineNo">059</span>   */<a name="line.59"></a>
 <span class="sourceLineNo">060</span>  protected StreetsideData() {<a name="line.60"></a>
-<span class="sourceLineNo">061</span>    selectedImage = null;<a name="line.61"></a>
-<span class="sourceLineNo">062</span>    bounds = new CopyOnWriteArrayList&lt;&gt;();<a name="line.62"></a>
+<span class="sourceLineNo">061</span>    this.selectedImage = null;<a name="line.61"></a>
+<span class="sourceLineNo">062</span>    this.bounds = new CopyOnWriteArrayList&lt;&gt;();<a name="line.62"></a>
 <span class="sourceLineNo">063</span><a name="line.63"></a>
 <span class="sourceLineNo">064</span>  // Adds the basic set of listeners.<a name="line.64"></a>
 <span class="sourceLineNo">065</span>  Arrays.stream(StreetsidePlugin.getStreetsideDataListeners()).forEach(this::addListener);<a name="line.65"></a>
@@ -142,11 +142,11 @@
 <span class="sourceLineNo">134</span>   * @param image The {@link StreetsideImage} object to be added.<a name="line.134"></a>
 <span class="sourceLineNo">135</span>   */<a name="line.135"></a>
 <span class="sourceLineNo">136</span>  public void addMultiSelectedImage(final StreetsideAbstractImage image) {<a name="line.136"></a>
-<span class="sourceLineNo">137</span>    if (!multiSelectedImages.contains(image)) {<a name="line.137"></a>
-<span class="sourceLineNo">138</span>      if (getSelectedImage() == null) {<a name="line.138"></a>
+<span class="sourceLineNo">137</span>    if (!this.multiSelectedImages.contains(image)) {<a name="line.137"></a>
+<span class="sourceLineNo">138</span>      if (this.getSelectedImage() == null) {<a name="line.138"></a>
 <span class="sourceLineNo">139</span>        this.setSelectedImage(image);<a name="line.139"></a>
 <span class="sourceLineNo">140</span>      } else {<a name="line.140"></a>
-<span class="sourceLineNo">141</span>        multiSelectedImages.add(image);<a name="line.141"></a>
+<span class="sourceLineNo">141</span>        this.multiSelectedImages.add(image);<a name="line.141"></a>
 <span class="sourceLineNo">142</span>      }<a name="line.142"></a>
 <span class="sourceLineNo">143</span>    }<a name="line.143"></a>
 <span class="sourceLineNo">144</span>    StreetsideLayer.invalidateInstance();<a name="line.144"></a>
@@ -159,11 +159,11 @@
 <span class="sourceLineNo">151</span>   * @param images A {@link Collection} object containing the set of images to be added.<a name="line.151"></a>
 <span class="sourceLineNo">152</span>   */<a name="line.152"></a>
 <span class="sourceLineNo">153</span>  public void addMultiSelectedImage(Collection&lt;StreetsideAbstractImage&gt; images) {<a name="line.153"></a>
-<span class="sourceLineNo">154</span>    images.stream().filter(image -&gt; !multiSelectedImages.contains(image)).forEach(image -&gt; {<a name="line.154"></a>
-<span class="sourceLineNo">155</span>      if (getSelectedImage() == null) {<a name="line.155"></a>
+<span class="sourceLineNo">154</span>    images.stream().filter(image -&gt; !this.multiSelectedImages.contains(image)).forEach(image -&gt; {<a name="line.154"></a>
+<span class="sourceLineNo">155</span>      if (this.getSelectedImage() == null) {<a name="line.155"></a>
 <span class="sourceLineNo">156</span>        this.setSelectedImage(image);<a name="line.156"></a>
 <span class="sourceLineNo">157</span>      } else {<a name="line.157"></a>
-<span class="sourceLineNo">158</span>        multiSelectedImages.add(image);<a name="line.158"></a>
+<span class="sourceLineNo">158</span>        this.multiSelectedImages.add(image);<a name="line.158"></a>
 <span class="sourceLineNo">159</span>      }<a name="line.159"></a>
 <span class="sourceLineNo">160</span>    });<a name="line.160"></a>
 <span class="sourceLineNo">161</span>    StreetsideLayer.invalidateInstance();<a name="line.161"></a>
@@ -324,12 +324,12 @@
 <span class="sourceLineNo">316</span>   * @param zoom  True if the view must be centered on the image; false otherwise.<a name="line.316"></a>
 <span class="sourceLineNo">317</span>   */<a name="line.317"></a>
 <span class="sourceLineNo">318</span>  public void setSelectedImage(StreetsideAbstractImage image, boolean zoom) {<a name="line.318"></a>
-<span class="sourceLineNo">319</span>    StreetsideAbstractImage oldImage = selectedImage;<a name="line.319"></a>
+<span class="sourceLineNo">319</span>    StreetsideAbstractImage oldImage = this.selectedImage;<a name="line.319"></a>
 <span class="sourceLineNo">320</span>    this.selectedImage = image;<a name="line.320"></a>
 <span class="sourceLineNo">321</span>    this.multiSelectedImages.clear();<a name="line.321"></a>
 <span class="sourceLineNo">322</span>    final MapView mv = StreetsidePlugin.getMapView();<a name="line.322"></a>
 <span class="sourceLineNo">323</span>    if (image != null) {<a name="line.323"></a>
-<span class="sourceLineNo">324</span>      multiSelectedImages.add(image);<a name="line.324"></a>
+<span class="sourceLineNo">324</span>      this.multiSelectedImages.add(image);<a name="line.324"></a>
 <span class="sourceLineNo">325</span>      if (mv != null &amp;&amp; image instanceof StreetsideImage) {<a name="line.325"></a>
 <span class="sourceLineNo">326</span>        StreetsideImage streetsideImage = (StreetsideImage) image;<a name="line.326"></a>
 <span class="sourceLineNo">327</span><a name="line.327"></a>
@@ -340,7 +340,7 @@
 <span class="sourceLineNo">332</span>    if (mv != null &amp;&amp; zoom &amp;&amp; selectedImage != null) {<a name="line.332"></a>
 <span class="sourceLineNo">333</span>      mv.zoomTo(selectedImage.getMovingLatLon());<a name="line.333"></a>
 <span class="sourceLineNo">334</span>    }<a name="line.334"></a>
-<span class="sourceLineNo">335</span>    fireSelectedImageChanged(oldImage, selectedImage);<a name="line.335"></a>
+<span class="sourceLineNo">335</span>    fireSelectedImageChanged(oldImage, this.selectedImage);<a name="line.335"></a>
 <span class="sourceLineNo">336</span>    StreetsideLayer.invalidateInstance();<a name="line.336"></a>
 <span class="sourceLineNo">337</span>  }<a name="line.337"></a>
 <span class="sourceLineNo">338</span><a name="line.338"></a>
@@ -386,7 +386,7 @@
 <span class="sourceLineNo">378</span>   * @return A List object containing all the images selected.<a name="line.378"></a>
 <span class="sourceLineNo">379</span>   */<a name="line.379"></a>
 <span class="sourceLineNo">380</span>  public Set&lt;StreetsideAbstractImage&gt; getMultiSelectedImages() {<a name="line.380"></a>
-<span class="sourceLineNo">381</span>    return multiSelectedImages;<a name="line.381"></a>
+<span class="sourceLineNo">381</span>    return this.multiSelectedImages;<a name="line.381"></a>
 <span class="sourceLineNo">382</span>  }<a name="line.382"></a>
 <span class="sourceLineNo">383</span><a name="line.383"></a>
 <span class="sourceLineNo">384</span>  /**<a name="line.384"></a>

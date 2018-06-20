@@ -1,8 +1,6 @@
 // License: GPL. For details, see LICENSE file.
 package org.openstreetmap.josm.plugins.streetside;
 
-import java.io.IOException;
-
 import org.openstreetmap.josm.Main;
 import org.openstreetmap.josm.gui.MainApplication;
 import org.openstreetmap.josm.gui.MainMenu;
@@ -50,6 +48,7 @@ public class StreetsidePlugin extends Plugin {
       MainMenu.add(MainApplication.getMenu().dataMenu, new StreetsideJoinAction(), false);
       MainMenu.add(MainApplication.getMenu().moreToolsMenu, WALK_ACTION, false);
       //MainMenu.add(MainApplication.getMenu().imagerySubMenu, new MapObjectLayerAction(), false);
+      //MainMenu.add(MainApplication.getMenu().imagerySubMenu, new MapObjectLayerAction(), false);
     }
   }
 
@@ -58,9 +57,8 @@ public class StreetsidePlugin extends Plugin {
    *
    * @param info
    *          Required information of the plugin. Obtained from the jar file.
-   * @throws IOException if the streetside cache directory is not found
    */
-  public StreetsidePlugin(PluginInformation info) /*throws IOException*/ {
+  public StreetsidePlugin(PluginInformation info) {
     super(info);
 
     if (StreetsideProperties.ACCESS_TOKEN.get() == null) {
@@ -69,7 +67,7 @@ public class StreetsidePlugin extends Plugin {
   }
 
   static StreetsideDataListener[] getStreetsideDataListeners() {
-	return new StreetsideDataListener[]{/*UPLOAD_ACTION,*/ WALK_ACTION, ZOOM_ACTION, CubemapBuilder.getInstance()};
+	return new StreetsideDataListener[]{WALK_ACTION, ZOOM_ACTION, CubemapBuilder.getInstance()};
   }
 
 

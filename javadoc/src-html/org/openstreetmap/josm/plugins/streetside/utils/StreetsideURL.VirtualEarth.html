@@ -200,7 +200,7 @@
 <span class="sourceLineNo">192</span><a name="line.192"></a>
 <span class="sourceLineNo">193</span>                /**<a name="line.193"></a>
 <span class="sourceLineNo">194</span>                 * Gives you the URL for the blur editor of the image with the given key.<a name="line.194"></a>
-<span class="sourceLineNo">195</span>                 * @param key the key of the image for which you want to open the blur editor<a name="line.195"></a>
+<span class="sourceLineNo">195</span>                 * @param id the key of the image for which you want to open the blur editor<a name="line.195"></a>
 <span class="sourceLineNo">196</span>                 * @return the URL of the blur editor<a name="line.196"></a>
 <span class="sourceLineNo">197</span>                 * @throws IllegalArgumentException if the image key is &lt;code&gt;null&lt;/code&gt;<a name="line.197"></a>
 <span class="sourceLineNo">198</span>                 */<a name="line.198"></a>
@@ -341,45 +341,42 @@
 <span class="sourceLineNo">333</span>                return ret.toString();<a name="line.333"></a>
 <span class="sourceLineNo">334</span>        }<a name="line.334"></a>
 <span class="sourceLineNo">335</span><a name="line.335"></a>
-<span class="sourceLineNo">336</span>        /**<a name="line.336"></a>
-<span class="sourceLineNo">337</span>         *<a name="line.337"></a>
-<span class="sourceLineNo">338</span>         */<a name="line.338"></a>
-<span class="sourceLineNo">339</span>        static String queryByIdString(Map&lt;String, String&gt; parts) {<a name="line.339"></a>
-<span class="sourceLineNo">340</span>                final StringBuilder ret = new StringBuilder("?id=");<a name="line.340"></a>
-<span class="sourceLineNo">341</span>                try {<a name="line.341"></a>
-<span class="sourceLineNo">342</span>                        ret.append(URLEncoder.encode(StreetsideURL.TEST_BUBBLE_ID, StandardCharsets.UTF_8.name()));<a name="line.342"></a>
-<span class="sourceLineNo">343</span>                        ret.append('&amp;').append(URLEncoder.encode("appkey=", StandardCharsets.UTF_8.name())).append('=')<a name="line.343"></a>
-<span class="sourceLineNo">344</span>                        .append(URLEncoder.encode(StreetsideURL.BING_MAPS_KEY, StandardCharsets.UTF_8.name()));<a name="line.344"></a>
-<span class="sourceLineNo">345</span>                } catch (final UnsupportedEncodingException e) {<a name="line.345"></a>
-<span class="sourceLineNo">346</span>                        Logging.error(e); // This should not happen, as the encoding is hard-coded<a name="line.346"></a>
-<span class="sourceLineNo">347</span>                }<a name="line.347"></a>
-<span class="sourceLineNo">348</span>                return ret.toString();<a name="line.348"></a>
-<span class="sourceLineNo">349</span>        }<a name="line.349"></a>
-<span class="sourceLineNo">350</span><a name="line.350"></a>
-<span class="sourceLineNo">351</span>        /**<a name="line.351"></a>
-<span class="sourceLineNo">352</span>         * Converts a {@link String} into a {@link URL} without throwing a {@link MalformedURLException}.<a name="line.352"></a>
-<span class="sourceLineNo">353</span>         * Instead such an exception will lead to an {@link Logging#error(Throwable)}.<a name="line.353"></a>
-<span class="sourceLineNo">354</span>         * So you should be very confident that your URL is well-formed when calling this method.<a name="line.354"></a>
-<span class="sourceLineNo">355</span>         * @param strings the Strings describing the URL<a name="line.355"></a>
-<span class="sourceLineNo">356</span>         * @return the URL that is constructed from the given string<a name="line.356"></a>
-<span class="sourceLineNo">357</span>         */<a name="line.357"></a>
-<span class="sourceLineNo">358</span>        static URL string2URL(String... strings) {<a name="line.358"></a>
-<span class="sourceLineNo">359</span>                final StringBuilder builder = new StringBuilder();<a name="line.359"></a>
-<span class="sourceLineNo">360</span>                for (int i = 0; strings != null &amp;&amp; i &lt; strings.length; i++) {<a name="line.360"></a>
-<span class="sourceLineNo">361</span>                        builder.append(strings[i]);<a name="line.361"></a>
-<span class="sourceLineNo">362</span>                }<a name="line.362"></a>
-<span class="sourceLineNo">363</span>                try {<a name="line.363"></a>
-<span class="sourceLineNo">364</span>                        return new URL(builder.toString());<a name="line.364"></a>
-<span class="sourceLineNo">365</span>                } catch (final MalformedURLException e) {<a name="line.365"></a>
-<span class="sourceLineNo">366</span>                        Logging.log(Logging.LEVEL_ERROR, String.format(<a name="line.366"></a>
-<span class="sourceLineNo">367</span>                                        "The class '%s' produces malformed URLs like '%s'!",<a name="line.367"></a>
-<span class="sourceLineNo">368</span>                                        StreetsideURL.class.getName(),<a name="line.368"></a>
-<span class="sourceLineNo">369</span>                                        builder<a name="line.369"></a>
-<span class="sourceLineNo">370</span>                                        ), e);<a name="line.370"></a>
-<span class="sourceLineNo">371</span>                        return null;<a name="line.371"></a>
-<span class="sourceLineNo">372</span>                }<a name="line.372"></a>
-<span class="sourceLineNo">373</span>        }<a name="line.373"></a>
-<span class="sourceLineNo">374</span>}<a name="line.374"></a>
+<span class="sourceLineNo">336</span>        static String queryByIdString(Map&lt;String, String&gt; parts) {<a name="line.336"></a>
+<span class="sourceLineNo">337</span>                final StringBuilder ret = new StringBuilder("?id=");<a name="line.337"></a>
+<span class="sourceLineNo">338</span>                try {<a name="line.338"></a>
+<span class="sourceLineNo">339</span>                        ret.append(URLEncoder.encode(StreetsideURL.TEST_BUBBLE_ID, StandardCharsets.UTF_8.name()));<a name="line.339"></a>
+<span class="sourceLineNo">340</span>                        ret.append('&amp;').append(URLEncoder.encode("appkey=", StandardCharsets.UTF_8.name())).append('=')<a name="line.340"></a>
+<span class="sourceLineNo">341</span>                        .append(URLEncoder.encode(StreetsideURL.BING_MAPS_KEY, StandardCharsets.UTF_8.name()));<a name="line.341"></a>
+<span class="sourceLineNo">342</span>                } catch (final UnsupportedEncodingException e) {<a name="line.342"></a>
+<span class="sourceLineNo">343</span>                        Logging.error(e); // This should not happen, as the encoding is hard-coded<a name="line.343"></a>
+<span class="sourceLineNo">344</span>                }<a name="line.344"></a>
+<span class="sourceLineNo">345</span>                return ret.toString();<a name="line.345"></a>
+<span class="sourceLineNo">346</span>        }<a name="line.346"></a>
+<span class="sourceLineNo">347</span><a name="line.347"></a>
+<span class="sourceLineNo">348</span>        /**<a name="line.348"></a>
+<span class="sourceLineNo">349</span>         * Converts a {@link String} into a {@link URL} without throwing a {@link MalformedURLException}.<a name="line.349"></a>
+<span class="sourceLineNo">350</span>         * Instead such an exception will lead to an {@link Logging#error(Throwable)}.<a name="line.350"></a>
+<span class="sourceLineNo">351</span>         * So you should be very confident that your URL is well-formed when calling this method.<a name="line.351"></a>
+<span class="sourceLineNo">352</span>         * @param strings the Strings describing the URL<a name="line.352"></a>
+<span class="sourceLineNo">353</span>         * @return the URL that is constructed from the given string<a name="line.353"></a>
+<span class="sourceLineNo">354</span>         */<a name="line.354"></a>
+<span class="sourceLineNo">355</span>        static URL string2URL(String... strings) {<a name="line.355"></a>
+<span class="sourceLineNo">356</span>                final StringBuilder builder = new StringBuilder();<a name="line.356"></a>
+<span class="sourceLineNo">357</span>                for (int i = 0; strings != null &amp;&amp; i &lt; strings.length; i++) {<a name="line.357"></a>
+<span class="sourceLineNo">358</span>                        builder.append(strings[i]);<a name="line.358"></a>
+<span class="sourceLineNo">359</span>                }<a name="line.359"></a>
+<span class="sourceLineNo">360</span>                try {<a name="line.360"></a>
+<span class="sourceLineNo">361</span>                        return new URL(builder.toString());<a name="line.361"></a>
+<span class="sourceLineNo">362</span>                } catch (final MalformedURLException e) {<a name="line.362"></a>
+<span class="sourceLineNo">363</span>                        Logging.log(Logging.LEVEL_ERROR, String.format(<a name="line.363"></a>
+<span class="sourceLineNo">364</span>                                        "The class '%s' produces malformed URLs like '%s'!",<a name="line.364"></a>
+<span class="sourceLineNo">365</span>                                        StreetsideURL.class.getName(),<a name="line.365"></a>
+<span class="sourceLineNo">366</span>                                        builder<a name="line.366"></a>
+<span class="sourceLineNo">367</span>                                        ), e);<a name="line.367"></a>
+<span class="sourceLineNo">368</span>                        return null;<a name="line.368"></a>
+<span class="sourceLineNo">369</span>                }<a name="line.369"></a>
+<span class="sourceLineNo">370</span>        }<a name="line.370"></a>
+<span class="sourceLineNo">371</span>}<a name="line.371"></a>
 
 
 

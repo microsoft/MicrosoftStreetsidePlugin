@@ -205,39 +205,41 @@
 <span class="sourceLineNo">197</span>   * Checks if the area for which Streetside images should be downloaded is too big. This means that probably<a name="line.197"></a>
 <span class="sourceLineNo">198</span>   * lots of Streetside images are going to be downloaded, slowing down the<a name="line.198"></a>
 <span class="sourceLineNo">199</span>   * program too much. A notification is shown when the download has stopped or continued.<a name="line.199"></a>
-<span class="sourceLineNo">200</span>   */<a name="line.200"></a>
-<span class="sourceLineNo">201</span>  private static boolean isAreaTooBig(final double area) {<a name="line.201"></a>
-<span class="sourceLineNo">202</span>    final boolean tooBig = area &gt; MAX_AREA;<a name="line.202"></a>
-<span class="sourceLineNo">203</span>    if (!stoppedDownload &amp;&amp; tooBig) {<a name="line.203"></a>
-<span class="sourceLineNo">204</span>      new Notification(<a name="line.204"></a>
-<span class="sourceLineNo">205</span>        I18n.tr("The Streetside layer has stopped downloading images, because the requested area is too big!") + (<a name="line.205"></a>
-<span class="sourceLineNo">206</span>          getMode() == DOWNLOAD_MODE.VISIBLE_AREA<a name="line.206"></a>
-<span class="sourceLineNo">207</span>          ? "\n"+I18n.tr("To solve this problem, you could zoom in and load a smaller area of the map.")<a name="line.207"></a>
-<span class="sourceLineNo">208</span>          : (getMode() == DOWNLOAD_MODE.OSM_AREA ? "\n"+I18n.tr("To solve this problem, you could switch to download mode ''{0}'' and load Streetside images for a smaller portion of the map.", DOWNLOAD_MODE.MANUAL_ONLY): "")<a name="line.208"></a>
-<span class="sourceLineNo">209</span>        )<a name="line.209"></a>
-<span class="sourceLineNo">210</span>      ).setIcon(StreetsidePlugin.LOGO.get()).setDuration(Notification.TIME_LONG).show();<a name="line.210"></a>
-<span class="sourceLineNo">211</span>    }<a name="line.211"></a>
-<span class="sourceLineNo">212</span>    if (stoppedDownload &amp;&amp; !tooBig) {<a name="line.212"></a>
-<span class="sourceLineNo">213</span>      new Notification("The Streetside layer now continues to download images…").setIcon(StreetsidePlugin.LOGO.get()).show();<a name="line.213"></a>
-<span class="sourceLineNo">214</span>    }<a name="line.214"></a>
-<span class="sourceLineNo">215</span>    stoppedDownload = tooBig;<a name="line.215"></a>
-<span class="sourceLineNo">216</span>    return tooBig;<a name="line.216"></a>
-<span class="sourceLineNo">217</span>  }<a name="line.217"></a>
-<span class="sourceLineNo">218</span><a name="line.218"></a>
-<span class="sourceLineNo">219</span>  /**<a name="line.219"></a>
-<span class="sourceLineNo">220</span>   * Stops all running threads.<a name="line.220"></a>
-<span class="sourceLineNo">221</span>   */<a name="line.221"></a>
-<span class="sourceLineNo">222</span>  public static void stopAll() {<a name="line.222"></a>
-<span class="sourceLineNo">223</span>    executor.shutdownNow();<a name="line.223"></a>
-<span class="sourceLineNo">224</span>    try {<a name="line.224"></a>
-<span class="sourceLineNo">225</span>      executor.awaitTermination(30, TimeUnit.SECONDS);<a name="line.225"></a>
-<span class="sourceLineNo">226</span>    } catch (InterruptedException e) {<a name="line.226"></a>
-<span class="sourceLineNo">227</span>      Logging.error(e);<a name="line.227"></a>
-<span class="sourceLineNo">228</span>    }<a name="line.228"></a>
-<span class="sourceLineNo">229</span>    executor = new ThreadPoolExecutor(3, 5, 100, TimeUnit.SECONDS,<a name="line.229"></a>
-<span class="sourceLineNo">230</span>      new ArrayBlockingQueue&lt;&gt;(100), new ThreadPoolExecutor.DiscardPolicy());<a name="line.230"></a>
-<span class="sourceLineNo">231</span>  }<a name="line.231"></a>
-<span class="sourceLineNo">232</span>}<a name="line.232"></a>
+<span class="sourceLineNo">200</span>   * @param area area to check <a name="line.200"></a>
+<span class="sourceLineNo">201</span>   * @return {@code true} if the area is too big<a name="line.201"></a>
+<span class="sourceLineNo">202</span>   */<a name="line.202"></a>
+<span class="sourceLineNo">203</span>  private static boolean isAreaTooBig(final double area) {<a name="line.203"></a>
+<span class="sourceLineNo">204</span>    final boolean tooBig = area &gt; MAX_AREA;<a name="line.204"></a>
+<span class="sourceLineNo">205</span>    if (!stoppedDownload &amp;&amp; tooBig) {<a name="line.205"></a>
+<span class="sourceLineNo">206</span>      new Notification(<a name="line.206"></a>
+<span class="sourceLineNo">207</span>        I18n.tr("The Streetside layer has stopped downloading images, because the requested area is too big!") + (<a name="line.207"></a>
+<span class="sourceLineNo">208</span>          getMode() == DOWNLOAD_MODE.VISIBLE_AREA<a name="line.208"></a>
+<span class="sourceLineNo">209</span>          ? "\n"+I18n.tr("To solve this problem, you could zoom in and load a smaller area of the map.")<a name="line.209"></a>
+<span class="sourceLineNo">210</span>          : (getMode() == DOWNLOAD_MODE.OSM_AREA ? "\n"+I18n.tr("To solve this problem, you could switch to download mode ''{0}'' and load Streetside images for a smaller portion of the map.", DOWNLOAD_MODE.MANUAL_ONLY): "")<a name="line.210"></a>
+<span class="sourceLineNo">211</span>        )<a name="line.211"></a>
+<span class="sourceLineNo">212</span>      ).setIcon(StreetsidePlugin.LOGO.get()).setDuration(Notification.TIME_LONG).show();<a name="line.212"></a>
+<span class="sourceLineNo">213</span>    }<a name="line.213"></a>
+<span class="sourceLineNo">214</span>    if (stoppedDownload &amp;&amp; !tooBig) {<a name="line.214"></a>
+<span class="sourceLineNo">215</span>      new Notification("The Streetside layer now continues to download images…").setIcon(StreetsidePlugin.LOGO.get()).show();<a name="line.215"></a>
+<span class="sourceLineNo">216</span>    }<a name="line.216"></a>
+<span class="sourceLineNo">217</span>    stoppedDownload = tooBig;<a name="line.217"></a>
+<span class="sourceLineNo">218</span>    return tooBig;<a name="line.218"></a>
+<span class="sourceLineNo">219</span>  }<a name="line.219"></a>
+<span class="sourceLineNo">220</span><a name="line.220"></a>
+<span class="sourceLineNo">221</span>  /**<a name="line.221"></a>
+<span class="sourceLineNo">222</span>   * Stops all running threads.<a name="line.222"></a>
+<span class="sourceLineNo">223</span>   */<a name="line.223"></a>
+<span class="sourceLineNo">224</span>  public static void stopAll() {<a name="line.224"></a>
+<span class="sourceLineNo">225</span>    executor.shutdownNow();<a name="line.225"></a>
+<span class="sourceLineNo">226</span>    try {<a name="line.226"></a>
+<span class="sourceLineNo">227</span>      executor.awaitTermination(30, TimeUnit.SECONDS);<a name="line.227"></a>
+<span class="sourceLineNo">228</span>    } catch (InterruptedException e) {<a name="line.228"></a>
+<span class="sourceLineNo">229</span>      Logging.error(e);<a name="line.229"></a>
+<span class="sourceLineNo">230</span>    }<a name="line.230"></a>
+<span class="sourceLineNo">231</span>    executor = new ThreadPoolExecutor(3, 5, 100, TimeUnit.SECONDS,<a name="line.231"></a>
+<span class="sourceLineNo">232</span>      new ArrayBlockingQueue&lt;&gt;(100), new ThreadPoolExecutor.DiscardPolicy());<a name="line.232"></a>
+<span class="sourceLineNo">233</span>  }<a name="line.233"></a>
+<span class="sourceLineNo">234</span>}<a name="line.234"></a>
 
 
 
