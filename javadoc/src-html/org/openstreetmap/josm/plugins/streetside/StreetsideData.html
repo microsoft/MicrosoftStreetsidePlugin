@@ -197,7 +197,7 @@
 <span class="sourceLineNo">189</span>   * @return The image under the mouse cursor.<a name="line.189"></a>
 <span class="sourceLineNo">190</span>   */<a name="line.190"></a>
 <span class="sourceLineNo">191</span>  public StreetsideAbstractImage getHighlightedImage() {<a name="line.191"></a>
-<span class="sourceLineNo">192</span>    return highlightedImage;<a name="line.192"></a>
+<span class="sourceLineNo">192</span>    return this.highlightedImage;<a name="line.192"></a>
 <span class="sourceLineNo">193</span>  }<a name="line.193"></a>
 <span class="sourceLineNo">194</span><a name="line.194"></a>
 <span class="sourceLineNo">195</span>  /**<a name="line.195"></a>
@@ -325,8 +325,8 @@
 <span class="sourceLineNo">317</span>   */<a name="line.317"></a>
 <span class="sourceLineNo">318</span>  public void setSelectedImage(StreetsideAbstractImage image, boolean zoom) {<a name="line.318"></a>
 <span class="sourceLineNo">319</span>    StreetsideAbstractImage oldImage = selectedImage;<a name="line.319"></a>
-<span class="sourceLineNo">320</span>    selectedImage = image;<a name="line.320"></a>
-<span class="sourceLineNo">321</span>    multiSelectedImages.clear();<a name="line.321"></a>
+<span class="sourceLineNo">320</span>    this.selectedImage = image;<a name="line.320"></a>
+<span class="sourceLineNo">321</span>    this.multiSelectedImages.clear();<a name="line.321"></a>
 <span class="sourceLineNo">322</span>    final MapView mv = StreetsidePlugin.getMapView();<a name="line.322"></a>
 <span class="sourceLineNo">323</span>    if (image != null) {<a name="line.323"></a>
 <span class="sourceLineNo">324</span>      multiSelectedImages.add(image);<a name="line.324"></a>
@@ -334,7 +334,7 @@
 <span class="sourceLineNo">326</span>        StreetsideImage streetsideImage = (StreetsideImage) image;<a name="line.326"></a>
 <span class="sourceLineNo">327</span><a name="line.327"></a>
 <span class="sourceLineNo">328</span>        // Downloading thumbnails of surrounding pictures.<a name="line.328"></a>
-<span class="sourceLineNo">329</span>        StreetsideData.downloadSurroundingImages(streetsideImage);<a name="line.329"></a>
+<span class="sourceLineNo">329</span>        downloadSurroundingImages(streetsideImage);<a name="line.329"></a>
 <span class="sourceLineNo">330</span>      }<a name="line.330"></a>
 <span class="sourceLineNo">331</span>    }<a name="line.331"></a>
 <span class="sourceLineNo">332</span>    if (mv != null &amp;&amp; zoom &amp;&amp; selectedImage != null) {<a name="line.332"></a>

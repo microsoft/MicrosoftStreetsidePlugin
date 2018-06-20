@@ -189,7 +189,7 @@ public class StreetsideData {
    * @return The image under the mouse cursor.
    */
   public StreetsideAbstractImage getHighlightedImage() {
-    return highlightedImage;
+    return this.highlightedImage;
   }
 
   /**
@@ -317,8 +317,8 @@ public class StreetsideData {
    */
   public void setSelectedImage(StreetsideAbstractImage image, boolean zoom) {
     StreetsideAbstractImage oldImage = selectedImage;
-    selectedImage = image;
-    multiSelectedImages.clear();
+    this.selectedImage = image;
+    this.multiSelectedImages.clear();
     final MapView mv = StreetsidePlugin.getMapView();
     if (image != null) {
       multiSelectedImages.add(image);
@@ -326,7 +326,7 @@ public class StreetsideData {
         StreetsideImage streetsideImage = (StreetsideImage) image;
 
         // Downloading thumbnails of surrounding pictures.
-        StreetsideData.downloadSurroundingImages(streetsideImage);
+        downloadSurroundingImages(streetsideImage);
       }
     }
     if (mv != null && zoom && selectedImage != null) {
