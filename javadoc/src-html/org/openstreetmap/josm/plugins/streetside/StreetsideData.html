@@ -297,7 +297,7 @@
 <span class="sourceLineNo">289</span>    if (getSelectedImage().getSequence() == null) {<a name="line.289"></a>
 <span class="sourceLineNo">290</span>                throw new IllegalStateException();<a name="line.290"></a>
 <span class="sourceLineNo">291</span>        }<a name="line.291"></a>
-<span class="sourceLineNo">292</span>    StreetsideAbstractImage tempImage = selectedImage;<a name="line.292"></a>
+<span class="sourceLineNo">292</span>    StreetsideAbstractImage tempImage = this.selectedImage;<a name="line.292"></a>
 <span class="sourceLineNo">293</span>    while (tempImage.previous() != null) {<a name="line.293"></a>
 <span class="sourceLineNo">294</span>      tempImage = tempImage.previous();<a name="line.294"></a>
 <span class="sourceLineNo">295</span>      if (tempImage.isVisible()) {<a name="line.295"></a>

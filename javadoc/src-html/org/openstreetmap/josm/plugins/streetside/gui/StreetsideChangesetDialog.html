@@ -82,7 +82,7 @@
 <span class="sourceLineNo">074</span>    );<a name="line.74"></a>
 <span class="sourceLineNo">075</span>    createLayout(rootComponent, false, Collections.singletonList(submitButton));<a name="line.75"></a>
 <span class="sourceLineNo">076</span><a name="line.76"></a>
-<span class="sourceLineNo">077</span>    final JTree changesetTree = new JTree(changesetTreeModel);<a name="line.77"></a>
+<span class="sourceLineNo">077</span>    final JTree changesetTree = new JTree(this.changesetTreeModel);<a name="line.77"></a>
 <span class="sourceLineNo">078</span>    changesetTree.expandRow(0);<a name="line.78"></a>
 <span class="sourceLineNo">079</span>    changesetTree.setShowsRootHandles(true);<a name="line.79"></a>
 <span class="sourceLineNo">080</span>    changesetTree.setRootVisible(false);<a name="line.80"></a>
@@ -90,7 +90,7 @@
 <span class="sourceLineNo">082</span>    changesetTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);<a name="line.82"></a>
 <span class="sourceLineNo">083</span><a name="line.83"></a>
 <span class="sourceLineNo">084</span>    final JPanel treesPanel = new JPanel(new GridBagLayout());<a name="line.84"></a>
-<span class="sourceLineNo">085</span>    treesPanel.add(spacer, GBC.eol());<a name="line.85"></a>
+<span class="sourceLineNo">085</span>    treesPanel.add(this.spacer, GBC.eol());<a name="line.85"></a>
 <span class="sourceLineNo">086</span>    treesPanel.add(changesetTree, GBC.eol().fill(GridBagConstraints.HORIZONTAL));<a name="line.86"></a>
 <span class="sourceLineNo">087</span>    treesPanel.add(new JSeparator(), GBC.eol().fill(GridBagConstraints.HORIZONTAL));<a name="line.87"></a>
 <span class="sourceLineNo">088</span>    treesPanel.add(Box.createRigidArea(new Dimension(0, 0)), GBC.std().weight(0, 1));<a name="line.88"></a>

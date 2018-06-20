@@ -74,7 +74,7 @@ public final class StreetsideChangesetDialog extends ToggleDialog implements Str
     );
     createLayout(rootComponent, false, Collections.singletonList(submitButton));
 
-    final JTree changesetTree = new JTree(changesetTreeModel);
+    final JTree changesetTree = new JTree(this.changesetTreeModel);
     changesetTree.expandRow(0);
     changesetTree.setShowsRootHandles(true);
     changesetTree.setRootVisible(false);
@@ -82,7 +82,7 @@ public final class StreetsideChangesetDialog extends ToggleDialog implements Str
     changesetTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
     final JPanel treesPanel = new JPanel(new GridBagLayout());
-    treesPanel.add(spacer, GBC.eol());
+    treesPanel.add(this.spacer, GBC.eol());
     treesPanel.add(changesetTree, GBC.eol().fill(GridBagConstraints.HORIZONTAL));
     treesPanel.add(new JSeparator(), GBC.eol().fill(GridBagConstraints.HORIZONTAL));
     treesPanel.add(Box.createRigidArea(new Dimension(0, 0)), GBC.std().weight(0, 1));
