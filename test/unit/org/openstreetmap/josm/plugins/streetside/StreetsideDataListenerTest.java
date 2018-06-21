@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.openstreetmap.josm.plugins.streetside;
 
@@ -9,6 +9,7 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -48,6 +49,7 @@ public class StreetsideDataListenerTest {
   /**
    * Test method for {@link org.openstreetmap.josm.plugins.streetside.StreetsideDataListener#imagesAdded()}.
    */
+  @Ignore
   @Test
   public final void testImagesAdded() {
     fail("Not yet implemented"); // TODO
@@ -56,6 +58,7 @@ public class StreetsideDataListenerTest {
   /**
    * Test method for {@link org.openstreetmap.josm.plugins.streetside.StreetsideDataListener#selectedImageChanged(org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImage, org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImage)}.
    */
+  @Ignore
   @Test
   public final void testSelectedImageChanged() {
     fail("Not yet implemented"); // TODO

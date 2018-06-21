@@ -62,7 +62,7 @@
 <span class="sourceLineNo">054</span>    dlg.setVisible(true);<a name="line.54"></a>
 <span class="sourceLineNo">055</span>    if (pane.getValue() != null<a name="line.55"></a>
 <span class="sourceLineNo">056</span>        &amp;&amp; (int) pane.getValue() == JOptionPane.OK_OPTION) {<a name="line.56"></a>
-<span class="sourceLineNo">057</span>      thread = new WalkThread((int) dialog.spin.getValue(),<a name="line.57"></a>
+<span class="sourceLineNo">057</span>      this.thread = new WalkThread((int) dialog.spin.getValue(),<a name="line.57"></a>
 <span class="sourceLineNo">058</span>          dialog.waitForPicture.isSelected(),<a name="line.58"></a>
 <span class="sourceLineNo">059</span>          dialog.followSelection.isSelected(), dialog.goForward.isSelected());<a name="line.59"></a>
 <span class="sourceLineNo">060</span>      fireWalkStarted();<a name="line.60"></a>
@@ -83,7 +83,7 @@
 <span class="sourceLineNo">075</span>   *          The listener to be added.<a name="line.75"></a>
 <span class="sourceLineNo">076</span>   */<a name="line.76"></a>
 <span class="sourceLineNo">077</span>  public void addListener(WalkListener lis) {<a name="line.77"></a>
-<span class="sourceLineNo">078</span>    listeners.add(lis);<a name="line.78"></a>
+<span class="sourceLineNo">078</span>    this.listeners.add(lis);<a name="line.78"></a>
 <span class="sourceLineNo">079</span>  }<a name="line.79"></a>
 <span class="sourceLineNo">080</span><a name="line.80"></a>
 <span class="sourceLineNo">081</span>  /**<a name="line.81"></a>
@@ -93,15 +93,15 @@
 <span class="sourceLineNo">085</span>   *          The listener to be added.<a name="line.85"></a>
 <span class="sourceLineNo">086</span>   */<a name="line.86"></a>
 <span class="sourceLineNo">087</span>  public void removeListener(WalkListener lis) {<a name="line.87"></a>
-<span class="sourceLineNo">088</span>    listeners.remove(lis);<a name="line.88"></a>
+<span class="sourceLineNo">088</span>    this.listeners.remove(lis);<a name="line.88"></a>
 <span class="sourceLineNo">089</span>  }<a name="line.89"></a>
 <span class="sourceLineNo">090</span><a name="line.90"></a>
 <span class="sourceLineNo">091</span>  private void fireWalkStarted() {<a name="line.91"></a>
-<span class="sourceLineNo">092</span>    if (listeners.isEmpty()) {<a name="line.92"></a>
+<span class="sourceLineNo">092</span>    if (this.listeners.isEmpty()) {<a name="line.92"></a>
 <span class="sourceLineNo">093</span>      return;<a name="line.93"></a>
 <span class="sourceLineNo">094</span>    }<a name="line.94"></a>
-<span class="sourceLineNo">095</span>    for (WalkListener lis : listeners) {<a name="line.95"></a>
-<span class="sourceLineNo">096</span>      lis.walkStarted(thread);<a name="line.96"></a>
+<span class="sourceLineNo">095</span>    for (WalkListener lis : this.listeners) {<a name="line.95"></a>
+<span class="sourceLineNo">096</span>      lis.walkStarted(this.thread);<a name="line.96"></a>
 <span class="sourceLineNo">097</span>    }<a name="line.97"></a>
 <span class="sourceLineNo">098</span>  }<a name="line.98"></a>
 <span class="sourceLineNo">099</span><a name="line.99"></a>

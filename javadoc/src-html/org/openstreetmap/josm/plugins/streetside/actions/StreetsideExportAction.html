@@ -70,8 +70,8 @@
 <span class="sourceLineNo">062</span>    JButton cancel = new JButton(tr("Cancel"));<a name="line.62"></a>
 <span class="sourceLineNo">063</span>    cancel.addActionListener(e -&gt; pane.setValue(JOptionPane.CANCEL_OPTION));<a name="line.63"></a>
 <span class="sourceLineNo">064</span><a name="line.64"></a>
-<span class="sourceLineNo">065</span>    dialog = new StreetsideExportDialog(ok);<a name="line.65"></a>
-<span class="sourceLineNo">066</span>    pane.setMessage(dialog);<a name="line.66"></a>
+<span class="sourceLineNo">065</span>    this.dialog = new StreetsideExportDialog(ok);<a name="line.65"></a>
+<span class="sourceLineNo">066</span>    pane.setMessage(this.dialog);<a name="line.66"></a>
 <span class="sourceLineNo">067</span>    pane.setOptions(new JButton[] {ok, cancel});<a name="line.67"></a>
 <span class="sourceLineNo">068</span><a name="line.68"></a>
 <span class="sourceLineNo">069</span>    JDialog dlg = pane.createDialog(Main.parent, tr("Export Streetside images"));<a name="line.69"></a>
@@ -81,10 +81,10 @@
 <span class="sourceLineNo">073</span>    // Checks if the inputs are correct and starts the export process.<a name="line.73"></a>
 <span class="sourceLineNo">074</span>    if (pane.getValue() != null<a name="line.74"></a>
 <span class="sourceLineNo">075</span>        &amp;&amp; (int) pane.getValue() == JOptionPane.OK_OPTION<a name="line.75"></a>
-<span class="sourceLineNo">076</span>        &amp;&amp; dialog.chooser != null) {<a name="line.76"></a>
-<span class="sourceLineNo">077</span>      if (dialog.group.isSelected(dialog.all.getModel())) {<a name="line.77"></a>
+<span class="sourceLineNo">076</span>        &amp;&amp; this.dialog.chooser != null) {<a name="line.76"></a>
+<span class="sourceLineNo">077</span>      if (this.dialog.group.isSelected(this.dialog.all.getModel())) {<a name="line.77"></a>
 <span class="sourceLineNo">078</span>        export(StreetsideLayer.getInstance().getData().getImages());<a name="line.78"></a>
-<span class="sourceLineNo">079</span>      } else if (dialog.group.isSelected(dialog.sequence.getModel())) {<a name="line.79"></a>
+<span class="sourceLineNo">079</span>      } else if (this.dialog.group.isSelected(this.dialog.sequence.getModel())) {<a name="line.79"></a>
 <span class="sourceLineNo">080</span>        Set&lt;StreetsideAbstractImage&gt; images = new ConcurrentSkipListSet&lt;&gt;();<a name="line.80"></a>
 <span class="sourceLineNo">081</span>        for (StreetsideAbstractImage image : StreetsideLayer.getInstance().getData().getMultiSelectedImages()) {<a name="line.81"></a>
 <span class="sourceLineNo">082</span>          if (image instanceof StreetsideImage) {<a name="line.82"></a>
@@ -96,11 +96,11 @@
 <span class="sourceLineNo">088</span>          }<a name="line.88"></a>
 <span class="sourceLineNo">089</span>        }<a name="line.89"></a>
 <span class="sourceLineNo">090</span>        export(images);<a name="line.90"></a>
-<span class="sourceLineNo">091</span>      } else if (dialog.group.isSelected(dialog.selected.getModel())) {<a name="line.91"></a>
+<span class="sourceLineNo">091</span>      } else if (this.dialog.group.isSelected(dialog.selected.getModel())) {<a name="line.91"></a>
 <span class="sourceLineNo">092</span>        export(StreetsideLayer.getInstance().getData().getMultiSelectedImages());<a name="line.92"></a>
 <span class="sourceLineNo">093</span>      }<a name="line.93"></a>
 <span class="sourceLineNo">094</span>      // This option ignores the selected directory.<a name="line.94"></a>
-<span class="sourceLineNo">095</span>    } else if (dialog.group.isSelected(dialog.rewrite.getModel())) {<a name="line.95"></a>
+<span class="sourceLineNo">095</span>    } else if (this.dialog.group.isSelected(dialog.rewrite.getModel())) {<a name="line.95"></a>
 <span class="sourceLineNo">096</span>      ArrayList&lt;StreetsideImportedImage&gt; images = new ArrayList&lt;&gt;();<a name="line.96"></a>
 <span class="sourceLineNo">097</span>      StreetsideLayer.getInstance().getData().getImages().stream().filter(img -&gt; img instanceof StreetsideImportedImage).forEach(img -&gt; images.add((StreetsideImportedImage) img));<a name="line.97"></a>
 <span class="sourceLineNo">098</span>      try {<a name="line.98"></a>
@@ -120,7 +120,7 @@
 <span class="sourceLineNo">112</span>   */<a name="line.112"></a>
 <span class="sourceLineNo">113</span>  public void export(Set&lt;StreetsideAbstractImage&gt; images) {<a name="line.113"></a>
 <span class="sourceLineNo">114</span>    MainApplication.worker.execute(new StreetsideExportManager(images,<a name="line.114"></a>
-<span class="sourceLineNo">115</span>        dialog.chooser.getSelectedFile().toString()));<a name="line.115"></a>
+<span class="sourceLineNo">115</span>        this.dialog.chooser.getSelectedFile().toString()));<a name="line.115"></a>
 <span class="sourceLineNo">116</span>  }<a name="line.116"></a>
 <span class="sourceLineNo">117</span><a name="line.117"></a>
 <span class="sourceLineNo">118</span>  @Override<a name="line.118"></a>

@@ -121,7 +121,7 @@ public class TileDownloadingTask implements Callable<String> {
 
 		long endTime = System.currentTimeMillis();
 		long runTime = startTime - endTime;
-		Logging.debug("Loaded image for tile {0} in {1} seconds", tileId, CubemapUtils.msToString(runTime));
+		Logging.info("Loaded image for tile {0} milliseconds", tileId, runTime);
 
 		return tileId;
 	}

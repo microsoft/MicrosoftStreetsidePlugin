@@ -129,7 +129,7 @@
 <span class="sourceLineNo">121</span><a name="line.121"></a>
 <span class="sourceLineNo">122</span>                long endTime = System.currentTimeMillis();<a name="line.122"></a>
 <span class="sourceLineNo">123</span>                long runTime = startTime - endTime;<a name="line.123"></a>
-<span class="sourceLineNo">124</span>                Logging.debug("Loaded image for tile {0} in {1} seconds", tileId, CubemapUtils.msToString(runTime));<a name="line.124"></a>
+<span class="sourceLineNo">124</span>                Logging.info("Loaded image for tile {0} milliseconds", tileId, runTime);<a name="line.124"></a>
 <span class="sourceLineNo">125</span><a name="line.125"></a>
 <span class="sourceLineNo">126</span>                return tileId;<a name="line.126"></a>
 <span class="sourceLineNo">127</span>        }<a name="line.127"></a>
