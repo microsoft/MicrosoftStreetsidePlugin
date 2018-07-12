@@ -1,17 +1,11 @@
 // License: GPL. For details, see LICENSE file.
 package org.openstreetmap.josm.plugins.streetside;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import org.openstreetmap.josm.data.coor.LatLon;
 import org.openstreetmap.josm.plugins.streetside.cubemap.CubemapUtils;
 import org.openstreetmap.josm.plugins.streetside.model.UserProfile;
-import org.openstreetmap.josm.tools.Logging;
-
-import org.openstreetmap.josm.plugins.streetside.model.ImageDetection;
 
 /**
  * A StreetsideImage object represents each of the images stored in Streetside.
@@ -29,7 +23,7 @@ public class StreetsideImage extends StreetsideAbstractImage {
    * left out initially because it's an unrequired complex object.
    */
   public static class Rn {
-	  // placeholder for nexted Rn attribute
+	  // placeholder for Rn attribute (undocumented streetside complex inner type)
   }
 
   // latitude of the Streetside image
@@ -47,25 +41,15 @@ public class StreetsideImage extends StreetsideAbstractImage {
   // Pitch
   private double pi;
 
-  // Heading (equivalent to Mapillary cd attribute - not currently supported.
-  private double he;
-
   // Blurring instructions - not currently used by the plugin
   private String bl;
 
   // Undocumented Attributes
   private int ml;
-  private long ne;
-  private long pr;
   private List<String> nbn;
   private List<String> pbn;
   private int ad;
   private Rn rn;
-
-  /**
-   * Set of traffic signs in the image.
-   */
-  private final List<ImageDetection> detections = Collections.synchronizedList(new ArrayList<>());
 
   /**
    * Main constructor of the class StreetsideImage
@@ -76,10 +60,6 @@ public class StreetsideImage extends StreetsideAbstractImage {
    */
   public StreetsideImage(String id, LatLon latLon, double he) {
     super(id, latLon, he);
-  }
-
-  public StreetsideImage(String id, LatLon latLon) {
-    super(id, latLon, 0.0);
   }
 
   public StreetsideImage(String id, double la, double lo) {
@@ -105,18 +85,6 @@ public String getId() {
     return String.valueOf(id);
   }
 
-  public List<ImageDetection> getDetections() {
-    return detections;
-  }
-
-  public void setAllDetections(Collection<ImageDetection> newDetections) {
-    Logging.debug("Add {0} detections to image {1}", newDetections.size(), getId());
-    synchronized (detections) {
-      detections.clear();
-      detections.addAll(newDetections);
-    }
-  }
-
   public UserProfile getUser() {
 	    return getSequence().getUser();
   }
@@ -129,13 +97,11 @@ public String getId() {
     );
   }
 
-  // TODO: implement equals @rrh
   @Override
   public boolean equals(Object object) {
     return object instanceof StreetsideImage && id.equals(((StreetsideImage) object).getId());
   }
 
-  // TODO: implement compareTo @rrh
   @Override
   public int compareTo(StreetsideAbstractImage image) {
     if (image instanceof StreetsideImage) {
@@ -144,7 +110,6 @@ public String getId() {
     return hashCode() - image.hashCode();
   }
 
-  // TODO: implement hashcode @rrh
   @Override
   public int hashCode() {
     return id.hashCode();
@@ -157,13 +122,7 @@ public String getId() {
   }
 
   private void checkModified() {
-    if (StreetsideLayer.hasInstance()) {
-      if (isModified()) {
-        StreetsideLayer.getInstance().getLocationChangeset().add(this);
-      } else {
-        StreetsideLayer.getInstance().getLocationChangeset().remove(this);
-      }
-    }
+    // modifications not currently supported in Streetside
   }
 
   @Override
@@ -240,34 +199,6 @@ public String getId() {
    */
   public void setMl(int ml) {
     this.ml = ml;
-  }
-
-  /**
-   * @return the ne
-   */
-  public long getNe() {
-    return ne;
-  }
-
-  /**
-   * @param ne the ne to set
-   */
-  public void setNe(long ne) {
-    this.ne = ne;
-  }
-
-  /**
-   * @return the pr
-   */
-  public long getPr() {
-    return pr;
-  }
-
-  /**
-   * @param pr the pr to set
-   */
-  public void setPr(long pr) {
-    this.pr = pr;
   }
 
   /**

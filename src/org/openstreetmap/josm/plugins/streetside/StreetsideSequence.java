@@ -64,7 +64,6 @@ public class StreetsideSequence {
 	images = new CopyOnWriteArrayList<>();
 }
 
-// TODO: Are all my sequences only set with id values? (no LatLon/Cas?) @rrh
 public StreetsideSequence(String id) {
 	this.id = id;
 	images = new CopyOnWriteArrayList<>();
@@ -85,7 +84,7 @@ public StreetsideSequence(String id) {
    *
    * @param images The set of {@link StreetsideAbstractImage} objects to be added.
    */
-  public synchronized void add(Collection<? extends StreetsideAbstractImage> images) {
+  public synchronized void add(final Collection<? extends StreetsideAbstractImage> images) {
     this.images.addAll(images);
     images.forEach(img -> img.setSequence(this));
   }

@@ -1,15 +1,18 @@
 // License: GPL. For details, see LICENSE file.
 package org.openstreetmap.josm.plugins.streetside.cubemap;
 
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import org.apache.log4j.Logger;
 import org.openstreetmap.josm.plugins.streetside.utils.StreetsideProperties;
-import org.openstreetmap.josm.tools.I18n;
-import org.openstreetmap.josm.tools.Logging;
 
 public class CubemapUtils {
+
+  final static Logger logger = Logger.getLogger(CubemapUtils.class);
+
 
 	public enum CubefaceType {
 		    ONE(1),
@@ -30,7 +33,7 @@ public class CubemapUtils {
 		    }
 
 		    public static CubefaceType valueOf(int cubefaceType) {
-		        return (CubefaceType) map.get(cubefaceType);
+		        return map.get(cubefaceType);
 		    }
 
 		    public int getValue() {
@@ -96,39 +99,56 @@ public class CubemapUtils {
 		String res = null;
 		final StringBuilder sb = new StringBuilder();
 
+		if (StreetsideProperties.DEBUGING_ENABLED.get()) {
+      logger.debug(MessageFormat.format("convertDecimal2Quaternary input: {0}", Long.toString(inputNum)));
+		}
+
 		while (inputNum > 0) {
 			sb.append(inputNum % CubemapUtils.NUM_BASE);
 			inputNum /= CubemapUtils.NUM_BASE;
 		}
 
-		sb.append("0");
 		res = sb.reverse().toString();
+
+		if (StreetsideProperties.DEBUGING_ENABLED.get()) {
+      logger.debug(MessageFormat.format("convertDecimal2Quaternary output: {0}", res));
+		}
 
 		return res;
 	}
 
 	public static String convertQuaternary2Decimal(String inputNum) {
-		int len = inputNum.length();
-		int power = 1; // Initialize power of base
-		int num = 0; // Initialize result
-		int base = 4; // This could be used for any base, not just quad
 
-		// Decimal equivalent is str[len-1]*1 +
-		// str[len-1]*base + str[len-1]*(base^2) + ...
-		for (int i = len - 1; i >= 0; i--) {
-			// A digit in input number must be
-			// less than number's base
-			int current = Integer.valueOf(String.valueOf(inputNum.substring(i,i+1)));
-			if ( current >= 4) {
-				Logging.error(I18n.tr("Invalid bubbleId {0}", inputNum));
-				return "-1";
-			}
+	  final String res;
 
-			num += Integer.valueOf(inputNum.charAt(i)).intValue() * power;
-			power = power * base;
-		}
+	  if (StreetsideProperties.DEBUGING_ENABLED.get()) {
+      logger.debug(MessageFormat.format("convertQuaternary2Decimal input: {0}", inputNum));
+    }
 
-		return Integer.toString(num);
+	  int len = inputNum.length();
+    int power = 1;
+    int num = 0;
+    int i;
+
+    for (i = len - 1; i >= 0; i--)
+    {
+        if (Integer.parseInt(inputNum.substring(i,i+1)) >= CubemapUtils.NUM_BASE)
+        {
+           logger.error("Error converting quadkey " + inputNum + " to decimal.");
+           return "000000000";
+        }
+
+        num += Integer.parseInt(inputNum.substring(i,i+1)) * power;
+        power = power * CubemapUtils.NUM_BASE;
+    }
+
+		res = Integer.toString(num);
+
+		if (StreetsideProperties.DEBUGING_ENABLED.get()) {
+      logger.debug(MessageFormat.format("convertQuaternary2Decimal output: {0}", res));
+    }
+
+		return res;
 	}
 
 	public static String getFaceNumberForCount(int count) {
@@ -214,28 +234,6 @@ public class CubemapUtils {
 		// magic numbers - the face id is contained in the 16th and 17th positions
 		return tileId.substring(16, 18);
 	}
-
-	public static String msToString(long ms) {
-        long totalSecs = ms/1000;
-        long hours = (totalSecs / 3600);
-        long mins = (totalSecs / 60) % 60;
-        long secs = totalSecs % 60;
-        String minsString = (mins == 0)
-            ? "00"
-            : ((mins < 10)
-               ? "0" + mins
-               : "" + mins);
-        String secsString = (secs == 0)
-            ? "00"
-            : ((secs < 10)
-               ? "0" + secs
-               : "" + secs);
-        if (hours > 0)
-            return hours + ":" + minsString + ":" + secsString;
-        else if (mins > 0)
-            return mins + ":" + secsString;
-        else return ":" + secsString;
-    }
 
 	public static String convertDoubleCountNrto16TileNr(String countNr) {
 		String tileAddress;

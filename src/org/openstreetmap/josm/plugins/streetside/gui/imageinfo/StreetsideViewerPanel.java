@@ -2,30 +2,33 @@
 package org.openstreetmap.josm.plugins.streetside.gui.imageinfo;
 
 import java.awt.BorderLayout;
+import java.text.MessageFormat;
 
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import org.apache.log4j.Logger;
 import org.openstreetmap.josm.data.preferences.AbstractProperty.ValueChangeListener;
 import org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImage;
 import org.openstreetmap.josm.plugins.streetside.StreetsideDataListener;
 import org.openstreetmap.josm.plugins.streetside.StreetsideImage;
 import org.openstreetmap.josm.plugins.streetside.actions.ImageReloadAction;
+import org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBox;
+import org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder;
 import org.openstreetmap.josm.plugins.streetside.cubemap.CubemapUtils;
 import org.openstreetmap.josm.plugins.streetside.cubemap.GraphicsUtils;
 import org.openstreetmap.josm.plugins.streetside.gui.boilerplate.StreetsideButton;
-import org.openstreetmap.josm.plugins.streetside.utils.CubemapBox;
 import org.openstreetmap.josm.plugins.streetside.utils.StreetsideProperties;
 import org.openstreetmap.josm.plugins.streetside.utils.StreetsideURL;
 import org.openstreetmap.josm.tools.I18n;
-import org.openstreetmap.josm.tools.Logging;
-
 
 public final class StreetsideViewerPanel extends JPanel
 		implements StreetsideDataListener {
 
 	private static final long serialVersionUID = 4141847503072417190L;
+
+	final static Logger logger = Logger.getLogger(StreetsideViewerPanel.class);
 
 	private JCheckBox highResImageryCheck;
 	private WebLinkAction imgLinkAction;
@@ -63,10 +66,11 @@ public final class StreetsideViewerPanel extends JPanel
 		repaint();
 	    JPanel checkPanel = new JPanel();
 
-	    imgReloadAction = new ImageReloadAction(I18n.tr("Reload"));
+	    imgReloadAction = new ImageReloadAction("Reload");
 
 	    StreetsideButton imgReloadButton = new StreetsideButton(imgReloadAction);
-		highResImageryCheck = new JCheckBox(I18n.tr("High resolution"));
+
+	    highResImageryCheck = new JCheckBox("High resolution");
 	    highResImageryCheck.setSelected(StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get());
 	    highResImageryCheck.addActionListener(
 	      action -> StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.put(highResImageryCheck.isSelected())
@@ -79,14 +83,17 @@ public final class StreetsideViewerPanel extends JPanel
 
 	    JPanel privacyLink = new JPanel();
 
-	    imgLinkAction = new WebLinkAction(I18n.tr("Report a privacy concern with this image"), null);
+	    imgLinkAction = new WebLinkAction("Report a privacy concern with this image", null);
 	    privacyLink.add(new StreetsideButton(imgLinkAction, true));
 	    checkPanel.add(privacyLink, BorderLayout.PAGE_END);
 
-	    add(checkPanel, BorderLayout.SOUTH);
 	    add(threeSixtyDegreeViewerPanel, BorderLayout.CENTER);
 
-	    add(privacyLink, BorderLayout.PAGE_END);
+	    JPanel bottomPanel = new JPanel();
+	    bottomPanel.add(checkPanel, BorderLayout.NORTH);
+	    bottomPanel.add(privacyLink, BorderLayout.SOUTH);
+
+	    add(bottomPanel, BorderLayout.PAGE_END);
 	}
 
 	/*
@@ -116,23 +123,25 @@ public final class StreetsideViewerPanel extends JPanel
 		// method is invoked with null initially by framework
 		if(newImage!=null) {
 
-		    Logging.debug(String.format(
+		    logger.info(String.format(
 		      "Selected Streetside image changed from %s to %s.",
 		      oldImage instanceof StreetsideImage ? ((StreetsideImage) oldImage).getId() : "‹none›",
 		      newImage instanceof StreetsideImage ? ((StreetsideImage) newImage).getId() : "‹none›"
 		    ));
 
-		    //imgIdValue.setEnabled(newImage instanceof StreetsideImage);
-		    final String newImageId = newImage instanceof StreetsideImage ? ((StreetsideImage) newImage).getId(): null;
+		    final String newImageId = CubemapBuilder.getInstance().getCubemap() !=null ? CubemapBuilder.getInstance().getCubemap().getId() : newImage instanceof StreetsideImage ? ((StreetsideImage) newImage).getId(): null;
 		    if (newImageId != null) {
 		      final String bubbleId = CubemapUtils.convertQuaternary2Decimal(newImageId);
 		      imageLinkChangeListener = b -> imgLinkAction.setURL(
 		        StreetsideURL.MainWebsite.streetsidePrivacyLink(bubbleId)
 		      );
+
+		      if(StreetsideProperties.DEBUGING_ENABLED.get()) {
+		        logger.debug(MessageFormat.format("Privacy link set for Streetside image {0} quadKey {1}", bubbleId, newImageId));
+		      }
+
 		      imageLinkChangeListener.valueChanged(null);
 		      StreetsideProperties.CUBEMAP_LINK_TO_BLUR_EDITOR.addListener(imageLinkChangeListener);
-
-
 		    } else {
 		      if (imageLinkChangeListener != null) {
 		        StreetsideProperties.CUBEMAP_LINK_TO_BLUR_EDITOR.removeListener(imageLinkChangeListener);
@@ -143,7 +152,7 @@ public final class StreetsideViewerPanel extends JPanel
 		  }
 	}
 
-	public CubemapBox getCubemapBox() {
+	public static CubemapBox getCubemapBox() {
 		return threeSixtyDegreeViewerPanel.getCubemapBox();
 	}
 

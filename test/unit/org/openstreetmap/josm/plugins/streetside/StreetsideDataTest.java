@@ -3,6 +3,8 @@ package org.openstreetmap.josm.plugins.streetside;
 
 import static org.junit.Assert.assertEquals;
 
+import org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImage;
+
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentSkipListSet;
 
@@ -10,7 +12,6 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
-
 import org.openstreetmap.josm.data.coor.LatLon;
 import org.openstreetmap.josm.plugins.streetside.utils.TestUtil.StreetsideTestRules;
 import org.openstreetmap.josm.testutils.JOSMTestRules;
@@ -38,10 +39,10 @@ public class StreetsideDataTest {
    */
   @Before
   public void setUp() {
-    img1 = new StreetsideImage("key1__________________", new LatLon(0.1, 0.1), 90);
-    img2 = new StreetsideImage("key2__________________", new LatLon(0.2, 0.2), 90);
-    img3 = new StreetsideImage("key3__________________", new LatLon(0.3, 0.3), 90);
-    img4 = new StreetsideImage("key4__________________", new LatLon(0.4, 0.4), 90);
+    img1 = new StreetsideImage("id1__________________", new LatLon(0.1, 0.1), 90);
+    img2 = new StreetsideImage("id2__________________", new LatLon(0.2, 0.2), 90);
+    img3 = new StreetsideImage("id3__________________", new LatLon(0.3, 0.3), 90);
+    img4 = new StreetsideImage("id4__________________", new LatLon(0.4, 0.4), 90);
     final StreetsideSequence seq = new StreetsideSequence();
 
     seq.add(Arrays.asList(img1, img2, img3, img4));
@@ -74,7 +75,7 @@ public class StreetsideDataTest {
   @Test
   public void sizeTest() {
     assertEquals(4, data.getImages().size());
-    data.add(new StreetsideImage("key5__________________", new LatLon(0.1, 0.1), 90));
+    data.add(new StreetsideImage("id5__________________", new LatLon(0.1, 0.1), 90));
     assertEquals(5, data.getImages().size());
   }
 

@@ -8,6 +8,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 import javax.imageio.ImageIO;
 
+import org.apache.log4j.Logger;
 import org.openstreetmap.josm.data.cache.CacheEntry;
 import org.openstreetmap.josm.data.cache.CacheEntryAttributes;
 import org.openstreetmap.josm.data.cache.ICachedLoaderListener;
@@ -15,7 +16,6 @@ import org.openstreetmap.josm.plugins.streetside.StreetsideAbstractImage;
 import org.openstreetmap.josm.plugins.streetside.StreetsideImage;
 import org.openstreetmap.josm.plugins.streetside.cache.CacheUtils;
 import org.openstreetmap.josm.plugins.streetside.cache.StreetsideCache;
-import org.openstreetmap.josm.tools.Logging;
 
 /**
  * This is the thread that downloads one of the images that are going to be
@@ -27,6 +27,8 @@ import org.openstreetmap.josm.tools.Logging;
  */
 public class StreetsideExportDownloadThread extends Thread implements
     ICachedLoaderListener {
+
+  final static Logger logger = Logger.getLogger(StreetsideExportDownloadThread.class);
 
   private final ArrayBlockingQueue<BufferedImage> queue;
   private final ArrayBlockingQueue<StreetsideAbstractImage> queueImages;
@@ -55,7 +57,8 @@ public class StreetsideExportDownloadThread extends Thread implements
 
   @Override
   public void run() {
-    CacheUtils.submit(this.image.getId(), StreetsideCache.Type.FULL_IMAGE, this);
+    // use "thumbnail" type here so that the tiles are not exported
+    CacheUtils.submit(image.getId(), StreetsideCache.Type.THUMBNAIL, this);
   }
 
   @Override
@@ -63,12 +66,12 @@ public class StreetsideExportDownloadThread extends Thread implements
       CacheEntryAttributes attributes, LoadResult result) {
     try {
       synchronized (StreetsideExportDownloadThread.class) {
-        this.queue
+        queue
             .put(ImageIO.read(new ByteArrayInputStream(data.getContent())));
-        this.queueImages.put(this.image);
+        queueImages.put(image);
       }
     } catch (InterruptedException | IOException e) {
-      Logging.error(e);
+      logger.error(e);
     }
   }
 }

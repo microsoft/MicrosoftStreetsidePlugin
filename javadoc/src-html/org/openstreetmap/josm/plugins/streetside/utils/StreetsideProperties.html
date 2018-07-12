@@ -30,8 +30,8 @@
 <span class="sourceLineNo">022</span>  public static final BooleanProperty IMAGE_LINK_TO_BLUR_EDITOR = new BooleanProperty("streetside.image-link-to-blur-editor", true);<a name="line.22"></a>
 <span class="sourceLineNo">023</span>  public static final BooleanProperty CUBEMAP_LINK_TO_BLUR_EDITOR = new BooleanProperty("streetside.cubemap-link-to-blur-editor", true);<a name="line.23"></a>
 <span class="sourceLineNo">024</span>  public static final IntegerProperty TILE_DOWNLOAD_THREAD_PAUSE_LEN_SEC = new IntegerProperty("streetside.tile-download-thread-pause-len-sec", 60);<a name="line.24"></a>
-<span class="sourceLineNo">025</span>  public static final BooleanProperty PREDOWNLOAD_CUBEMAPS = new BooleanProperty("streetside.predownload-cubemaps", true);<a name="line.25"></a>
-<span class="sourceLineNo">026</span><a name="line.26"></a>
+<span class="sourceLineNo">025</span>  public static final BooleanProperty PREDOWNLOAD_CUBEMAPS = new BooleanProperty("streetside.predownload-cubemaps", false);<a name="line.25"></a>
+<span class="sourceLineNo">026</span>  public static final BooleanProperty DEBUGING_ENABLED = new BooleanProperty("streetside.debugging-enabled", true);<a name="line.26"></a>
 <span class="sourceLineNo">027</span>  /**<a name="line.27"></a>
 <span class="sourceLineNo">028</span>   * If false, all sequences that cross the download bounds are put completely into the StreetsideData object.<a name="line.28"></a>
 <span class="sourceLineNo">029</span>   * Otherwise only all images (!) inside the download bounds are added, the others are discarded.<a name="line.29"></a>
@@ -65,38 +65,44 @@
 <span class="sourceLineNo">057</span>    new StringProperty("streetside.download-mode", StreetsideDownloader.DOWNLOAD_MODE.DEFAULT.getPrefId());<a name="line.57"></a>
 <span class="sourceLineNo">058</span>  public static final StringProperty START_DIR =<a name="line.58"></a>
 <span class="sourceLineNo">059</span>    new StringProperty("streetside.start-directory", System.getProperty("user.home"));<a name="line.59"></a>
-<span class="sourceLineNo">060</span><a name="line.60"></a>
-<span class="sourceLineNo">061</span>  /**<a name="line.61"></a>
-<span class="sourceLineNo">062</span>   * The number of times the help popup for the {@link ImageInfoPanel} will be displayed.<a name="line.62"></a>
-<span class="sourceLineNo">063</span>   * But regardless of this number, the popup will only show up at most once between two (re)starts of JOSM.<a name="line.63"></a>
-<span class="sourceLineNo">064</span>   * Or opening the {@link ImageInfoPanel} immediately brings this number down to zero.<a name="line.64"></a>
-<span class="sourceLineNo">065</span>   */<a name="line.65"></a>
-<span class="sourceLineNo">066</span>  public static final IntegerProperty IMAGEINFO_HELP_COUNTDOWN =<a name="line.66"></a>
-<span class="sourceLineNo">067</span>    new IntegerProperty("streetside.imageInfo.helpDisplayedCountdown", 4);<a name="line.67"></a>
-<span class="sourceLineNo">068</span><a name="line.68"></a>
-<span class="sourceLineNo">069</span>  /**<a name="line.69"></a>
-<span class="sourceLineNo">070</span>   * The number of times the help popup for the {@link StreetsideViewerPanel} will be displayed.<a name="line.70"></a>
-<span class="sourceLineNo">071</span>   * But regardless of this number, the popup will only show up at most once between two (re)starts of JOSM.<a name="line.71"></a>
-<span class="sourceLineNo">072</span>   * Or opening the {@link StreetsideViewerPanel} immediately brings this number down to zero.<a name="line.72"></a>
-<span class="sourceLineNo">073</span>   */<a name="line.73"></a>
-<span class="sourceLineNo">074</span>  public static final IntegerProperty STREETSIDE_VIEWER_HELP_COUNTDOWN =<a name="line.74"></a>
-<span class="sourceLineNo">075</span>    new IntegerProperty("streetside.streetsideViewer.helpDisplayedCountdown", 4);<a name="line.75"></a>
-<span class="sourceLineNo">076</span><a name="line.76"></a>
-<span class="sourceLineNo">077</span>  /**<a name="line.77"></a>
-<span class="sourceLineNo">078</span>   * The number of images to be prefetched when a streetside image is selected<a name="line.78"></a>
+<span class="sourceLineNo">060</span>  public static final StringProperty URL_CLIENT_ID =<a name="line.60"></a>
+<span class="sourceLineNo">061</span>    new StringProperty("streetside.url-clientid", System.getProperty("T1Fzd20xZjdtR0s1VDk5OFNIOXpYdzoxNDYyOGRkYzUyYTFiMzgz"));<a name="line.61"></a>
+<span class="sourceLineNo">062</span>  public static final StringProperty BING_MAPS_KEY =<a name="line.62"></a>
+<span class="sourceLineNo">063</span>    new StringProperty("streetside.bing-maps-key", System.getProperty("AuftgJsO0Xs8Ts4M1xZUQJQXJNsvmh3IV8DkNieCiy3tCwCUMq76-WpkrBtNAuEm"));<a name="line.63"></a>
+<span class="sourceLineNo">064</span>  public static final StringProperty TEST_BUBBLE_ID =<a name="line.64"></a>
+<span class="sourceLineNo">065</span>    new StringProperty("streetside.test-bubble-id", System.getProperty("80848005"));<a name="line.65"></a>
+<span class="sourceLineNo">066</span><a name="line.66"></a>
+<span class="sourceLineNo">067</span>  /**<a name="line.67"></a>
+<span class="sourceLineNo">068</span>   * The number of times the help popup for the {@link ImageInfoPanel} will be displayed.<a name="line.68"></a>
+<span class="sourceLineNo">069</span>   * But regardless of this number, the popup will only show up at most once between two (re)starts of JOSM.<a name="line.69"></a>
+<span class="sourceLineNo">070</span>   * Or opening the {@link ImageInfoPanel} immediately brings this number down to zero.<a name="line.70"></a>
+<span class="sourceLineNo">071</span>   */<a name="line.71"></a>
+<span class="sourceLineNo">072</span>  public static final IntegerProperty IMAGEINFO_HELP_COUNTDOWN =<a name="line.72"></a>
+<span class="sourceLineNo">073</span>    new IntegerProperty("streetside.imageInfo.helpDisplayedCountdown", 4);<a name="line.73"></a>
+<span class="sourceLineNo">074</span><a name="line.74"></a>
+<span class="sourceLineNo">075</span>  /**<a name="line.75"></a>
+<span class="sourceLineNo">076</span>   * The number of times the help popup for the {@link StreetsideViewerPanel} will be displayed.<a name="line.76"></a>
+<span class="sourceLineNo">077</span>   * But regardless of this number, the popup will only show up at most once between two (re)starts of JOSM.<a name="line.77"></a>
+<span class="sourceLineNo">078</span>   * Or opening the {@link StreetsideViewerPanel} immediately brings this number down to zero.<a name="line.78"></a>
 <span class="sourceLineNo">079</span>   */<a name="line.79"></a>
-<span class="sourceLineNo">080</span>  public static final IntegerProperty PRE_FETCH_IMAGE_COUNT = new IntegerProperty("streetside.prefetch-image-count", 2);<a name="line.80"></a>
-<span class="sourceLineNo">081</span><a name="line.81"></a>
-<span class="sourceLineNo">082</span>  /**<a name="line.82"></a>
-<span class="sourceLineNo">083</span>   * The number of images to be prefetched when a streetside image is selected<a name="line.83"></a>
-<span class="sourceLineNo">084</span>   */<a name="line.84"></a>
-<span class="sourceLineNo">085</span>  public static final IntegerProperty PRE_FETCH_CUBEMAP_COUNT = new IntegerProperty("streetside.prefetch-image-count", 2);<a name="line.85"></a>
-<span class="sourceLineNo">086</span><a name="line.86"></a>
+<span class="sourceLineNo">080</span>  public static final IntegerProperty STREETSIDE_VIEWER_HELP_COUNTDOWN =<a name="line.80"></a>
+<span class="sourceLineNo">081</span>    new IntegerProperty("streetside.streetsideViewer.helpDisplayedCountdown", 4);<a name="line.81"></a>
+<span class="sourceLineNo">082</span><a name="line.82"></a>
+<span class="sourceLineNo">083</span>  /**<a name="line.83"></a>
+<span class="sourceLineNo">084</span>   * The number of images to be prefetched when a streetside image is selected<a name="line.84"></a>
+<span class="sourceLineNo">085</span>   */<a name="line.85"></a>
+<span class="sourceLineNo">086</span>  public static final IntegerProperty PRE_FETCH_IMAGE_COUNT = new IntegerProperty("streetside.prefetch-image-count", 2);<a name="line.86"></a>
 <span class="sourceLineNo">087</span><a name="line.87"></a>
-<span class="sourceLineNo">088</span>  private StreetsideProperties() {<a name="line.88"></a>
-<span class="sourceLineNo">089</span>    // Private constructor to avoid instantiation<a name="line.89"></a>
-<span class="sourceLineNo">090</span>  }<a name="line.90"></a>
-<span class="sourceLineNo">091</span>}<a name="line.91"></a>
+<span class="sourceLineNo">088</span>  /**<a name="line.88"></a>
+<span class="sourceLineNo">089</span>   * The number of images to be prefetched when a streetside image is selected<a name="line.89"></a>
+<span class="sourceLineNo">090</span>   */<a name="line.90"></a>
+<span class="sourceLineNo">091</span>  public static final IntegerProperty PRE_FETCH_CUBEMAP_COUNT = new IntegerProperty("streetside.prefetch-image-count", 2);<a name="line.91"></a>
+<span class="sourceLineNo">092</span><a name="line.92"></a>
+<span class="sourceLineNo">093</span><a name="line.93"></a>
+<span class="sourceLineNo">094</span>  private StreetsideProperties() {<a name="line.94"></a>
+<span class="sourceLineNo">095</span>    // Private constructor to avoid instantiation<a name="line.95"></a>
+<span class="sourceLineNo">096</span>  }<a name="line.96"></a>
+<span class="sourceLineNo">097</span>}<a name="line.97"></a>
 
 
 

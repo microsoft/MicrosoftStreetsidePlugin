@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
+import org.apache.log4j.Logger;
 import org.openstreetmap.josm.Main;
 import org.openstreetmap.josm.actions.JosmAction;
 import org.openstreetmap.josm.gui.MainApplication;
@@ -27,7 +28,6 @@ import org.openstreetmap.josm.plugins.streetside.gui.StreetsideExportDialog;
 import org.openstreetmap.josm.plugins.streetside.io.export.StreetsideExportManager;
 import org.openstreetmap.josm.tools.ImageProvider;
 import org.openstreetmap.josm.tools.ImageProvider.ImageSizes;
-import org.openstreetmap.josm.tools.Logging;
 import org.openstreetmap.josm.tools.Shortcut;
 
 /**
@@ -39,6 +39,8 @@ import org.openstreetmap.josm.tools.Shortcut;
 public class StreetsideExportAction extends JosmAction {
 
   private static final long serialVersionUID = 6131359489725632369L;
+
+  final static Logger logger = Logger.getLogger(StreetsideExportAction.class);
 
   private StreetsideExportDialog dialog;
 
@@ -62,8 +64,8 @@ public class StreetsideExportAction extends JosmAction {
     JButton cancel = new JButton(tr("Cancel"));
     cancel.addActionListener(e -> pane.setValue(JOptionPane.CANCEL_OPTION));
 
-    this.dialog = new StreetsideExportDialog(ok);
-    pane.setMessage(this.dialog);
+    dialog = new StreetsideExportDialog(ok);
+    pane.setMessage(dialog);
     pane.setOptions(new JButton[] {ok, cancel});
 
     JDialog dlg = pane.createDialog(Main.parent, tr("Export Streetside images"));
@@ -73,10 +75,10 @@ public class StreetsideExportAction extends JosmAction {
     // Checks if the inputs are correct and starts the export process.
     if (pane.getValue() != null
         && (int) pane.getValue() == JOptionPane.OK_OPTION
-        && this.dialog.chooser != null) {
-      if (this.dialog.group.isSelected(this.dialog.all.getModel())) {
+        && dialog.chooser != null) {
+      if (dialog.group.isSelected(dialog.all.getModel())) {
         export(StreetsideLayer.getInstance().getData().getImages());
-      } else if (this.dialog.group.isSelected(this.dialog.sequence.getModel())) {
+      } else if (dialog.group.isSelected(dialog.sequence.getModel())) {
         Set<StreetsideAbstractImage> images = new ConcurrentSkipListSet<>();
         for (StreetsideAbstractImage image : StreetsideLayer.getInstance().getData().getMultiSelectedImages()) {
           if (image instanceof StreetsideImage) {
@@ -88,17 +90,17 @@ public class StreetsideExportAction extends JosmAction {
           }
         }
         export(images);
-      } else if (this.dialog.group.isSelected(dialog.selected.getModel())) {
+      } else if (dialog.group.isSelected(dialog.selected.getModel())) {
         export(StreetsideLayer.getInstance().getData().getMultiSelectedImages());
       }
       // This option ignores the selected directory.
-    } else if (this.dialog.group.isSelected(dialog.rewrite.getModel())) {
+    } else if (dialog.group.isSelected(dialog.rewrite.getModel())) {
       ArrayList<StreetsideImportedImage> images = new ArrayList<>();
       StreetsideLayer.getInstance().getData().getImages().stream().filter(img -> img instanceof StreetsideImportedImage).forEach(img -> images.add((StreetsideImportedImage) img));
       try {
         MainApplication.worker.execute(new StreetsideExportManager(images));
       } catch (IOException e1) {
-        Logging.error(e1);
+        logger.error(e1);
       }
     }
     dlg.dispose();
@@ -112,7 +114,7 @@ public class StreetsideExportAction extends JosmAction {
    */
   public void export(Set<StreetsideAbstractImage> images) {
     MainApplication.worker.execute(new StreetsideExportManager(images,
-        this.dialog.chooser.getSelectedFile().toString()));
+        dialog.chooser.getSelectedFile().toString()));
   }
 
   @Override

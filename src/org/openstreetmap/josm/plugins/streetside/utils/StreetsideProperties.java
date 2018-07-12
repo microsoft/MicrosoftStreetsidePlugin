@@ -22,8 +22,8 @@ public final class StreetsideProperties {
   public static final BooleanProperty IMAGE_LINK_TO_BLUR_EDITOR = new BooleanProperty("streetside.image-link-to-blur-editor", true);
   public static final BooleanProperty CUBEMAP_LINK_TO_BLUR_EDITOR = new BooleanProperty("streetside.cubemap-link-to-blur-editor", true);
   public static final IntegerProperty TILE_DOWNLOAD_THREAD_PAUSE_LEN_SEC = new IntegerProperty("streetside.tile-download-thread-pause-len-sec", 60);
-  public static final BooleanProperty PREDOWNLOAD_CUBEMAPS = new BooleanProperty("streetside.predownload-cubemaps", true);
-
+  public static final BooleanProperty PREDOWNLOAD_CUBEMAPS = new BooleanProperty("streetside.predownload-cubemaps", false);
+  public static final BooleanProperty DEBUGING_ENABLED = new BooleanProperty("streetside.debugging-enabled", true);
   /**
    * If false, all sequences that cross the download bounds are put completely into the StreetsideData object.
    * Otherwise only all images (!) inside the download bounds are added, the others are discarded.
@@ -57,6 +57,12 @@ public final class StreetsideProperties {
     new StringProperty("streetside.download-mode", StreetsideDownloader.DOWNLOAD_MODE.DEFAULT.getPrefId());
   public static final StringProperty START_DIR =
     new StringProperty("streetside.start-directory", System.getProperty("user.home"));
+  public static final StringProperty URL_CLIENT_ID =
+    new StringProperty("streetside.url-clientid", System.getProperty("T1Fzd20xZjdtR0s1VDk5OFNIOXpYdzoxNDYyOGRkYzUyYTFiMzgz"));
+  public static final StringProperty BING_MAPS_KEY =
+    new StringProperty("streetside.bing-maps-key", System.getProperty("AuftgJsO0Xs8Ts4M1xZUQJQXJNsvmh3IV8DkNieCiy3tCwCUMq76-WpkrBtNAuEm"));
+  public static final StringProperty TEST_BUBBLE_ID =
+    new StringProperty("streetside.test-bubble-id", System.getProperty("80848005"));
 
   /**
    * The number of times the help popup for the {@link ImageInfoPanel} will be displayed.

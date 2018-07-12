@@ -10,10 +10,11 @@ import org.openstreetmap.josm.data.coor.LatLon;
 import org.openstreetmap.josm.plugins.streetside.utils.StreetsideProperties;
 
 /**
- * Abstract superclass for all image objects. At the moment there are just 2,
- * {@link StreetsideImportedImage} and {@link StreetsideImage}.
+ * Abstract superclass for all image objects. At the moment there are 3,
+ * {@link StreetsideImportedImage}, {@link StreetsideImage}, & {@link StreetsideCubemap}.
  *
  * @author nokutu
+ * @author renerr18
  *
  */
 public abstract class StreetsideAbstractImage implements Comparable<StreetsideAbstractImage> {
@@ -24,6 +25,10 @@ public abstract class StreetsideAbstractImage implements Comparable<StreetsideAb
 	private static final float EPSILON = 1e-5f;
 
 	protected String id;
+
+	private long ne;
+  private long pr;
+
 
 	/** The time the image was captured, in Epoch format. */
 	protected long cd;
@@ -336,4 +341,33 @@ public abstract class StreetsideAbstractImage implements Comparable<StreetsideAb
 	public void turn(final double ca) {
 		movingHe = tempHe + ca;
 	}
+
+	/**
+   * @return the ne
+   */
+  public long getNe() {
+    return ne;
+  }
+
+  /**
+   * @param ne the ne to set
+   */
+  public void setNe(long ne) {
+    this.ne = ne;
+  }
+
+  /**
+   * @return the pr
+   */
+  public long getPr() {
+    return pr;
+  }
+
+  /**
+   * @param pr the pr to set
+   */
+  public void setPr(long pr) {
+    this.pr = pr;
+  }
+
 }

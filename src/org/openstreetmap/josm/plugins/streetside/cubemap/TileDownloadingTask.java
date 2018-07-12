@@ -2,23 +2,24 @@
 package org.openstreetmap.josm.plugins.streetside.cubemap;
 
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
+import java.text.MessageFormat;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.imageio.ImageIO;
 
+import org.apache.log4j.Logger;
 import org.openstreetmap.josm.plugins.streetside.cache.StreetsideCache;
+import org.openstreetmap.josm.plugins.streetside.utils.StreetsideProperties;
 import org.openstreetmap.josm.plugins.streetside.utils.StreetsideURL;
-import org.openstreetmap.josm.tools.I18n;
-import org.openstreetmap.josm.tools.Logging;
 
 import us.monoid.web.Resty;
 
 public class TileDownloadingTask implements Callable<String> {
+
+  final static Logger logger = Logger.getLogger(TileDownloadingTask.class);
 
 	private String tileId;
 	private final long startTime = System.currentTimeMillis();
@@ -104,24 +105,18 @@ public class TileDownloadingTask implements Callable<String> {
 				.stream());
 
 		if (img == null) {
-			Logging.error(I18n.tr("Download of BufferedImage {0} is null!", tileId));
+			logger.error("Download of BufferedImage " + tileId + " is null!");
 		}
 
-		String faceId = CubemapUtils.getFaceIdFromTileId(tileId);
-
-		Map<String, Map<String, BufferedImage>> faces2TilesMap = CubemapBuilder
-				.getInstance().getCubemap().getFace2TilesMap();
-
-		if(faces2TilesMap.get(faceId)==null) {
-			faces2TilesMap.put(faceId, new HashMap<String,BufferedImage>());
-		}
-		faces2TilesMap.get(faceId).put(tileId, img);
+		CubemapBuilder.getInstance().getTileImages().put(tileId, img);
 
 		fireTileAdded(tileId);
 
-		long endTime = System.currentTimeMillis();
-		long runTime = startTime - endTime;
-		Logging.info("Loaded image for tile {0} milliseconds", tileId, runTime);
+		if (StreetsideProperties.DEBUGING_ENABLED.get()) {
+		  long endTime = System.currentTimeMillis();
+	    long runTime = (endTime-startTime)/1000;
+	    logger.debug(MessageFormat.format("Loaded image for {0} in {1} seconds.", tileId, runTime));
+		}
 
 		return tileId;
 	}

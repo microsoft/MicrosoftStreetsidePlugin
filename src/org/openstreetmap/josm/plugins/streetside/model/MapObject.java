@@ -1,22 +1,14 @@
 // License: GPL. For details, see LICENSE file.
 package org.openstreetmap.josm.plugins.streetside.model;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.function.Function;
-
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import org.openstreetmap.josm.data.coor.LatLon;
 import org.openstreetmap.josm.plugins.streetside.cache.Caches.MapObjectIconCache;
-import org.openstreetmap.josm.plugins.streetside.utils.StreetsideURL.MainWebsite;
 import org.openstreetmap.josm.tools.ImageProvider;
-import org.openstreetmap.josm.tools.Logging;
 
 public class MapObject extends KeyIndexedObject {
   private static final ImageIcon ICON_UNKNOWN_TYPE = ImageProvider.get("unknown-mapobject-type");
-  private static Function<String, URL> iconUrlGen = MainWebsite::mapObjectIcon;
 
   private final LatLon coordinate;
   private final String objPackage;
@@ -55,14 +47,7 @@ public class MapObject extends KeyIndexedObject {
     if ("not-in-set".equals(objectTypeID)) {
       return ICON_UNKNOWN_TYPE;
     } else if (cachedIcon == null) {
-      try {
-        final ImageIcon downloadedIcon = new ImageIcon(ImageIO.read(iconUrlGen.apply(objectTypeID)));
-        MapObjectIconCache.getInstance().put(objectTypeID, downloadedIcon);
-        return downloadedIcon;
-      } catch (IOException e) {
-        Logging.log(Logging.LEVEL_WARN, "Failed to download icon " + objectTypeID, e);
-        return ICON_UNKNOWN_TYPE;
-      }
+      // downloading of map icons is not currently supported by Streetside
     }
     return cachedIcon;
   }

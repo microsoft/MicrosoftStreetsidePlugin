@@ -19,8 +19,8 @@ public class StreetsideURLTest {
 
   public static class APIv3 {
 
-    @Ignore
-	@Test
+    /*@Ignore
+	  @Test
     public void testSearchDetections() {
       assertUrlEquals(StreetsideURL.APIv3.searchDetections(null), "https://a.streetside.com/v3/detections", CLIENT_ID_QUERY_PART);
     }
@@ -38,9 +38,11 @@ public class StreetsideURLTest {
         new URL("https://a.streetside.com/v3/changesets?" + CLIENT_ID_QUERY_PART),
         StreetsideURL.APIv3.submitChangeset()
       );
-    }
+    }*/
+  }
 
-    @Test
+
+	@Test
     public void testParseNextFromHeaderValue() throws MalformedURLException {
       String headerVal =
         "<https://a.streetside.com/v3/sequences?page=1&per_page=200&client_id=TG1sUUxGQlBiYWx2V05NM0pQNUVMQTo2NTU3NTBiNTk1NzM1Y2U2>; rel=\"first\", " +
@@ -71,16 +73,16 @@ public class StreetsideURLTest {
     public void testParseNextFromHeaderValueMalformed() {
       assertEquals(null, StreetsideURL.APIv3.parseNextFromLinkHeaderValue("<###>; rel=\"next\", blub"));
     }
-  }
 
-  public static class Cloudfront {
+
+  /*public static class Cloudfront {
     @Ignore
 	@Test
     public void testThumbnail() {
       assertUrlEquals(StreetsideURL.VirtualEarth.streetsideTile("arbitrary_key", true), "https://d1cuyjsrcm0gby.cloudfront.net/arbitrary_key/thumb-2048.jpg");
       assertUrlEquals(StreetsideURL.VirtualEarth.streetsideTile("arbitrary_key2", false), "https://d1cuyjsrcm0gby.cloudfront.net/arbitrary_key2/thumb-320.jpg");
     }
-  }
+  }*/
 
   @Ignore
   @Test
@@ -99,7 +101,7 @@ public class StreetsideURLTest {
   @Ignore
   @Test
   public void testConnectURL() {
-    assertUrlEquals(
+    /*assertUrlEquals(
         StreetsideURL.MainWebsite.connect("http://redirect-host/ä"),
         "https://www.streetside.com/connect",
         CLIENT_ID_QUERY_PART,
@@ -122,25 +124,25 @@ public class StreetsideURLTest {
         CLIENT_ID_QUERY_PART,
         "scope=user%3Aread+public%3Aupload+public%3Awrite",
         "response_type=token"
-    );
+    );*/
   }
 
   @Ignore
   @Test
   public void testUploadSecretsURL() throws MalformedURLException {
-    assertEquals(
+    /*assertEquals(
         new URL("https://a.streetside.com/v2/me/uploads/secrets?"+CLIENT_ID_QUERY_PART),
         StreetsideURL.uploadSecretsURL()
-    );
+    );*/
   }
 
   @Ignore
   @Test
   public void testUserURL() throws MalformedURLException {
-    assertEquals(
+    /*assertEquals(
         new URL("https://a.streetside.com/v3/me?"+CLIENT_ID_QUERY_PART),
         StreetsideURL.APIv3.userURL()
-    );
+    );*/
   }
 
   @Test

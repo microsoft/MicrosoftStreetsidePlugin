@@ -4,12 +4,12 @@ package org.openstreetmap.josm.plugins.streetside.cache;
 
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
 import org.openstreetmap.josm.data.cache.CacheEntry;
 import org.openstreetmap.josm.data.cache.CacheEntryAttributes;
 import org.openstreetmap.josm.data.cache.ICachedLoaderListener;
 import org.openstreetmap.josm.plugins.streetside.StreetsideImage;
 import org.openstreetmap.josm.plugins.streetside.cubemap.CubemapBuilder;
-import org.openstreetmap.josm.tools.Logging;
 
 /**
 * Utility methods for working with cache.
@@ -18,6 +18,8 @@ import org.openstreetmap.josm.tools.Logging;
 *
 */
 public final class CacheUtils {
+
+final static Logger logger = Logger.getLogger(CacheUtils.class);
 
 private static IgnoreDownload ignoreDownload = new IgnoreDownload();
 
@@ -56,8 +58,7 @@ public static void downloadPicture(StreetsideImage img) {
 *          The image whose picture is going to be downloaded.
 */
 public static void downloadCubemap(StreetsideImage cm) {
-	// TODO: causes errors. Analyze @rrh
-	//downloadPicture(cm, PICTURE.CUBEMAP);
+	downloadPicture(cm, PICTURE.CUBEMAP);
 }
 
 /**
@@ -82,10 +83,11 @@ public static void downloadPicture(StreetsideImage img, PICTURE pic) {
      submit(img.getId(), StreetsideCache.Type.THUMBNAIL, ignoreDownload);
      break;
    case FULL_IMAGE:
-   // TODO: is this still useful? @rrh
+     // not used (relic from Mapillary)
+     break;
    case CUBEMAP:
 	   if(img.getId()==null) {
-		   Logging.error("Download cancelled. Image id is null.");
+		   logger.error("Download cancelled. Image id is null.");
 	   } else {
 		   CubemapBuilder.getInstance().downloadCubemapImages(img.getId());
 	   }
@@ -95,153 +97,6 @@ public static void downloadPicture(StreetsideImage img, PICTURE pic) {
      break;
  }
 }
-
-/**
-* Downloads the picture of the given image. Does nothing when it is already
-* in cache.
-*
-* @param cm
-*          The cubemap to be downloaded.
-* @param pic
-*          The picture type to be downloaded (full quality, thumbnail, both, or cubemap.)
-*/
-/*public static void downloadCubemapFront(StreetsideImage cm, PICTURE pic) {
- switch (pic) {
-   case CUBEMAP:
-	   for (int i = 0; i < 6; i++) {
-			for (int j = 0; j < 4; j++) {
-				for (int k = 0; k < 4; k++) {
-					String cubeface = CubemapUtils.getFaceNumberForCount(i);
-					String tileNr = CubemapUtils.rowCol2StreetsideCellAddressMap
-							.get(Integer.toString(j) + Integer.toString(k));
-					long tileId = Long.parseLong(cm.getId() + cubeface + tileNr);
-
-					submit(cm.getId(), StreetsideCache.Type.CUBEMAP_FRONT, ignoreDownload);
-
-				}
-			}
-		}
-	   break;
-   default:
-     submit(cm.getId(), StreetsideCache.Type.CUBEMAP_FRONT, ignoreDownload);
-     break;
- }
-}*/
-
-/*public static void downloadCubemapRight(StreetsideImage cm, PICTURE pic) {
-	 switch (pic) {
-	   case CUBEMAP:
-		   for (int i = 0; i < 6; i++) {
-				for (int j = 0; j < 4; j++) {
-					for (int k = 0; k < 4; k++) {
-						String cubeface = CubemapUtils.getFaceNumberForCount(i);
-						String tileNr = CubemapUtils.rowCol2StreetsideCellAddressMap
-								.get(Integer.toString(j) + Integer.toString(k));
-						long tileId = Long.parseLong(cm.getId() + cubeface + tileNr);
-
-						submit(cm.getId(), StreetsideCache.Type.CUBEMAP_RIGHT, ignoreDownload);
-
-					}
-				}
-			}
-		   break;
-	   default:
-	     submit(cm.getId(), StreetsideCache.Type.CUBEMAP_RIGHT, ignoreDownload);
-	     break;
-	 }
-	}*/
-
-/*public static void downloadCubemapBack(StreetsideImage cm, PICTURE pic) {
-	 switch (pic) {
-	   case CUBEMAP:
-		   for (int i = 0; i < 6; i++) {
-				for (int j = 0; j < 4; j++) {
-					for (int k = 0; k < 4; k++) {
-						String cubeface = CubemapUtils.getFaceNumberForCount(i);
-						String tileNr = CubemapUtils.rowCol2StreetsideCellAddressMap
-								.get(Integer.toString(j) + Integer.toString(k));
-						long tileId = Long.parseLong(cm.getId() + cubeface + tileNr);
-
-						submit(cm.getId(), StreetsideCache.Type.CUBEMAP_BACK, ignoreDownload);
-
-					}
-				}
-			}
-		   break;
-	   default:
-	     submit(cm.getId(), StreetsideCache.Type.CUBEMAP_BACK, ignoreDownload);
-	     break;
-	 }
-	}*/
-
-/*public static void downloadCubemapLeft(StreetsideImage cm, PICTURE pic) {
-	 switch (pic) {
-	   case CUBEMAP:
-		   for (int i = 0; i < 6; i++) {
-				for (int j = 0; j < 4; j++) {
-					for (int k = 0; k < 4; k++) {
-						String cubeface = CubemapUtils.getFaceNumberForCount(i);
-						String tileNr = CubemapUtils.rowCol2StreetsideCellAddressMap
-								.get(Integer.toString(j) + Integer.toString(k));
-						long tileId = Long.parseLong(cm.getId() + cubeface + tileNr);
-
-						submit(cm.getId(), StreetsideCache.Type.CUBEMAP_LEFT, ignoreDownload);
-
-					}
-				}
-			}
-		   break;
-	   default:
-	     submit(cm.getId(), StreetsideCache.Type.CUBEMAP_LEFT, ignoreDownload);
-	     break;
-	 }
-	}*/
-
-/*public static void downloadCubemapUp(StreetsideImage cm, PICTURE pic) {
-	 switch (pic) {
-	   case CUBEMAP:
-		   for (int i = 0; i < 6; i++) {
-				for (int j = 0; j < 4; j++) {
-					for (int k = 0; k < 4; k++) {
-						String cubeface = CubemapUtils.getFaceNumberForCount(i);
-						String tileNr = CubemapUtils.rowCol2StreetsideCellAddressMap
-								.get(Integer.toString(j) + Integer.toString(k));
-						long tileId = Long.parseLong(cm.getId() + cubeface + tileNr);
-
-						submit(cm.getId(), StreetsideCache.Type.CUBEMAP_UP, ignoreDownload);
-
-					}
-				}
-			}
-		   break;
-	   default:
-	     submit(cm.getId(), StreetsideCache.Type.CUBEMAP_UP, ignoreDownload);
-	     break;
-	 }
-	}*/
-
-/*public static void downloadCubemapDown(StreetsideImage cm, PICTURE pic) {
-	 switch (pic) {
-	   case CUBEMAP:
-		   for (int i = 0; i < 6; i++) {
-				for (int j = 0; j < 4; j++) {
-					for (int k = 0; k < 4; k++) {
-						String cubeface = CubemapUtils.getFaceNumberForCount(i);
-						String tileNr = CubemapUtils.rowCol2StreetsideCellAddressMap
-								.get(Integer.toString(j) + Integer.toString(k));
-						long tileId = Long.parseLong(cm.getId() + cubeface + tileNr);
-
-						submit(cm.getId(), StreetsideCache.Type.CUBEMAP_DOWN, ignoreDownload);
-
-					}
-				}
-			}
-		   break;
-	   default:
-	     submit(cm.getId(), StreetsideCache.Type.CUBEMAP_DOWN, ignoreDownload);
-	     break;
-	 }
-	}*/
 
 /**
 * Requests the picture with the given key and quality and uses the given
@@ -259,15 +114,15 @@ public static void submit(String key, StreetsideCache.Type type,
  try {
    new StreetsideCache(key, type).submit(lis, false);
  } catch (IOException e) {
-   Logging.error(e);
+   logger.error(e);
  }
 }
 
-private static class IgnoreDownload implements ICachedLoaderListener {
+  private static class IgnoreDownload implements ICachedLoaderListener {
 
- @Override
- public void loadingFinished(CacheEntry arg0, CacheEntryAttributes arg1, LoadResult arg2) {
-   // Ignore download
- }
-}
+    @Override
+    public void loadingFinished(CacheEntry arg0, CacheEntryAttributes arg1, LoadResult arg2) {
+      // Ignore download
+    }
+  }
 }

@@ -25,6 +25,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 
+import org.apache.log4j.Logger;
 import org.openstreetmap.josm.actions.ExpertToggleAction;
 import org.openstreetmap.josm.gui.preferences.PreferenceTabbedPane;
 import org.openstreetmap.josm.gui.preferences.SubPreferenceSetting;
@@ -37,11 +38,8 @@ import org.openstreetmap.josm.plugins.streetside.oauth.StreetsideLoginListener;
 import org.openstreetmap.josm.plugins.streetside.oauth.StreetsideUser;
 import org.openstreetmap.josm.plugins.streetside.utils.StreetsideColorScheme;
 import org.openstreetmap.josm.plugins.streetside.utils.StreetsideProperties;
-import org.openstreetmap.josm.plugins.streetside.utils.StreetsideURL;
-import org.openstreetmap.josm.plugins.streetside.utils.StreetsideUtils;
 import org.openstreetmap.josm.tools.GBC;
 import org.openstreetmap.josm.tools.I18n;
-import org.openstreetmap.josm.tools.Logging;
 
 /**
  * Creates the preferences panel for the plugin.
@@ -50,6 +48,9 @@ import org.openstreetmap.josm.tools.Logging;
  *
  */
 public class StreetsidePreferenceSetting implements SubPreferenceSetting, StreetsideLoginListener {
+
+  final static Logger logger = Logger.getLogger(StreetsidePreferenceSetting.class);
+
   private final JComboBox<String> downloadModeComboBox = new JComboBox<>(new String[]{
       DOWNLOAD_MODE.VISIBLE_AREA.getLabel(),
       DOWNLOAD_MODE.OSM_AREA.getLabel(),
@@ -57,35 +58,21 @@ public class StreetsidePreferenceSetting implements SubPreferenceSetting, Street
   });
 
   private final JCheckBox displayHour =
-    // TODO tr( RRH
-    // i18n: Checkbox label in JOSM settings
     new JCheckBox(I18n.tr("Display hour when the picture was taken"), StreetsideProperties.DISPLAY_HOUR.get());
   private final JCheckBox format24 =
-    // TODO tr( RRH
-    // i18n: Checkbox label in JOSM settings
     new JCheckBox(I18n.tr("Use 24 hour format"), StreetsideProperties.TIME_FORMAT_24.get());
   private final JCheckBox moveTo =
-    // TODO tr( RRH
-    // i18n: Checkbox label in JOSM settings
     new JCheckBox(I18n.tr("Move to picture''s location with next/previous buttons"), StreetsideProperties.MOVE_TO_IMG.get());
   private final JCheckBox hoverEnabled =
-    // TODO tr( RRH
-    // i18n: Checkbox label in JOSM settings
     new JCheckBox(I18n.tr("Preview images when hovering its icon"), StreetsideProperties.HOVER_ENABLED.get());
   private final JCheckBox cutOffSeq =
-    // TODO tr( RRH
-    // i18n: Checkbox label in JOSM settings
     new JCheckBox(I18n.tr("Cut off sequences at download bounds"), StreetsideProperties.CUT_OFF_SEQUENCES_AT_BOUNDS.get());
   private final JCheckBox imageLinkToBlurEditor =
     new JCheckBox(
-      // TODO tr( RRH
-      // i18n: Checkbox label in JOSM settings
       I18n.tr("When opening Streetside image in web browser, show the blur editor instead of the image viewer"),
       StreetsideProperties.IMAGE_LINK_TO_BLUR_EDITOR.get()
     );
   private final JCheckBox developer =
-    // TODO tr( RRH
-    // i18n: Checkbox label in JOSM settings
     new JCheckBox(I18n.tr("Enable experimental beta-features (might be unstable)"), StreetsideProperties.DEVELOPER.get());
   private final SpinnerNumberModel preFetchSize = new SpinnerNumberModel(
     StreetsideProperties.PRE_FETCH_IMAGE_COUNT.get().intValue(),
@@ -111,15 +98,14 @@ public class StreetsidePreferenceSetting implements SubPreferenceSetting, Street
     loginPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
     loginPanel.setBackground(StreetsideColorScheme.TOOLBAR_DARK_GREY);
     JLabel brandImage = new JLabel();
-    // TODO: change icons RRH
     try (InputStream is = StreetsidePreferenceSetting.class.getResourceAsStream("/images/streetside-logo-white.png")) {
       if (is != null) {
         brandImage.setIcon(new ImageIcon(ImageIO.read(is)));
       } else {
-        Logging.warn("Could not load Streetside brand image!");
+        logger.warn("Could not load Streetside brand image!");
       }
     } catch (IOException e) {
-      Logging.warn("While reading Streetside brand image, an IO-exception occured!");
+      logger.warn("While reading Streetside brand image, an IO-exception occured!");
     }
     loginPanel.add(brandImage, 0);
     loginPanel.add(Box.createHorizontalGlue(), 1);
@@ -137,7 +123,6 @@ public class StreetsidePreferenceSetting implements SubPreferenceSetting, Street
     downloadModeComboBox.setSelectedItem(DOWNLOAD_MODE.fromPrefId(StreetsideProperties.DOWNLOAD_MODE.get()).getLabel());
 
     JPanel downloadModePanel = new JPanel();
-    // TODO tr( RRH
     downloadModePanel.add(new JLabel(I18n.tr("Download mode")));
     downloadModePanel.add(downloadModeComboBox);
     mainPanel.add(downloadModePanel, GBC.eol());
@@ -150,8 +135,6 @@ public class StreetsidePreferenceSetting implements SubPreferenceSetting, Street
     mainPanel.add(imageLinkToBlurEditor, GBC.eol());
 
     final JPanel preFetchPanel = new JPanel();
-    // TODO: tr( RRH
-    // i18n: Spinner label in JOSM settings
     preFetchPanel.add(new JLabel(I18n.tr("Number of images to be pre-fetched (forwards and backwards)")));
     final JSpinner spinner = new JSpinner(preFetchSize);
     final JSpinner.DefaultEditor editor = new JSpinner.NumberEditor(spinner);
@@ -187,7 +170,6 @@ public class StreetsidePreferenceSetting implements SubPreferenceSetting, Street
   public void onLogin(final String username) {
     loginPanel.remove(loginButton);
     loginPanel.add(logoutButton, 3);
-    // TODO tr( RRH
     loginLabel.setText(I18n.tr("You are logged in as ''{0}''.", username));
     loginPanel.revalidate();
     loginPanel.repaint();
@@ -197,7 +179,6 @@ public class StreetsidePreferenceSetting implements SubPreferenceSetting, Street
   public void onLogout() {
     loginPanel.remove(logoutButton);
     loginPanel.add(loginButton, 3);
-    // TODO: tr( RRH
     loginLabel.setText(I18n.tr("You are currently not logged in."));
     loginPanel.revalidate();
     loginPanel.repaint();
@@ -247,12 +228,7 @@ public class StreetsidePreferenceSetting implements SubPreferenceSetting, Street
     public void actionPerformed(ActionEvent arg0) {
       OAuthPortListener portListener = new OAuthPortListener(callback);
       portListener.start();
-      try {
-        // TODO: change URL RRH
-        StreetsideUtils.browse(StreetsideURL.MainWebsite.connect("http://localhost:"+OAuthPortListener.PORT+'/'));
-      } catch (IOException e) {
-        Logging.error(e);
-      }
+      // user authentication not supported for Streetside (Mapillary relic)
     }
   }
 

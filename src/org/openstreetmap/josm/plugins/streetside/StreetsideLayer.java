@@ -11,20 +11,16 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.TexturePaint;
-import java.awt.event.ActionEvent;
 import java.awt.geom.Line2D;
-import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 import java.util.Comparator;
 import java.util.IntSummaryStatistics;
 import java.util.Optional;
 
-import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Icon;
-import javax.swing.JComponent;
-import javax.swing.KeyStroke;
 
+import org.apache.log4j.Logger;
 import org.openstreetmap.josm.Main;
 import org.openstreetmap.josm.data.Bounds;
 import org.openstreetmap.josm.data.osm.DataSet;
@@ -41,12 +37,11 @@ import org.openstreetmap.josm.gui.layer.Layer;
 import org.openstreetmap.josm.gui.layer.MainLayerManager.ActiveLayerChangeEvent;
 import org.openstreetmap.josm.gui.layer.MainLayerManager.ActiveLayerChangeListener;
 import org.openstreetmap.josm.plugins.streetside.cache.CacheUtils;
-import org.openstreetmap.josm.plugins.streetside.gui.StreetsideChangesetDialog;
 import org.openstreetmap.josm.plugins.streetside.gui.StreetsideMainDialog;
+import org.openstreetmap.josm.plugins.streetside.history.StreetsideRecord;
 import org.openstreetmap.josm.plugins.streetside.io.download.StreetsideDownloader;
 import org.openstreetmap.josm.plugins.streetside.io.download.StreetsideDownloader.DOWNLOAD_MODE;
 import org.openstreetmap.josm.plugins.streetside.mode.AbstractMode;
-import org.openstreetmap.josm.plugins.streetside.mode.JoinMode;
 import org.openstreetmap.josm.plugins.streetside.mode.SelectMode;
 import org.openstreetmap.josm.plugins.streetside.utils.MapViewGeometryUtil;
 import org.openstreetmap.josm.plugins.streetside.utils.StreetsideColorScheme;
@@ -54,9 +49,6 @@ import org.openstreetmap.josm.plugins.streetside.utils.StreetsideProperties;
 import org.openstreetmap.josm.plugins.streetside.utils.StreetsideUtils;
 import org.openstreetmap.josm.tools.I18n;
 import org.openstreetmap.josm.tools.ImageProvider.ImageSizes;
-import org.openstreetmap.josm.tools.Logging;
-
-import org.openstreetmap.josm.plugins.streetside.history.StreetsideRecord;
 
 /**
  * This class represents the layer shown in JOSM. There can only exist one
@@ -67,26 +59,23 @@ import org.openstreetmap.josm.plugins.streetside.history.StreetsideRecord;
 public final class StreetsideLayer extends AbstractModifiableLayer implements
 ActiveLayerChangeListener, StreetsideDataListener {
 
+  final static Logger logger = Logger.getLogger(StreetsideLayer.class);
+
   /** The radius of the image marker */
   private static final int IMG_MARKER_RADIUS = 7;
   /** The radius of the circular sector that indicates the camera angle */
   private static final int CA_INDICATOR_RADIUS = 15;
   /** The angle of the circular sector that indicates the camera angle */
   private static final int CA_INDICATOR_ANGLE = 40;
-  /** Length of the edge of the small sign, which indicates that traffic signs have been found in an image. */
-  private static final int TRAFFIC_SIGN_SIZE = 6;
-  /** A third of the height of the sign, for easier calculations */
-  private static final double TRAFFIC_SIGN_HEIGHT_3RD = Math.sqrt(
-    Math.pow(TRAFFIC_SIGN_SIZE, 2) - Math.pow(TRAFFIC_SIGN_SIZE / 2d, 2)
-  ) / 3;
 
-  private static final DataSetListenerAdapter DATASET_LISTENER = new DataSetListenerAdapter(e -> {
-    if (e instanceof DataChangedEvent && StreetsideDownloader.getMode() == DOWNLOAD_MODE.OSM_AREA) {
-      // When more data is downloaded, a delayed update is thrown, in order to
-      // wait for the data bounds to be set.
-      MainApplication.worker.execute(StreetsideDownloader::downloadOSMArea);
-    }
-  });
+	private static final DataSetListenerAdapter DATASET_LISTENER =
+			new DataSetListenerAdapter(e -> {
+				if (e instanceof DataChangedEvent && StreetsideDownloader.getMode() == DOWNLOAD_MODE.OSM_AREA) {
+					// When more data is downloaded, a delayed update is thrown, in order to
+					// wait for the data bounds to be set.
+					MainApplication.worker.execute(StreetsideDownloader::downloadOSMArea);
+				}
+			});
 
 	/** Unique instance of the class. */
 	private static StreetsideLayer instance;
@@ -99,7 +88,6 @@ ActiveLayerChangeListener, StreetsideDataListener {
 	public AbstractMode mode;
 
 	private volatile TexturePaint hatched;
-	private final StreetsideLocationChangeset locationChangeset = new StreetsideLocationChangeset();
 
 	private StreetsideLayer() {
 		super(I18n.tr("Microsoft Streetside Images"));
@@ -131,14 +119,6 @@ ActiveLayerChangeListener, StreetsideDataListener {
     }
     if (StreetsidePlugin.getMapView() != null) {
       StreetsideMainDialog.getInstance().streetsideImageDisplay.repaint();
-      /*StreetsideMainDialog.getInstance()
-        .getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
-        .put(KeyStroke.getKeyStroke("DELETE"), "StreetsideDel");
-      StreetsideMainDialog.getInstance().getActionMap()
-        .put("StreetsideDel", new DeleteImageAction());*/
-
-			// There is no delete image action for Streetside (Streetside functionality here removed).
-			getLocationChangeset().addChangesetListener(StreetsideChangesetDialog.getInstance());
 		}
 		createHatchTexture();
 		invalidate();
@@ -209,16 +189,6 @@ ActiveLayerChangeListener, StreetsideDataListener {
 	}
 
   /**
-   * Returns the {@link StreetsideLocationChangeset} object, which acts as the database of the
-   * Layer.
-   *
-   * @return The {@link StreetsideData} object that stores the database.
-   */
-  public StreetsideLocationChangeset getLocationChangeset() {
-    return locationChangeset;
-  }
-
-  /**
    * Returns the n-nearest image, for n=1 the nearest one is returned, for n=2 the second nearest one and so on.
    * The "n-nearest image" is picked from the list of one image from every sequence that is nearest to the currently
    * selected image, excluding the sequence to which the selected image belongs.
@@ -257,7 +227,7 @@ ActiveLayerChangeListener, StreetsideDataListener {
   }
 
 
-  @Override
+	@Override
   public boolean isModified() {
     return data.getImages().parallelStream().anyMatch(StreetsideAbstractImage::isModified);
   }
@@ -266,9 +236,6 @@ ActiveLayerChangeListener, StreetsideDataListener {
   public void setVisible(boolean visible) {
     super.setVisible(visible);
     getData().getImages().parallelStream().forEach(img -> img.setVisible(visible));
-    if (MainApplication.getMap() != null) {
-      //StreetsideFilterDialog.getInstance().refresh();
-    }
   }
 
   /**
@@ -311,8 +278,11 @@ ActiveLayerChangeListener, StreetsideDataListener {
       }
     }
 
+    // TODO: Sequence lines removed because Streetside imagery is organized
+    // such that the images are sorted by the distance from the center of
+    // the bounding box - Redefine sequences?
+
     // Draw sequence line
-    // TODO: reimplement sequence lines for Streetside
     /*g.setStroke(new BasicStroke(2));
     final StreetsideAbstractImage selectedImage = getData().getSelectedImage();
     for (StreetsideSequence seq : getData().getSequences()) {
@@ -332,9 +302,6 @@ ActiveLayerChangeListener, StreetsideDataListener {
         drawImageMarker(g, imageAbs);
       }
     }
-    if (mode instanceof JoinMode) {
-      mode.paint(g, mv, box);
-    }
   }
 
   /**
@@ -344,7 +311,7 @@ ActiveLayerChangeListener, StreetsideDataListener {
    */
   private void drawImageMarker(final Graphics2D g, final StreetsideAbstractImage img) {
     if (img == null || img.getLatLon() == null) {
-      Logging.warn("An image is not painted, because it is null or has no LatLon!");
+      logger.warn("An image is not painted, because it is null or has no LatLon!");
       return;
     }
     final StreetsideAbstractImage selectedImg = getData().getSelectedImage();
@@ -389,20 +356,6 @@ ActiveLayerChangeListener, StreetsideDataListener {
       g.setStroke(new BasicStroke(2));
       g.drawOval(p.x - IMG_MARKER_RADIUS, p.y - IMG_MARKER_RADIUS, 2 * IMG_MARKER_RADIUS, 2 * IMG_MARKER_RADIUS);
     }
-
-
-		if (img instanceof StreetsideImage && !((StreetsideImage) img).getDetections().isEmpty()) {
-			Path2D trafficSign = new Path2D.Double();
-			trafficSign.moveTo(p.getX() - StreetsideLayer.TRAFFIC_SIGN_SIZE / 2d, p.getY() - StreetsideLayer.TRAFFIC_SIGN_HEIGHT_3RD);
-			trafficSign.lineTo(p.getX() + StreetsideLayer.TRAFFIC_SIGN_SIZE / 2d, p.getY() - StreetsideLayer.TRAFFIC_SIGN_HEIGHT_3RD);
-			trafficSign.lineTo(p.getX(), p.getY() + 2 * StreetsideLayer.TRAFFIC_SIGN_HEIGHT_3RD);
-			trafficSign.closePath();
-			g.setColor(Color.WHITE);
-			g.fill(trafficSign);
-			g.setStroke(new BasicStroke(1));
-			g.setColor(Color.RED);
-			g.draw(trafficSign);
-		}
 	}
 
   @Override
@@ -535,8 +488,8 @@ ActiveLayerChangeListener, StreetsideDataListener {
       nearestImages = new StreetsideImage[0];
     }
     if (MainApplication.isDisplayingMapView()) {
-      StreetsideMainDialog.getInstance().redButton.setEnabled(nearestImages.length >= 1);
-      StreetsideMainDialog.getInstance().blueButton.setEnabled(nearestImages.length >= 2);
+      //StreetsideMainDialog.getInstance().redButton.setEnabled(nearestImages.length >= 1);
+      //StreetsideMainDialog.getInstance().blueButton.setEnabled(nearestImages.length >= 2);
     }
     if (nearestImages.length >= 1) {
       CacheUtils.downloadPicture(nearestImages[0]);
@@ -545,23 +498,6 @@ ActiveLayerChangeListener, StreetsideDataListener {
       }
     }
   }
-
-  /**
-   * Action used to delete images.
-   *
-   * @author nokutu
-   */
-  /*private class DeleteImageAction extends AbstractAction {
-
-    private static final long serialVersionUID = -982809854631863962L;
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-      if (instance != null)
-        StreetsideRecord.getInstance().addCommand(
-          new CommandDelete(getData().getMultiSelectedImages()));
-    }
-  }*/
 
   private static class NearestImgToTargetComparator implements Comparator<StreetsideAbstractImage> {
     private final StreetsideAbstractImage target;

@@ -5,14 +5,17 @@ import static org.openstreetmap.josm.tools.I18n.tr;
 
 import javax.swing.JOptionPane;
 
+import org.apache.log4j.Logger;
 import org.openstreetmap.josm.Main;
-import org.openstreetmap.josm.tools.Logging;
+import org.openstreetmap.josm.tools.I18n;
 
 /**
  * @author nokutu
  *
  */
 public final class PluginState {
+
+  final static Logger logger = Logger.getLogger(PluginState.class);
 
   private static boolean submittingChangeset;
 
@@ -38,7 +41,7 @@ public final class PluginState {
    */
   public static void finishDownload() {
     if (runningDownloads == 0) {
-      Logging.warn("The amount of running downloads is equal to 0");
+      logger.warn(I18n.tr("The amount of running downloads is equal to 0"));
       return;
     }
     runningDownloads--;
@@ -105,7 +108,7 @@ public final class PluginState {
   private static void finishedUploadDialog(int numImages) {
     JOptionPane.showMessageDialog(
       Main.parent,
-      tr("You have successfully uploaded {0} images to mapillary.com", numImages),
+      tr("You have successfully uploaded {0} images to Bing.com", numImages),
       tr("Finished upload"),
       JOptionPane.INFORMATION_MESSAGE
     );
@@ -117,8 +120,8 @@ public final class PluginState {
     }
     JOptionPane.showMessageDialog(
         Main.parent,
-        tr("You are not logged in, please log in to Mapillary in the preferences"),
-        tr("Not Logged in to Mapillary"),
+        tr("You are not logged in, please log in to Streetside in the preferences"),
+        tr("Not Logged in to Streetside"),
         JOptionPane.WARNING_MESSAGE
     );
   }

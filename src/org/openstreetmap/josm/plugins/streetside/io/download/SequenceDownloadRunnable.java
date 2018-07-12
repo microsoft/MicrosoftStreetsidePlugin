@@ -19,8 +19,6 @@ import org.openstreetmap.josm.plugins.streetside.cubemap.CubemapUtils;
 import org.openstreetmap.josm.plugins.streetside.utils.StreetsideProperties;
 import org.openstreetmap.josm.plugins.streetside.utils.StreetsideSequenceIdGenerator;
 import org.openstreetmap.josm.plugins.streetside.utils.StreetsideURL.APIv3;
-import org.openstreetmap.josm.tools.I18n;
-import org.openstreetmap.josm.tools.Logging;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
@@ -47,7 +45,7 @@ public final class SequenceDownloadRunnable extends BoundsDownloadRunnable {
       return;
     }
 
-    StreetsideSequence seq = new StreetsideSequence(null);
+    StreetsideSequence seq = new StreetsideSequence(StreetsideSequenceIdGenerator.generateId());
 
     List<StreetsideImage> bubbleImages = new ArrayList<>();
 
@@ -62,25 +60,22 @@ public final class SequenceDownloadRunnable extends BoundsDownloadRunnable {
     mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
     try {
-
       JsonParser parser = mapper.getFactory().createParser(new BufferedInputStream(con.getInputStream()));
-      if (parser.nextToken() != JsonToken.START_ARRAY) {
-        parser.close();
-        throw new IllegalStateException("Expected an array");
-      }
+    if(parser.nextToken() != JsonToken.START_ARRAY) {
+      parser.close();
+      throw new IllegalStateException("Expected an array");
+    }
 
-      StreetsideImage previous = null;
+    StreetsideImage previous = null;
 
-      while (parser.nextToken() == JsonToken.START_OBJECT) {
+    while (parser.nextToken() == JsonToken.START_OBJECT) {
         // read everything from this START_OBJECT to the matching END_OBJECT
         // and return it as a tree model ObjectNode
         ObjectNode node = mapper.readTree(parser);
         // Discard the first sequence ('enabled') - it does not contain bubble data
         if (node.get("id") != null && node.get("la") != null && node.get("lo") != null) {
           StreetsideImage image = new StreetsideImage(CubemapUtils.convertDecimal2Quaternary(node.path("id").asLong()), node.path("la").asDouble(), node.get("lo").asDouble());
-          if (previous != null) {
-              previous.setNe(image.getNe());
-          }
+          previous = image;
           image.setAd(node.path("ad").asInt());
           image.setAl(node.path("al").asDouble());
           image.setBl(node.path("bl").asText());
@@ -95,7 +90,7 @@ public final class SequenceDownloadRunnable extends BoundsDownloadRunnable {
           image.setRo(node.path("ro").asDouble());
 
           // Add list of cubemap tile images to images
-          List<StreetsideImage> tiles = new ArrayList<StreetsideImage>();
+          List<StreetsideImage> tiles = new ArrayList<>();
 
           EnumSet.allOf(CubemapUtils.CubemapFaces.class).forEach(face -> {
 
@@ -115,20 +110,21 @@ public final class SequenceDownloadRunnable extends BoundsDownloadRunnable {
                       image.getId() + face.getValue() + CubemapUtils.rowCol2StreetsideCellAddressMap
                         .get(String.valueOf(Integer.valueOf(i).toString() + Integer.valueOf(j).toString()))
                       ));
-                  tiles.add(tile
-              );
+                  tiles.add(tile);
                 }
               }
             }
           });
 
-          bubbleImages.add(image);
-          Logging.debug("Added image with id <" + image.getId() + ">");
-
+      	  bubbleImages.add(image);
+          logger.info("Added image with id <" + image.getId() + ">");
+          if (StreetsideProperties.PREDOWNLOAD_CUBEMAPS.get()) {
+            StreetsideData.downloadSurroundingCubemaps(image);
+          }
         }
       }
 
-      parser.close();
+    parser.close();
 
     } catch (JsonParseException e) {
       e.printStackTrace();
@@ -164,7 +160,7 @@ public final class SequenceDownloadRunnable extends BoundsDownloadRunnable {
     }
 
     final long endTime = System.currentTimeMillis();
-    Logging.info(I18n.tr("Sucessfully loaded {0} Microsoft Streetside images in {0} ",seq.getImages().size(),endTime-startTime%60));
+    logger.info("Sucessfully loaded " + seq.getImages().size() + " Microsoft Streetside images in " + (endTime-startTime/1000));
   }
 
   @Override
