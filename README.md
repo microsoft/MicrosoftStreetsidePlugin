@@ -5,12 +5,6 @@ The Microsoft JOSM Streetside (https://www.microsoft.com/en-us/maps/streetside) 
 
 Once JOSM is started and the MicrosoftStreetside plugin is selected in the JOSM Preferences, available Streetside imagery can be display within the boundary of the downloaded JOSM area, by selecting Imagery -> Streetside, from the main menu. Once blue bubbles appear on the map signifying Streetside imagery, clicking on a bubble results in the 360 degree imagery being displayed in the 360 degree viewer, which can be undocked and enlarged to allow for better viewing.
 
-## Documentation
-
-You can find out more about how to use the plugin and how it works in the [project Wiki](https://github.com/JOSM/MicrosoftStreetside/wiki).
-
-If you want to know how to configure the plugin, you can look at the [Configuration Wiki page](https://github.com/JOSM/MicrosoftStreetside/wiki/Configuration).
-
 ## Building from source
 Checkout the JOSM source, compile it and checkout the plugin source (the last gradle command is optional, but contains code checking and unit test functionality - requires a Gradle installation):
 
