@@ -27,7 +27,7 @@ Details about plugin development can be found [in the JOSM wiki](https://josm.op
 
 ## License
 
-This plugin is based on the Mapilary developed by developed and maintained by nokutu (nokutu@openmailbox.org) and extended to display Streetside imagery by Rene Rhodes (renerr18) You can contact Rene on github.
+This plugin is based on the Mapilary and extended to display Streetside imagery by Rene Rhodes (rerorhodes@gmail.com).
 
 This software is licensed under [GPL v3](https://www.gnu.org/licenses/gpl-3.0.en.html). 
 
