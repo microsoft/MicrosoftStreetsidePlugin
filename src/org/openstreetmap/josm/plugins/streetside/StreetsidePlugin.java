@@ -86,7 +86,7 @@ public class StreetsidePlugin extends Plugin {
       StreetsideMainDialog.destroyInstance();
       ImageInfoPanel.destroyInstance();
       CubemapBuilder.destroyInstance();
-
+      StreetsideViewerDialog.destroyInstance();
     }
   }
 
