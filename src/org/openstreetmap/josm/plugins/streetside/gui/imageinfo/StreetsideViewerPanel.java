@@ -41,12 +41,7 @@ public final class StreetsideViewerPanel extends JPanel
 
 		super(new BorderLayout());
 
-		SwingUtilities.invokeLater(new Runnable() {
-		     @Override
-		     public void run() {
-		    	 initializeAndStartGUI();
-		     }
-		 });
+		SwingUtilities.invokeLater(() -> initializeAndStartGUI());
 
 		selectedImageChanged(null, null);
 
