@@ -35,7 +35,8 @@ public class CubemapBuilder implements ITileDownloadingTaskListener, StreetsideD
 	private StreetsideCubemap cubemap;
 	protected boolean cancelled;
 	private long startTime;
-    private Map<String, BufferedImage> tileImages = new ConcurrentHashMap<>();
+  private Map<String, BufferedImage> tileImages = new ConcurrentHashMap<>();
+  private ExecutorService pool;
 
   /**
    * @return the tileImages
@@ -89,6 +90,12 @@ public class CubemapBuilder implements ITileDownloadingTaskListener, StreetsideD
 	}
 
 	public void downloadCubemapImages(String imageId) {
+	  if(StreetsideViewerPanel.getThreeSixtyDegreeViewerPanel().getScene() != StreetsideViewerPanel.getThreeSixtyDegreeViewerPanel().getLoadingScene()) {
+      StreetsideViewerPanel.getThreeSixtyDegreeViewerPanel().setScene(
+  	      StreetsideViewerPanel.getThreeSixtyDegreeViewerPanel().getLoadingScene()
+  	  );
+	  }
+	  
 		final int maxCols = StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get() ? 4 : 2;
 		final int maxRows = StreetsideProperties.SHOW_HIGH_RES_STREETSIDE_IMAGERY.get() ? 4 : 2;
 		final int maxThreadCount = 6 * maxCols * maxRows;
@@ -97,9 +104,14 @@ public class CubemapBuilder implements ITileDownloadingTaskListener, StreetsideD
     message[0] = MessageFormat.format("Downloading Streetside imagery for {0}", imageId);
     message[1] = "Wait for completion…….";
 		long startTime = System.currentTimeMillis();
+		
+		if(CubemapBuilder.getInstance().getTileImages().keySet().size() > 0) {
+      pool.shutdownNow();
+      CubemapBuilder.getInstance().resetTileImages();
+    }
 
 		try {
-			ExecutorService pool = Executors.newFixedThreadPool(maxThreadCount);
+			pool = Executors.newFixedThreadPool(maxThreadCount);
 			List<Callable<String>> tasks = new ArrayList<>(maxThreadCount);
 
 			// launch 4-tiled (low-res) downloading tasks . . .
@@ -128,6 +140,7 @@ public class CubemapBuilder implements ITileDownloadingTaskListener, StreetsideD
 				}
 			}
 
+			// execute tasks
 			MainApplication.worker.submit(() -> {
 			  try {
           List<Future<String>> results = pool.invokeAll(tasks);
