@@ -1,4 +1,5 @@
-//License: GPL. For details, see LICENSE file.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the GPLv3 license.
 package org.openstreetmap.josm.plugins.streetside.gui.imageinfo;
 
 import org.openstreetmap.josm.plugins.streetside.cubemap.CameraTransformer;
@@ -11,12 +12,15 @@ import javafx.scene.PerspectiveCamera;
 import javafx.scene.PointLight;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 @SuppressWarnings("restriction")
 public class ThreeSixtyDegreeViewerPanel extends JFXPanel {
@@ -24,8 +28,8 @@ public class ThreeSixtyDegreeViewerPanel extends JFXPanel {
   private static final long serialVersionUID = -4940350009018422000L;
 
   private static Scene cubemapScene;
-
   private static Scene defaultScene;
+  private static Scene loadingScene;
 
   private static Group root;
   private static Group subGroup;
@@ -78,6 +82,8 @@ public class ThreeSixtyDegreeViewerPanel extends JFXPanel {
 
     subGroup = new Group();
     subGroup.getChildren().add(cameraTransform);
+    
+    createLoadingScene();
 
     Platform.runLater(new Runnable() {
       @Override
@@ -197,6 +203,13 @@ public class ThreeSixtyDegreeViewerPanel extends JFXPanel {
     defaultScene = new Scene(vbox, 200, 100);
     return defaultScene;
   }
+  
+  private static void createLoadingScene() {
+    Label label = new Label(" Loading...");
+    label.setFont(Font.font(null, FontWeight.BOLD, 14));
+    VBox vbox = new VBox(label);
+    loadingScene = new Scene(vbox, 200, 100);
+  }
 
   public CubemapBox getCubemapBox() {
     if (cubemapBox == null) {
@@ -212,5 +225,9 @@ public class ThreeSixtyDegreeViewerPanel extends JFXPanel {
 
   public Scene getCubemapScene() {
     return cubemapScene;
+  }
+  
+  public Scene getLoadingScene() {
+    return loadingScene;
   }
 }

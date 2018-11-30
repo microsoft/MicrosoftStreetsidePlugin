@@ -1,4 +1,5 @@
-// License: GPL. For details, see LICENSE file.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the GPLv3 license.
 package org.openstreetmap.josm.plugins.streetside.cache;
 
 import java.io.File;

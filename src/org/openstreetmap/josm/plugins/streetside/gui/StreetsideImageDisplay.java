@@ -1,4 +1,5 @@
-// License: GPL. For details, see LICENSE file.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the GPLv3 license.
 package org.openstreetmap.josm.plugins.streetside.gui;
 
 import static org.openstreetmap.josm.tools.I18n.tr;

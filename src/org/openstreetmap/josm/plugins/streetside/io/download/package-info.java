@@ -1,4 +1,5 @@
-// License: GPL. For details, see LICENSE file.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the GPLv3 license.
 /**
  * Classes for downloading images, sequences and image metadata like traffic signs from <a href="https://mapillary.com">mapillary.com</a> .
  */
