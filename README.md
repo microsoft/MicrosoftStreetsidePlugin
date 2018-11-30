@@ -37,3 +37,7 @@ The MicrosoftStreetside plugin used JavaFX to implement the Streetside 360 degre
 Java SE 1.8 specification, and may not function properly with alternative JDKs (e.g. OpenJDK is not currently supported). JavaFX is licensed under the same terms as Java SE (http://www.oracle.com/technetwork/java/javase/terms/license/index.html).
 
 The plugin also makes use of the compact Resty libary for communicating with RESTful web services from Java (https://beders.github.io/Resty/Resty/Overview.html). Resty is licensed under the MIT license (https://github.com/go-resty/resty/blob/master/LICENSE).
+
+
+### Code of Conduct
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
