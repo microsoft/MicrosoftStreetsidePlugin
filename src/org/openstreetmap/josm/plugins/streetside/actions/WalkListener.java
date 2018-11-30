@@ -1,0 +1,20 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the GPLv3 license.
+package org.openstreetmap.josm.plugins.streetside.actions;
+
+/**
+ * Implemented by those classes that need to listen to the creation of the walk
+ * threads.
+ *
+ * @author nokutu
+ *
+ */
+public interface WalkListener {
+
+  /**
+   * Called when a new walk thread is started.
+   *
+   * @param thread The thread executing the walk.
+   */
+  void walkStarted(WalkThread thread);
+}

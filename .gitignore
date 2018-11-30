@@ -1,0 +1,22 @@
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# Build and javadoc dirs
+bin/
+javadoc/
+build/
+doc/
+logs/
+
+# Repository metadata files
+.svn/
+.gradle/
+.travis.yml
+
+# OS X metadata
+.DS_Store
+
+

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--** This is a template build file for a JOSM  plugin.
+**
+** Maintaining versions
+** ====================-->
+<project name="MicrosoftStreetside" default="dist" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<!-- Configure these properties (replace "..." accordingly).
+	         See https://josm.openstreetmap.de/wiki/DevelopersGuide/DevelopingPlugins
+	     -->
+	<!-- enter the SVN commit message -->
+	<property name="commit.message" value="Commit message" />
+
+	<!-- edit the properties of this plugin in the file `gradle.properties` -->
+	<property file="${basedir}/gradle.properties"/>
+
+	<property name="josm" location="../../core/dist/josm-custom.jar"/>
+	<property name="plugin.dist.dir" value="../../dist"/>
+
+	<!--** include targets that all plugins have in common **-->
+	<import file="../build-common.xml"/>
+
+	<path id="ivy.lib.path" path="ant/ivy-2.4.0.jar" />
+	<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path" />
+
+	<fileset id="plugin.requires.jars" dir="${plugin.dist.dir}">
+		<include name="apache-commons.jar"/>
+		<include name="apache-http.jar"/>
+	</fileset>
+
+	<target name="pre-compile" depends="fetch_dependencies">
+		<!-- include fetch_dependencies task -->
+	</target>
+
+	<target name="clean_ivy">
+		<delete failonerror="false">
+			<fileset dir="${plugin.lib.dir}">
+				<include name="**/*.jar"/>
+				<exclude name="**/*-custom.jar" />
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="fetch_dependencies" depends="clean_ivy">
+		<echo>fetching dependencies with ivy</echo>
+		<ivy:retrieve pattern="${plugin.lib.dir}/[artifact]-[type].[ext]" conf="default" />
+	</target>
+
+	<target name="install-plugin" depends="clean, dist, install">
+		<echo>Installed Microsoft Streetside plugin</echo>
+	</target>
+
+	<target name="test-run" depends="install-plugin, runjosm">
+	</target>
+</project>

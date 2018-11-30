@@ -1,0 +1,30 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the GPLv3 license.
+package org.openstreetmap.josm.plugins.streetside.model;
+
+import java.io.Serializable;
+
+import javax.swing.ImageIcon;
+
+// not currently used but kept in case Microsoft wants to support user logins
+public class UserProfile extends KeyIndexedObject implements Serializable {
+
+  private static final long serialVersionUID = 7993340649510343946L;
+
+  private final String username;
+  private final ImageIcon avatar;
+
+  public UserProfile(String key, String username, ImageIcon avatar) {
+    super(key);
+    this.avatar = avatar;
+    this.username = username;
+  }
+
+  public String getUsername() {
+    return username;
+  }
+
+  public ImageIcon getAvatar() {
+    return avatar;
+  }
+}

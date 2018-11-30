@@ -1,0 +1,24 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the GPLv3 license.
+package org.openstreetmap.josm.plugins.streetside.model;
+
+import java.awt.geom.Path2D;
+
+public class SpecialImageArea extends KeyIndexedObject {
+  private final String imageKey;
+  private final Path2D shape;
+
+  protected SpecialImageArea(final Path2D shape, final String imageKey, final String key) {
+    super(key);
+    this.shape = shape;
+    this.imageKey = imageKey;
+  }
+
+  public String getImageKey() {
+    return imageKey;
+  }
+
+  public Path2D getShape() {
+    return shape;
+  }
+}
